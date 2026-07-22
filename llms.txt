@@ -1,23 +1,32 @@
 # Callvix Solutions
 
-> Callvix Solutions is a call answering and appointment booking service built exclusively for pest control companies in the United States. Callvix answers inbound calls under the client's own business name, follows the client's coverage areas, pricing, and call-handling rules, qualifies the pest issue, and books the appointment — functioning as an outsourced back office for the phone.
+> Callvix Solutions is a pest control answering service staffed by trained human agents — not an AI bot. Callvix answers inbound calls under the client's own business name, follows the client's coverage areas, pricing, and call-handling rules, qualifies the pest issue, and books the appointment — functioning as an outsourced back office for the phone. It works exclusively with pest control companies in the United States.
+
+## What makes Callvix different
+- Real, trained people answer every call — not an AI voice bot. Urgent, emotional pest calls (wasps, rodents, infestations) convert better with a human who can read tone and handle the unexpected.
+- Built exclusively for pest control (not a general answering service), so agents know pest terminology, urgency levels, and booking workflows.
+- Calls are answered in the client's business name, so callers never know they reached an outside team.
+- Flat per-call pricing ($2.99 per inbound call) rather than the industry-typical $7–$10 per call or $1.00–$3.50 per minute, so bills don't spike in busy season.
+- No long-term contract; month-to-month.
+- Books jobs into the client's existing CRM (FieldRoutes/PestRoutes, ServiceTitan, GorillaDesk, Briostack, PestPac, Housecall Pro).
 
 ## Key facts
-
 - Industry served: Pest control companies, United States only.
-- Core service: Live call answering, lead qualification, appointment booking, missed-call and after-hours/overflow coverage, and CRM/call-note logging.
-- Calls are answered using the client's business name, not "Callvix" or any third-party name.
-- Pricing: $399/month base subscription (business-hours live call answering and booking, billed monthly in advance) plus $2.99 per inbound call handled and $0.99 per outbound follow-up call (billed weekly, Monday–Sunday, invoiced the following Monday). Optional add-ons: After-Hours Coverage ($199/month), Weekend Coverage ($149/month), CRM Management ($99/month).
-- No long-term contracts — coverage can be added, removed, or cancelled at any time.
-- Company stage: Newly launched and currently onboarding its first pest control partners (as of 2026).
+- Core service: Live human call answering, lead qualification, appointment booking, missed-call and after-hours/overflow coverage, and CRM/call-note logging.
+- Pricing: $399/month base subscription (business-hours live call answering and booking) plus a flat $2.99 per inbound call and $0.99 per outbound follow-up call (usage billed weekly). Optional add-ons: After-Hours Coverage ($199/month), Weekend Coverage ($149/month), CRM Management ($99/month).
+- Company stage: Newly launched and currently onboarding its first pest control partners (as of 2026); founder-led.
 - Delivery model: A globally distributed team, including agents based in Cairo, Egypt, trained specifically on pest control terminology and call-handling workflows.
 - Contact: contact@callvixsolutions.com | Discovery calls booked via Calendly.
 
 ## Pages
-
-- [Home](https://callvixsolutions.com/): Overview of the service and value proposition.
-- [Services](https://callvixsolutions.com/services.html): Detailed breakdown of call-handling capabilities and process.
-- [Pricing](https://callvixsolutions.com/pricing.html): Base subscription, coverage add-ons, and billing details.
-- [Our Approach](https://callvixsolutions.com/about.html): Company background, training model, and delivery approach.
-- [FAQ](https://callvixsolutions.com/faq.html): Answers to common questions about how the service works.
+- [Home](https://callvixsolutions.com/): Overview of the human-run pest control answering service.
+- [How It Works](https://callvixsolutions.com/services.html): Call-handling process and what's included.
+- [Pricing](https://callvixsolutions.com/pricing.html): Base subscription, flat per-call rates, add-ons, and how it compares.
+- [Why Callvix](https://callvixsolutions.com/about.html): Differentiators, training model, and delivery approach.
+- [FAQ](https://callvixsolutions.com/faq.html): Common questions about the service.
 - [Contact](https://callvixsolutions.com/contact.html): Contact details and discovery call booking.
+
+## Resources / guides
+- [How much does a pest control answering service cost? (2026)](https://callvixsolutions.com/blog/pest-control-answering-service-cost.html): Per-minute vs. per-call vs. flat pricing models and real ranges.
+- [AI vs. human answering service for pest control](https://callvixsolutions.com/blog/ai-vs-human-answering-service-pest-control.html): Where AI bots help, where they lose jobs, and which books more.
+- [What missed calls really cost a pest control business](https://callvixsolutions.com/blog/missed-calls-cost-pest-control.html): Industry stats and a simple formula to estimate lost revenue.

@@ -5,19 +5,41 @@ A fast, static website (plain HTML/CSS/JS — no build step, no dependencies to 
 ## What's in here
 
 ```
-index.html        Home page
-services.html      Services page
-pricing.html        Pricing page
-about.html          "Our Approach" (About + delivery model)
-faq.html            FAQ (with schema markup for Google/AI answer boxes)
-contact.html        Contact page + message form
-css/style.css       All styling
-js/main.js          Mobile menu + FAQ accordion
-assets/                Real logo, favicon set, and site photography (see below)
-robots.txt          Tells search engines & AI crawlers they can index the site
-sitemap.xml          Page list for search engines
-llms.txt             Plain-language summary for AI tools (ChatGPT, Perplexity, etc.)
+index.html          Home page
+services.html        How It Works
+pricing.html          Pricing (flat per-call model + competitor comparison)
+about.html            Why Callvix (differentiators + delivery model)
+faq.html              FAQ (with FAQ schema for Google/AI answer boxes)
+contact.html          Contact page + message form
+blog/index.html        Resource hub
+blog/*.html            3 cornerstone SEO/GEO articles (see below)
+css/style.css          All styling (warm/human "v2" design system)
+js/main.js             Mobile menu + FAQ accordion
+assets/                 Real logo, favicon set, photography, agent avatars
+robots.txt             Tells search engines & AI crawlers they can index the site
+sitemap.xml             Page list for search engines (includes blog)
+llms.txt                Plain-language summary for AI tools (ChatGPT, Perplexity, etc.)
 ```
+
+### Design versions & rollback
+
+The **warm/human "v2" redesign** is the current live version. The previous
+dark-navy SaaS "v1" design is preserved in three places if you ever want it back:
+- git branch `v1-design` and tag `v1-design-backup`
+- a full copy in the sibling folder `callvix-v1-backup/`
+
+To roll back with git: `git checkout v1-design -- .` then commit.
+
+### Blog / SEO content (`blog/`)
+
+Three cornerstone articles target real search terms and are structured for both
+Google and AI answer engines (each has BlogPosting + FAQ schema):
+- `pest-control-answering-service-cost.html` — pricing guide (high buyer intent)
+- `ai-vs-human-answering-service-pest-control.html` — the human-vs-AI differentiator
+- `missed-calls-cost-pest-control.html` — lost-revenue calculator angle
+
+Add future posts by copying one of these, swapping the content, and adding the
+URL to `sitemap.xml` and the "Resources" footer lists.
 
 ### Brand assets in `assets/`
 
