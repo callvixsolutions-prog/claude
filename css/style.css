@@ -203,9 +203,9 @@ strong { color: var(--ink-900); font-weight: 700; }
 .pill svg { width: 15px; height: 15px; color: var(--teal-500); }
 .pill--live { color: var(--teal-600); }
 .pill--live .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal-500); box-shadow: 0 0 0 4px rgba(38,168,182,0.18); }
-.hero h1 { font-size: clamp(35px, 4.7vw, 57px); color: var(--navy-900); line-height: 1.06; }
-.hero h1 .u { background: linear-gradient(transparent 62%, rgba(38,168,182,0.32) 62%); }
-.hero p.lede { max-width: 540px; margin-top: 8px; }
+.hero h1 { font-size: clamp(31px, 3.7vw, 46px); font-weight: 700; color: var(--navy-900); line-height: 1.16; letter-spacing: -0.01em; max-width: 15ch; }
+.hero h1 .u { background: linear-gradient(transparent 60%, rgba(38,168,182,0.30) 60%); padding: 0 2px; }
+.hero p.lede { max-width: 500px; margin-top: 18px; font-size: 18.5px; }
 .hero-cta { display: flex; align-items: center; gap: 16px; margin-top: 32px; flex-wrap: wrap; }
 .hero-cta-note { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-500); margin-top: 16px; }
 .hero-cta-note svg { width: 16px; height: 16px; color: var(--teal-500); flex-shrink: 0; }
