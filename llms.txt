@@ -28,13 +28,13 @@
 
 ## Pages
 - [Home](https://callvixsolutions.com/): Overview of the human-run pest control answering service.
-- [How It Works](https://callvixsolutions.com/services.html): Call-handling process, sample call, and what's included.
-- [Pricing](https://callvixsolutions.com/pricing.html): Base subscription, flat per-call rates, add-ons, and cost comparison.
-- [Why Callvix](https://callvixsolutions.com/about.html): Differentiators, training model, and delivery approach.
-- [FAQ](https://callvixsolutions.com/faq.html): Common questions about the service.
-- [Contact](https://callvixsolutions.com/contact.html): Contact details and discovery call booking.
+- [How It Works](https://callvixsolutions.com/services): Call-handling process, sample call, and what's included.
+- [Pricing](https://callvixsolutions.com/pricing): Base subscription, flat per-call rates, add-ons, and cost comparison.
+- [Why Callvix](https://callvixsolutions.com/about): Differentiators, training model, and delivery approach.
+- [FAQ](https://callvixsolutions.com/faq): Common questions about the service.
+- [Contact](https://callvixsolutions.com/contact): Contact details and discovery call booking.
 
 ## Resources / guides
-- [How much does a pest control answering service cost? (2026)](https://callvixsolutions.com/blog/pest-control-answering-service-cost.html): Per-minute vs. per-call vs. flat pricing models, real ranges, and hidden fees.
-- [AI vs. human answering service for pest control](https://callvixsolutions.com/blog/ai-vs-human-answering-service-pest-control.html): Where AI bots help, where they lose jobs, and which books more.
-- [What missed calls really cost a pest control business](https://callvixsolutions.com/blog/missed-calls-cost-pest-control.html): Industry statistics and a formula to estimate lost revenue.
+- [How much does a pest control answering service cost? (2026)](https://callvixsolutions.com/blog/pest-control-answering-service-cost): Per-minute vs. per-call vs. flat pricing models, real ranges, and hidden fees.
+- [AI vs. human answering service for pest control](https://callvixsolutions.com/blog/ai-vs-human-answering-service-pest-control): Where AI bots help, where they lose jobs, and which books more.
+- [What missed calls really cost a pest control business](https://callvixsolutions.com/blog/missed-calls-cost-pest-control): Industry statistics and a formula to estimate lost revenue.

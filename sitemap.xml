@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://callvixsolutions.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://callvixsolutions.com/services.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://callvixsolutions.com/pricing.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://callvixsolutions.com/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://callvixsolutions.com/faq.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://callvixsolutions.com/contact.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://callvixsolutions.com/services</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://callvixsolutions.com/pricing</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://callvixsolutions.com/about</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://callvixsolutions.com/faq</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://callvixsolutions.com/contact</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://callvixsolutions.com/blog/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://callvixsolutions.com/blog/pest-control-answering-service-cost.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://callvixsolutions.com/blog/ai-vs-human-answering-service-pest-control.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://callvixsolutions.com/blog/missed-calls-cost-pest-control.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://callvixsolutions.com/blog/pest-control-answering-service-cost</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://callvixsolutions.com/blog/ai-vs-human-answering-service-pest-control</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://callvixsolutions.com/blog/missed-calls-cost-pest-control</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>

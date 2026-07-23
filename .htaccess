@@ -1,66 +1,85 @@
 # ==========================================================================
 # Callvix Solutions — Apache / LiteSpeed config (Hostinger)
-# Handles: HTTPS, 301 redirects from the old WordPress URLs, clean URLs,
-# compression, browser caching, and security headers.
+#
+# URL policy: clean, extensionless URLs are canonical.
+#   /pricing        <- canonical, serves pricing.html (internal rewrite, 200)
+#   /pricing.html   -> 301 -> /pricing
+#   /pricing/       -> 301 -> /pricing
+#   /blog/          <- real directory, keeps its trailing slash
+#
+# IMPORTANT: rule order below is deliberate. Do not reorder without re-testing
+# for redirect loops (an earlier version looped /pricing <-> /pricing.html).
 # ==========================================================================
 
 Options -Indexes
 DirectoryIndex index.html
 
-# --------------------------------------------------------------------------
-# 1. HTTPS + canonical host (non-www)
-# --------------------------------------------------------------------------
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # Force HTTPS
+  # ------------------------------------------------------------------------
+  # 1. Force HTTPS
+  # ------------------------------------------------------------------------
   RewriteCond %{HTTPS} !=on
   RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
-  # Force non-www (change to the www block below if you prefer www)
+  # ------------------------------------------------------------------------
+  # 2. Force non-www (canonical host)
+  # ------------------------------------------------------------------------
   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
   RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
   # ------------------------------------------------------------------------
-  # 2. 301 REDIRECTS — old WordPress URLs -> new pages
-  #    These preserve the Google rankings the old site already earned.
+  # 3. Old WordPress URLs -> new clean URLs (single hop, no chains)
+  #
+  #    NOTE: /pricing/ is deliberately NOT listed here. The old slug "pricing"
+  #    is identical to the new page, so a rule here would fight the trailing
+  #    slash rule below and loop. Rule 5 already sends /pricing/ -> /pricing.
   # ------------------------------------------------------------------------
-  RewriteRule ^about-us/?$            /about.html      [R=301,L]
-  RewriteRule ^why-egypt/?$           /about.html      [R=301,L]
-  RewriteRule ^landing/?$             /services.html   [R=301,L]
-  RewriteRule ^pricing/?$             /pricing.html    [R=301,L]
-  RewriteRule ^contact-us/?$          /contact.html    [R=301,L]
-  RewriteRule ^home/?$                /                [R=301,L]
+  RewriteRule ^about-us/?$    /about     [R=301,L]
+  RewriteRule ^why-egypt/?$   /about     [R=301,L]
+  RewriteRule ^landing/?$     /services  [R=301,L]
+  RewriteRule ^contact-us/?$  /contact   [R=301,L]
+  RewriteRule ^home/?$        /          [R=301,L]
 
   # Old WordPress sitemaps -> new sitemap
-  RewriteRule ^sitemap_index\.xml$    /sitemap.xml     [R=301,L]
-  RewriteRule ^page-sitemap\.xml$     /sitemap.xml     [R=301,L]
-  RewriteRule ^wp-sitemap\.xml$       /sitemap.xml     [R=301,L]
+  RewriteRule ^sitemap_index\.xml$  /sitemap.xml  [R=301,L]
+  RewriteRule ^page-sitemap\.xml$   /sitemap.xml  [R=301,L]
+  RewriteRule ^wp-sitemap\.xml$     /sitemap.xml  [R=301,L]
 
-  # Retire leftover WordPress paths so they don't 500 or leak
-  RewriteRule ^wp-admin(/.*)?$        /                [R=301,L]
-  RewriteRule ^wp-login\.php$         /                [R=301,L]
+  # Retire leftover WordPress entry points
+  RewriteRule ^wp-admin(/.*)?$  /  [R=301,L]
+  RewriteRule ^wp-login\.php$   /  [R=301,L]
 
   # ------------------------------------------------------------------------
-  # 3. Clean URLs — /pricing also works, serving /pricing.html
+  # 4. Strip .html  (only for real browser requests, never internal rewrites)
   # ------------------------------------------------------------------------
-  # Strip .html from the address bar
   RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
   RewriteRule ^ /%1 [R=301,L]
 
-  # Internally map extensionless requests to the .html file
+  # ------------------------------------------------------------------------
+  # 5. Remove trailing slash — but ONLY when it isn't a real directory
+  #    (so /blog/ is untouched, while /pricing/ -> /pricing)
+  # ------------------------------------------------------------------------
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME}\.html -f
-  RewriteRule ^(.+?)/?$ $1.html [L]
+  RewriteRule ^(.+?)/$ /$1 [R=301,L]
+
+  # ------------------------------------------------------------------------
+  # 6. Serve the .html file for a clean URL — internal rewrite, NOT a redirect
+  # ------------------------------------------------------------------------
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.+)$ $1.html [L]
 </IfModule>
 
 # --------------------------------------------------------------------------
-# 4. Custom error page
+# Custom error page
 # --------------------------------------------------------------------------
 ErrorDocument 404 /404.html
 
 # --------------------------------------------------------------------------
-# 5. Compression (smaller = faster = better Core Web Vitals / SEO)
+# Compression (better Core Web Vitals)
 # --------------------------------------------------------------------------
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
@@ -70,23 +89,23 @@ ErrorDocument 404 /404.html
 </IfModule>
 
 # --------------------------------------------------------------------------
-# 6. Browser caching
+# Browser caching
 # --------------------------------------------------------------------------
 <IfModule mod_expires.c>
   ExpiresActive On
-  ExpiresByType text/html                 "access plus 1 hour"
-  ExpiresByType text/css                  "access plus 1 year"
-  ExpiresByType application/javascript    "access plus 1 year"
-  ExpiresByType image/jpeg                "access plus 1 year"
-  ExpiresByType image/png                 "access plus 1 year"
-  ExpiresByType image/webp                "access plus 1 year"
-  ExpiresByType image/svg+xml             "access plus 1 year"
-  ExpiresByType image/x-icon              "access plus 1 year"
-  ExpiresByType text/xml                  "access plus 1 day"
+  ExpiresByType text/html               "access plus 1 hour"
+  ExpiresByType text/css                "access plus 1 year"
+  ExpiresByType application/javascript  "access plus 1 year"
+  ExpiresByType image/jpeg              "access plus 1 year"
+  ExpiresByType image/png               "access plus 1 year"
+  ExpiresByType image/webp              "access plus 1 year"
+  ExpiresByType image/svg+xml           "access plus 1 year"
+  ExpiresByType image/x-icon            "access plus 1 year"
+  ExpiresByType text/xml                "access plus 1 day"
 </IfModule>
 
 # --------------------------------------------------------------------------
-# 7. Security headers
+# Security headers
 # --------------------------------------------------------------------------
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
@@ -96,7 +115,7 @@ ErrorDocument 404 /404.html
 </IfModule>
 
 # --------------------------------------------------------------------------
-# 8. Correct MIME types
+# MIME types
 # --------------------------------------------------------------------------
 <IfModule mod_mime.c>
   AddType image/webp .webp
