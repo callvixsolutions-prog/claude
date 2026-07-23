@@ -39,7 +39,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/style.css?v=20260723b">
 <script type="application/ld+json">
 { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
   { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://callvixsolutions.com/" },
@@ -125,7 +125,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           address configured in the Formspree dashboard. To change the destination
           address, edit it in Formspree — no code change needed here.
         -->
-        <form action="https://formspree.io/f/maqrpwqw" method="POST">
+        <form action="https://formspree.io/f/maqrpwqw" method="POST" data-ajax data-success="/thank-you">
           <!-- Subject line that appears in your inbox -->
           <input type="hidden" name="_subject" value="New enquiry from callvixsolutions.com">
           <!-- Send the visitor to our own branded thank-you page after submitting -->
@@ -143,6 +143,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           <div class="form-field"><label for="state">State / service area</label><input type="text" id="state" name="state" placeholder="e.g. Texas — Austin metro"></div>
           <div class="form-field"><label for="message">What's your current call flow like?</label><textarea id="message" name="message" rows="4" placeholder="e.g. We miss a lot of calls when techs are out in the field..."></textarea></div>
           <button type="submit" class="btn btn-primary btn-block">Send message</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
           <p class="form-note">By submitting, you agree to be contacted by Callvix Solutions about your inquiry.</p>
         </form>
       </div>
@@ -208,6 +209,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     </div>
   </div>
 </footer>
-<script src="/js/main.js"></script>
+<script src="/js/main.js?v=20260723b"></script>
 </body>
 </html>

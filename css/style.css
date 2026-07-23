@@ -480,6 +480,9 @@ strong { color: var(--ink-900); font-weight: 700; }
 .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: 2px solid var(--teal-400); outline-offset: 1px; background: var(--white); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .form-note { font-size: 13px; color: var(--ink-400); margin-top: 10px; }
+.form-status { font-size: 14px; margin: 12px 0 0; min-height: 1px; }
+.form-status:empty { margin: 0; }
+.form-status--error { color: #b4232b; font-weight: 600; }
 
 /* ---------- Footer ---------- */
 .site-footer { background: var(--navy-950); color: #9aa2c0; padding: 72px 0 30px; }
