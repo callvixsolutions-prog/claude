@@ -25,37 +25,31 @@ llms.txt                  Structured summary for AI engines (ChatGPT, Perplexity
 
 ---
 
-## 1. Contact form — how to make it work (5 minutes, no coding)
+## 1. Contact form — CONFIGURED ✅
 
-The form in `contact.html` currently points at a placeholder. A static site can't
-process form submissions itself, so it needs a free form backend. Use **Formspree**:
+The contact form is wired to **Formspree**, form ID **`maqrpwqw`**
+(`https://formspree.io/f/maqrpwqw`). Nothing further to code.
 
-1. Go to **[formspree.io](https://formspree.io)** and create a free account
-   (free tier = 50 submissions/month).
-2. Verify your email address when prompted.
-3. Click **+ New Form**.
-   - **Form name:** `Callvix Website Contact`
-   - **Send to:** `contact@callvixsolutions.com`
-4. Formspree shows you an endpoint like `https://formspree.io/f/xdkogqwl`.
-   The part after `/f/` (e.g. `xdkogqwl`) is your **form ID**.
-5. Open `contact.html`, find this line (around line 120):
+It's set up with:
 
-   ```html
-   <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-   ```
+| Field | Purpose |
+|---|---|
+| `_subject` | Emails arrive titled "New enquiry from callvixsolutions.com" |
+| `_next` | After submitting, visitors land on our own `thank-you.html`, not Formspree's default page |
+| `_gotcha` | Hidden honeypot — bots fill it in, humans never see it, so spam is filtered without a CAPTCHA |
 
-   Replace `YOUR_FORM_ID` with your real ID:
+### Remaining one-time step (after the site is live)
+Submit the form **once yourself** from the live domain. Formspree requires you to
+confirm the very first submission before it starts forwarding to your inbox.
 
-   ```html
-   <form action="https://formspree.io/f/xdkogqwl" method="POST">
-   ```
-
-6. Re-upload `contact.html`, then **submit the form once yourself**. Formspree
-   asks you to confirm the first submission — after that, every message lands in
-   your inbox automatically.
-
-**Optional:** in Formspree settings you can turn on reCAPTCHA (spam protection)
-and set a custom "thank you" redirect page.
+### Notes
+- The destination email is set **in the Formspree dashboard**, not in the code —
+  change it there, no re-upload needed.
+- Free tier is 50 submissions/month. If you outgrow it, upgrading in Formspree
+  requires no code change.
+- The `_next` redirect points at `https://callvixsolutions.com/thank-you.html`,
+  so it only works once the site is on the real domain. Testing locally will show
+  Formspree's default confirmation page instead — that's expected.
 
 ---
 
