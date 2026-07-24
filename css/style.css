@@ -198,7 +198,14 @@ strong { color: var(--ink-900); font-weight: 700; }
 }
 .mobile-nav ul { display: flex; flex-direction: column; gap: 2px; }
 .mobile-nav a { display: block; padding: 15px 6px; font-family: var(--font-heading); font-weight: 700; font-size: 19px; border-bottom: 1px solid var(--border); color: var(--navy-900); }
-.mobile-nav .btn { margin-top: 22px; }
+/* The CTA is an <a class="btn"> — restore proper button styling that the
+   .mobile-nav a rule above would otherwise clobber (block display killed the
+   centering; 6px padding shoved the text left; nav border showed through). */
+.mobile-nav a.btn {
+  display: flex; width: 100%; justify-content: center; text-align: center;
+  padding: 16px 28px; margin-top: 22px; border-bottom: none; font-size: 15.5px;
+}
+.mobile-nav a.btn-primary { color: #04252a; }
 
 /* ---------- Hero ---------- */
 .hero { position: relative; padding: 76px 0 84px; overflow: hidden; }
