@@ -177,19 +177,24 @@ strong { color: var(--ink-900); font-weight: 700; }
 .nav-toggle { display: none; background: none; border: none; padding: 8px; }
 .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--navy-900); margin: 5px 0; border-radius: 2px; }
 
-/* Closed state is `display:none` (not an off-screen transform) so the panel
-   never contributes page width and can't create horizontal scroll. */
+/* Closed state hides via visibility/opacity (NOT display:none + animation,
+   which some mobile browsers freeze on the first keyframe, and NOT an
+   off-screen transform, which caused horizontal scroll). The panel is pinned
+   left:0/right:0 so it's exactly viewport-width and never overflows. */
 .mobile-nav {
   position: fixed; inset: 82px 0 0 0; background: var(--cream); z-index: 99;
-  padding: 24px; overflow-y: auto; display: none;
+  padding: 24px; overflow-y: auto;
+  visibility: hidden; opacity: 0; transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
 }
-.mobile-nav.open { display: block; animation: mobileNavIn 0.22s ease both; }
-@keyframes mobileNavIn {
-  from { opacity: 0; transform: translateX(10%); }
-  to   { opacity: 1; transform: none; }
+.mobile-nav.open {
+  visibility: visible; opacity: 1; transform: none;
+  pointer-events: auto;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s;
 }
 @media (prefers-reduced-motion: reduce) {
-  .mobile-nav.open { animation: none; }
+  .mobile-nav, .mobile-nav.open { transition: none; }
 }
 .mobile-nav ul { display: flex; flex-direction: column; gap: 2px; }
 .mobile-nav a { display: block; padding: 15px 6px; font-family: var(--font-heading); font-weight: 700; font-size: 19px; border-bottom: 1px solid var(--border); color: var(--navy-900); }
