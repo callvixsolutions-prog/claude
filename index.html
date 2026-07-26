@@ -43,40 +43,52 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/style.css?v=20260724a">
+<link rel="stylesheet" href="/css/style.css?v=20260726a">
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Callvix Solutions",
-  "url": "https://callvixsolutions.com",
-  "logo": "https://callvixsolutions.com/assets/logo.png",
-  "description": "Callvix Solutions is a pest control answering service. Trained human agents answer inbound calls in the client's business name, qualify the pest issue, and book appointments — built exclusively for U.S. pest control companies.",
-  "email": "contact@callvixsolutions.com",
-  "telephone": "+1-561-621-1617",
-  "areaServed": { "@type": "Country", "name": "United States" },
-  "sameAs": [
-    "https://www.facebook.com/callvixsolutions",
-    "https://www.linkedin.com/company/callvixsolutions"
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://callvixsolutions.com/#organization",
+      "name": "Callvix Solutions",
+      "url": "https://callvixsolutions.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://callvixsolutions.com/assets/logo.png"
+      },
+      "description": "Callvix Solutions provides live call answering and appointment booking for pest control companies across the United States. Trained representatives answer in each client's business name, qualify the pest issue, and book eligible jobs by the client's rules.",
+      "email": "contact@callvixsolutions.com",
+      "telephone": "+1-561-621-1617",
+      "areaServed": { "@type": "Country", "name": "United States" },
+      "sameAs": [
+        "https://www.facebook.com/callvixsolutions",
+        "https://www.linkedin.com/company/callvixsolutions"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://callvixsolutions.com/#website",
+      "url": "https://callvixsolutions.com/",
+      "name": "Callvix Solutions",
+      "publisher": { "@id": "https://callvixsolutions.com/#organization" }
+    },
+    {
+      "@type": "Service",
+      "serviceType": "Pest Control Answering Service and Appointment Booking",
+      "provider": { "@id": "https://callvixsolutions.com/#organization" },
+      "areaServed": { "@type": "Country", "name": "United States" },
+      "audience": { "@type": "BusinessAudience", "audienceType": "Pest Control Companies" },
+      "description": "Live call answering by trained representatives, lead qualification, appointment booking, and after-hours/overflow coverage for U.S. pest control businesses. Calls are answered under the client's business name. Pricing is $399/month base plus $2.99 per inbound call and $0.99 per outbound follow-up call.",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "USD",
+        "price": "399",
+        "description": "$399/month base subscription plus $2.99 per inbound call and $0.99 per outbound follow-up call. No long-term contract."
+      }
+    }
   ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "serviceType": "Pest Control Answering Service and Appointment Booking",
-  "provider": { "@type": "Organization", "name": "Callvix Solutions" },
-  "areaServed": { "@type": "Country", "name": "United States" },
-  "audience": { "@type": "BusinessAudience", "audienceType": "Pest Control Companies" },
-  "description": "Live call answering by trained human agents, lead qualification, appointment booking, and after-hours/overflow coverage for U.S. pest control businesses. Calls are answered under the client's business name. Pricing is $399/month base plus $2.99 per inbound call and $0.99 per outbound follow-up call.",
-  "offers": {
-    "@type": "Offer",
-    "priceCurrency": "USD",
-    "price": "399",
-    "description": "$399/month base subscription plus $2.99 per inbound call and $0.99 per outbound follow-up call. No long-term contract."
-  }
 }
 </script>
 </head>
@@ -134,7 +146,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg> Built only for pest control</span>
       </div>
       <h1>Stop letting missed calls become <span class="u">your competitor's booked jobs.</span></h1>
-      <p class="lede">Callvix is a pest control answering service run by <strong>trained people</strong> — not an AI robot. We answer every call in your company's name, qualify the pest issue, and book the appointment while your techs stay in the field.</p>
+      <p class="lede">Callvix is a pest control answering service run by <strong>trained people</strong> — not an AI robot. During your agreed coverage, we answer in your company's name, qualify the pest issue, and book eligible jobs by your rules, so your field team can stay focused on the route.</p>
       <div class="hero-cta">
         <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" class="btn btn-primary btn-lg">Book a Free Discovery Call</a>
         <a href="/services" class="btn btn-outline">See how it works</a>
@@ -144,12 +156,12 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <div class="hero-proof">
         <div class="avatar-stack">
           <div class="avatars">
-            <img src="/assets/av-1.png" alt="Callvix call representative" width="44" height="44" loading="lazy">
-            <img src="/assets/av-2.png" alt="Callvix call representative" width="44" height="44" loading="lazy">
-            <img src="/assets/av-3.png" alt="Callvix call representative" width="44" height="44" loading="lazy">
-            <img src="/assets/av-4.png" alt="Callvix call representative" width="44" height="44" loading="lazy">
+            <img src="/assets/av-1.png" alt="Customer service representative" width="44" height="44" loading="lazy">
+            <img src="/assets/av-2.png" alt="Customer service representative" width="44" height="44" loading="lazy">
+            <img src="/assets/av-3.png" alt="Customer service representative" width="44" height="44" loading="lazy">
+            <img src="/assets/av-4.png" alt="Customer service representative" width="44" height="44" loading="lazy">
           </div>
-          <p>A trained representative picks up —<br>never a queue or a robot.</p>
+          <p>A trained representative picks up —<br>a real person, not a bot.</p>
         </div>
       </div>
     </div>
@@ -158,10 +170,10 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <div class="call-card">
         <div class="call-card-top">
           <div class="who">
-            <img src="/assets/av-rep.png" alt="Callvix call representative on a live call" width="40" height="40">
-            <div><strong>Callvix representative</strong><span>Answering as "Green Shield Pest Control"</span></div>
+            <img src="/assets/av-rep.png" alt="Customer service representative wearing a headset" width="40" height="40">
+            <div><strong>Callvix representative</strong><span>Answering as "Example Pest Control Co."</span></div>
           </div>
-          <span class="live-tag"><span class="dot"></span> LIVE</span>
+          <span class="live-tag"><span class="dot"></span> EXAMPLE</span>
         </div>
         <div class="call-card-body">
           <div class="bubble them"><span class="lbl">Caller</span>"There are wasps building a nest right by our front door — can someone come out today?"</div>
@@ -173,9 +185,10 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           </div>
         </div>
       </div>
+      <p class="card-disclaimer">Illustrative sample call flow — not a customer testimonial or performance claim.</p>
       <div class="hero-float">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-        <div>Booked in 90 seconds<small>while you were on a job</small></div>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div>Booked while you're in the field<small>sample call outcome</small></div>
       </div>
     </div>
   </div>
@@ -198,32 +211,31 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   <div class="container">
     <div class="section-head section-head--center">
       <div class="eyebrow">The cost of a ringing phone</div>
-      <h2>In pest control, a missed call isn't a missed call. It's a lost customer.</h2>
-      <p class="lede">Pest problems feel urgent — a wasp nest, mice in the walls, ants across the counter. If nobody picks up, people don't wait. They dial the next company on Google. The numbers are brutal:</p>
+      <h2>In pest control, a missed call is often a lost customer.</h2>
+      <p class="lede">Pest problems feel urgent — a wasp nest, mice in the walls, ants across the counter. When the first company doesn't answer, many callers simply contact the next available provider instead of waiting or leaving a voicemail.</p>
     </div>
     <div class="stat-band">
       <div class="stat">
-        <div class="num">85<span>%</span></div>
-        <p>of callers who reach voicemail never call back.</p>
-        <cite>Home-services call research</cite>
+        <div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="var(--teal-500)" stroke-width="2" style="width:38px;height:38px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <p><strong>Urgent by nature.</strong> Callers with a pest emergency want help now — a missed call is easily lost to the next provider.</p>
       </div>
       <div class="stat">
-        <div class="num">~80<span>%</span></div>
-        <p>won't leave a voicemail during an urgent pest issue.</p>
-        <cite>Industry call studies</cite>
+        <div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="var(--teal-500)" stroke-width="2" style="width:38px;height:38px;"><path d="M12 22s8-4.5 8-11.8A8 8 0 0 0 4 10.2C4 17.5 12 22 12 22Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <p><strong>Voicemail rarely helps.</strong> Many people won't leave a message during an urgent issue — they just hang up and dial again.</p>
       </div>
       <div class="stat">
-        <div class="num">5–10<span>×</span></div>
-        <p>higher conversion when a lead is answered within 5 minutes.</p>
-        <cite>Harvard Business Review</cite>
+        <div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="var(--teal-500)" stroke-width="2" style="width:38px;height:38px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <p><strong>Speed matters.</strong> Answering live, right away, gives you a real shot at the booking before a competitor does.</p>
       </div>
       <div class="stat">
-        <div class="num">$600<span>+</span></div>
-        <p>the yearly value of one recurring residential account you just saved.</p>
-        <cite>Typical quarterly plan</cite>
+        <div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="var(--teal-500)" stroke-width="2" style="width:38px;height:38px;"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <p><strong>It adds up.</strong> A single new account can become recurring service — so recovered calls compound over time.</p>
       </div>
     </div>
-    <p style="text-align:center; margin-top:32px; color:var(--ink-500); max-width:640px; margin-left:auto; margin-right:auto;">You already know the pattern: you're mid-treatment, driving between stops, or it's 7pm — and the phone just rings out. Callvix answers it.</p>
+    <div class="article-callout" style="max-width:680px; margin:36px auto 0; text-align:left;">
+      <p style="margin:0;"><strong>Put a number on it (example).</strong> Say you miss 40 calls a month, book 40% of the calls you do answer, and a first job averages $500: that's roughly <strong>40 × 40% × $500 ≈ $8,000/month</strong> in potential first-job revenue at stake — before any recurring work. <span style="color:var(--ink-500);">Illustrative math using example figures; plug in your own numbers on a discovery call.</span></p>
+    </div>
+    <p style="text-align:center; margin-top:28px; color:var(--ink-500); max-width:640px; margin-left:auto; margin-right:auto;">You already know the pattern: you're mid-treatment, driving between stops, or it's after hours — and the phone just rings out. Callvix helps you cover it.</p>
   </div>
 </section>
 
@@ -251,7 +263,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Real people trained specifically on pest control calls</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Hear urgency and adapt — reassure, prioritize, escalate</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Sound exactly like your own front-office team</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Operate as an extension of your office, using your rules</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Ask the right follow-ups and book the bigger job</li>
         </ul>
       </div>
@@ -264,8 +276,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   <div class="container">
     <div class="section-head section-head--center">
       <div class="eyebrow">What we do</div>
-      <h2>Your phone, handled like an in-house office — just never missed</h2>
-      <p class="lede">Every inbound call is answered using your company name, following your coverage areas, pricing, and rules. Customers never know they've reached anyone but your office.</p>
+      <h2>Your phone, handled like an in-house office</h2>
+      <p class="lede">During your agreed coverage, calls are answered using your company name, following your coverage areas, pricing, and rules — so the experience matches your own front office.</p>
     </div>
     <div class="grid grid-3">
       <div class="card">
@@ -293,8 +305,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   <div class="container">
     <div class="photo-split">
       <div class="photo-frame">
-        <img src="/assets/photo-team.jpg" alt="Callvix representatives answering pest control calls in your company's name" width="1100" height="660" loading="lazy">
-        <div class="photo-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> A real person on every call</div>
+        <img src="/assets/photo-team.jpg" alt="Customer service team wearing headsets in an office" width="1100" height="660" loading="lazy">
+        <div class="photo-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Live human answering</div>
       </div>
       <div>
         <div class="eyebrow">Who answers</div>
@@ -317,7 +329,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <div>
         <div class="eyebrow">How it works</div>
         <h2>From first ring to booked job, in five steps</h2>
-        <p class="lede">A consistent, professional experience on every single call — no matter who's on shift.</p>
+        <p class="lede">A consistent, professional experience on the calls we handle — no matter who's on shift.</p>
         <a href="/services" class="btn btn-outline" style="margin-top:8px;">See it in detail</a>
       </div>
       <div class="steps">
@@ -434,8 +446,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="split">
       <div>
         <div class="eyebrow">Fits how you already work</div>
-        <h2>Books straight into the tools you already run on</h2>
-        <p class="lede">We log calls and booked jobs into your existing CRM or scheduling system, so your team sees them right where they expect to — no new software to learn.</p>
+        <h2>Works with the tools your office already runs on</h2>
+        <p class="lede">Call workflows can be configured around the CRM or scheduling system your office already uses, so your team sees calls and booked jobs where they expect — set up during onboarding, subject to access.</p>
         <div class="hero-badges" style="margin-top:8px;">
           <span class="pill">FieldRoutes / PestRoutes</span>
           <span class="pill">ServiceTitan</span>
@@ -444,12 +456,12 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           <span class="pill">PestPac</span>
           <span class="pill">Housecall Pro</span>
         </div>
-        <p style="margin-top:22px; font-size:14px; color:#8a93b5;">Use something else? We adapt to your workflow on the discovery call.</p>
+        <p style="margin-top:22px; font-size:13px; color:#8a93b5;">Use something else? We adapt to your workflow on the discovery call. Software names and trademarks belong to their respective owners; no partnership or native integration is implied.</p>
       </div>
       <div class="grid" style="gap:18px;">
         <div class="card card--navy icon-row">
           <div class="icon-sm" style="background:rgba(38,168,182,0.16)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--teal-300)" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
-          <div><h4 style="color:#fff">Your rules, not a generic script</h4><p style="color:#aeb6d0">We follow your coverage areas, pricing, and booking logic exactly.</p></div>
+          <div><h4 style="color:#fff">Your rules, not a generic script</h4><p style="color:#aeb6d0">We follow your coverage areas, pricing, and booking logic as configured.</p></div>
         </div>
         <div class="card card--navy icon-row">
           <div class="icon-sm" style="background:rgba(38,168,182,0.16)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--teal-300)" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
@@ -457,7 +469,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         </div>
         <div class="card card--navy icon-row">
           <div class="icon-sm" style="background:rgba(38,168,182,0.16)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--teal-300)" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg></div>
-          <div><h4 style="color:#fff">Live in days, not months</h4><p style="color:#aeb6d0">A short onboarding and we're answering in your name.</p></div>
+          <div><h4 style="color:#fff">A guided onboarding</h4><p style="color:#aeb6d0">Launch timing depends on your workflow, phone setup and approval — usually a short onboarding.</p></div>
         </div>
       </div>
     </div>
@@ -528,8 +540,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <a href="/" class="flogo" aria-label="Callvix Solutions home"><img src="/assets/logo-white.png" alt="Callvix Solutions logo" width="117" height="40"></a>
         <p>A pest control answering service staffed by real, trained people. We answer in your company name, qualify the pest issue, and book the job &mdash; so you never lose a lead to voicemail.</p>
         <div class="footer-badge">
-          <img src="/assets/badge-designrush.png" alt="DesignRush Top Call Center Companies 2026 award badge" width="38" height="43">
-          <span>Recognized among DesignRush&rsquo;s<br>Top Call Center Companies, 2026</span>
+          <img src="/assets/badge-designrush.png" alt="DesignRush directory badge" width="38" height="43">
+          <span>Listed on DesignRush&rsquo;s<br>Top Call Center Companies, 2026</span>
         </div>
       </div>
 
@@ -570,6 +582,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="footer-bottom">
       <div class="footer-legal">
         <span>&copy; <span class="current-year">2026</span> Callvix Solutions. All rights reserved.</span>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms">Terms</a>
       </div>
       <span>Built exclusively for U.S. pest control companies.</span>
       <div class="footer-social">
@@ -580,6 +594,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   </div>
 </footer>
 
-<script src="/js/main.js?v=20260724a"></script>
+<script src="/js/main.js?v=20260726a"></script>
 </body>
 </html>

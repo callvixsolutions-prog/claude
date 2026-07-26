@@ -270,6 +270,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .call-result { display: flex; align-items: center; gap: 10px; margin-top: 6px; padding: 14px 16px; background: var(--navy-900); border-radius: 14px; }
 .call-result svg { width: 22px; height: 22px; color: #fff; background: var(--teal-500); border-radius: 50%; padding: 4px; flex-shrink: 0; }
 .call-result span { font-size: 13.5px; color: #fff; font-family: var(--font-heading); font-weight: 600; }
+.card-disclaimer { text-align: center; font-size: 12.5px; color: var(--ink-400); margin: 12px 0 0; font-style: italic; }
 .hero-float {
   position: absolute; right: -14px; bottom: 34px; background: var(--white); color: var(--navy-900);
   border-radius: var(--radius-md); padding: 13px 17px; box-shadow: var(--shadow-lg);
@@ -291,9 +292,11 @@ strong { color: var(--ink-900); font-weight: 700; }
   background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md);
   padding: 28px 24px; box-shadow: var(--shadow-sm);
 }
-.stat .num { font-family: var(--font-heading); font-size: 40px; font-weight: 800; color: var(--navy-900); line-height: 1; letter-spacing: -0.03em; }
+.stat .num { font-family: var(--font-heading); font-size: 40px; font-weight: 800; color: var(--navy-900); line-height: 1; letter-spacing: -0.03em; display: flex; align-items: center; min-height: 40px; }
 .stat .num span { color: var(--teal-500); }
-.stat p { margin: 12px 0 0; font-size: 14.5px; color: var(--ink-500); line-height: 1.5; }
+.stat .num svg { display: block; }
+.stat p { margin: 14px 0 0; font-size: 14.5px; color: var(--ink-500); line-height: 1.55; }
+.stat p strong { color: var(--navy-900); }
 .stat cite { display: block; margin-top: 10px; font-size: 11.5px; color: var(--ink-400); font-style: normal; }
 
 /* ---------- Cards ---------- */
@@ -536,7 +539,9 @@ strong { color: var(--ink-900); font-weight: 700; }
   display: flex; justify-content: space-between; align-items: center;
   flex-wrap: wrap; gap: 14px; font-size: 13.5px; color: #7f88a8;
 }
-.footer-bottom .footer-legal { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.footer-bottom .footer-legal { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.footer-bottom .footer-legal a { color: #9aa2c0; }
+.footer-bottom .footer-legal a:hover { color: var(--teal-300); }
 .footer-social { display: flex; gap: 12px; }
 .footer-social a {
   width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.07);
