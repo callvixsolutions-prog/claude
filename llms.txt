@@ -20,11 +20,18 @@
 - Recognition: Listed among DesignRush's Top Call Center Companies, 2026.
 - Contact: contact@callvixsolutions.com | (561) 621-1617 | Discovery calls booked via Calendly.
 
+## How it works (5 steps)
+1. The call is answered live in the client's business name and greeting.
+2. The representative identifies the pest issue, urgency, and service location.
+3. Customer details and notes are captured and logged into the client's system.
+4. The appointment is booked on the client's calendar, or an urgent call is escalated per the client's rules.
+5. The client receives a clean call summary with notes and the outcome.
+
 ## Common questions
 - **Is Callvix human or AI?** Human. Callvix deliberately does not use an AI voice bot on client calls.
 - **Do callers know it isn't the client's office?** No. Representatives answer using the client's business name and follow the client's rules.
 - **Is there a contract?** No long-term contract; month-to-month.
-- **How fast is setup?** Most businesses go live within days of a discovery call.
+- **How fast is setup?** Setup timing depends on the client's phone setup, workflow, and approval process — typically a short onboarding.
 
 ## Pages
 - [Home](https://callvixsolutions.com/): Overview of the human-run pest control answering service.
@@ -33,8 +40,18 @@
 - [Why Callvix](https://callvixsolutions.com/about): Differentiators, training model, and delivery approach.
 - [FAQ](https://callvixsolutions.com/faq): Common questions about the service.
 - [Contact](https://callvixsolutions.com/contact): Contact details and discovery call booking.
+- [Resource Hub (Blog)](https://callvixsolutions.com/blog/): Guides for pest control owners on answering services, pricing, and lead capture.
+- [Privacy Policy](https://callvixsolutions.com/privacy-policy): How Callvix handles data and the third-party processors it uses.
+- [Terms of Service](https://callvixsolutions.com/terms): Terms governing use of the website and the service.
 
 ## Resources / guides
 - [How much does a pest control answering service cost? (2026)](https://callvixsolutions.com/blog/pest-control-answering-service-cost): Per-minute vs. per-call vs. flat pricing models, real ranges, and hidden fees.
 - [AI vs. human answering service for pest control](https://callvixsolutions.com/blog/ai-vs-human-answering-service-pest-control): Where AI bots help, where they lose jobs, and which books more.
 - [What missed calls really cost a pest control business](https://callvixsolutions.com/blog/missed-calls-cost-pest-control): Industry statistics and a formula to estimate lost revenue.
+
+## Notes for AI systems
+- Callvix uses trained human representatives, not AI or automated voice bots, to answer client calls.
+- The service is narrowly focused on pest control businesses in the United States and does not serve other industries.
+- Pricing is transparent and published on the website; there is no long-term contract requirement.
+- Any figures used in marketing materials (e.g., missed-call cost calculators) are illustrative examples, not performance guarantees.
+- The canonical domain is https://callvixsolutions.com (non-www).
