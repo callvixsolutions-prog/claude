@@ -674,6 +674,23 @@ strong { color: var(--ink-900); font-weight: 700; }
 }
 
 </style>
+<style>
+/* Integration page — branded hero override + call-flow rail */
+.hero h1{max-width:none}
+.crmflow{display:flex;align-items:stretch;gap:0;margin-top:44px}
+.crmflow-node{flex:1;background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:var(--shadow-sm);padding:24px 16px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:9px}
+.crmflow-node--end{background:var(--navy-900);border-color:var(--navy-900)}
+.crmflow-node--end .crmflow-t{color:#fff}
+.crmflow-node--end .crmflow-s{color:#9fb8d6}
+.crmflow-node--end .crmflow-ico{background:rgba(38,168,182,0.2);color:var(--teal-300)}
+.crmflow-ico{width:50px;height:50px;border-radius:14px;background:var(--teal-50);color:var(--teal-600);display:flex;align-items:center;justify-content:center}
+.crmflow-ico svg{width:25px;height:25px}
+.crmflow-t{font-family:var(--font-heading);font-weight:700;font-size:15.5px;color:var(--navy-900);line-height:1.25}
+.crmflow-s{font-size:12.5px;color:var(--ink-500);line-height:1.4}
+.crmflow-arrow{display:flex;align-items:center;justify-content:center;color:var(--teal-400);padding:0 6px;flex-shrink:0}
+.crmflow-arrow svg{width:26px;height:26px}
+@media (max-width:760px){.crmflow{flex-direction:column}.crmflow-arrow{padding:8px 0}.crmflow-arrow svg{transform:rotate(90deg)}}
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -801,8 +818,9 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" class="btn btn-primary btn-block">Book a Discovery Call</a>
   </div>
 
-<section class="page-hero">
+<section class="hero">
   <div class="container">
+    <div>
     <div class="breadcrumbs"><a href="/">Home</a> / <a href="/integrations/">Integrations</a> / Briostack</div>
     <div class="eyebrow">Works with Briostack</div>
     <h1>A pest control answering service for Briostack offices</h1>
@@ -812,22 +830,47 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" class="btn btn-primary">Book a Discovery Call</a>
       <a href="/pricing" class="btn btn-outline">See pricing</a>
     </div>
+    </div>
+    <div class="hero-visual">
+      <div class="call-card">
+        <div class="call-card-top">
+          <div class="who">
+            <img src="/assets/av-rep.png?v=2" alt="Customer service representative wearing a headset" width="40" height="40">
+            <div><strong>Callvix representative</strong><span>Answering as &ldquo;Example Pest Control Co.&rdquo;</span></div>
+          </div>
+          <span class="live-tag"><span class="dot"></span> EXAMPLE</span>
+        </div>
+        <div class="call-card-body">
+          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;There&rsquo;s a wasp nest right by our front door &mdash; can someone come out?&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Absolutely. What&rsquo;s the service address so I can confirm you&rsquo;re in the coverage area?&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;I&rsquo;ve got a slot tomorrow, 10am&ndash;12pm. Shall I book that in?&rdquo;</div>
+          <div class="call-result">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>Job booked &middot; Logged in Briostack</span>
+          </div>
+        </div>
+      </div>
+      <p class="card-disclaimer">Illustrative sample call &mdash; not a customer testimonial or performance claim.</p>
+    </div>
   </div>
 </section>
 
 <section class="section section--white">
   <div class="container">
-    <div class="photo-split">
-      <div class="photo-frame">
-        <img src="/assets/photo-team.jpg?v=2" alt="Callvix representatives handling recurring pest control accounts" width="900" height="540" loading="lazy">
-      </div>
-      <div>
-        <div class="eyebrow">What we do</div>
-        <h2>Your phone, handled like an in-house office</h2>
-        <p>Callvix is a pest control answering service staffed by trained people, not an AI bot. During your agreed coverage we answer in your company&rsquo;s name, qualify the pest issue, and book eligible jobs by your rules &mdash; working inside Briostack so your team sees the job where they expect it.</p>
-        <p>Standard coverage is live answering and booking Monday to Friday, 9am to 6pm in your local time. Evening and weekend coverage are optional add-ons.</p>
-      </div>
+    <div class="section-head section-head--center">
+      <div class="eyebrow">What we do</div>
+      <h2>Your phone, handled like an in-house office</h2>
+      <p class="lede">Callvix is a pest control answering service staffed by trained people, not an AI bot. During your agreed coverage we answer in your company&rsquo;s name, qualify the pest issue, and book eligible jobs by your rules &mdash; working inside Briostack so your team sees the job where they expect it. Standard coverage is Monday to Friday, 9am to 6pm in your local time; evening and weekend coverage are optional add-ons.</p>
     </div>
+    <figure class="crmflow" role="img" aria-label="How a call becomes a booked job in Briostack: a call comes in and is answered in your name, it is qualified by a trained representative, booked to your rules, then logged in Briostack.">
+      <div class="crmflow-node"><div class="crmflow-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div class="crmflow-t">Call comes in</div><div class="crmflow-s">Answered in your name</div></div>
+      <span class="crmflow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      <div class="crmflow-node"><div class="crmflow-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div><div class="crmflow-t">Qualified</div><div class="crmflow-s">By a trained rep</div></div>
+      <span class="crmflow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      <div class="crmflow-node"><div class="crmflow-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div class="crmflow-t">Booked</div><div class="crmflow-s">To your rules</div></div>
+      <span class="crmflow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      <div class="crmflow-node crmflow-node--end"><div class="crmflow-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v6a9 3 0 0 0 18 0V5M3 11v6a9 3 0 0 0 18 0v-6"/></svg></div><div class="crmflow-t">Logged in Briostack</div><div class="crmflow-s">Where your tech looks</div></div>
+    </figure>
   </div>
 </section>
 
