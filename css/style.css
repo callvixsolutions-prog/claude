@@ -160,7 +160,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 }
 .logo { display: flex; align-items: center; flex-shrink: 0; }
 .logo img { height: 40px; width: auto; }
-.main-nav { display: flex; align-items: center; gap: 26px; }
+.main-nav { display: flex; align-items: center; gap: 20px; }
 .main-nav a {
   font-family: var(--font-heading); font-weight: 600; font-size: 14.5px;
   color: var(--ink-700); position: relative; padding: 6px 0; white-space: nowrap;
