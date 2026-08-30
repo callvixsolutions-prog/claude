@@ -674,6 +674,16 @@ strong { color: var(--ink-900); font-weight: 700; }
 }
 
 </style>
+<style>
+/* Integrations hub — hero + CRM card polish */
+.hero h1{max-width:none}
+.crm-grid .card{display:flex;flex-direction:column;align-items:flex-start}
+.crm-grid .card .stat-icon{margin-bottom:16px}
+.crm-grid .card p{flex:1}
+.crm-grid .card .crm-more{margin-top:16px;font-family:var(--font-heading);font-weight:700;font-size:13.5px;color:var(--teal-600);display:inline-flex;align-items:center;gap:6px}
+.crm-grid .card .crm-more svg{width:15px;height:15px;transition:transform .18s ease}
+.crm-grid .card:hover .crm-more svg{transform:translateX(3px)}
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -780,15 +790,39 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" class="btn btn-primary btn-block">Book a Discovery Call</a>
   </div>
 
-<section class="page-hero">
+<section class="hero">
   <div class="container">
-    <div class="breadcrumbs"><a href="/">Home</a> / Integrations</div>
-    <div class="eyebrow">Fits how you already work</div>
-    <h1>We book into the system your office already runs</h1>
-    <p class="hero-subhead">Answering the phone is the easy half.</p>
-    <p class="lede">The half that decides whether an answering service is worth paying for is what happens next &mdash; whether the job lands in your software as a clean, correctly-coded appointment with notes your tech can use, or as a message somebody has to re-key an hour later.</p>
-    <div class="hero-cta" style="margin-top:26px;">
-      <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" class="btn btn-primary">Book a Discovery Call</a>
+    <div>
+      <div class="breadcrumbs"><a href="/">Home</a> / Integrations</div>
+      <div class="eyebrow">Fits how you already work</div>
+      <h1>We book into the system your office already runs</h1>
+      <p class="hero-subhead">Answering the phone is the easy half.</p>
+      <p class="lede">The half that decides whether an answering service is worth paying for is what happens next &mdash; whether the job lands in your software as a clean, correctly-coded appointment with notes your tech can use, or as a message somebody has to re-key an hour later.</p>
+      <div class="hero-cta" style="margin-top:26px;">
+        <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" class="btn btn-primary btn-lg">Book a Discovery Call</a>
+        <a href="/pricing" class="btn btn-outline">See pricing</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="call-card">
+        <div class="call-card-top">
+          <div class="who">
+            <img src="/assets/av-rep.png?v=2" alt="Customer service representative wearing a headset" width="40" height="40">
+            <div><strong>Callvix representative</strong><span>Answering as &ldquo;Example Pest Control Co.&rdquo;</span></div>
+          </div>
+          <span class="live-tag"><span class="dot"></span> EXAMPLE</span>
+        </div>
+        <div class="call-card-body">
+          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;There&rsquo;s a wasp nest right by our front door &mdash; can someone come out?&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Absolutely. What&rsquo;s the service address so I can confirm you&rsquo;re in the coverage area?&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;I&rsquo;ve got a slot tomorrow, 10am&ndash;12pm. Shall I book that in?&rdquo;</div>
+          <div class="call-result">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+            <span>Job booked &middot; Logged in your CRM</span>
+          </div>
+        </div>
+      </div>
+      <p class="card-disclaimer">Illustrative sample call &mdash; not a customer testimonial or performance claim.</p>
     </div>
   </div>
 </section>
@@ -798,30 +832,42 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="section-head">
       <p class="lede">Callvix representatives work inside the system your office already uses, the way an in-house CSR would. There is no data sync and no native integration to configure &mdash; you grant the access you are comfortable with, we agree the booking rules in writing, and you can revoke it at any time. Pick your system to see exactly what that looks like.</p>
     </div>
-    <div class="grid grid-3">
+    <div class="grid grid-3 crm-grid">
       <a class="card" href="/integrations/fieldroutes">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
         <h3>Answering service for FieldRoutes users</h3>
         <p>Formerly PestRoutes. Route density, subscriptions and lead source attribution &mdash; the three things a generic call center gets wrong here.</p>
+        <span class="crm-more">See how it works <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
       </a>
       <a class="card" href="/integrations/pestpac">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
         <h3>Answering service for PestPac users</h3>
         <p>Service codes, branches and territories. We build a written mapping table and escalate anything that isn&rsquo;t on it.</p>
+        <span class="crm-more">See how it works <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
       </a>
       <a class="card" href="/integrations/gorilladesk">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
         <h3>Answering service for GorillaDesk users</h3>
         <p>Small teams, tight schedules. Usually a defined daily booking window plus escalation for everything else.</p>
+        <span class="crm-more">See how it works <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
       </a>
       <a class="card" href="/integrations/briostack">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
         <h3>Answering service for Briostack users</h3>
         <p>Heavy on recurring service and automated comms, so we book conservatively and never process a cancellation.</p>
+        <span class="crm-more">See how it works <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
       </a>
       <a class="card" href="/integrations/servicetitan">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></svg></div>
         <h3>Answering service for ServiceTitan users</h3>
         <p>Business units, job types and campaign attribution. A mis-booked job corrupts capacity planning as well as revenue.</p>
+        <span class="crm-more">See how it works <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
       </a>
       <a class="card" href="/integrations/housecall-pro">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2" y="14" width="4" height="6" rx="1.5"/><rect x="18" y="14" width="4" height="6" rx="1.5"/><path d="M20 18v1a3 3 0 0 1-3 3h-3"/></svg></div>
         <h3>Answering service for Housecall Pro users</h3>
         <p>Not pest-specific, so the pest knowledge has to come from whoever answers. That is the whole point of us.</p>
+        <span class="crm-more">See how it works <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
       </a>
     </div>
   </div>
@@ -837,7 +883,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   </div>
 </section>
 
-<section class="section section--alt">
+<section class="section section--white">
   <div class="container container-narrow">
     <div class="section-head">
       <div class="eyebrow">Pricing</div>
