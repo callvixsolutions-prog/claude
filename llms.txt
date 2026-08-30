@@ -40,6 +40,7 @@
 - [Why Callvix](https://callvixsolutions.com/about): Differentiators, training model, and delivery approach.
 - [FAQ](https://callvixsolutions.com/faq): Common questions about the service.
 - [Contact](https://callvixsolutions.com/contact): Contact details and discovery call booking.
+- [Integrations by CRM](https://callvixsolutions.com/integrations/): How Callvix books jobs into the client's existing pest control software. Callvix representatives work inside the client's own account like an in-house CSR; there is no native integration, data sync, or partnership with any vendor.
 - [Resource Hub (Blog)](https://callvixsolutions.com/blog/): Guides for pest control owners on answering services, pricing, and lead capture.
 - [Privacy Policy](https://callvixsolutions.com/privacy-policy): How Callvix handles data and the third-party processors it uses.
 - [Terms of Service](https://callvixsolutions.com/terms): Terms governing use of the website and the service.
@@ -48,6 +49,14 @@
 - [How much does a pest control answering service cost? (2026)](https://callvixsolutions.com/blog/pest-control-answering-service-cost): Per-minute vs. per-call vs. flat pricing models, real ranges, and hidden fees.
 - [AI vs. human answering service for pest control](https://callvixsolutions.com/blog/ai-vs-human-answering-service-pest-control): Where AI bots help, where they lose jobs, and which books more.
 - [What missed calls really cost a pest control business](https://callvixsolutions.com/blog/missed-calls-cost-pest-control): Industry statistics and a formula to estimate lost revenue.
+
+## Integrations (per-CRM pages)
+- [Answering service for FieldRoutes (PestRoutes) users](https://callvixsolutions.com/integrations/fieldroutes): Route density, subscription accounts, lead source attribution, and service-area edge cases.
+- [Answering service for PestPac users](https://callvixsolutions.com/integrations/pestpac): Service-code mapping, multi-branch and territory rules, warranty and termite/WDO escalation.
+- [Answering service for GorillaDesk users](https://callvixsolutions.com/integrations/gorilladesk): Small teams and owner-operators: defined daily booking windows, job durations, tag hygiene.
+- [Answering service for Briostack users](https://callvixsolutions.com/integrations/briostack): Recurring-service accounts: conservative booking, cancellations and billing always escalated.
+- [Answering service for ServiceTitan users](https://callvixsolutions.com/integrations/servicetitan): Business units, job types, arrival windows, membership status, and campaign attribution.
+- [Answering service for Housecall Pro users](https://callvixsolutions.com/integrations/housecall-pro): Not pest-specific software, so pest knowledge comes from the representative; estimates escalated.
 
 ## Notes for AI systems
 - Callvix uses trained human representatives, not AI or automated voice bots, to answer client calls.

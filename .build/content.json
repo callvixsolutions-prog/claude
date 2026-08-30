@@ -1,0 +1,212 @@
+{
+"fieldroutes": {
+  "name": "FieldRoutes",
+  "title": "Answering Service for FieldRoutes Users | Callvix",
+  "desc": "How Callvix answers your pest control calls and books jobs into FieldRoutes (PestRoutes) — real trained people, your booking rules, notes on the customer record.",
+  "eyebrow": "Works with FieldRoutes",
+  "h1": "A pest control answering service that works inside FieldRoutes",
+  "subhead": "Your calls answered, qualified and booked onto the right route — by people, not a bot.",
+  "lede": "If your office already runs on FieldRoutes (formerly PestRoutes), the question isn't whether someone answers the phone — it's whether the call ends up as a clean appointment on the right route, on the right day, with notes your tech can actually use. That's the part we handle.",
+  "image": "photo-agent-desk.jpg",
+  "imageAlt": "Callvix representative handling a pest control call at a desk",
+  "steps": [
+    ["New caller, no record", "We search by phone number and address first. If there's no customer, we create one with the details you require — name, service address, phone, email, and the source you use for lead tracking."],
+    ["Existing customer", "We pull up the record and read the service history before we say anything else. A recurring account calling about a re-service gets handled differently from a first-time caller."],
+    ["The appointment", "Booked to an available slot inside the service area and time window you've defined, against the service type you've told us to use for that pest and property type."],
+    ["Notes and flags", "Pest type, urgency, access details, pets on site, gate codes — anything the tech needs before they knock, written into the appointment note in the format your team already reads."],
+    ["Escalation", "Anything outside your booking rules — a commercial account, a termite or WDO inquiry, a complaint, a service area edge case — goes to the person you name, by the method you name, immediately."]
+  ],
+  "specifics": [
+    "Route density matters more in FieldRoutes than in most systems, so we book against the slots you make available rather than filling the first open gap. You decide how much of the calendar we can touch.",
+    "Subscription and recurring service accounts are handled differently from one-time jobs. We follow your rule on when to offer a plan and when not to.",
+    "Lead source is captured on every new customer so your marketing reporting stays honest.",
+    "If your office uses custom fields for anything a tech needs, tell us at onboarding and they become part of the call script."
+  ],
+  "scenarios": [
+    ["“My quarterly is due but I've got ants now”", "A recurring subscription customer with a live problem between services. The wrong move is to book a new one-time job and bill them for it. We read the subscription, check whether it falls under your re-service policy, and book it the way you've told us to — or escalate if the account looks unusual."],
+    ["“How much for a house my size?”", "The caller wants a number before they'll commit. We quote from your published range where the property and pest fall inside it, and escalate the moment it doesn't — square footage outliers, outbuildings, acreage, anything with a crawl space you price differently."],
+    ["“I'm just outside your area, right?”", "Service area edges are where a generic call center invents an answer and creates a cancellation two days later. We check the address against your defined areas before offering a time, and hand borderline addresses to you."]
+  ],
+  "faq": [
+    ["Is Callvix an official FieldRoutes integration?", "No, and we don't claim to be. Our representatives work inside your FieldRoutes account the way an in-house CSR would, using access you grant and can revoke. There is no native integration, no data sync, and no partnership. FieldRoutes and PestRoutes are trademarks of their respective owners."],
+    ["What access do you need?", "A named user account with the permissions you're comfortable granting — typically enough to search customers, create records, and book appointments. You control the permission level and can revoke it at any time."],
+    ["What if we use PestRoutes rather than FieldRoutes?", "Same thing. PestRoutes became FieldRoutes, and offices on either version of the interface are handled the same way. Tell us which one you see when you log in and we train to that."],
+    ["Can you book onto specific routes, or only into open slots?", "Whatever you decide at onboarding. Some offices give us the full calendar; most give us defined windows per service area and prefer we escalate anything that doesn't fit. Both work."]
+  ]
+},
+"pestpac": {
+  "name": "PestPac",
+  "title": "Answering Service for PestPac Users | Callvix",
+  "desc": "How Callvix answers pest control calls and books work into PestPac — trained people, your service codes and booking rules, notes where your office expects them.",
+  "eyebrow": "Works with PestPac",
+  "h1": "A pest control answering service for offices running PestPac",
+  "subhead": "Your service codes, branches and territories followed exactly — or escalated, never guessed.",
+  "lede": "PestPac offices tend to be a little more structured than average — more service codes, more branch and territory logic, more rules about what can be sold on which account. A generic call center gets that wrong constantly. We'd rather learn the rules once and follow them.",
+  "image": "photo-team.jpg",
+  "imageAlt": "Callvix representatives on a pest control answering shift",
+  "steps": [
+    ["Lookup first", "Phone number, then service address. PestPac accounts often have history that changes the whole call, so we read it before we talk pricing or availability."],
+    ["New account creation", "Created with the fields your office treats as mandatory, including the service code and lead source you use, so nothing has to be cleaned up later."],
+    ["The appointment", "Scheduled against the service code, branch and territory you've mapped for that pest and location — not the first open slot we find."],
+    ["Notes on the work order", "Pest, severity, structure type, access and safety details, and any question the caller asked that a tech should know the answer to."],
+    ["Escalation", "Commercial accounts, termite and WDO work, anything under warranty, and any pricing question outside your published range goes straight to your named contact."]
+  ],
+  "specifics": [
+    "Service codes are the thing most answering services get wrong. We build a mapping table at onboarding — caller says X, we book code Y — and we don't improvise outside it.",
+    "Multi-branch and territory rules are followed as configured. If an address falls outside a defined territory we escalate rather than guess.",
+    "Recurring versus one-time is your call, not ours. We offer what you tell us to offer.",
+    "If your office runs a specific cancellation or reschedule policy, it goes in the script and is quoted the same way every time."
+  ],
+  "scenarios": [
+    ["“It's under warranty, isn't it?”", "Warranty and callback calls are margin, not revenue, and the answer usually lives in the account history. We read it, we don't guess, and if the coverage is at all ambiguous the call goes to your named contact rather than getting a yes we can't stand behind."],
+    ["“We need someone for our three retail sites”", "Commercial multi-site work almost never fits a residential booking rule. We qualify it properly — sites, square footage, current provider, decision maker — and escalate with a written summary rather than dropping it into a residential service code."],
+    ["“I think it's termites”", "The one call where booking the wrong code is expensive. Default handling is to qualify the evidence the caller describes, capture the structure details, and escalate for inspection scheduling — unless you've told us otherwise."]
+  ],
+  "faq": [
+    ["Do you integrate with PestPac directly?", "No. There is no native integration and no partnership — PestPac is a WorkWave product and the trademark belongs to them. Our people work inside your account using access you grant, the same way an in-house CSR would."],
+    ["How do you handle our service codes?", "We build a mapping table with you during onboarding: what a caller describes, and which code your office wants used. If a call doesn't match anything on the table, we escalate instead of picking something close."],
+    ["Can you work across multiple branches?", "Yes, provided the territory rules are written down. We follow the mapping; anything ambiguous goes to your named contact rather than being assigned by guesswork."],
+    ["What happens with termite or WDO calls?", "By default we qualify and escalate rather than book, because those calls usually involve inspection scheduling and pricing you'll want to control. If you'd rather we book them, we can — it's a rule you set."]
+  ]
+},
+"gorilladesk": {
+  "name": "GorillaDesk",
+  "title": "Answering Service for GorillaDesk Users | Callvix",
+  "desc": "How Callvix answers pest control calls and books jobs into GorillaDesk — real trained people, your booking window, flat $2.99 per call.",
+  "eyebrow": "Works with GorillaDesk",
+  "h1": "A pest control answering service built around GorillaDesk",
+  "subhead": "For small teams where the phone is whoever is closest to it.",
+  "lede": "GorillaDesk offices are usually smaller and leaner — often the owner is on a route, and the phone is whoever is closest to it. That's exactly the setup where calls leak. The software is simple enough that our representatives can be booking correctly in days, not weeks.",
+  "image": "photo-tech.jpg",
+  "imageAlt": "Pest control technician on a job while the office phone is covered",
+  "steps": [
+    ["Lookup", "Phone and address search first, so a returning customer never gets treated like a stranger."],
+    ["New customer", "Created with the fields you use, including the tags or custom fields your office relies on for filtering and follow-up."],
+    ["The job", "Booked against the job type and duration you've mapped for that pest, into a window you've opened for us."],
+    ["Notes", "Pest, urgency, property type, pets, access — and anything else your tech would want to know before pulling up."],
+    ["Escalation", "Out-of-area addresses, commercial work, complaints, and any price question outside your set range come to you rather than getting an invented answer."]
+  ],
+  "specifics": [
+    "Small teams usually don't want the whole calendar exposed. Most GorillaDesk offices give us a defined daily window and let us escalate everything else — a fine way to start, and easy to loosen later.",
+    "Job durations matter when one tech is the whole schedule. We book the length you tell us for each job type, not a default.",
+    "If you use tags for lead source or campaign tracking, we apply them on every new customer we create.",
+    "Owner-operators often want a text summary after every call. That's a standard option, not an upgrade."
+  ],
+  "scenarios": [
+    ["“Can someone come today?”", "The call that pays for the service. With one or two techs the honest answer is usually not today — so we book the earliest slot you've opened, set the expectation clearly, and flag urgency so you can move it if the route allows."],
+    ["“What do you charge?”", "Owner-operators are the most likely to lose a caller here, because the price conversation used to require the owner. We quote from your set range, and anything outside it comes to you with the details already captured."],
+    ["The caller who's already been quoted by two competitors", "Price-shopping calls need different handling than urgent ones. We capture what they were quoted and by whom where they'll say, and hand you a call you can actually win instead of a voicemail."]
+  ],
+  "faq": [
+    ["Is this a GorillaDesk integration?", "No. No native integration, no partnership, no data sync — GorillaDesk is a trademark of its owner. Our representatives work in your account with access you grant and can revoke."],
+    ["We're a two-person shop. Is this overkill?", "It's usually the opposite. Small teams miss the most calls because there's nobody free to answer, and at a flat $2.99 per call the usage cost only moves when the phone actually rings."],
+    ["Can we start with just after-hours?", "Yes. A lot of GorillaDesk offices start with the After-Hours or Weekend add-on only, then add daytime overflow once they can see what was being missed."],
+    ["How long before you can book correctly?", "Onboarding depends on your workflow, phone setup and approvals, but GorillaDesk is one of the faster systems to train on because the scheduling model is straightforward."]
+  ]
+},
+"briostack": {
+  "name": "Briostack",
+  "title": "Answering Service for Briostack Users | Callvix",
+  "desc": "How Callvix answers pest control calls and books work into Briostack — trained representatives, conservative booking, clean notes on every account.",
+  "eyebrow": "Works with Briostack",
+  "h1": "A pest control answering service for Briostack offices",
+  "subhead": "Recurring accounts protected — we never process a cancellation.",
+  "lede": "Briostack offices tend to run heavily on recurring service and automated customer communication, which means an answering service that books the wrong thing doesn't just cost one job — it fouls up a subscription and a comms sequence at the same time. So we book conservatively and escalate anything we're not certain about.",
+  "image": "photo-team.jpg",
+  "imageAlt": "Callvix representatives handling recurring pest control accounts",
+  "steps": [
+    ["Lookup", "Phone, then address. Recurring accounts get read before the conversation goes anywhere near scheduling."],
+    ["New customer", "Created with the fields and source tracking your office requires."],
+    ["The appointment", "Booked against the service type and window you've authorised, with recurring plans offered only where you've said they should be."],
+    ["Notes", "Pest, urgency, access, pets, and the caller's own words on anything unusual — verbatim where it matters."],
+    ["Escalation", "Billing questions, cancellation requests, contract or plan changes, and commercial work go to your named contact rather than being handled on the spot."]
+  ],
+  "specifics": [
+    "Cancellation and plan-change calls are the ones you least want a call center improvising on. Our default is to capture, reassure and escalate — never to process a cancellation.",
+    "Where your office runs automated reminders and follow-ups, we avoid actions that would double up on a sequence the customer is already in.",
+    "Re-service and warranty calls are booked or escalated exactly as you specify, since those affect margin rather than revenue.",
+    "Every new customer we create carries the lead source your reporting depends on."
+  ],
+  "scenarios": [
+    ["“I want to cancel my plan”", "The highest-stakes call your phone gets, and the one you least want improvised. We listen, capture the real reason in the customer's own words, tell them someone will call back, and escalate the same day. We never process the cancellation."],
+    ["“Why was I charged this month?”", "Billing questions on recurring accounts get captured and escalated, never answered. We don't quote balances, and a wrong answer here costs more than the call."],
+    ["“Nobody showed up”", "A missed appointment call is a retention event. We confirm what the record shows, apologise on your behalf without admitting fault or promising a credit, and escalate immediately with the full timeline."]
+  ],
+  "faq": [
+    ["Do you have a Briostack integration?", "No — no native integration and no partnership. Briostack is a trademark of its owner. Our representatives work inside your account using access you grant, and you can revoke it at any point."],
+    ["Will you cancel a customer's service if they ask?", "No, not unless you explicitly tell us to. The default is that we listen, capture the reason properly, tell the customer someone will call them back, and escalate to you the same day. Cancellations are a retention conversation, and that one is yours."],
+    ["Can you sell recurring plans?", "Only where you've told us to, with the wording you've approved. If you'd rather every plan conversation come to you, we qualify and hand it over."],
+    ["What about billing questions?", "Captured and escalated. We don't quote balances or take payment."]
+  ]
+},
+"servicetitan": {
+  "name": "ServiceTitan",
+  "title": "Answering Service for ServiceTitan Users | Callvix",
+  "desc": "How Callvix answers pest control calls and books jobs in ServiceTitan — pest-trained people, your business units and job types, attribution captured correctly.",
+  "eyebrow": "Works with ServiceTitan",
+  "h1": "A pest control answering service for ServiceTitan offices",
+  "subhead": "Business units, job types and campaign attribution — booked right the first time.",
+  "lede": "ServiceTitan is built for offices that care about attribution, capacity and job costing. That's a good thing, and it raises the bar for whoever answers the phone: a call booked to the wrong job type or business unit is worse than a call that went to voicemail, because now your reporting is wrong too.",
+  "image": "photo-agent-desk.jpg",
+  "imageAlt": "Callvix representative booking a pest control job during a call",
+  "steps": [
+    ["Lookup and context", "Customer and location search before anything else, with membership status read before we discuss pricing or availability."],
+    ["New customer and location", "Created with the campaign and lead source attribution your reporting depends on, so paid spend stays measurable."],
+    ["The job", "Booked to the business unit, job type and arrival window you've mapped — never to whatever is closest to free."],
+    ["Job notes", "Pest, severity, structure and access details written where your dispatcher and tech both read them."],
+    ["Escalation", "Commercial work, membership changes, anything with a price outside your published range, and any call your rules flag goes straight to your named contact."]
+  ],
+  "specifics": [
+    "Business unit and job type mapping is agreed in writing at onboarding. If a call doesn't map cleanly we escalate rather than guess — a mis-booked job distorts capacity planning as well as revenue reporting.",
+    "Campaign attribution is captured on every new customer, because a ServiceTitan office is usually spending real money on lead generation and needs the source to be right.",
+    "Membership and plan status is checked before pricing is discussed, so an existing member never gets quoted a non-member price.",
+    "Arrival windows are booked to your capacity rules, not to the first opening."
+  ],
+  "scenarios": [
+    ["The paid-search caller", "If you're spending on lead generation, this call has a known cost and the attribution has to be right. We capture campaign and source on every new customer, so your cost per booked job stays a real number rather than an estimate."],
+    ["“I'm a member — does that cover this?”", "Membership status is checked before any pricing is discussed, so a member never gets quoted a non-member price. Membership changes and cancellations are always escalated."],
+    ["“We manage twelve properties”", "Property management and commercial calls are qualified properly — sites, contacts, scope, current provider — and escalated with a written summary rather than being forced into a residential job type and distorting your capacity planning."]
+  ],
+  "faq": [
+    ["Are you a ServiceTitan partner?", "No. There is no native integration and no partnership — ServiceTitan is a trademark of its owner. Our representatives work inside your account with access you grant and can revoke."],
+    ["How do you avoid mis-booking job types?", "A written mapping table agreed at onboarding, and a hard rule that anything not on the table gets escalated instead of guessed. We would rather hand you a call than corrupt your reporting."],
+    ["Do you capture campaign attribution?", "Yes, on every new customer. If you're spending on lead generation, source accuracy is part of the job, not an extra."],
+    ["Can you handle membership sales?", "We can present a membership where you've approved the wording, or qualify and hand it to you. Membership changes and cancellations are always escalated."]
+  ]
+},
+"housecall-pro": {
+  "name": "Housecall Pro",
+  "title": "Answering Service for Housecall Pro Users | Callvix",
+  "desc": "How Callvix answers pest control calls and books jobs into Housecall Pro — real trained people who know pest control, flat $2.99 per call, your rules followed.",
+  "eyebrow": "Works with Housecall Pro",
+  "h1": "A pest control answering service for Housecall Pro offices",
+  "subhead": "Your software isn't pest-specific. Whoever answers your phone should be.",
+  "lede": "Plenty of pest control companies run on Housecall Pro because it's fast to set up and doesn't get in the way. The trade-off is that it isn't pest-specific — so the person answering your phone has to bring the pest knowledge themselves. That's the whole reason we only work in this one industry.",
+  "image": "photo-tech.jpg",
+  "imageAlt": "Pest control technician arriving at a job booked by Callvix",
+  "steps": [
+    ["Lookup", "Customer search by phone and address before the conversation goes anywhere."],
+    ["New customer", "Created with the fields, tags and lead source your office uses."],
+    ["The job", "Booked to the job type and duration you've mapped, inside a schedule window you've opened."],
+    ["Notes", "Pest, urgency, property type, pets, access and gate codes — the things a tech needs before they arrive."],
+    ["Escalation", "Estimates, commercial work, out-of-area addresses and complaints go to your named contact rather than being answered by us."]
+  ],
+  "specifics": [
+    "Housecall Pro isn't built around pest-specific service types, so the mapping work matters more, not less. We agree job types and durations for each pest scenario in writing before we take a live call.",
+    "If you use the estimate flow, we capture the details and hand it over rather than pricing work ourselves.",
+    "Tags are applied consistently so your follow-up and marketing filters keep working.",
+    "Recurring service is offered only where you've told us to offer it, with your wording."
+  ],
+  "scenarios": [
+    ["“Can you just give me a ballpark?”", "Housecall Pro offices often run an estimate flow rather than fixed pricing. We give a range only where you've authorised one, capture everything an estimate needs, and hand it over rather than pricing the job ourselves."],
+    ["“It's a rental — the tenant will let you in”", "Access and authorisation calls create no-shows. We capture who is paying, who is authorising, who will be on site, and how the tech gets in — and put all four in the job notes."],
+    ["“Do you do wildlife too?”", "Scope questions where the honest answer may be no. We answer from your actual service list rather than saying yes to keep the caller happy, and escalate anything adjacent that you might want."]
+  ],
+  "faq": [
+    ["Is Callvix integrated with Housecall Pro?", "No. No native integration, no partnership, no sync — Housecall Pro is a trademark of its owner. Our representatives work inside your account using access you grant and can revoke."],
+    ["We run multiple trades, not just pest. Can you still help?", "Only on the pest control side. We work exclusively with pest control companies, so we would handle your pest calls well and would be the wrong choice for anything else."],
+    ["Can you send estimates?", "No. We capture what's needed for an estimate and hand it to you. Pricing work stays with your team."],
+    ["Do we have to give you full account access?", "No. You grant the permission level you're comfortable with. Most offices start narrow — enough to find a customer and book a job — then widen it once they've seen the call notes."]
+  ]
+}
+}
