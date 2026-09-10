@@ -62,6 +62,11 @@ document.addEventListener('DOMContentLoaded', function () {
       })
         .then(function (res) {
           if (res.ok) {
+            // Mark this session as having genuinely completed the form. The
+            // generate_lead event fires on the thank-you page, not here, so a
+            // failed submit can never be counted and the push is not lost to
+            // the navigation that follows.
+            try { sessionStorage.setItem('cvx_lead_pending', '1'); } catch (e) {}
             window.location.href = form.getAttribute('data-success') || '/thank-you';
             return;
           }
@@ -82,3 +87,80 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+/* ------------------------------------------------------------------
+   Conversion instrumentation -> window.dataLayer (consumed by GTM)
+
+   GTM container GTM-PJFS7HV5 and GA4 G-PNTC76HGVB are already live, so
+   this file only PUSHES events. It never calls gtag() and never loads a
+   tag of its own. These events reach GA4 only once the matching GTM
+   custom-event triggers + GA4 event tags are created.
+
+   Privacy: no names, emails, phone numbers or form contents are ever
+   sent. Only a page_path and a normalized, non-identifying location.
+------------------------------------------------------------------ */
+(function () {
+  function pushEvent(name, params) {
+    try {
+      window.dataLayer = window.dataLayer || [];
+      var payload = { event: name, page_path: window.location.pathname };
+      if (params) {
+        for (var k in params) {
+          if (Object.prototype.hasOwnProperty.call(params, k) && params[k]) payload[k] = params[k];
+        }
+      }
+      window.dataLayer.push(payload);
+    } catch (e) { /* analytics must never break the page */ }
+  }
+  window.cvxPushEvent = pushEvent;
+
+  // Normalized description of where a link sits. Contains no user data.
+  function linkLocation(el) {
+    if (!el || !el.closest) return 'body';
+    if (el.closest('.site-header')) return 'header';
+    if (el.closest('.mobile-nav')) return 'mobile_nav';
+    if (el.closest('.site-footer')) return 'footer';
+    if (el.closest('.cta-band')) return 'cta_band';
+    if (el.closest('.hero, .page-hero')) return 'hero';
+    if (el.closest('.article-body')) return 'article_body';
+    return 'body';
+  }
+
+  // One delegated listener. It never calls preventDefault(), so navigation,
+  // dialling and mail clients behave exactly as before.
+  document.addEventListener('click', function (e) {
+    var a = (e.target && e.target.closest) ? e.target.closest('a[href]') : null;
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    var where = linkLocation(a);
+    if (href.indexOf('tel:') === 0) {
+      pushEvent('phone_click', { link_location: where });
+    } else if (href.indexOf('mailto:') === 0) {
+      pushEvent('email_click', { link_location: where });
+    } else if (href.indexOf('calendly.com') !== -1) {
+      pushEvent('calendly_click', { link_location: where, cta_location: where });
+    }
+  }, true);
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // Print / Save-as-PDF on the call-script intake form. The button keeps its
+    // inline onclick, so printing itself is unchanged.
+    document.querySelectorAll('.print-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        pushEvent('intake_form_print', { link_location: 'article_body' });
+      });
+    });
+
+    // generate_lead fires only on a genuine thank-you arrival that followed a
+    // successful submit, and only once per session, so refreshing the
+    // thank-you page (or landing on it directly) does not create a lead.
+    if (!/^\/thank-you(\.html)?\/?$/.test(window.location.pathname)) return;
+    try {
+      if (sessionStorage.getItem('cvx_lead_fired') === '1') return;
+      if (sessionStorage.getItem('cvx_lead_pending') !== '1') return;
+      sessionStorage.removeItem('cvx_lead_pending');
+      sessionStorage.setItem('cvx_lead_fired', '1');
+      pushEvent('generate_lead', { cta_location: 'contact_form' });
+    } catch (e) { /* storage blocked: stay silent rather than over-count */ }
+  });
+})();
