@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(function (err) {
           if (status) {
-            status.textContent = err.message || 'Could not send. Please call (561) 621-1617 or email us.';
+            status.textContent = err.message || 'Could not send. Please call (551) 373-6777 or email us.';
             status.className = 'form-status form-status--error';
           }
           if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalLabel; }

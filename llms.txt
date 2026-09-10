@@ -49,6 +49,8 @@
 - [How much does a pest control answering service cost? (2026)](https://callvixsolutions.com/blog/pest-control-answering-service-cost): Per-minute vs. per-call vs. flat pricing models, real ranges, and hidden fees.
 - [AI vs. human answering service for pest control](https://callvixsolutions.com/blog/ai-vs-human-answering-service-pest-control): Where AI bots help, where they lose jobs, and which books more.
 - [What missed calls really cost a pest control business](https://callvixsolutions.com/blog/missed-calls-cost-pest-control): Industry statistics and a formula to estimate lost revenue.
+- [After-hours pest control call handling: coverage and escalation plan](https://callvixsolutions.com/blog/after-hours-pest-control-call-handling): Five coverage decisions, an eligibility gate, four escalation levels, intake fields, a weekend handoff checklist and five test calls.
+- [Pest control call script and customer intake form (free template)](https://callvixsolutions.com/blog/pest-control-call-script-intake-form): A complete inbound intake script - greeting, qualification, service-area check, safety boundary, booking limits, escalation, CRM note template, QA checklist and a printable one-page intake form.
 
 ## Integrations (per-CRM pages)
 - [Answering service for FieldRoutes (PestRoutes) users](https://callvixsolutions.com/integrations/fieldroutes): Route density, subscription accounts, lead source attribution, and service-area edge cases.
