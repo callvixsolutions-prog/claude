@@ -1,0 +1,71 @@
+# Notifies IndexNow (Bing, Yandex, Seznam, Naver, Yep...) after a production deploy.
+#
+# Hostinger deploys this repository to https://callvixsolutions.com whenever
+# `main` is pushed. This job runs on the same push, but it does not submit
+# anything until production is actually serving the pushed content: for every
+# page changed in the push it polls the live URL until the served bytes match
+# the committed file (or, for a deleted page, until it returns 404/410).
+#
+# It never runs for other branches, pull requests, forks or local work, and an
+# IndexNow/API failure only produces a warning - it cannot fail or roll back
+# the deployment, which Hostinger performs independently.
+
+name: IndexNow
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "sitemap = resubmit every canonical sitemap URL; urls = submit the URLs below"
+        type: choice
+        options: [sitemap, urls]
+        default: sitemap
+      urls:
+        description: "Space-separated canonical URLs (urls mode only)"
+        type: string
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow-production
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    if: github.repository == 'callvixsolutions-prog/claude' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Submit pages changed in this push (after the deploy is live)
+        if: github.event_name == 'push'
+        env:
+          FROM_SHA: ${{ github.event.before }}
+          TO_SHA: ${{ github.sha }}
+        run: node scripts/submit-indexnow.mjs --changed --from "$FROM_SHA" --to "$TO_SHA" --wait-for-deploy --wait-timeout 900
+
+      - name: Manual submission
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          MODE: ${{ inputs.mode }}
+          URLS: ${{ inputs.urls }}
+        run: |
+          set -f   # URLs are split on spaces but never glob-expanded
+          if [ "$MODE" = "urls" ]; then
+            # shellcheck disable=SC2086
+            node scripts/submit-indexnow.mjs --urls $URLS
+          else
+            node scripts/submit-indexnow.mjs --sitemap
+          fi
