@@ -57,3 +57,11 @@ Other standing accuracy rules:
 - Pricing is $399/mo base + $2.99 per inbound call + $0.99 per outbound follow-up. Flat per call, never per minute.
 - The homepage revenue maths is labelled as illustrative. Keep that label until real data replaces it.
 - Callvix is human-answered. Never describe it as AI, automated, or a voice bot.
+
+## IndexNow
+
+A push to `main` triggers `.github/workflows/indexnow.yml`, which waits for the deploy to be live and then
+notifies IndexNow about the `.html` pages changed in that push. Nothing to do per edit — but keep every new
+indexable page's `<link rel="canonical">` correct, and keep noindex on utility pages, because the script uses
+both to decide what to submit. Never delete or edit the root key file `cb5b7350e51fd62e3bbef397cf0f8c98.txt`.
+Commands and details: README §8.

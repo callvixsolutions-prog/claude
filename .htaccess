@@ -16,12 +16,13 @@ DirectoryIndex index.html
 
 # --------------------------------------------------------------------------
 # Block files that ship with the repo but shouldn't be web-reachable
-# (README, git metadata, editor/OS junk)
+# (README, git metadata, editor/OS junk, Node tooling and CI config)
 # --------------------------------------------------------------------------
-<FilesMatch "(?i)\.(md|gitignore|gitattributes|DS_Store)$">
+<FilesMatch "(?i)(\.(md|gitignore|gitattributes|DS_Store|mjs)|^package(-lock)?\.json)$">
   Require all denied
 </FilesMatch>
 RedirectMatch 404 /\.git
+RedirectMatch 404 ^/scripts(/|$)
 
 <IfModule mod_rewrite.c>
   RewriteEngine On

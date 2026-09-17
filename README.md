@@ -172,3 +172,58 @@ sentence, change it, re-upload. No CMS, no build step.
 When adding a blog post: copy an existing article in `blog/`, change the content,
 then add its URL to `sitemap.xml` and to the "Resources" list in the footer of
 each page.
+
+---
+
+## 8. IndexNow (automatic search-engine notifications)
+
+IndexNow tells Bing and the other participating engines (Yandex, Seznam, Naver,
+Yep...) that a page was added, updated or deleted. Google does not use IndexNow —
+keep using Search Console for Google.
+
+**Key file:** `cb5b7350e51fd62e3bbef397cf0f8c98.txt` in the site root, served at
+<https://callvixsolutions.com/cb5b7350e51fd62e3bbef397cf0f8c98.txt>. It must
+contain only the key. Don't rename or delete it; if the key is ever rotated,
+update `KEY` in `scripts/submit-indexnow.mjs` in the same commit.
+
+### How it runs automatically
+
+`.github/workflows/indexnow.yml` runs on every push to `main` — the same push
+that makes Hostinger deploy the site. It:
+
+1. lists the `.html` pages added, changed or deleted in that push
+   (noindex pages such as `thank-you.html` and `404.html` are ignored);
+2. **waits until production serves each changed page's new content** (it
+   compares the live bytes with the committed file; deleted pages must return
+   404/410), for up to 15 minutes;
+3. re-checks each URL is live, not redirected, not noindex and self-canonical;
+4. sends the list to `https://api.indexnow.org/indexnow`.
+
+Pages that never went live in time are skipped with a warning. An IndexNow or
+network failure is only a warning — it can't fail or undo the deploy. Results
+(HTTP status and response body) appear in the GitHub **Actions** run summary.
+It does not run for other branches, pull requests or local work. Pushes that
+change no pages (CSS-only commits still re-inline CSS into pages, so those do
+count) submit nothing.
+
+### Manual commands (Node 18+, no install needed)
+
+```bash
+npm run indexnow:check                                          # dry run: validate every sitemap URL, submit nothing
+npm run indexnow:sitemap                                        # submit every canonical URL in the live sitemap
+npm run indexnow -- https://callvixsolutions.com/pricing https://callvixsolutions.com/services
+npm run indexnow:changed -- --from <old-sha> --to <new-sha>     # what the workflow runs
+npm test                                                        # unit tests for the script
+```
+
+Or, without a terminal: GitHub → **Actions → IndexNow → Run workflow** (choose
+`sitemap` or `urls`).
+
+Only canonical `https://callvixsolutions.com` page URLs are ever sent: `www`,
+`http`, query strings, `.html` variants, assets, redirects and noindex pages are
+rejected. Response meaning: **200** submitted · **202** received, key check
+pending · **400** bad request · **403** key not valid · **422** URLs/key don't
+match the host · **429** rate-limited.
+
+`scripts/`, `package.json` and `.github/` are blocked from the public web by
+`.htaccess`.

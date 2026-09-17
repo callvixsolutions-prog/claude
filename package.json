@@ -1,0 +1,15 @@
+{
+  "name": "callvix-website",
+  "private": true,
+  "description": "Static site for callvixsolutions.com. There is no build step; these scripts are tooling only.",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test scripts/submit-indexnow.test.mjs",
+    "indexnow": "node scripts/submit-indexnow.mjs --production --urls",
+    "indexnow:sitemap": "node scripts/submit-indexnow.mjs --production --sitemap",
+    "indexnow:changed": "node scripts/submit-indexnow.mjs --production --changed --wait-for-deploy",
+    "indexnow:check": "node scripts/submit-indexnow.mjs --dry-run --sitemap"
+  }
+}
