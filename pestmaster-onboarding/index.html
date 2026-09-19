@@ -695,9 +695,10 @@ strong { color: var(--ink-900); font-weight: 700; }
 .onb-footer .onb-footer-help a { color: var(--teal-300); }
 @media (max-width: 600px) {
   .onb-main { padding: 24px 0 40px; }
-  .onb-wrap { padding: 0 12px; }
+  .onb-wrap { padding: 0 16px; }
   .onb-intro { font-size: 15.5px; }
-  .onb-frame { border-radius: var(--radius-sm); }
+  /* Tally adds no side padding at phone widths, so drop the card chrome there */
+  .onb-frame { border: 0; border-radius: 0; box-shadow: none; }
   .onb-footer .container { flex-direction: column; align-items: flex-start; }
 }
 </style>
