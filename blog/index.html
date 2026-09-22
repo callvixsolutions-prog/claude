@@ -627,6 +627,11 @@ strong { color: var(--ink-900); font-weight: 700; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1150px) { .header-phone-wrap { display: none; } }
+/* 320px phones: logo + Book a Call + menu button overflowed the header by ~18px */
+@media (max-width: 360px) {
+  .site-header .container { padding: 0 16px; gap: 10px; }
+  .header-actions { gap: 10px; }
+}
 @media (max-width: 980px) {
   .hero .container, .split, .split--lean, .photo-split { grid-template-columns: 1fr; gap: 40px; }
   .hero-visual { max-width: 480px; }
@@ -763,6 +768,15 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           <h2>Pest control answering service checklist: 25 questions to ask before you hire</h2>
           <p>Compare providers on call quality, booking rules, escalation, reporting and pricing &mdash; with a simple scorecard and the red flags to watch for.</p>
           <span class="more">Read the checklist <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+      <a class="blog-card" href="/resources/pest-control-answering-service-vendor-scorecard">
+        <div class="thumb"><img src="/assets/vendor-scorecard.jpg" alt="Cover of the free printable answering service vendor scorecard" width="900" height="506" loading="lazy"></div>
+        <div class="body">
+          <span class="kicker">Free download &middot; PDF</span>
+          <h2>Free pest control answering service vendor scorecard</h2>
+          <p>A printable sheet for comparing providers: all 25 checklist questions, space for evidence, a 0&ndash;10 score and a decision summary.</p>
+          <span class="more">Get the free scorecard <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
         </div>
       </a>
     </div>

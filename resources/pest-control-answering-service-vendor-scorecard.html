@@ -13,16 +13,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 
 
-<title>Page Not Found | Callvix Solutions</title>
-<meta name="description" content="That page could not be found. Explore Callvix's pest control answering service — how it works, pricing, FAQs, and how to reach a real person.">
-<link rel="canonical" href="https://callvixsolutions.com/404">
-<meta name="robots" content="noindex,follow">
+<title>Free Pest Control Answering Service Vendor Scorecard (PDF)</title>
+<meta name="description" content="Compare pest control answering services with a free printable scorecard: all 25 checklist questions, space for evidence, a 0–10 score and a decision summary.">
+<link rel="canonical" href="https://callvixsolutions.com/resources/pest-control-answering-service-vendor-scorecard">
+<meta name="robots" content="index,follow">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Callvix Solutions">
-<meta property="og:title" content="Page Not Found | Callvix Solutions">
-<meta property="og:description" content="That page could not be found. Explore Callvix's pest control answering service — how it works, pricing, FAQs, and how to reach a real person.">
-<meta property="og:url" content="https://callvixsolutions.com/404">
-<meta property="og:image" content="https://callvixsolutions.com/assets/og-default.jpg">
+<meta property="og:title" content="Free Pest Control Answering Service Vendor Scorecard (PDF)">
+<meta property="og:description" content="Compare pest control answering services with a free printable scorecard: all 25 checklist questions, space for evidence, a 0–10 score and a decision summary.">
+<meta property="og:url" content="https://callvixsolutions.com/resources/pest-control-answering-service-vendor-scorecard">
+<meta property="og:image" content="https://callvixsolutions.com/assets/vendor-scorecard-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Answering Service Vendor Scorecard: a free printable PDF from Callvix Solutions with 25 questions, a 0 to 10 score and a decision summary">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/favicon.ico?v=2" sizes="any">
 <link rel="icon" type="image/png" href="/assets/favicon-32.png" sizes="32x32">
@@ -663,9 +666,113 @@ strong { color: var(--ink-900); font-weight: 700; }
   .cc-op--eq { transform: none; }
 }
 </style>
+<style>
+/* ===== Vendor scorecard resource page: scoped styles (uses shared design tokens) ===== */
+.article-disclosure { font-size: 14px; color: var(--ink-500); font-style: italic; margin: 0 0 26px; line-height: 1.55; }
+.sc-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 26px; }
+.sc-cta .btn { white-space: normal; text-align: center; }
+.sc-cta--body { margin: 30px 0 10px; padding: 22px; background: var(--teal-50); border: 1px solid var(--teal-100); border-radius: var(--radius-md); }
+.sc-file { font-size: 14px; color: var(--ink-500); }
+.article-body .sc-cta a.btn { color: #04252a; font-weight: 600; }
+.btn:focus-visible, .article-body a:focus-visible, .score-wrap:focus-visible { outline: 3px solid var(--teal-500); outline-offset: 3px; }
+.article-body h3.sc-step { margin: 0 0 6px; font-size: 18.5px; }
+.sc-key { font-size: 15.5px; }
+.sc-parts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0 8px; }
+.sc-part { background: var(--cream); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 18px 20px; }
+.sc-part h4 { font-size: 16.5px; margin: 0 0 10px; line-height: 1.3; }
+.sc-part-n { display: block; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--teal-600); margin-bottom: 3px; }
+.sc-part ol { margin: 0; padding-left: 26px; font-size: 15px; line-height: 1.5; display: flex; flex-direction: column; gap: 7px; }
+.sc-part li::marker { color: var(--teal-600); font-weight: 700; font-family: var(--font-heading); }
+.score-wrap { margin: 20px 0 22px; border-radius: var(--radius-sm); }
+.article-body table.scorecard { margin: 0; }
+.scorecard caption { caption-side: top; text-align: left; font-size: 14px; color: var(--ink-500); padding: 0 0 10px; }
+.scorecard tbody th { background: var(--white); font-family: var(--font-heading); color: var(--navy-900); font-size: 15px; }
+.sc-note { background: var(--gold-100); border-radius: var(--radius-sm); padding: 14px 18px; font-size: 15.5px; }
+.sc-url { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; background: var(--sand); border-radius: 6px; padding: 2px 6px; word-break: break-all; }
+@media (max-width: 720px) { .sc-parts { grid-template-columns: 1fr; } }
+/* Narrow screens: each category becomes a stacked card, so nothing scrolls sideways */
+@media (max-width: 640px) {
+  .scorecard thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+  .scorecard, .scorecard tbody, .scorecard tr, .scorecard th, .scorecard td { display: block; width: 100%; }
+  .scorecard caption { display: block; }
+  .scorecard tr { border: 1px solid var(--line); border-radius: var(--radius-sm); margin-bottom: 12px; overflow: hidden; }
+  .article-body .scorecard th, .article-body .scorecard td { border: 0; border-top: 1px solid var(--line); }
+  .article-body .scorecard tbody th { border-top: 0; background: var(--sand); }
+  .scorecard td { display: grid; grid-template-columns: 84px 1fr; gap: 10px; }
+  .scorecard td::before { content: attr(data-label); font-family: var(--font-heading); font-weight: 700; color: var(--teal-600); font-size: 13.5px; }
+  .sc-cta .btn { width: 100%; }
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://callvixsolutions.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Resources",
+      "item": "https://callvixsolutions.com/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Vendor Scorecard",
+      "item": "https://callvixsolutions.com/resources/pest-control-answering-service-vendor-scorecard"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "DigitalDocument",
+  "name": "Pest Control Answering Service Vendor Scorecard",
+  "headline": "Free Pest Control Answering Service Vendor Scorecard",
+  "description": "Compare pest control answering services with a free printable scorecard: all 25 checklist questions, space for evidence, a 0–10 score and a decision summary.",
+  "url": "https://callvixsolutions.com/resources/pest-control-answering-service-vendor-scorecard",
+  "mainEntityOfPage": "https://callvixsolutions.com/resources/pest-control-answering-service-vendor-scorecard",
+  "inLanguage": "en-US",
+  "isAccessibleForFree": true,
+  "image": "https://callvixsolutions.com/assets/vendor-scorecard-1200x630.png",
+  "author": {
+    "@type": "Organization",
+    "@id": "https://callvixsolutions.com/#organization",
+    "name": "Callvix Solutions",
+    "url": "https://callvixsolutions.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "@id": "https://callvixsolutions.com/#organization",
+    "name": "Callvix Solutions",
+    "url": "https://callvixsolutions.com/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://callvixsolutions.com/assets/logo.png?v=2",
+      "width": 350,
+      "height": 119
+    }
+  },
+  "datePublished": "2026-09-22",
+  "dateModified": "2026-09-22",
+  "isBasedOn": "https://callvixsolutions.com/blog/pest-control-answering-service-checklist",
+  "associatedMedia": {
+    "@type": "MediaObject",
+    "name": "Pest Control Answering Service Vendor Scorecard (PDF)",
+    "contentUrl": "https://callvixsolutions.com/assets/pest-control-answering-service-vendor-scorecard.pdf",
+    "encodingFormat": "application/pdf",
+    "contentSize": "273 KB"
+  }
+}
+</script>
 </head>
 <body>
-
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PJFS7HV5"
 height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
@@ -675,13 +782,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   <div class="container">
     <a href="/" class="logo" aria-label="Callvix Solutions home"><picture><source srcset="/assets/logo.webp?v=2" type="image/webp"><img src="/assets/logo.png?v=2" alt="Callvix Solutions logo" width="117" height="40" decoding="async"></picture></a>
     <nav class="main-nav" aria-label="Primary">
-      <a href="/">Home</a>
-      <a href="/services">How It Works</a>
-      <a href="/pricing">Pricing</a>
-      <a href="/about">Why Callvix</a>
-      <a href="/blog/">Resources</a>
-      <a href="/faq">FAQ</a>
-      <a href="/contact" aria-current="page">Contact</a>
+      <a href="/">Home</a><a href="/services">How It Works</a><a href="/pricing">Pricing</a><a href="/about">Why Callvix</a><a href="/blog/" aria-current="page">Resources</a><a href="/faq">FAQ</a><a href="/contact">Contact</a>
     </nav>
     <div class="header-actions">
       <div class="header-phone-wrap"><a class="header-phone" href="tel:+15513736777"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>(551) 373-6777</a></div>
@@ -696,21 +797,90 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" class="btn btn-primary btn-block">Book a Discovery Call</a>
   </div>
 
+
 <main id="main">
 
-<section class="section" style="padding-top:90px;">
-  <div class="container" style="text-align:center; max-width:680px;">
-    <div class="eyebrow" style="justify-content:center;">Error 404</div>
-    <h1 style="font-size:clamp(30px,4vw,44px);">That page has moved &mdash; but we&rsquo;re still answering.</h1>
-    <p class="lede">The link you followed doesn&rsquo;t exist anymore. Here&rsquo;s where most people are heading:</p>
-    <div class="btn-row" style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin:32px 0 44px;">
-      <a href="/" class="btn btn-primary">Go to homepage</a>
-      <a href="/pricing" class="btn btn-outline">See pricing</a>
+<section class="page-hero">
+  <div class="container article">
+    <div class="breadcrumbs"><a href="/">Home</a> / <a href="/blog/">Resources</a> / Vendor scorecard</div>
+    <div class="eyebrow">Free resource</div>
+    <h1>Free Pest Control Answering Service Vendor Scorecard</h1>
+    <p class="lede">Compare answering-service providers consistently. This printable scorecard puts the same 25 questions to every vendor and scores them the same way across call quality, booking rules, escalation, reporting and pricing.</p>
+    <div class="sc-cta">
+      <a class="btn btn-primary btn-lg" href="/assets/pest-control-answering-service-vendor-scorecard.pdf" download data-scorecard-download data-link-location="hero" data-cta-location="hero_download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Download the scorecard<span class="visually-hidden"> (PDF, 5 pages, 273 KB)</span></a>
+      <span class="sc-file">PDF &middot; 5 pages &middot; 273 KB &middot; free, no sign-up</span>
     </div>
-    <div class="grid grid-3" style="text-align:left;">
-      <a class="card" href="/services"><h2 style="font-size:17px;">How it works</h2><p>How we answer, qualify, and book every call in your name.</p></a>
-      <a class="card" href="/faq"><h2 style="font-size:17px;">FAQ</h2><p>Pricing, contracts, CRM booking, and getting started.</p></a>
-      <a class="card" href="/contact"><h2 style="font-size:17px;">Contact us</h2><p>Talk to a real person, or book a 15-minute call.</p></a>
+    <div class="article-meta" style="margin-top:22px;"><span>By Callvix Solutions</span><span class="sep"></span><span>Published September 2026</span></div>
+  </div>
+</section>
+
+<section class="section section--white">
+  <div class="container article">
+    <div class="article-body">
+      <p class="article-disclosure">Disclosure: this scorecard was created by Callvix Solutions, a human-answered call answering service for U.S. pest-control companies. It is vendor-neutral and can be used to evaluate Callvix or any other provider.</p>
+
+      <h2>How to use this scorecard</h2>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div><h3 class="sc-step">Print one copy per provider</h3><p>Fill in the vendor name, reviewer, date and the plan or price they proposed.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div><h3 class="sc-step">Ask all 25 questions</h3><p>Ask each vendor for a direct answer, an example and, where possible, a live demonstration. Tick Clear, Partial or Unclear and note the evidence.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div><h3 class="sc-step">Score the five categories</h3><p>Using your notes, score each category from 0 to 2 for a total out of 10.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div><h3 class="sc-step">Compare, then pilot</h3><p>Compare totals and decision notes side by side, then test your strongest candidate in a controlled pilot before forwarding all calls.</p></div></div>
+      </div>
+
+      <h2>Preview the scorecard</h2>
+      <p>This is what the PDF contains, so you can use it without downloading. Each question is explained in detail in our <a href="/blog/pest-control-answering-service-checklist">guide to the 25 questions to ask before hiring an answering service</a>.</p>
+
+      <h3>Part A: record an answer to each question</h3>
+      <p class="article-callout sc-key"><strong>Answer key.</strong> <strong>Clear</strong>: a direct answer backed by an example, document or demonstration. <strong>Partial</strong>: answered, but vague or not yet verified. <strong>Unclear</strong>: no answer, or the provider could not explain it.</p>
+      <div class="sc-parts">
+        <div class="sc-part"><h4><span class="sc-part-n">Part 1</span> Caller experience and brand representation</h4><ol start="1"><li>Will calls be answered in our company name?</li><li>Who actually answers the call?</li><li>How are agents trained on pest control conversations?</li><li>Can the handler adapt when the caller goes off script?</li></ol></div>
+        <div class="sc-part"><h4><span class="sc-part-n">Part 2</span> Qualification and intake accuracy</h4><ol start="5"><li>What information is collected on every new inquiry?</li><li>How is the service area checked?</li><li>How does the service distinguish a new lead from an existing customer?</li><li>How are unclear pest descriptions handled?</li></ol></div>
+        <div class="sc-part"><h4><span class="sc-part-n">Part 3</span> Booking rules and schedule control</h4><ol start="9"><li>Can the service book directly into our calendar or CRM?</li><li>Which services may be booked without office approval?</li><li>How are technician skills, territories and drive time respected?</li><li>What can the handler say about price?</li><li>How are cancellations, reschedules and recurring-service calls handled?</li></ol></div>
+        <div class="sc-part"><h4><span class="sc-part-n">Part 4</span> Urgency, safety and escalation</h4><ol start="14"><li>What counts as urgent&mdash;and who decides?</li><li>What are agents prohibited from promising?</li><li>How is the on-call person reached?</li><li>What happens after hours, on weekends and during holidays?</li></ol></div>
+        <div class="sc-part"><h4><span class="sc-part-n">Part 5</span> Technology, access and handoffs</h4><ol start="18"><li>Which systems can the provider work in?</li><li>What access will the service require?</li><li>What does the office or technician receive after each call?</li><li>How are system outages handled?</li></ol></div>
+        <div class="sc-part"><h4><span class="sc-part-n">Part 6</span> Quality control and accountability</h4><ol start="22"><li>Can we review call recordings, summaries and outcomes?</li><li>How is quality measured and corrected?</li><li>Which reports will we receive?</li></ol></div>
+        <div class="sc-part"><h4><span class="sc-part-n">Part 7</span> Pricing and contract terms</h4><ol start="25"><li>What will a realistic busy-season month cost?</li></ol></div>
+      </div>
+
+      <h3>Part B: score the five categories</h3>
+      <div class="score-wrap" role="region" aria-labelledby="scorecard-caption" tabindex="0">
+      <table class="scorecard">
+        <caption id="scorecard-caption">Vendor scorecard: score each provider from 0 to 2 in each category, for a total out of 10</caption>
+        <thead><tr><th scope="col">Category</th><th scope="col">0 points</th><th scope="col">1 point</th><th scope="col">2 points</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Pest-control readiness</th><td data-label="0 points">Generic or unclear</td><td data-label="1 point">Some relevant experience</td><td data-label="2 points">Documented pest-specific workflow</td></tr>
+          <tr><th scope="row">Booking control</th><td data-label="0 points">Takes messages only</td><td data-label="1 point">Limited booking</td><td data-label="2 points">Books by your written rules</td></tr>
+          <tr><th scope="row">Escalation</th><td data-label="0 points">Ad hoc</td><td data-label="1 point">Basic escalation</td><td data-label="2 points">Tested, multi-step escalation plan</td></tr>
+          <tr><th scope="row">Visibility</th><td data-label="0 points">Minimal reporting</td><td data-label="1 point">Summaries or recordings</td><td data-label="2 points">Calls, outcomes and QA are reviewable</td></tr>
+          <tr><th scope="row">Pricing clarity</th><td data-label="0 points">Vague or incomplete</td><td data-label="1 point">Most charges explained</td><td data-label="2 points">Complete busy-season cost example</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <ul class="bul">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>9&ndash;10:</strong> Strong candidate for a controlled pilot.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>7&ndash;8:</strong> Promising, but resolve the weak category in writing.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>5&ndash;6:</strong> High implementation risk; test carefully before forwarding all calls.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>0&ndash;4:</strong> The provider is not ready to operate as your front office.</span></li>
+      </ul>
+      <p class="sc-note"><strong>The total is a comparison aid, not a guarantee of service quality.</strong> It is a screening tool, not a substitute for a pilot: a provider should still prove it can follow your actual rules on real or simulated calls.</p>
+
+      <h3>Part C: summarize the decision</h3>
+      <p>The last page has space for each provider&rsquo;s <strong>strengths</strong>, <strong>risks</strong>, <strong>unanswered questions</strong> and <strong>next step</strong>, plus a table to compare up to three providers by total score and weakest category.</p>
+
+      <div class="sc-cta sc-cta--body">
+        <a class="btn btn-primary btn-lg" href="/assets/pest-control-answering-service-vendor-scorecard.pdf" download data-scorecard-download data-link-location="article_body" data-cta-location="preview_download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Download the free scorecard<span class="visually-hidden"> (PDF, 5 pages, 273 KB)</span></a>
+        <span class="sc-file">PDF &middot; 5 pages &middot; US Letter &middot; 273 KB</span>
+      </div>
+
+      <h2>Linking to this resource</h2>
+      <p>The scorecard is free to download and print, with no email required. If you would like to reference it for your members, clients or readers, please link to this page so they always get the current version: <span class="sc-url">callvixsolutions.com/resources/pest-control-answering-service-vendor-scorecard</span></p>
+    </div>
+
+    <div class="cta-band" style="margin-top:56px;">
+      <div class="eyebrow">Evaluating Callvix?</div>
+      <h2>Put us through the same 25 questions</h2>
+      <p class="lede">Book a discovery call and we&rsquo;ll answer each one for your own service areas and booking rules.</p>
+      <div class="btn-row"><a href="https://calendly.com/callvixsolutions/callvix-discovery-call" class="btn btn-primary btn-lg">Book a Discovery Call</a></div>
     </div>
   </div>
 </section>
@@ -779,5 +949,22 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   </div>
 </footer>
 <script src="/js/main.js?v=20260910b"></script>
+<script>
+/* vendor_scorecard_download: one dataLayer event per click on a scorecard PDF link.
+   Uses cvxPushEvent from main.js (adds page_path). No personal data. */
+(function () {
+  var links = document.querySelectorAll('a[data-scorecard-download]');
+  for (var i = 0; i < links.length; i++) {
+    links[i].addEventListener('click', function () {
+      if (typeof window.cvxPushEvent !== 'function') return;
+      window.cvxPushEvent('vendor_scorecard_download', {
+        link_location: this.getAttribute('data-link-location'),
+        cta_location: this.getAttribute('data-cta-location'),
+        file_name: 'pest-control-answering-service-vendor-scorecard.pdf'
+      });
+    });
+  }
+})();
+</script>
 </body>
 </html>

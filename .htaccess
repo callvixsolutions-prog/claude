@@ -51,6 +51,7 @@ RedirectMatch 404 ^/scripts(/|$)
   RewriteRule ^landing/?$     /services  [R=301,L]
   RewriteRule ^contact-us/?$  /contact   [R=301,L]
   RewriteRule ^home/?$        /          [R=301,L]
+  RewriteRule ^resources/?$   /blog/     [R=301,L]
 
   # Old WordPress sitemaps -> new sitemap
   RewriteRule ^sitemap_index\.xml$  /sitemap.xml  [R=301,L]

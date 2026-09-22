@@ -628,6 +628,11 @@ strong { color: var(--ink-900); font-weight: 700; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1150px) { .header-phone-wrap { display: none; } }
+/* 320px phones: logo + Book a Call + menu button overflowed the header by ~18px */
+@media (max-width: 360px) {
+  .site-header .container { padding: 0 16px; gap: 10px; }
+  .header-actions { gap: 10px; }
+}
 @media (max-width: 980px) {
   .hero .container, .split, .split--lean, .photo-split { grid-template-columns: 1fr; gap: 40px; }
   .hero-visual { max-width: 480px; }
@@ -940,6 +945,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>0&ndash;4:</strong> The provider is not ready to operate as your front office.</span></li>
       </ul>
       <p>The score is a screening tool, not a substitute for a pilot. A provider should still prove it can follow your actual rules on real or simulated calls.</p>
+      <p>Prefer to score on paper? Use our free <a href="/resources/pest-control-answering-service-vendor-scorecard">printable vendor scorecard</a>, which puts all 25 questions, space for evidence and this 0&ndash;10 grid into one PDF.</p>
 
       <h2>Red flags to take seriously</h2>
       <ul class="bul bul--flag">

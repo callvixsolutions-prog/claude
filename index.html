@@ -627,6 +627,11 @@ strong { color: var(--ink-900); font-weight: 700; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1150px) { .header-phone-wrap { display: none; } }
+/* 320px phones: logo + Book a Call + menu button overflowed the header by ~18px */
+@media (max-width: 360px) {
+  .site-header .container { padding: 0 16px; gap: 10px; }
+  .header-actions { gap: 10px; }
+}
 @media (max-width: 980px) {
   .hero .container, .split, .split--lean, .photo-split { grid-template-columns: 1fr; gap: 40px; }
   .hero-visual { max-width: 480px; }

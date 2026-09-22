@@ -625,6 +625,11 @@ strong { color: var(--ink-900); font-weight: 700; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1150px) { .header-phone-wrap { display: none; } }
+/* 320px phones: logo + Book a Call + menu button overflowed the header by ~18px */
+@media (max-width: 360px) {
+  .site-header .container { padding: 0 16px; gap: 10px; }
+  .header-actions { gap: 10px; }
+}
 @media (max-width: 980px) {
   .hero .container, .split, .split--lean, .photo-split { grid-template-columns: 1fr; gap: 40px; }
   .hero-visual { max-width: 480px; }
@@ -769,7 +774,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Is there a long-term contract?</strong> Month-to-month protects you if the service underdelivers.</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Do they actually book the job, or just take a message?</strong> A message you have to call back on is worth far less than a booked appointment.</span></li>
       </ul>
-      <p>Price is only one part of the decision. For the questions on booking rules, escalation, reporting and access, work through our <a href="/blog/pest-control-answering-service-checklist">25-question vendor checklist</a>.</p>
+      <p>Price is only one part of the decision. For the questions on booking rules, escalation, reporting and access, work through our <a href="/blog/pest-control-answering-service-checklist">25-question vendor checklist</a> and record each provider&rsquo;s answers on the <a href="/resources/pest-control-answering-service-vendor-scorecard">answering service scorecard</a>.</p>
 
       <h2>How to think about cost the right way</h2>
       <p>The real question isn't "what's the monthly price?" — it's "what's my cost per booked job?" The figure that matters is your own average recurring account value — pull it from your CRM rather than from an industry article, because it varies enormously by market, service mix and contract length. Once you know it, compare it against what an answering service costs per call it actually books; whether that math works is something only your own numbers can answer.</p>
