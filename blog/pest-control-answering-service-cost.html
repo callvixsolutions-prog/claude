@@ -104,6 +104,11 @@ body {
   text-rendering: optimizeLegibility;
 }
 img, svg { max-width: 100%; display: block; }
+/* Long URLs and emails break only when they cannot otherwise fit */
+body { overflow-wrap: break-word; }
+/* Wide article tables scroll inside their own box on small screens */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-scroll:focus-visible { outline: 3px solid var(--teal-500); outline-offset: 3px; }
 a { color: inherit; text-decoration: none; }
 ul { list-style: none; margin: 0; padding: 0; }
 button { font: inherit; cursor: pointer; }
@@ -625,12 +630,15 @@ strong { color: var(--ink-900); font-weight: 700; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1150px) { .header-phone-wrap { display: none; } }
-/* 320px phones: logo + Book a Call + menu button overflowed the header by ~18px,
-   and long no-wrap buttons were wider than the screen */
+/* 320px phones: logo + Book a Call + menu button overflowed the header by ~18px */
 @media (max-width: 360px) {
   .site-header .container { padding: 0 16px; gap: 10px; }
   .header-actions { gap: 10px; }
+}
+/* Phones: long button labels wrap instead of pushing the page sideways */
+@media (max-width: 480px) {
   .btn { white-space: normal; text-align: center; }
+  .header-actions .btn { white-space: nowrap; }
 }
 /* The full nav + Book a Call need ~930px; below that, use the menu button
    (it previously switched at 720px, so 721-929px tablets overflowed sideways) */
@@ -762,6 +770,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <p>The same predictability as per-call, but at a much lower per-call price. Callvix, for example, charges a <strong>flat $2.99 per inbound call</strong> on top of a $399/month base — below the $8.50–$11.50 per-call overage rates Smith.ai publishes — with no per-minute meter running. This is the model that scales most gently as your call volume grows.</p>
 
       <h2>Real 2026 cost ranges at a glance</h2>
+      <div class="table-scroll" role="region" aria-label="Answering service cost ranges (scrolls sideways on small screens)" tabindex="0">
       <table>
         <thead><tr><th>Model</th><th>Typical price</th><th>Best for</th><th>Watch out for</th></tr></thead>
         <tbody>
@@ -771,6 +780,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           <tr><td>Live receptionist (per-call plan)</td><td>from $300 / mo for 30 calls<sup>2</sup></td><td>Brand-sensitive offices</td><td>Per-call overage once the allowance is used</td></tr>
         </tbody>
       </table>
+      </div>
       <p style="font-size:14px; color:var(--ink-400);"><sup>1</sup> PATLive published pricing. <sup>2</sup> Smith.ai published pricing. Both verified 10 September 2026. Provider pricing changes &mdash; check the current plan before you buy. Callvix pricing is stated separately below and is not part of these market ranges.</p>
 
       <h2>The hidden costs to ask about</h2>
