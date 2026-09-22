@@ -627,10 +627,18 @@ strong { color: var(--ink-900); font-weight: 700; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1150px) { .header-phone-wrap { display: none; } }
-/* 320px phones: logo + Book a Call + menu button overflowed the header by ~18px */
+/* 320px phones: logo + Book a Call + menu button overflowed the header by ~18px,
+   and long no-wrap buttons were wider than the screen */
 @media (max-width: 360px) {
   .site-header .container { padding: 0 16px; gap: 10px; }
   .header-actions { gap: 10px; }
+  .btn { white-space: normal; text-align: center; }
+}
+/* The full nav + Book a Call need ~930px; below that, use the menu button
+   (it previously switched at 720px, so 721-929px tablets overflowed sideways) */
+@media (max-width: 940px) {
+  .main-nav { display: none; }
+  .nav-toggle { display: block; }
 }
 @media (max-width: 980px) {
   .hero .container, .split, .split--lean, .photo-split { grid-template-columns: 1fr; gap: 40px; }
