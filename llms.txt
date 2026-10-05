@@ -8,7 +8,7 @@
 - **Answered in your business name.** Callers never learn they reached an outside team; the experience is identical to reaching the company's own office.
 - **Flat per-call pricing.** $2.99 per inbound call, flat — versus the industry-typical $7–$10 per call or $1.00–$3.50 per minute. A long, complex call costs the same as a short one, so bills don't spike in busy season.
 - **No long-term contract.** Month-to-month; coverage can be added, reduced, or cancelled at any time.
-- **Books into existing systems.** Calls and booked jobs are logged into the client's CRM: FieldRoutes (formerly PestRoutes), ServiceTitan, GorillaDesk, Briostack, PestPac, or Housecall Pro.
+- **Books into existing systems.** With the CRM Management add-on ($99/month), calls and booked jobs are entered into the client's CRM: FieldRoutes (formerly PestRoutes), ServiceTitan, GorillaDesk, Briostack, PestPac, or Housecall Pro.
 
 ## Key facts
 - Industry served: Pest control companies, United States only.
@@ -23,7 +23,7 @@
 ## How it works (5 steps)
 1. The call is answered live in the client's business name and greeting.
 2. The representative identifies the pest issue, urgency, and service location.
-3. Customer details and notes are captured and logged into the client's system.
+3. Customer details and notes are captured on every call; entry into the client's system is the CRM Management add-on.
 4. The appointment is booked on the client's calendar, or an urgent call is escalated per the client's rules.
 5. The client receives a clean call summary with notes and the outcome.
 
