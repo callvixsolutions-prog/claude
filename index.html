@@ -695,7 +695,7 @@ strong { color: var(--ink-900); font-weight: 700; }
         "@type": "ImageObject",
         "url": "https://callvixsolutions.com/assets/logo.png?v=2"
       },
-      "description": "Callvix Solutions provides live call answering and appointment booking for pest control companies across the United States. Trained representatives answer in each client's business name, qualify the pest issue, and book eligible jobs by the client's rules.",
+      "description": "Callvix Solutions provides live-human answering and job booking exclusively for U.S. pest control companies. Callvix Solutions at callvixsolutions.com is not affiliated with callvix.com.",
       "email": "contact@callvixsolutions.com",
       "telephone": "+1-551-373-6777",
       "address": {
@@ -706,7 +706,10 @@ strong { color: var(--ink-900); font-weight: 700; }
         "postalCode": "08053",
         "addressCountry": "US"
       },
-      "areaServed": { "@type": "Country", "name": "United States" },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
       "sameAs": [
         "https://www.facebook.com/callvixsolutions",
         "https://www.linkedin.com/company/callvixsolutions",
@@ -721,27 +724,177 @@ strong { color: var(--ink-900); font-weight: 700; }
         "https://www.sortlist.com/agency/callvix-solutions",
         "https://about.me/callvixsolutions",
         "https://www.f6s.com/company/callvix-solutions"
-      ]
+      ],
+      "disambiguatingDescription": "The pest control answering and job-booking service at callvixsolutions.com; not affiliated with callvix.com."
     },
     {
       "@type": "WebSite",
       "@id": "https://callvixsolutions.com/#website",
       "url": "https://callvixsolutions.com/",
       "name": "Callvix Solutions",
-      "publisher": { "@id": "https://callvixsolutions.com/#organization" }
+      "publisher": {
+        "@id": "https://callvixsolutions.com/#organization"
+      }
     },
     {
       "@type": "Service",
       "serviceType": "Pest Control Answering Service and Appointment Booking",
-      "provider": { "@id": "https://callvixsolutions.com/#organization" },
-      "areaServed": { "@type": "Country", "name": "United States" },
-      "audience": { "@type": "BusinessAudience", "audienceType": "Pest Control Companies" },
-      "description": "Live call answering by trained representatives, lead qualification, appointment booking, and after-hours/overflow coverage for U.S. pest control businesses. Calls are answered under the client's business name. Pricing is $399/month base plus $2.99 per inbound call and $0.99 per outbound follow-up call.",
+      "provider": {
+        "@id": "https://callvixsolutions.com/#organization"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "United States"
+      },
+      "audience": {
+        "@type": "BusinessAudience",
+        "audienceType": "Pest Control Companies"
+      },
+      "description": "Live-human answering, qualification, appointment booking by the client's rules, and escalation for U.S. pest control companies. Base coverage is Monday-Friday, 9am-6pm in the client's local time. Booking and call details are shared using the method agreed during setup, plus a weekly activity summary. Direct CRM entry requires the optional CRM Management add-on at $99/month. Evening and weekend coverage are optional paid add-ons.",
       "offers": {
         "@type": "Offer",
-        "priceCurrency": "USD",
-        "price": "399",
-        "description": "$399/month base subscription plus $2.99 per inbound call and $0.99 per outbound follow-up call. No long-term contract."
+        "@id": "https://callvixsolutions.com/#offer-base",
+        "name": "Base subscription plus call usage",
+        "url": "https://callvixsolutions.com/pricing",
+        "seller": {
+          "@id": "https://callvixsolutions.com/#organization"
+        },
+        "description": "$399/month base plus $2.99 per inbound call and $0.99 per outbound follow-up call. No long-term contract. Optional add-ons cost extra. Total charges depend on call volume and selected add-ons.",
+        "priceSpecification": {
+          "@type": "CompoundPriceSpecification",
+          "priceCurrency": "USD",
+          "name": "Monthly base plus inbound and outbound call usage",
+          "priceComponent": [
+            {
+              "@type": "UnitPriceSpecification",
+              "name": "Base subscription",
+              "price": 399,
+              "priceCurrency": "USD",
+              "referenceQuantity": {
+                "@type": "QuantitativeValue",
+                "value": 1,
+                "unitText": "month"
+              }
+            },
+            {
+              "@type": "UnitPriceSpecification",
+              "name": "Inbound call usage",
+              "price": 2.99,
+              "priceCurrency": "USD",
+              "referenceQuantity": {
+                "@type": "QuantitativeValue",
+                "value": 1,
+                "unitText": "inbound call"
+              }
+            },
+            {
+              "@type": "UnitPriceSpecification",
+              "name": "Outbound follow-up call usage, when used",
+              "price": 0.99,
+              "priceCurrency": "USD",
+              "referenceQuantity": {
+                "@type": "QuantitativeValue",
+                "value": 1,
+                "unitText": "outbound follow-up call"
+              }
+            }
+          ]
+        },
+        "addOn": [
+          {
+            "@type": "Offer",
+            "@id": "https://callvixsolutions.com/#offer-crm-management",
+            "name": "CRM Management",
+            "url": "https://callvixsolutions.com/pricing",
+            "description": "Optional add-on: representatives enter call notes and booking details directly into the client's CRM using authorized account access. No native integration or automatic data sync. Requires the base subscription; usage charges still apply.",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "name": "CRM Management monthly",
+              "price": 99,
+              "priceCurrency": "USD",
+              "referenceQuantity": {
+                "@type": "QuantitativeValue",
+                "value": 1,
+                "unitText": "month"
+              }
+            },
+            "itemOffered": {
+              "@type": "Service",
+              "name": "CRM Management",
+              "provider": {
+                "@id": "https://callvixsolutions.com/#organization"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "@id": "https://callvixsolutions.com/#offer-after-hours",
+            "name": "After-Hours Coverage",
+            "url": "https://callvixsolutions.com/pricing",
+            "description": "Optional evening coverage; the coverage window is agreed during setup. Requires the base subscription; usage charges still apply.",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "name": "After-Hours Coverage monthly",
+              "price": 199,
+              "priceCurrency": "USD",
+              "referenceQuantity": {
+                "@type": "QuantitativeValue",
+                "value": 1,
+                "unitText": "month"
+              }
+            },
+            "itemOffered": {
+              "@type": "Service",
+              "name": "After-Hours Coverage",
+              "provider": {
+                "@id": "https://callvixsolutions.com/#organization"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "@id": "https://callvixsolutions.com/#offer-weekend",
+            "name": "Weekend Coverage",
+            "url": "https://callvixsolutions.com/pricing",
+            "description": "Optional weekend coverage; the coverage window is agreed during setup. Requires the base subscription; usage charges still apply.",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "name": "Weekend Coverage monthly",
+              "price": 149,
+              "priceCurrency": "USD",
+              "referenceQuantity": {
+                "@type": "QuantitativeValue",
+                "value": 1,
+                "unitText": "month"
+              }
+            },
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Weekend Coverage",
+              "provider": {
+                "@id": "https://callvixsolutions.com/#organization"
+              }
+            }
+          }
+        ]
+      },
+      "@id": "https://callvixsolutions.com/#answering-service",
+      "name": "Live-human pest control answering and job-booking service",
+      "url": "https://callvixsolutions.com/services"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://callvixsolutions.com/#webpage",
+      "url": "https://callvixsolutions.com/",
+      "name": "Callvix Solutions | Pest Control Answering Service",
+      "isPartOf": {
+        "@id": "https://callvixsolutions.com/#website"
+      },
+      "about": {
+        "@id": "https://callvixsolutions.com/#organization"
+      },
+      "mainEntity": {
+        "@id": "https://callvixsolutions.com/#answering-service"
       }
     }
   ]
@@ -1112,7 +1265,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <span class="plan-combo-value">$0.99<small>/call</small></span>
       </div>
     </div>
-    <p class="plan-combo-note">Flat per call, not per minute — a long, tricky call costs the same as a quick one. Plus optional After-Hours, Weekend &amp; CRM add-ons.</p>
+    <p class="plan-combo-note">Flat per call, not per minute — a long, tricky call costs the same as a quick one. Plus optional add-ons: After-Hours $199/mo, Weekend $149/mo, CRM Management $99/mo. Base coverage Mon&ndash;Fri, 9am&ndash;6pm your local time.</p>
     <p style="text-align:center; margin-top:30px;"><a href="/pricing" class="btn btn-navy">See full pricing</a></p>
   </div>
 </section>
@@ -1218,7 +1371,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="/" class="flogo" aria-label="Callvix Solutions home"><picture><source srcset="/assets/logo-white.webp?v=2" type="image/webp"><img src="/assets/logo-white.png?v=2" alt="Callvix Solutions logo" width="117" height="40" loading="lazy" decoding="async"></picture></a>
-        <p>A pest control answering service staffed by real, trained people. We answer in your company name, qualify the pest issue, and book the job &mdash; so you never lose a lead to voicemail.</p>
+        <p>Real, trained people answer in your company name, qualify the pest issue, and book eligible jobs by your rules.</p>
         <div class="footer-badge">
           <img src="/assets/badge-designrush.png" alt="DesignRush directory badge" width="38" height="43" loading="lazy" decoding="async">
           <span>Listed on DesignRush&rsquo;s<br>Top Call Center Companies, 2026</span>
@@ -1267,7 +1420,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <a href="/privacy-policy">Privacy Policy</a>
         <a href="/terms">Terms</a>
       </div>
-      <span>Built exclusively for U.S. pest control companies.</span>
+      <span>Callvix Solutions (callvixsolutions.com) provides live-human answering and job booking exclusively for U.S. pest control companies, and is not affiliated with callvix.com.</span>
       <div class="footer-social">
         <a href="https://www.facebook.com/callvixsolutions" aria-label="Callvix Solutions on Facebook" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.87v-6.98H7.9V12h2.5V9.8c0-2.47 1.47-3.84 3.72-3.84 1.08 0 2.2.19 2.2.19v2.43h-1.24c-1.22 0-1.6.76-1.6 1.54V12h2.72l-.44 2.89h-2.28v6.98A10 10 0 0 0 22 12Z"/></svg></a>
         <a href="https://www.linkedin.com/company/callvixsolutions" aria-label="Callvix Solutions on LinkedIn" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 5a2 2 0 1 1-4-.02 2 2 0 0 1 4 .02ZM7 8.48H3V21h4V8.48Zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7-5.94-8.68-2.91V8.48Z"/></svg></a>
