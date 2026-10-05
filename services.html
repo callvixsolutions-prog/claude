@@ -763,9 +763,17 @@ strong { color: var(--ink-900); font-weight: 700; }
   "@type": "Service",
   "name": "Pest Control Answering Service",
   "serviceType": "Pest control answering & appointment-booking service",
-  "provider": { "@type": "Organization", "name": "Callvix Solutions", "url": "https://callvixsolutions.com/" },
-  "areaServed": { "@type": "Country", "name": "United States" },
-  "audience": { "@type": "BusinessAudience", "audienceType": "Pest control companies" },
+  "provider": {
+    "@id": "https://callvixsolutions.com/#organization"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "United States"
+  },
+  "audience": {
+    "@type": "BusinessAudience",
+    "audienceType": "Pest control companies"
+  },
   "url": "https://callvixsolutions.com/services",
   "description": "A pest control answering service staffed by trained people who answer in your company name, qualify the pest issue, and book the job. Live Monday to Friday answering and booking as standard, with optional after-hours and weekend coverage. Flat per-call pricing.",
   "offers": {
@@ -773,7 +781,8 @@ strong { color: var(--ink-900); font-weight: 700; }
     "priceCurrency": "USD",
     "price": "399",
     "description": "$399/month base (Mon-Fri live answering and booking) plus $2.99 per inbound call and $0.99 per outbound follow-up call. Optional add-ons: after-hours, weekend, and CRM management."
-  }
+  },
+  "@id": "https://callvixsolutions.com/#answering-service"
 }
 </script>
 <script type="application/ld+json">
