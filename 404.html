@@ -110,6 +110,14 @@ body { overflow-wrap: break-word; }
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .table-scroll:focus-visible { outline: 3px solid var(--teal-500); outline-offset: 3px; }
 a { color: inherit; text-decoration: none; }
+/* Keyboard users land on the header's logo, nav, phone and CTA on every page
+   before reaching the content; this lets them jump straight to <main>. */
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 1000;
+  background: var(--navy-900); color: #fff; padding: 12px 18px;
+  border-radius: 0 0 var(--radius-md) 0; font-weight: 600;
+}
+.skip-link:focus { left: 0; }
 ul { list-style: none; margin: 0; padding: 0; }
 button { font: inherit; cursor: pointer; }
 h1, h2, h3, h4 {
@@ -518,6 +526,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .form-field { margin-bottom: 18px; }
 .form-field label { display: block; font-family: var(--font-heading); font-weight: 600; font-size: 14px; margin-bottom: 7px; color: var(--navy-900); }
 .form-field input, .form-field select, .form-field textarea { width: 100%; padding: 13px 15px; border: 1px solid var(--line-2); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 15px; color: var(--text); background: var(--cream); }
+.form-field .opt { font-weight: 500; font-size: 13px; color: var(--ink-400); }
 .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: 2px solid var(--teal-400); outline-offset: 1px; background: var(--white); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .form-note { font-size: 13px; color: var(--ink-400); margin-top: 10px; }
@@ -658,6 +667,8 @@ strong { color: var(--ink-900); font-weight: 700; }
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PJFS7HV5"
 height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+
+<a href="#main" class="skip-link">Skip to main content</a>
 
 <header class="site-header">
   <div class="container">
