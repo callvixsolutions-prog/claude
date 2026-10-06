@@ -62,6 +62,16 @@ RedirectMatch 404 ^/scripts(/|$)
   RewriteRule ^wp-admin(/.*)?$  /  [R=301,L]
   RewriteRule ^wp-login\.php$   /  [R=301,L]
 
+  # /index, /index/ and /index.html are duplicates of the homepage. Send all
+  # three straight to / in one hop, before rule 4 turns /index.html into /index.
+  #
+  #    MUST match on THE_REQUEST, not the URI. DirectoryIndex serves index.html
+  #    for "/" as an internal subrequest whose URI *is* index.html; matching the
+  #    URI would redirect that subrequest back to / and loop forever.
+  #    THE_REQUEST keeps the original request line, so the subrequest is unaffected.
+  RewriteCond %{THE_REQUEST} \s/+index(\.html)?/?[\s?] [NC]
+  RewriteRule ^ / [R=301,L]
+
   # ------------------------------------------------------------------------
   # 4. Strip .html  (only for real browser requests, never internal rewrites)
   # ------------------------------------------------------------------------

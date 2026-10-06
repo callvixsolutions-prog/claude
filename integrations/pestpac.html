@@ -719,9 +719,109 @@ strong { color: var(--ink-900); font-weight: 700; }
   "description": "Human answering and job booking for pest control companies using PestPac. $399/month + $2.99/inbound call; direct CRM entry adds $99/month.",
   "offers": {
     "@type": "Offer",
-    "priceCurrency": "USD",
-    "price": "399",
-    "description": "$399/month base (Mon-Fri live answering and booking) plus $2.99 per inbound call and $0.99 per outbound follow-up call. Optional add-ons: After-Hours $199/mo, Weekend $149/mo, CRM Management $99/mo."
+    "@id": "https://callvixsolutions.com/integrations/pestpac#offer-base",
+    "name": "Base subscription plus call usage",
+    "url": "https://callvixsolutions.com/pricing",
+    "seller": {
+      "@id": "https://callvixsolutions.com/#organization"
+    },
+    "description": "$399/month base plus $2.99 per inbound call and $0.99 per outbound follow-up call when used. No long-term contract. Optional add-ons cost extra. Total charges depend on call volume and selected add-ons.",
+    "priceSpecification": {
+      "@type": "CompoundPriceSpecification",
+      "priceCurrency": "USD",
+      "name": "Monthly base plus inbound and outbound call usage",
+      "priceComponent": [
+        {
+          "@type": "UnitPriceSpecification",
+          "name": "Base subscription",
+          "price": 399,
+          "priceCurrency": "USD",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": 1,
+            "unitText": "month"
+          }
+        },
+        {
+          "@type": "UnitPriceSpecification",
+          "name": "Inbound call usage",
+          "price": 2.99,
+          "priceCurrency": "USD",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": 1,
+            "unitText": "inbound call"
+          }
+        },
+        {
+          "@type": "UnitPriceSpecification",
+          "name": "Outbound follow-up call usage, when used",
+          "price": 0.99,
+          "priceCurrency": "USD",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": 1,
+            "unitText": "outbound follow-up call"
+          }
+        }
+      ]
+    },
+    "addOn": [
+      {
+        "@type": "Offer",
+        "@id": "https://callvixsolutions.com/integrations/pestpac#offer-crm-management",
+        "name": "CRM Management",
+        "url": "https://callvixsolutions.com/pricing",
+        "description": "Optional add-on: representatives enter call notes and booking details directly into the client's own PestPac account using access the client grants and can revoke. No native integration or automatic data sync. Requires the base subscription; call usage charges still apply.",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "name": "CRM Management monthly",
+          "price": 99,
+          "priceCurrency": "USD",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": 1,
+            "unitText": "month"
+          }
+        }
+      },
+      {
+        "@type": "Offer",
+        "@id": "https://callvixsolutions.com/integrations/pestpac#offer-after-hours",
+        "name": "After-Hours Coverage",
+        "url": "https://callvixsolutions.com/pricing",
+        "description": "Optional add-on: live answering during an agreed evening window. No overnight coverage. Requires the base subscription.",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "name": "After-Hours Coverage monthly",
+          "price": 199,
+          "priceCurrency": "USD",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": 1,
+            "unitText": "month"
+          }
+        }
+      },
+      {
+        "@type": "Offer",
+        "@id": "https://callvixsolutions.com/integrations/pestpac#offer-weekend",
+        "name": "Weekend Coverage",
+        "url": "https://callvixsolutions.com/pricing",
+        "description": "Optional add-on: live answering during agreed weekend windows. Requires the base subscription.",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "name": "Weekend Coverage monthly",
+          "price": 149,
+          "priceCurrency": "USD",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": 1,
+            "unitText": "month"
+          }
+        }
+      }
+    ]
   },
   "@id": "https://callvixsolutions.com/integrations/pestpac#service"
 }
@@ -832,8 +932,10 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         </div>
         <div class="call-card-body">
           <div class="bubble them"><span class="lbl">Caller</span>&ldquo;There&rsquo;s a wasp nest right by our front door &mdash; can someone come out?&rdquo;</div>
-          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Absolutely. What&rsquo;s the service address so I can confirm you&rsquo;re in the coverage area?&rdquo;</div>
-          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;I&rsquo;ve got a slot tomorrow, 10am&ndash;12pm. Shall I book that in?&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Let&rsquo;s get that looked at. Can I take the service address so I can check you&rsquo;re in the coverage area?&rdquo;</div>
+          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;It&rsquo;s 14 Oak Lane.&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;That&rsquo;s covered. There&rsquo;s a slot tomorrow between 10am and 12pm &mdash; does that work?&rdquo;</div>
+          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;Yes, that&rsquo;s fine.&rdquo;</div>
           <div class="call-result">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
             <span>Job booked &middot; entered in PestPac with the add-on</span>
