@@ -318,6 +318,8 @@ strong { color: var(--ink-900); font-weight: 700; }
   border-radius: var(--radius-md); padding: 13px 17px; box-shadow: var(--shadow-lg);
   display: flex; align-items: center; gap: 11px; font-family: var(--font-heading); font-weight: 700; font-size: 14px;
 }
+.hero-float--below { position: static; margin: 14px auto 0; width: fit-content; }
+@media (max-width: 980px) { .hero-float--below { margin-left: 0; } }
 .hero-float .ico { width: 34px; height: 34px; border-radius: 10px; background: var(--teal-100); display: flex; align-items: center; justify-content: center; }
 .hero-float .ico svg { width: 18px; height: 18px; color: var(--teal-600); }
 .hero-float small { display: block; font-family: var(--font-body); font-weight: 500; font-size: 11.5px; color: var(--ink-500); }
@@ -347,25 +349,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .stat cite { display: block; margin-top: 10px; font-size: 11.5px; color: var(--ink-400); font-style: normal; }
 
 /* Cost-of-a-missed-call visual equation */
-.cost-calc {
-  max-width: 880px; margin: 40px auto 0; text-align: center;
-  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md); padding: 34px 30px 30px; position: relative; overflow: hidden;
-}
-.cost-calc::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 4px; background: linear-gradient(90deg, var(--teal-500), var(--teal-300)); }
-.cost-calc-eyebrow { display: inline-block; font-family: var(--font-heading); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--teal-600); }
-.cost-calc-title { font-family: var(--font-heading); font-size: 22px; font-weight: 700; color: var(--navy-900); margin: 8px 0 24px; letter-spacing: -0.01em; }
-.cost-calc-eq { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 11px; }
-.cc-factor, .cc-result { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 15px 17px; border-radius: var(--radius-md); min-width: 92px; }
-.cc-factor { background: var(--sand); }
-.cc-result { background: linear-gradient(155deg, var(--teal-500), var(--teal-600)); box-shadow: var(--shadow-teal); }
-.cc-num { font-family: var(--font-heading); font-size: 26px; font-weight: 800; color: var(--navy-900); line-height: 1; letter-spacing: -0.02em; }
-.cc-label { font-size: 12px; line-height: 1.3; color: var(--ink-500); }
-.cc-result .cc-num { color: #fff; font-size: 27px; }
-.cc-result .cc-label { color: rgba(255,255,255,0.9); font-weight: 600; }
-.cc-op { font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--teal-600); flex-shrink: 0; }
-.cc-op--eq { color: var(--navy-900); }
-.cost-calc-note { margin: 22px auto 0; max-width: 560px; font-size: 13px; line-height: 1.6; color: var(--ink-500); }
+
 .cost-close { text-align: center; margin: 30px auto 0; max-width: 660px; font-size: 16px; line-height: 1.65; color: var(--ink-500); }
 
 /* ---------- Cards ---------- */
@@ -408,25 +392,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .photo-badge svg { width: 18px; height: 18px; color: var(--teal-300); }
 
 /* ---------- Human vs AI comparison (core pillar) ---------- */
-.versus { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.versus-col { border-radius: var(--radius-lg); padding: 34px; }
-.versus-col h3 { display: flex; align-items: center; gap: 11px; font-size: 21px; margin-bottom: 20px; }
-.versus-col h3 .badge { width: 40px; height: 40px; border-radius: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.versus-col h3 .badge svg { width: 22px; height: 22px; }
-.versus-col ul { display: flex; flex-direction: column; gap: 14px; }
-.versus-col li { display: flex; gap: 11px; align-items: flex-start; font-size: 15px; }
-.versus-col li svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; }
-.versus-them { background: var(--white); border: 1px solid var(--line); }
-.versus-them h3 { color: var(--ink-700); }
-.versus-them h3 .badge { background: var(--sand-2); color: var(--ink-500); }
-.versus-them li { color: var(--ink-500); }
-.versus-them li svg { color: var(--ink-400); }
-.versus-us { background: linear-gradient(160deg, var(--navy-900), var(--navy-800)); border: 1px solid var(--navy-700); box-shadow: var(--shadow-lg); }
-.versus-us h3 { color: #fff; }
-.versus-us h3 .badge { background: var(--teal-500); color: #04252a; }
-.versus-us li { color: #dfe4f2; }
-.versus-us li svg { color: var(--teal-400); }
-.versus-us .tag-top { display: inline-block; background: var(--teal-500); color: #04252a; font-family: var(--font-heading); font-weight: 700; font-size: 11.5px; padding: 5px 12px; border-radius: 999px; margin-bottom: 16px; letter-spacing: 0.03em; }
+
 
 /* ---------- Steps ---------- */
 .steps { display: flex; flex-direction: column; }
@@ -437,18 +403,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .step p { color: var(--ink-500); margin: 0; }
 
 /* ---------- Comparison table ---------- */
-.compare-wrap { overflow-x: auto; border-radius: var(--radius-md); box-shadow: var(--shadow-md); }
-.compare-table { width: 100%; border-collapse: collapse; background: var(--white); min-width: 640px; }
-.compare-table th, .compare-table td { padding: 17px 20px; text-align: left; border-bottom: 1px solid var(--line); font-size: 14.5px; }
-.compare-table thead th { font-family: var(--font-heading); background: var(--sand); color: var(--navy-900); font-size: 14px; }
-.compare-table td:not(:first-child), .compare-table th:not(:first-child) { text-align: center; }
-.compare-table .col-callvix { background: var(--teal-50); }
-.compare-table thead .col-callvix { background: var(--navy-900); color: #fff; }
-.compare-table tbody td:first-child { font-weight: 600; color: var(--ink-700); }
-.compare-table .col-callvix { font-weight: 700; color: var(--navy-900); }
-.compare-table svg.yes { width: 19px; height: 19px; color: var(--teal-500); }
-.compare-table svg.no { width: 18px; height: 18px; color: var(--line-2); }
-.compare-table tbody tr:last-child td { border-bottom: none; }
+
 
 /* ---------- Pricing ---------- */
 .plan-combo { display: flex; align-items: stretch; border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); background: var(--white); }
@@ -460,11 +415,14 @@ strong { color: var(--ink-900); font-weight: 700; }
 .plan-combo-value small { font-size: 14px; font-weight: 600; color: var(--ink-400); }
 .plan-combo-item--base .plan-combo-value small { color: #9fb8d6; }
 .plan-combo-plus { display: flex; align-items: center; justify-content: center; width: 56px; flex-shrink: 0; background: var(--sand); font-family: var(--font-heading); font-size: 22px; font-weight: 800; color: var(--teal-600); }
+.price-headline { font-family: var(--font-heading); font-size: 40px; font-weight: 800; color: var(--navy-900); letter-spacing: -0.02em; line-height: 1.1; margin: 6px 0 14px; }
+.price-headline small { font-family: var(--font-body); font-weight: 500; font-size: 17px; color: var(--ink-500); letter-spacing: 0; }
+.price-hero-note { font-size: 14.5px; color: var(--ink-500); margin-top: 12px; }
+@media (max-width: 480px) { .price-headline { font-size: 31px; } }
 .plan-combo-note { text-align: center; font-size: 13.5px; color: var(--ink-400); margin-top: 15px; }
 
 .price-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 32px; position: relative; box-shadow: var(--shadow-sm); }
-.price-card--highlight { border-color: var(--teal-500); box-shadow: var(--shadow-md); }
-.price-card--highlight::before { content: 'Most popular'; position: absolute; top: -13px; left: 32px; background: var(--teal-500); color: #04252a; font-family: var(--font-heading); font-weight: 700; font-size: 12px; padding: 5px 13px; border-radius: 999px; }
+
 .price-card h3 { font-size: 20px; margin-bottom: 6px; }
 .price-card .price { font-family: var(--font-heading); font-size: 34px; font-weight: 800; color: var(--navy-900); margin: 10px 0 4px; letter-spacing: -0.02em; }
 .price-card .price span { font-size: 14px; font-weight: 600; color: var(--ink-400); }
@@ -568,17 +526,20 @@ strong { color: var(--ink-900); font-weight: 700; }
 .form-status:empty { margin: 0; }
 .form-status--error { color: #b4232b; font-weight: 600; }
 
-/* ---------- Compact pricing summary (integration pages) ---------- */
+/* ---------- Compact pricing summary (integration pages) ----------
+   Every rule here is scoped to .price-cards. The plan cards on /pricing use
+   the bare .price-card selector above; leaving any of these unscoped lets the
+   later block win the cascade and silently restyle that page. */
 .price-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.price-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 24px 26px; box-shadow: var(--shadow-sm); }
-.price-card--addon { background: var(--cream); }
-.price-card h3 { font-size: 17px; margin: 10px 0 10px; }
-.price-card .price-amount { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); font-size: 30px; line-height: 1.1; margin-bottom: 10px; }
-.price-card .price-amount small { font-family: var(--font-body); font-weight: 500; font-size: 15px; color: var(--ink-500); }
-.price-card p { font-size: 15px; color: var(--ink-700); margin: 0 0 10px; line-height: 1.55; }
-.price-card ul { display: flex; flex-direction: column; gap: 7px; margin: 0; }
-.price-card li { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 14.5px; color: var(--ink-500); border-top: 1px solid var(--line); padding-top: 7px; }
-.price-card li .amt { font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); white-space: nowrap; }
+.price-cards .price-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 24px 26px; box-shadow: var(--shadow-sm); }
+.price-cards .price-card--addon { background: var(--cream); }
+.price-cards .price-card h3 { font-size: 17px; margin: 10px 0 10px; }
+.price-cards .price-card .price-amount { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); font-size: 30px; line-height: 1.1; margin-bottom: 10px; }
+.price-cards .price-card .price-amount small { font-family: var(--font-body); font-weight: 500; font-size: 15px; color: var(--ink-500); }
+.price-cards .price-card p { font-size: 15px; color: var(--ink-700); margin: 0 0 10px; line-height: 1.55; }
+.price-cards .price-card ul { display: flex; flex-direction: column; gap: 7px; margin: 0; }
+.price-cards .price-card li { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 14.5px; color: var(--ink-500); border-top: 1px solid var(--line); padding-top: 7px; }
+.price-cards .price-card li .amt { font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); white-space: nowrap; }
 @media (max-width: 720px) { .price-cards { grid-template-columns: 1fr; gap: 18px; } }
 
 /* ---------- Footer ---------- */
@@ -666,7 +627,6 @@ strong { color: var(--ink-900); font-weight: 700; }
   .photo-split.reverse .photo-frame { order: -1; }
   .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .stat-band { grid-template-columns: repeat(2, 1fr); }
-  .versus { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .base-band { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
@@ -684,14 +644,13 @@ strong { color: var(--ink-900); font-weight: 700; }
   .plan-combo-plus { width: 100%; height: 36px; }
   .hero-float { display: none; }
   .base-band { padding: 30px; }
-  .cost-calc { padding: 28px 20px 26px; }
-  .cost-calc-eq { flex-direction: column; gap: 8px; }
   .cc-factor, .cc-result { flex-direction: row; gap: 10px; width: 100%; max-width: 300px; padding: 14px 20px; justify-content: center; }
   .cc-factor .cc-label, .cc-result .cc-label { text-align: left; }
   .cc-factor br, .cc-result br { display: none; }
   .cc-op { transform: rotate(90deg); }
   .cc-op--eq { transform: none; }
 }
+
 </style>
 <style>
 /* ===== Call-script & intake-form resource: scoped visual + print styles ===== */
@@ -1096,7 +1055,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <p>Real, trained people answer in your company name, qualify the pest issue, and book eligible jobs by your rules.</p>
         <div class="footer-badge">
           <img src="/assets/badge-designrush.png" alt="DesignRush directory badge" width="38" height="43" loading="lazy" decoding="async">
-          <span>Listed on DesignRush&rsquo;s<br>Top Call Center Companies, 2026</span>
+          <span>Listed in the DesignRush<br>call center company directory</span>
         </div>
       </div>
 

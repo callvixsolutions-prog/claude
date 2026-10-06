@@ -320,6 +320,8 @@ strong { color: var(--ink-900); font-weight: 700; }
   border-radius: var(--radius-md); padding: 13px 17px; box-shadow: var(--shadow-lg);
   display: flex; align-items: center; gap: 11px; font-family: var(--font-heading); font-weight: 700; font-size: 14px;
 }
+.hero-float--below { position: static; margin: 14px auto 0; width: fit-content; }
+@media (max-width: 980px) { .hero-float--below { margin-left: 0; } }
 .hero-float .ico { width: 34px; height: 34px; border-radius: 10px; background: var(--teal-100); display: flex; align-items: center; justify-content: center; }
 .hero-float .ico svg { width: 18px; height: 18px; color: var(--teal-600); }
 .hero-float small { display: block; font-family: var(--font-body); font-weight: 500; font-size: 11.5px; color: var(--ink-500); }
@@ -349,25 +351,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .stat cite { display: block; margin-top: 10px; font-size: 11.5px; color: var(--ink-400); font-style: normal; }
 
 /* Cost-of-a-missed-call visual equation */
-.cost-calc {
-  max-width: 880px; margin: 40px auto 0; text-align: center;
-  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md); padding: 34px 30px 30px; position: relative; overflow: hidden;
-}
-.cost-calc::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 4px; background: linear-gradient(90deg, var(--teal-500), var(--teal-300)); }
-.cost-calc-eyebrow { display: inline-block; font-family: var(--font-heading); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--teal-600); }
-.cost-calc-title { font-family: var(--font-heading); font-size: 22px; font-weight: 700; color: var(--navy-900); margin: 8px 0 24px; letter-spacing: -0.01em; }
-.cost-calc-eq { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 11px; }
-.cc-factor, .cc-result { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 15px 17px; border-radius: var(--radius-md); min-width: 92px; }
-.cc-factor { background: var(--sand); }
-.cc-result { background: linear-gradient(155deg, var(--teal-500), var(--teal-600)); box-shadow: var(--shadow-teal); }
-.cc-num { font-family: var(--font-heading); font-size: 26px; font-weight: 800; color: var(--navy-900); line-height: 1; letter-spacing: -0.02em; }
-.cc-label { font-size: 12px; line-height: 1.3; color: var(--ink-500); }
-.cc-result .cc-num { color: #fff; font-size: 27px; }
-.cc-result .cc-label { color: rgba(255,255,255,0.9); font-weight: 600; }
-.cc-op { font-family: var(--font-heading); font-size: 20px; font-weight: 700; color: var(--teal-600); flex-shrink: 0; }
-.cc-op--eq { color: var(--navy-900); }
-.cost-calc-note { margin: 22px auto 0; max-width: 560px; font-size: 13px; line-height: 1.6; color: var(--ink-500); }
+
 .cost-close { text-align: center; margin: 30px auto 0; max-width: 660px; font-size: 16px; line-height: 1.65; color: var(--ink-500); }
 
 /* ---------- Cards ---------- */
@@ -410,25 +394,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .photo-badge svg { width: 18px; height: 18px; color: var(--teal-300); }
 
 /* ---------- Human vs AI comparison (core pillar) ---------- */
-.versus { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.versus-col { border-radius: var(--radius-lg); padding: 34px; }
-.versus-col h3 { display: flex; align-items: center; gap: 11px; font-size: 21px; margin-bottom: 20px; }
-.versus-col h3 .badge { width: 40px; height: 40px; border-radius: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.versus-col h3 .badge svg { width: 22px; height: 22px; }
-.versus-col ul { display: flex; flex-direction: column; gap: 14px; }
-.versus-col li { display: flex; gap: 11px; align-items: flex-start; font-size: 15px; }
-.versus-col li svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; }
-.versus-them { background: var(--white); border: 1px solid var(--line); }
-.versus-them h3 { color: var(--ink-700); }
-.versus-them h3 .badge { background: var(--sand-2); color: var(--ink-500); }
-.versus-them li { color: var(--ink-500); }
-.versus-them li svg { color: var(--ink-400); }
-.versus-us { background: linear-gradient(160deg, var(--navy-900), var(--navy-800)); border: 1px solid var(--navy-700); box-shadow: var(--shadow-lg); }
-.versus-us h3 { color: #fff; }
-.versus-us h3 .badge { background: var(--teal-500); color: #04252a; }
-.versus-us li { color: #dfe4f2; }
-.versus-us li svg { color: var(--teal-400); }
-.versus-us .tag-top { display: inline-block; background: var(--teal-500); color: #04252a; font-family: var(--font-heading); font-weight: 700; font-size: 11.5px; padding: 5px 12px; border-radius: 999px; margin-bottom: 16px; letter-spacing: 0.03em; }
+
 
 /* ---------- Steps ---------- */
 .steps { display: flex; flex-direction: column; }
@@ -439,18 +405,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .step p { color: var(--ink-500); margin: 0; }
 
 /* ---------- Comparison table ---------- */
-.compare-wrap { overflow-x: auto; border-radius: var(--radius-md); box-shadow: var(--shadow-md); }
-.compare-table { width: 100%; border-collapse: collapse; background: var(--white); min-width: 640px; }
-.compare-table th, .compare-table td { padding: 17px 20px; text-align: left; border-bottom: 1px solid var(--line); font-size: 14.5px; }
-.compare-table thead th { font-family: var(--font-heading); background: var(--sand); color: var(--navy-900); font-size: 14px; }
-.compare-table td:not(:first-child), .compare-table th:not(:first-child) { text-align: center; }
-.compare-table .col-callvix { background: var(--teal-50); }
-.compare-table thead .col-callvix { background: var(--navy-900); color: #fff; }
-.compare-table tbody td:first-child { font-weight: 600; color: var(--ink-700); }
-.compare-table .col-callvix { font-weight: 700; color: var(--navy-900); }
-.compare-table svg.yes { width: 19px; height: 19px; color: var(--teal-500); }
-.compare-table svg.no { width: 18px; height: 18px; color: var(--line-2); }
-.compare-table tbody tr:last-child td { border-bottom: none; }
+
 
 /* ---------- Pricing ---------- */
 .plan-combo { display: flex; align-items: stretch; border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-md); background: var(--white); }
@@ -462,11 +417,14 @@ strong { color: var(--ink-900); font-weight: 700; }
 .plan-combo-value small { font-size: 14px; font-weight: 600; color: var(--ink-400); }
 .plan-combo-item--base .plan-combo-value small { color: #9fb8d6; }
 .plan-combo-plus { display: flex; align-items: center; justify-content: center; width: 56px; flex-shrink: 0; background: var(--sand); font-family: var(--font-heading); font-size: 22px; font-weight: 800; color: var(--teal-600); }
+.price-headline { font-family: var(--font-heading); font-size: 40px; font-weight: 800; color: var(--navy-900); letter-spacing: -0.02em; line-height: 1.1; margin: 6px 0 14px; }
+.price-headline small { font-family: var(--font-body); font-weight: 500; font-size: 17px; color: var(--ink-500); letter-spacing: 0; }
+.price-hero-note { font-size: 14.5px; color: var(--ink-500); margin-top: 12px; }
+@media (max-width: 480px) { .price-headline { font-size: 31px; } }
 .plan-combo-note { text-align: center; font-size: 13.5px; color: var(--ink-400); margin-top: 15px; }
 
 .price-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 32px; position: relative; box-shadow: var(--shadow-sm); }
-.price-card--highlight { border-color: var(--teal-500); box-shadow: var(--shadow-md); }
-.price-card--highlight::before { content: 'Most popular'; position: absolute; top: -13px; left: 32px; background: var(--teal-500); color: #04252a; font-family: var(--font-heading); font-weight: 700; font-size: 12px; padding: 5px 13px; border-radius: 999px; }
+
 .price-card h3 { font-size: 20px; margin-bottom: 6px; }
 .price-card .price { font-family: var(--font-heading); font-size: 34px; font-weight: 800; color: var(--navy-900); margin: 10px 0 4px; letter-spacing: -0.02em; }
 .price-card .price span { font-size: 14px; font-weight: 600; color: var(--ink-400); }
@@ -570,17 +528,20 @@ strong { color: var(--ink-900); font-weight: 700; }
 .form-status:empty { margin: 0; }
 .form-status--error { color: #b4232b; font-weight: 600; }
 
-/* ---------- Compact pricing summary (integration pages) ---------- */
+/* ---------- Compact pricing summary (integration pages) ----------
+   Every rule here is scoped to .price-cards. The plan cards on /pricing use
+   the bare .price-card selector above; leaving any of these unscoped lets the
+   later block win the cascade and silently restyle that page. */
 .price-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.price-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 24px 26px; box-shadow: var(--shadow-sm); }
-.price-card--addon { background: var(--cream); }
-.price-card h3 { font-size: 17px; margin: 10px 0 10px; }
-.price-card .price-amount { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); font-size: 30px; line-height: 1.1; margin-bottom: 10px; }
-.price-card .price-amount small { font-family: var(--font-body); font-weight: 500; font-size: 15px; color: var(--ink-500); }
-.price-card p { font-size: 15px; color: var(--ink-700); margin: 0 0 10px; line-height: 1.55; }
-.price-card ul { display: flex; flex-direction: column; gap: 7px; margin: 0; }
-.price-card li { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 14.5px; color: var(--ink-500); border-top: 1px solid var(--line); padding-top: 7px; }
-.price-card li .amt { font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); white-space: nowrap; }
+.price-cards .price-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 24px 26px; box-shadow: var(--shadow-sm); }
+.price-cards .price-card--addon { background: var(--cream); }
+.price-cards .price-card h3 { font-size: 17px; margin: 10px 0 10px; }
+.price-cards .price-card .price-amount { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); font-size: 30px; line-height: 1.1; margin-bottom: 10px; }
+.price-cards .price-card .price-amount small { font-family: var(--font-body); font-weight: 500; font-size: 15px; color: var(--ink-500); }
+.price-cards .price-card p { font-size: 15px; color: var(--ink-700); margin: 0 0 10px; line-height: 1.55; }
+.price-cards .price-card ul { display: flex; flex-direction: column; gap: 7px; margin: 0; }
+.price-cards .price-card li { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 14.5px; color: var(--ink-500); border-top: 1px solid var(--line); padding-top: 7px; }
+.price-cards .price-card li .amt { font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); white-space: nowrap; }
 @media (max-width: 720px) { .price-cards { grid-template-columns: 1fr; gap: 18px; } }
 
 /* ---------- Footer ---------- */
@@ -668,7 +629,6 @@ strong { color: var(--ink-900); font-weight: 700; }
   .photo-split.reverse .photo-frame { order: -1; }
   .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .stat-band { grid-template-columns: repeat(2, 1fr); }
-  .versus { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .base-band { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
@@ -686,14 +646,13 @@ strong { color: var(--ink-900); font-weight: 700; }
   .plan-combo-plus { width: 100%; height: 36px; }
   .hero-float { display: none; }
   .base-band { padding: 30px; }
-  .cost-calc { padding: 28px 20px 26px; }
-  .cost-calc-eq { flex-direction: column; gap: 8px; }
   .cc-factor, .cc-result { flex-direction: row; gap: 10px; width: 100%; max-width: 300px; padding: 14px 20px; justify-content: center; }
   .cc-factor .cc-label, .cc-result .cc-label { text-align: left; }
   .cc-factor br, .cc-result br { display: none; }
   .cc-op { transform: rotate(90deg); }
   .cc-op--eq { transform: none; }
 }
+
 </style>
 
 <script type="application/ld+json">
@@ -1001,9 +960,11 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           <span class="live-tag"><span class="dot"></span> EXAMPLE</span>
         </div>
         <div class="call-card-body">
-          <div class="bubble them"><span class="lbl">Caller</span>"There are wasps building a nest right by our front door — can someone come out today?"</div>
-          <div class="bubble us"><span class="lbl">Callvix</span>"Absolutely, we can prioritize that. What's the service address so I can confirm you're in the coverage area?"</div>
-          <div class="bubble us"><span class="lbl">Callvix</span>"I've got a technician free tomorrow, 10am–12pm. Shall I book that in for you?"</div>
+          <div class="bubble them"><span class="lbl">Caller</span>"There are wasps building a nest right by our front door. Can someone come out?"</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>"Let's get that looked at. Can I take the service address so I can check you're in the coverage area?"</div>
+          <div class="bubble them"><span class="lbl">Caller</span>"It's 14 Oak Lane."</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>"That's covered. There's a slot tomorrow between 10am and 12pm — does that work?"</div>
+          <div class="bubble them"><span class="lbl">Caller</span>"Yes, that's fine."</div>
           <div class="call-result">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
             <span>Job booked · Flagged urgent · Details recorded</span>
@@ -1011,7 +972,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         </div>
       </div>
       <p class="card-disclaimer">Illustrative sample call flow — not a customer testimonial or performance claim.</p>
-      <div class="hero-float">
+      <div class="hero-float hero-float--below">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg></div>
         <div>Booked while you're in the field<small>sample call outcome</small></div>
       </div>
@@ -1047,13 +1008,13 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       </div>
       <div class="stat">
         <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-11.8A8 8 0 0 0 4 10.2C4 17.5 12 22 12 22Z"/><circle cx="12" cy="10" r="3"/></svg></div>
-        <h3 class="stat-title">Voicemail won't save it</h3>
-        <p>Most people won't leave a message about an urgent problem. They hang up and dial the next number on the list.</p>
+        <h3 class="stat-title">Give callers a person to speak to</h3>
+        <p>When your office cannot pick up, we answer during your agreed coverage.</p>
       </div>
       <div class="stat">
         <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-        <h3 class="stat-title">First to answer wins</h3>
-        <p>Picking up live, on the first ring, is often what books the job — before a competitor ever gets the chance.</p>
+        <h3 class="stat-title">Turn enquiries into clear next steps</h3>
+        <p>We qualify the request and book eligible appointments or escalate according to your rules.</p>
       </div>
       <div class="stat">
         <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
@@ -1062,58 +1023,11 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       </div>
     </div>
 
-    <div class="cost-calc">
-      <span class="cost-calc-eyebrow">A rough sense of the stakes</span>
-      <h3 class="cost-calc-title">What could those missed calls be worth?</h3>
-      <div class="cost-calc-eq">
-        <div class="cc-factor"><span class="cc-num">3</span><span class="cc-label">missed calls<br>a day</span></div>
-        <span class="cc-op">×</span>
-        <div class="cc-factor"><span class="cc-num">40%</span><span class="cc-label">you'd<br>book</span></div>
-        <span class="cc-op">×</span>
-        <div class="cc-factor"><span class="cc-num">$250</span><span class="cc-label">avg. first<br>job</span></div>
-        <span class="cc-op">×</span>
-        <div class="cc-factor"><span class="cc-num">30</span><span class="cc-label">days a<br>month</span></div>
-        <span class="cc-op cc-op--eq">=</span>
-        <div class="cc-result"><span class="cc-num">≈ $9,000</span><span class="cc-label">a month at stake</span></div>
-      </div>
-      <p class="cost-calc-note">Example figures, not a guarantee — and that's before any recurring service. Bring your own numbers to a discovery call and we'll work it through with you.</p>
-    </div>
-
-    <p class="cost-close">You know the pattern — you're mid-treatment, driving between stops, or it's after hours, and the phone just rings out. That's the gap Callvix quietly covers for you.</p>
+    <p class="cost-close">You know the pattern — you're mid-treatment, driving between stops, or the office is already stretched, and the phone just rings out. That's the gap Callvix covers during your agreed coverage. If you want to put a number on it, our guide to <a href="/blog/missed-calls-cost-pest-control">what missed calls really cost</a> walks through the arithmetic using your own booking rate and job value.</p>
   </div>
 </section>
 
 <!-- ===================== HUMAN VS AI (CORE PILLAR) ===================== -->
-<section class="section section--alt">
-  <div class="container">
-    <div class="section-head section-head--center">
-      <div class="eyebrow">Why real people matter</div>
-      <h2>A lot of new services answer with a bot. We're the people who actually pick up.</h2>
-      <p class="lede">A homeowner with a rat in the kitchen doesn't want to "press 1." They want a calm, competent human who gets it. That judgment — and warmth — is exactly what an AI robot can't fake.</p>
-    </div>
-    <div class="versus">
-      <div class="versus-col versus-them">
-        <h3><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V4h6v3M9 13h.01M15 13h.01"/></svg></span> A typical AI answering bot</h3>
-        <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg> Reads a script; stumbles on anything unexpected</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg> Can't read tone, urgency, or a frustrated customer</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg> Callers hang up the moment they realize it's a robot</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg> Misses the upsell and the "while you're here" job</li>
-        </ul>
-      </div>
-      <div class="versus-col versus-us">
-        <span class="tag-top">The Callvix difference</span>
-        <h3><span class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></span> Trained Callvix agents</h3>
-        <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Real people trained specifically on pest control calls</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Hear urgency and adapt — reassure, prioritize, escalate</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Operate as an extension of your office, using your rules</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Ask the right follow-ups and book the bigger job</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ===================== WHAT WE DO ===================== -->
 <section class="section">
@@ -1172,7 +1086,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="split">
       <div>
         <div class="eyebrow">How it works</div>
-        <h2>From first ring to booked job, in five steps</h2>
+        <h2>From first call to booked job, in five steps</h2>
         <p class="lede">A consistent, professional experience on the calls we handle — no matter who's on shift.</p>
         <a href="/services" class="btn btn-outline" style="margin-top:8px;">See it in detail</a>
       </div>
@@ -1188,72 +1102,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
 </section>
 
 <!-- ===================== COMPARISON ===================== -->
-<section class="section section--alt">
-  <div class="container">
-    <div class="section-head section-head--center">
-      <div class="eyebrow">How Callvix compares</div>
-      <h2>Voicemail loses jobs. Generic call centers miss context. Bots feel like bots.</h2>
-      <p class="lede">Here's how a pest-control-only, human-run service stacks up against the alternatives.</p>
-    </div>
-    <div class="compare-wrap">
-      <table class="compare-table">
-        <thead>
-          <tr>
-            <th>&nbsp;</th>
-            <th>Voicemail</th>
-            <th>Generic answering service</th>
-            <th>AI answering bot</th>
-            <th class="col-callvix">Callvix</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Answered live, in your business name</td>
-            <td><svg class="no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></td>
-            <td>Sometimes</td>
-            <td>Robotic</td>
-            <td class="col-callvix"><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></td>
-          </tr>
-          <tr>
-            <td>Real human judgment on urgent calls</td>
-            <td><svg class="no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></td>
-            <td><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></td>
-            <td><svg class="no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></td>
-            <td class="col-callvix"><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></td>
-          </tr>
-          <tr>
-            <td>Trained on pest control specifically</td>
-            <td><svg class="no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></td>
-            <td><svg class="no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></td>
-            <td>Varies</td>
-            <td class="col-callvix"><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></td>
-          </tr>
-          <tr>
-            <td>Books the job by your rules</td>
-            <td><svg class="no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></td>
-            <td>Sometimes</td>
-            <td>Sometimes</td>
-            <td class="col-callvix"><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></td>
-          </tr>
-          <tr>
-            <td>Flat per-call price (no per-minute bill shock)</td>
-            <td>—</td>
-            <td><svg class="no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></td>
-            <td>Varies</td>
-            <td class="col-callvix"><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></td>
-          </tr>
-          <tr>
-            <td>No long-term contract</td>
-            <td>—</td>
-            <td>Often required</td>
-            <td>Varies</td>
-            <td class="col-callvix"><svg class="yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
 
 <!-- ===================== PRICING ===================== -->
 <section class="section">
@@ -1291,7 +1139,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <div>
         <div class="eyebrow">Fits how you already work</div>
         <h2>Works with the tools your office already runs on</h2>
-        <p class="lede">Call workflows can be configured around <a href="/integrations/" style="color:var(--teal-300);font-weight:600;">the CRM or scheduling system your office already uses</a>, so your team sees calls and booked jobs where they expect — set up during onboarding, subject to access.</p>
+        <p class="lede">Our representatives can work in <a href="/integrations/" style="color:var(--teal-300);font-weight:600;">the CRM or scheduling system your office already uses</a> with the <strong>CRM Management add-on ($99/month)</strong>, entering call notes and booking details in your own account using access you grant and can revoke. Without the add-on, booking and call details reach your team by the method agreed during setup. There is no native integration or data sync.</p>
         <div class="hero-badges" style="margin-top:8px;">
           <a class="pill" href="/integrations/fieldroutes">FieldRoutes / PestRoutes</a>
           <a class="pill" href="/integrations/servicetitan">ServiceTitan</a>
@@ -1335,7 +1183,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <div class="body">
           <span class="kicker">Pricing</span>
           <h3>How much does a pest control answering service cost in 2026?</h3>
-          <p>Per-minute vs. per-call vs. flat pricing — and how to avoid a busy-season bill shock.</p>
+          <p>Per-minute and per-call billing — and how to compare them at your own call volume.</p>
           <span class="more">Read the guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
         </div>
       </a>
@@ -1366,7 +1214,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
 <section class="section">
   <div class="container">
     <div class="cta-band">
-      <div class="eyebrow">Now onboarding founding partners</div>
+      <div class="eyebrow">Talk to the founder</div>
       <h2>Ready to stop losing pest control jobs to voicemail?</h2>
       <p class="lede">Book a free 20-minute discovery call. We'll map your current call flow and show you exactly how Callvix fits — no contract, no pressure.</p>
       <div class="btn-row">
@@ -1388,7 +1236,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <p>Real, trained people answer in your company name, qualify the pest issue, and book eligible jobs by your rules.</p>
         <div class="footer-badge">
           <img src="/assets/badge-designrush.png" alt="DesignRush directory badge" width="38" height="43" loading="lazy" decoding="async">
-          <span>Listed on DesignRush&rsquo;s<br>Top Call Center Companies, 2026</span>
+          <span>Listed in the DesignRush<br>call center company directory</span>
         </div>
       </div>
 

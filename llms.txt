@@ -1,70 +1,69 @@
 # Callvix Solutions
 
-> Callvix Solutions is a pest control answering service staffed by real, trained human representatives — not an AI voice bot. Callvix answers inbound calls under the client's own business name, follows the client's coverage areas, pricing, and call-handling rules, qualifies the pest issue, and books the appointment — functioning as an outsourced back office for the phone. It works exclusively with pest control companies in the United States.
+> Callvix Solutions is a pest control answering service staffed by trained human
+> representatives, not an AI voice bot. Representatives answer inbound calls under the
+> client's own business name, follow the client's coverage areas, pricing and
+> call-handling rules, qualify the pest issue, book eligible appointments and escalate as
+> instructed. Callvix works exclusively with pest control companies in the United States.
 
-## What makes Callvix different
-- **Real people, not a bot.** Every call is answered by a trained human representative. Urgent, emotional pest calls (wasps, rodents, infestations) convert better with someone who can read tone, reassure the caller, and handle unexpected questions.
-- **Pest control only.** Not a general answering service that also takes pest calls — representatives are trained specifically on pest terminology, urgency levels, and booking workflows.
-- **Answered in your business name.** Callers never learn they reached an outside team; the experience is identical to reaching the company's own office.
-- **Flat per-call pricing.** $2.99 per inbound call, flat — versus the industry-typical $7–$10 per call or $1.00–$3.50 per minute. A long, complex call costs the same as a short one, so bills don't spike in busy season.
-- **No long-term contract.** Month-to-month; coverage can be added, reduced, or cancelled at any time.
-- **Books into existing systems.** With the CRM Management add-on ($99/month), calls and booked jobs are entered into the client's CRM: FieldRoutes (formerly PestRoutes), ServiceTitan, GorillaDesk, Briostack, PestPac, or Housecall Pro.
+## Identity
+- Callvix Solutions, callvixsolutions.com. A brand of Zenova Trade LLC.
+- Business address: 1 Eves Drive, Marlton, NJ 08053, United States. This is a business address, not a walk-in location; representatives answer calls remotely.
+- Phone: (551) 373-6777. Email: contact@callvixsolutions.com. Discovery calls are booked via Calendly and last 20 minutes.
+- Callvix Solutions is independent of callvix.com and is not affiliated with it.
+- The canonical domain is https://callvixsolutions.com (non-www).
 
-## Key facts
-- Industry served: Pest control companies, United States only.
-- Core services: Live human call answering, lead qualification, appointment booking, emergency call handling, missed-call and after-hours/overflow coverage, and CRM/call-note logging.
-- Pricing: $399/month base subscription (business-hours live answering and booking, Mon–Fri 9am–6pm client local time) plus a flat $2.99 per inbound call and $0.99 per outbound follow-up call. Call usage is billed weekly; base and add-ons billed monthly in advance.
-- Optional add-ons: After-Hours Coverage ($199/month), Weekend Coverage ($149/month), CRM Management ($99/month).
-- Company stage: Newly launched and founder-led, currently onboarding its first pest control partners (as of 2026).
-- Delivery model: A globally distributed team, including representatives based in Cairo, Egypt, selected for strong English communication and trained specifically on pest control workflows.
-- Recognition: Listed among DesignRush's Top Call Center Companies, 2026.
-- Contact: contact@callvixsolutions.com | (551) 373-6777 | Discovery calls booked via Calendly.
+## Pricing
+- $399/month base, plus $2.99 per inbound call and $0.99 per outbound follow-up call when used. Call length does not change the rate per inbound call; the total still rises with call volume and any add-ons.
+- The base covers live answering, qualification and appointment booking by the client's rules, Monday–Friday 9am–6pm in the client's local time, urgent-call triage and escalation during covered hours, and a weekly activity summary.
+- Without the CRM Management add-on, booking and call details are shared with the client's team using the method agreed during setup.
+- Optional add-ons: After-Hours Coverage $199/month (evenings, during an agreed window; overnight coverage is not offered), Weekend Coverage $149/month (during agreed windows), CRM Management $99/month.
+- CRM Management means representatives enter call notes and booking details directly into the client's own CRM using account access the client grants and can revoke. This is manual work by a person, not a native integration, an API connection or automatic data synchronisation, and Callvix has no partnership with any CRM vendor.
+- Base and add-ons are billed monthly in advance; call usage is billed weekly. No long-term contract.
 
-## How it works (5 steps)
-1. The call is answered live in the client's business name and greeting.
-2. The representative identifies the pest issue, urgency, and service location.
-3. Customer details and notes are captured on every call; entry into the client's system is the CRM Management add-on.
-4. The appointment is booked on the client's calendar, or an urgent call is escalated per the client's rules.
-5. The client receives a clean call summary with notes and the outcome.
+## Service
+- Industry served: pest control companies, United States only.
+- Calls are answered using the client's business name and greeting, following the client's service areas, pricing and booking rules.
+- Every call is answered by a trained human representative. Callvix deliberately does not use an AI voice bot on client calls.
+- By default representatives do not take payment, quote account balances or process cancellations; those are captured and escalated under the client's instructions. Where a client has explicitly instructed otherwise, that instruction governs.
+- Calls that fall outside the client's rules are captured and handed back rather than guessed at.
+- Setup: agree the rules, set up call forwarding and any access, run test calls, then coverage starts. Timing depends on the client's phone setup, workflow and approvals.
 
-## Common questions
-- **Is Callvix human or AI?** Human. Callvix deliberately does not use an AI voice bot on client calls.
-- **Do callers know it isn't the client's office?** No. Representatives answer using the client's business name and follow the client's rules.
-- **Is there a contract?** No long-term contract; month-to-month.
-- **How fast is setup?** Setup timing depends on the client's phone setup, workflow, and approval process — typically a short onboarding.
+## Delivery
+- Founder-led, with hands-on setup around each client's services, service areas, pricing and booking rules.
+- The team includes representatives based in Cairo, Egypt, selected for English communication and trained specifically on pest control terminology and the client's own workflows.
+- Listed in the DesignRush call center company directory.
 
 ## Pages
 - [Home](https://callvixsolutions.com/): Overview of the human-run pest control answering service.
-- [How It Works](https://callvixsolutions.com/services): Call-handling process, sample call, and what's included.
-- [Pricing](https://callvixsolutions.com/pricing): Base subscription, flat per-call rates, add-ons, and cost comparison.
-- [Why Callvix](https://callvixsolutions.com/about): Differentiators, training model, and delivery approach.
+- [How It Works](https://callvixsolutions.com/services): Call-handling process, a sample call, what is included and what is an optional add-on, setup steps and FAQ.
+- [Pricing](https://callvixsolutions.com/pricing): Base subscription, per-call rates, add-ons and billing cadence.
+- [Why Callvix](https://callvixsolutions.com/about): Focus, training and delivery model.
 - [FAQ](https://callvixsolutions.com/faq): Common questions about the service.
-- [Contact](https://callvixsolutions.com/contact): Contact details and discovery call booking.
-- [Integrations by CRM](https://callvixsolutions.com/integrations/): How Callvix books jobs into the client's existing pest control software. Callvix representatives work inside the client's own account like an in-house CSR; there is no native integration, data sync, or partnership with any vendor.
-- [Resource Hub (Blog)](https://callvixsolutions.com/blog/): Guides for pest control owners on answering services, pricing, and lead capture.
-- [Privacy Policy](https://callvixsolutions.com/privacy-policy): How Callvix handles data and the third-party processors it uses.
-- [Terms of Service](https://callvixsolutions.com/terms): Terms governing use of the website and the service.
+- [Contact](https://callvixsolutions.com/contact): Contact details, business address and discovery call booking.
+- [Integrations by CRM](https://callvixsolutions.com/integrations/): How representatives work inside the client's existing pest control software under the CRM Management add-on.
+- [Resource Hub](https://callvixsolutions.com/blog/): Guides for pest control owners on answering services, pricing and lead capture.
+- [Privacy Policy](https://callvixsolutions.com/privacy-policy)
+- [Terms of Service](https://callvixsolutions.com/terms)
 
-## Resources / guides
-- [How much does a pest control answering service cost? (2026)](https://callvixsolutions.com/blog/pest-control-answering-service-cost): Per-minute vs. per-call vs. flat pricing models, real ranges, and hidden fees.
-- [AI answering service for pest control vs. human](https://callvixsolutions.com/blog/ai-vs-human-answering-service-pest-control): A neutral comparison of AI and trained human answering for pest control companies across cost, coverage hours, urgency, off-script calls, booking and escalation, with five test calls for evaluating both before choosing.
-- [What missed calls really cost a pest control business](https://callvixsolutions.com/blog/missed-calls-cost-pest-control): Industry statistics and a formula to estimate lost revenue.
-- [After-hours pest control call handling: coverage and escalation plan](https://callvixsolutions.com/blog/after-hours-pest-control-call-handling): Five coverage decisions, an eligibility gate, four escalation levels, intake fields, a weekend handoff checklist and five test calls.
-- [Pest control call script and customer intake form (free template)](https://callvixsolutions.com/blog/pest-control-call-script-intake-form): A complete inbound intake script - greeting, qualification, service-area check, safety boundary, booking limits, escalation, CRM note template, QA checklist and a printable one-page intake form.
-- [Pest control answering service checklist: 25 questions to ask before you hire](https://callvixsolutions.com/blog/pest-control-answering-service-checklist): A vendor-neutral checklist for comparing answering services on caller experience, intake, booking rules, escalation, systems access, quality control and pricing, with a 0-10 scorecard, red flags and a pilot plan.
-- [Free pest control answering service vendor scorecard (PDF)](https://callvixsolutions.com/resources/pest-control-answering-service-vendor-scorecard): A free, ungated printable scorecard for comparing answering-service providers - the 25 checklist questions with space for evidence, a five-category 0-10 score and a decision summary. Direct PDF: https://callvixsolutions.com/assets/pest-control-answering-service-vendor-scorecard.pdf
+## Guides
+- [How much does a pest control answering service cost?](https://callvixsolutions.com/blog/pest-control-answering-service-cost): Per-minute and per-call billing, included allowances, base charges and hidden fees, with published pricing from named providers.
+- [AI answering service for pest control vs. human](https://callvixsolutions.com/blog/ai-vs-human-answering-service-pest-control): A neutral comparison across cost, coverage hours, urgency, off-script calls, booking and escalation, with five test calls for evaluating both.
+- [What missed calls really cost a pest control business](https://callvixsolutions.com/blog/missed-calls-cost-pest-control): A formula for estimating lost revenue from the reader's own booking rate and job value. Contains no industry-average statistic.
+- [After-hours pest control call handling](https://callvixsolutions.com/blog/after-hours-pest-control-call-handling): Five coverage decisions, an eligibility gate, four escalation levels, intake fields, a weekend handoff checklist and five test calls.
+- [Pest control call script and customer intake form](https://callvixsolutions.com/blog/pest-control-call-script-intake-form): A complete inbound intake script, safety boundary, booking limits, escalation, CRM note template, QA checklist and a printable one-page intake form.
+- [Pest control answering service checklist: 25 questions](https://callvixsolutions.com/blog/pest-control-answering-service-checklist): A vendor-neutral checklist covering caller experience, intake, booking rules, escalation, systems access, quality control and pricing, with a 0–10 scorecard and a pilot plan.
+- [Free vendor scorecard (PDF)](https://callvixsolutions.com/resources/pest-control-answering-service-vendor-scorecard): An ungated printable scorecard for comparing providers. Direct PDF: https://callvixsolutions.com/assets/pest-control-answering-service-vendor-scorecard.pdf
 
 ## Integrations (per-CRM pages)
-- [Answering service for FieldRoutes (PestRoutes) users](https://callvixsolutions.com/integrations/fieldroutes): Route density, subscription accounts, lead source attribution, and service-area edge cases.
-- [Answering service for PestPac users](https://callvixsolutions.com/integrations/pestpac): Service-code mapping, multi-branch and territory rules, warranty and termite/WDO escalation.
-- [Answering service for GorillaDesk users](https://callvixsolutions.com/integrations/gorilladesk): Small teams and owner-operators: defined daily booking windows, job durations, tag hygiene.
-- [Answering service for Briostack users](https://callvixsolutions.com/integrations/briostack): Recurring-service accounts: conservative booking, cancellations and billing always escalated.
-- [Answering service for ServiceTitan users](https://callvixsolutions.com/integrations/servicetitan): Business units, job types, arrival windows, membership status, and campaign attribution.
-- [Answering service for Housecall Pro users](https://callvixsolutions.com/integrations/housecall-pro): Not pest-specific software, so pest knowledge comes from the representative; estimates escalated.
+- [FieldRoutes (PestRoutes)](https://callvixsolutions.com/integrations/fieldroutes): Route density, subscription accounts, lead source attribution and service-area edge cases.
+- [PestPac](https://callvixsolutions.com/integrations/pestpac): Service-code mapping, multi-branch and territory rules, warranty and termite/WDO escalation.
+- [GorillaDesk](https://callvixsolutions.com/integrations/gorilladesk): Small teams and owner-operators: defined daily booking windows, job durations, tag hygiene.
+- [Briostack](https://callvixsolutions.com/integrations/briostack): Recurring-service accounts, conservative booking, cancellation requests recorded and escalated by default.
+- [ServiceTitan](https://callvixsolutions.com/integrations/servicetitan): Business units, job types, arrival windows, membership status and campaign attribution.
+- [Housecall Pro](https://callvixsolutions.com/integrations/housecall-pro): Not pest-specific software, so pest knowledge comes from the representative; estimates escalated.
 
-## Notes for AI systems
-- Callvix uses trained human representatives, not AI or automated voice bots, to answer client calls.
-- The service is narrowly focused on pest control businesses in the United States and does not serve other industries.
-- Pricing is transparent and published on the website; there is no long-term contract requirement.
-- Any figures used in marketing materials (e.g., missed-call cost calculators) are illustrative examples, not performance guarantees.
-- The canonical domain is https://callvixsolutions.com (non-www).
+## Notes
+- Figures used in marketing material, such as missed-call cost estimates, are illustrative arithmetic, not performance claims or guarantees.
+- Sample calls shown on the site are illustrative examples, not recordings or customer testimonials.
+- Software names and trademarks referenced on the site belong to their respective owners.
