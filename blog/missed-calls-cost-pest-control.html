@@ -575,6 +575,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .footer-contact .footer-phone svg { width: 18px; height: 18px; color: var(--teal-400); flex-shrink: 0; }
 .footer-contact .footer-phone:hover { color: var(--teal-300); }
 .footer-contact .footer-email { display: block; font-size: 14.5px; color: var(--teal-300); margin-bottom: 14px; word-break: break-word; }
+.footer-address { font-size: 14px; line-height: 1.6; color: #9aa2c0; margin: 14px 0 0; }
 .footer-contact .footer-email:hover { color: #fff; }
 .footer-contact .footer-area { font-size: 13.5px; color: #7f88a8; line-height: 1.55; margin-bottom: 18px; }
 /* Buttons inside the footer must keep their own colours (beat `.footer-col a`) */
@@ -612,7 +613,35 @@ strong { color: var(--ink-900); font-weight: 700; }
 }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 1150px) { .header-phone-wrap { display: none; } }
+/* Below 1150px the full number no longer fits beside the nav and CTA. Rather
+   than drop the phone entirely — this is a phone-answering business — collapse
+   it to a round icon button with a 44px touch target. The number itself stays
+   visible in the mobile menu and the footer.
+   Scoped to .header-phone-wrap so the mobile menu's own .header-phone link,
+   which has no .header-phone-num span, is left alone. */
+@media (max-width: 1150px) {
+  .header-phone-wrap .header-phone-num { display: none; }
+  .header-phone-wrap .header-phone {
+    width: 44px; height: 44px; gap: 0; justify-content: center;
+    border: 1px solid var(--line-2); border-radius: 999px;
+  }
+  .header-phone-wrap .header-phone svg { width: 19px; height: 19px; }
+}
+/* The call button adds ~50px to a header row that was already full on phones.
+   Give it room by tightening the gaps, logo and CTA rather than dropping any
+   of the four controls. Measured to fit at 320px, the narrowest we support. */
+@media (max-width: 480px) {
+  .site-header .container { gap: 8px; }
+  .header-actions { gap: 8px; }
+  .logo img { height: 34px; }
+  .header-actions .btn-sm { padding: 10px 14px; font-size: 13.5px; }
+}
+@media (max-width: 360px) {
+  .logo img { height: 30px; }
+  .header-phone-wrap .header-phone { width: 40px; height: 40px; }
+  .header-actions .btn-sm { padding: 9px 11px; font-size: 13px; }
+  .nav-toggle { padding: 6px; }
+}
 /* 320px phones: logo + Book a Call + menu button overflowed the header by ~18px */
 @media (max-width: 360px) {
   .site-header .container { padding: 0 16px; gap: 10px; }
@@ -742,8 +771,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <a href="/">Home</a><a href="/services">How It Works</a><a href="/pricing">Pricing</a><a href="/about">Why Callvix</a><a href="/blog/" aria-current="page">Resources</a><a href="/faq">FAQ</a><a href="/contact">Contact</a>
     </nav>
     <div class="header-actions">
-      <div class="header-phone-wrap"><a class="header-phone" href="tel:+15513736777"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>(551) 373-6777</a></div>
-      <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" class="btn btn-primary btn-sm">Book a Call</a>
+      <div class="header-phone-wrap"><a class="header-phone" href="tel:+15513736777" aria-label="Call Callvix on (551) 373-6777"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="header-phone-num">(551) 373-6777</span></a></div>
+      <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Book a Call</a>
       <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -751,7 +780,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   <div class="mobile-nav" id="mobileNav">
     <ul><li><a href="/">Home</a></li><li><a href="/services">How It Works</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/about">Why Callvix</a></li><li><a href="/blog/">Resources</a></li><li><a href="/faq">FAQ</a></li><li><a href="/contact">Contact</a></li></ul>
     <a href="tel:+15513736777" class="header-phone" style="margin-top:14px;">(551) 373-6777</a>
-    <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" class="btn btn-primary btn-block">Book a Discovery Call</a>
+    <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-block">Book a Discovery Call</a>
   </div>
 
 <main id="main">
@@ -842,7 +871,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <div class="eyebrow">Stop the leak</div>
       <h2>Stop losing jobs to voicemail</h2>
       <p class="lede">Book a free discovery call and we'll map exactly where your calls are leaking — and what recovering them is worth.</p>
-      <div class="btn-row"><a href="https://calendly.com/callvixsolutions/callvix-discovery-call" class="btn btn-primary btn-lg">Book a Discovery Call</a><a href="/services" class="btn btn-ghost">How it works</a></div>
+      <div class="btn-row"><a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Book a Discovery Call</a><a href="/services" class="btn btn-ghost">How it works</a></div>
     </div>
   </div>
 </section>
@@ -891,8 +920,9 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           (551) 373-6777
         </a>
         <a class="footer-email" href="mailto:contact@callvixsolutions.com">contact@callvixsolutions.com</a>
+        <p class="footer-address">Callvix Solutions<br>1 Eves Drive<br>Marlton, NJ 08053<br>United States</p>
         <p class="footer-area">Serving pest control companies nationwide across the United States.</p>
-        <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" class="btn btn-primary btn-sm">Book a discovery call</a>
+        <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Book a discovery call</a>
       </div>
     </div>
 

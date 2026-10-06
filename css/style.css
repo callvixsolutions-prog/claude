@@ -539,6 +539,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .footer-contact .footer-phone svg { width: 18px; height: 18px; color: var(--teal-400); flex-shrink: 0; }
 .footer-contact .footer-phone:hover { color: var(--teal-300); }
 .footer-contact .footer-email { display: block; font-size: 14.5px; color: var(--teal-300); margin-bottom: 14px; word-break: break-word; }
+.footer-address { font-size: 14px; line-height: 1.6; color: #9aa2c0; margin: 14px 0 0; }
 .footer-contact .footer-email:hover { color: #fff; }
 .footer-contact .footer-area { font-size: 13.5px; color: #7f88a8; line-height: 1.55; margin-bottom: 18px; }
 /* Buttons inside the footer must keep their own colours (beat `.footer-col a`) */
@@ -576,7 +577,35 @@ strong { color: var(--ink-900); font-weight: 700; }
 }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 1150px) { .header-phone-wrap { display: none; } }
+/* Below 1150px the full number no longer fits beside the nav and CTA. Rather
+   than drop the phone entirely — this is a phone-answering business — collapse
+   it to a round icon button with a 44px touch target. The number itself stays
+   visible in the mobile menu and the footer.
+   Scoped to .header-phone-wrap so the mobile menu's own .header-phone link,
+   which has no .header-phone-num span, is left alone. */
+@media (max-width: 1150px) {
+  .header-phone-wrap .header-phone-num { display: none; }
+  .header-phone-wrap .header-phone {
+    width: 44px; height: 44px; gap: 0; justify-content: center;
+    border: 1px solid var(--line-2); border-radius: 999px;
+  }
+  .header-phone-wrap .header-phone svg { width: 19px; height: 19px; }
+}
+/* The call button adds ~50px to a header row that was already full on phones.
+   Give it room by tightening the gaps, logo and CTA rather than dropping any
+   of the four controls. Measured to fit at 320px, the narrowest we support. */
+@media (max-width: 480px) {
+  .site-header .container { gap: 8px; }
+  .header-actions { gap: 8px; }
+  .logo img { height: 34px; }
+  .header-actions .btn-sm { padding: 10px 14px; font-size: 13.5px; }
+}
+@media (max-width: 360px) {
+  .logo img { height: 30px; }
+  .header-phone-wrap .header-phone { width: 40px; height: 40px; }
+  .header-actions .btn-sm { padding: 9px 11px; font-size: 13px; }
+  .nav-toggle { padding: 6px; }
+}
 /* 320px phones: logo + Book a Call + menu button overflowed the header by ~18px */
 @media (max-width: 360px) {
   .site-header .container { padding: 0 16px; gap: 10px; }
