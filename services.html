@@ -569,6 +569,19 @@ strong { color: var(--ink-900); font-weight: 700; }
 .form-status:empty { margin: 0; }
 .form-status--error { color: #b4232b; font-weight: 600; }
 
+/* ---------- Compact pricing summary (integration pages) ---------- */
+.price-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.price-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 24px 26px; box-shadow: var(--shadow-sm); }
+.price-card--addon { background: var(--cream); }
+.price-card h3 { font-size: 17px; margin: 10px 0 10px; }
+.price-card .price-amount { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); font-size: 30px; line-height: 1.1; margin-bottom: 10px; }
+.price-card .price-amount small { font-family: var(--font-body); font-weight: 500; font-size: 15px; color: var(--ink-500); }
+.price-card p { font-size: 15px; color: var(--ink-700); margin: 0 0 10px; line-height: 1.55; }
+.price-card ul { display: flex; flex-direction: column; gap: 7px; margin: 0; }
+.price-card li { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 14.5px; color: var(--ink-500); border-top: 1px solid var(--line); padding-top: 7px; }
+.price-card li .amt { font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); white-space: nowrap; }
+@media (max-width: 720px) { .price-cards { grid-template-columns: 1fr; gap: 18px; } }
+
 /* ---------- Footer ---------- */
 .site-footer { background: var(--navy-950); color: #9aa2c0; padding: 72px 0 30px; }
 .footer-grid {
@@ -945,7 +958,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="section-head section-head--center">
       <div class="eyebrow">What&rsquo;s included</div>
       <h2>What Callvix covers, and what&rsquo;s optional</h2>
-      <p class="lede">Standard weekday answering and booking, with paid add-ons for evenings and weekends. There is no blanket &ldquo;24/7&rdquo; promise &mdash; you choose the coverage windows that fit your business. Our <a href="/blog/after-hours-pest-control-call-handling">after-hours coverage and escalation plan</a> walks through choosing those windows from your own call data.</p>
+      <p class="lede">Live answering and booking Monday&ndash;Friday, 9am&ndash;6pm your local time, with optional evening and weekend coverage during the windows you agree. Our <a href="/blog/after-hours-pest-control-call-handling">after-hours coverage and escalation plan</a> walks through choosing those windows from your own call data.</p>
     </div>
 
     <div class="grid grid-2">
@@ -993,8 +1006,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <p style="font-size:14px;color:var(--ink-500);margin-top:14px;">Choose add-on windows from your own call data &mdash; not a blanket 24/7 plan.</p>
       </div>
     </div>
-
-<p class="svc-note" style="background:var(--teal-50);border:1px solid var(--teal-100);border-radius:var(--radius-sm);padding:14px 18px;margin:22px 0 0;"><strong>Working inside your own system is a paid add-on.</strong> The $399 base covers live answering, qualification and appointment booking by your rules, with booking and call details shared with your team using the method agreed during setup. Direct entry into your CRM is <strong>CRM Management, $99/month</strong>.</p>
 
     <div class="svc-fits">
       <div><h3>Solo operators</h3><p>Calls answered in your name while you&rsquo;re on a job or driving, without hiring a receptionist.</p></div>
@@ -1053,18 +1064,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       </div>
     </div>
     <p class="card-disclaimer">An illustrative example, not a recording or a customer testimonial. A call only ends in a booking when the address meets your service-area rules and a slot is actually free; otherwise it is escalated or returned to you by the rule you set.</p>
-
-    <div class="section-head section-head--center" style="margin:64px auto 36px;">
-      <div class="eyebrow">How calls are handled</div>
-      <h2>The same four stages on every call</h2>
-      <p class="lede">Each call follows the steps agreed at setup, so your rules are applied the same way whoever is on shift.</p>
-    </div>
-    <div class="steps">
-      <div class="step"><div class="step-num">1</div><div><h3 style="margin:0 0 6px;font-size:18.5px;">Answered as your business</h3><p>Calls open with your company name and greeting style.</p></div></div>
-      <div class="step"><div class="step-num">2</div><div><h3 style="margin:0 0 6px;font-size:18.5px;">Qualified and captured</h3><p>Service type, urgency and location confirmed, the address checked against your service area, and the caller&rsquo;s details recorded.</p></div></div>
-      <div class="step"><div class="step-num">3</div><div><h3 style="margin:0 0 6px;font-size:18.5px;">Booked or escalated</h3><p>Appointments booked on your availability, or escalated by your rules when the request falls outside them.</p></div></div>
-      <div class="step"><div class="step-num">4</div><div><h3 style="margin:0 0 6px;font-size:18.5px;">Shared and reported back</h3><p>Booking and call details shared with your team using the method agreed during setup, follow-up calls made where you&rsquo;ve asked for them, and a weekly activity summary. With the CRM Management add-on, notes and bookings are entered directly in your system.</p></div></div>
-    </div>
   </div>
 </section>
 
@@ -1080,7 +1079,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <h2>A trained person answers, not an automated menu</h2>
         <p class="lede">No &ldquo;press 1 for scheduling,&rdquo; and no script that falls apart when the caller goes off-topic. Handlers are trained on pest control conversations and learn your services, service area, pricing and booking rules before they answer in your name.</p>
         <p>A homeowner with rats in the kitchen or wasps by the door wants someone who can hear the urgency, ask the right follow-up question and book the job. An automated system can read a script; the judgment calls are where people still do better. We think that through in our <a href="/blog/ai-vs-human-answering-service-pest-control">comparison of AI and human answering</a>, written to be useful whichever you choose.</p>
-        <p class="svc-note">With the <strong>CRM Management add-on ($99/month)</strong>, our representatives work inside your own system &mdash; <a href="/integrations/fieldroutes">FieldRoutes</a>, <a href="/integrations/servicetitan">ServiceTitan</a>, <a href="/integrations/gorilladesk">GorillaDesk</a>, <a href="/integrations/briostack">Briostack</a>, <a href="/integrations/pestpac">PestPac</a>, <a href="/integrations/housecall-pro">Housecall Pro</a> or whatever you run &mdash; using a login you grant and can revoke. FieldRoutes, PestRoutes, ServiceTitan, GorillaDesk, Briostack, PestPac and Housecall Pro are trademarks of their respective owners; Callvix is not affiliated with them, and there is no native integration or data sync.</p>
+        <p class="svc-note">With the <strong>CRM Management add-on ($99/month)</strong>, our representatives work inside your own system &mdash; <a href="/integrations/fieldroutes">FieldRoutes</a>, <a href="/integrations/servicetitan">ServiceTitan</a>, <a href="/integrations/gorilladesk">GorillaDesk</a>, <a href="/integrations/briostack">Briostack</a>, <a href="/integrations/pestpac">PestPac</a>, <a href="/integrations/housecall-pro">Housecall Pro</a> or whatever you run &mdash; using a login you grant and can revoke. There is no native integration or data sync.</p>
       </div>
     </div>
   </div>
@@ -1095,7 +1094,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     </div>
     <div class="svc-setup">
       <div class="s"><span>1</span><h3>Agree the rules</h3><p>Coverage window, service area, what may be booked, pricing you allow us to quote, and who urgent calls go to.</p></div>
-      <div class="s"><span>2</span><h3>Set up forwarding and access</h3><p>You forward the numbers you choose and create a login in your own system with the permissions you&rsquo;re comfortable granting.</p></div>
+      <div class="s"><span>2</span><h3>Set up forwarding and access</h3><p>You forward the numbers you choose, and we agree the method for sharing booking and call details. If you take CRM Management, you also create a login in your own system with the permissions you&rsquo;re comfortable granting.</p></div>
       <div class="s"><span>3</span><h3>Test calls</h3><p>We run calls through the rules together and correct the wording and routing before any customer reaches us.</p></div>
       <div class="s"><span>4</span><h3>Coverage starts</h3><p>Live answering begins on the window you agreed, once the test calls look right.</p></div>
     </div>

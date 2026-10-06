@@ -12,7 +12,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-PJFS7HV5');</script>
 <!-- End Google Tag Manager -->
 
-
 <title>FieldRoutes Answering Service | Callvix Solutions</title>
 <meta name="description" content="Human answering and job booking for pest control companies using FieldRoutes. $399/month + $2.99/inbound call; direct CRM entry adds $99/month.">
 <link rel="canonical" href="https://callvixsolutions.com/integrations/fieldroutes">
@@ -572,6 +571,19 @@ strong { color: var(--ink-900); font-weight: 700; }
 .form-status:empty { margin: 0; }
 .form-status--error { color: #b4232b; font-weight: 600; }
 
+/* ---------- Compact pricing summary (integration pages) ---------- */
+.price-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.price-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 24px 26px; box-shadow: var(--shadow-sm); }
+.price-card--addon { background: var(--cream); }
+.price-card h3 { font-size: 17px; margin: 10px 0 10px; }
+.price-card .price-amount { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); font-size: 30px; line-height: 1.1; margin-bottom: 10px; }
+.price-card .price-amount small { font-family: var(--font-body); font-weight: 500; font-size: 15px; color: var(--ink-500); }
+.price-card p { font-size: 15px; color: var(--ink-700); margin: 0 0 10px; line-height: 1.55; }
+.price-card ul { display: flex; flex-direction: column; gap: 7px; margin: 0; }
+.price-card li { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 14.5px; color: var(--ink-500); border-top: 1px solid var(--line); padding-top: 7px; }
+.price-card li .amt { font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); white-space: nowrap; }
+@media (max-width: 720px) { .price-cards { grid-template-columns: 1fr; gap: 18px; } }
+
 /* ---------- Footer ---------- */
 .site-footer { background: var(--navy-950); color: #9aa2c0; padding: 72px 0 30px; }
 .footer-grid {
@@ -828,6 +840,14 @@ strong { color: var(--ink-900); font-weight: 700; }
         "@type": "Answer",
         "text": "Same thing. PestRoutes became FieldRoutes, and offices on either version of the interface are handled the same way. Tell us which one you see when you log in and we train to that."
       }
+    },
+    {
+      "@type": "Question",
+      "name": "What won’t your representatives do without instructions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "By default they don’t take payment, quote account balances or process cancellations — those are captured and escalated under your instructions. They also don’t answer a pricing or scope question that falls outside the rules you set. Where you have explicitly told us to handle something, we follow that instead."
+      }
     }
   ]
 }
@@ -974,7 +994,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="section-head">
       <div class="eyebrow">Onboarding</div>
       <h2>Set up your call handling, access and booking rules</h2>
-      <p class="lede">Setup is a conversation, not a form. All of this is written down before we answer in your name.</p>
+      <p class="lede">All of this is written down before we answer in your name.</p>
     </div>
     <div class="checklist">
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><strong>Your rules.</strong> Coverage window, service areas and what to do with an address outside them, pricing you allow us to quote, what may be booked and what must come to you, and your escalation contact and method.</p></div>
@@ -986,20 +1006,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   </div>
 </section>
 
-<section class="section section--alt">
-  <div class="container container-narrow">
-    <div class="section-head">
-      <div class="eyebrow">Straight answers</div>
-      <h2>What we don&rsquo;t do</h2>
-      <p class="lede">The difference between a useful answering service and one that creates work for you.</p>
-    </div>
-    <div class="article-callout">
-      <p><strong>We are not a FieldRoutes partner and this is not a native integration.</strong> There is no data sync. Our people work in your account like an in-house CSR would, using access you control.</p>
-      <p>We don&rsquo;t take payment or quote account balances. We don&rsquo;t invent an answer to a pricing or scope question that falls outside your rules &mdash; it gets escalated. We don&rsquo;t process cancellations; we capture the reason and hand the call back to you under your escalation instructions. And we only work with pest control companies, so we would be the wrong choice for your other trades if you run any.</p>
-    </div>
-  </div>
-</section>
-
 <section class="section section--white">
   <div class="container container-narrow">
     <div class="section-head">
@@ -1007,15 +1013,26 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <h2>FieldRoutes answering service pricing and coverage</h2>
       <p class="lede">Per call, not per minute &mdash; a long, complicated booking costs the same as a quick question.</p>
     </div>
-    <ul class="svc-price-list">
-      <li><span>Base subscription &mdash; Mon&ndash;Fri live answering &amp; booking</span><span class="amt">$399/mo</span></li>
-      <li><span>Per inbound call we handle</span><span class="amt">$2.99</span></li>
-      <li><span>Per outbound follow-up call</span><span class="amt">$0.99</span></li>
-      <li><span>CRM Management add-on &mdash; notes and bookings entered directly in FieldRoutes</span><span class="amt">$99/mo</span></li>
-      <li><span>After-Hours coverage add-on</span><span class="amt">$199/mo</span></li>
-      <li><span>Weekend coverage add-on</span><span class="amt">$149/mo</span></li>
-    </ul>
-    <p style="margin-top:18px;">Our prices are published rather than quoted &mdash; you can work out what Callvix costs before you ever speak to us. <a href="/pricing">See the full pricing breakdown &rarr;</a></p>
+    <div class="price-cards">
+      <div class="price-card">
+        <span class="tag">Core service</span>
+        <div class="price-amount">$399<small>/month + $2.99 per inbound call</small></div>
+        <h3>Human answering, qualification and booking by your rules</h3>
+        <p>Monday&ndash;Friday, 9am&ndash;6pm your local time. Booking and call details are shared with your team using the method agreed during setup, plus a weekly activity summary.</p>
+        <ul><li><span>Per outbound follow-up call</span><span class="amt">$0.99</span></li></ul>
+      </div>
+      <div class="price-card price-card--addon">
+        <span class="tag">Optional add-ons</span>
+        <div class="price-amount">+$99<small>/month &mdash; CRM Management</small></div>
+        <h3>Call notes and booking details entered directly in FieldRoutes</h3>
+        <p>Added only if you want it. Our representatives work in your own account using access you grant and can revoke.</p>
+        <ul>
+          <li><span>Evening coverage</span><span class="amt">+$199/mo</span></li>
+          <li><span>Weekend coverage</span><span class="amt">+$149/mo</span></li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:20px;"><a href="/pricing">See the full pricing breakdown &rarr;</a></p>
   </div>
 </section>
 
@@ -1053,6 +1070,10 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <details>
         <summary>What if we use PestRoutes rather than FieldRoutes?</summary>
         <div class="a"><p>Same thing. PestRoutes became FieldRoutes, and offices on either version of the interface are handled the same way. Tell us which one you see when you log in and we train to that.</p></div>
+      </details>
+      <details>
+        <summary>What won&rsquo;t your representatives do without instructions?</summary>
+        <div class="a"><p>By default they don&rsquo;t take payment, quote account balances or process cancellations &mdash; those are captured and escalated under your instructions. They also don&rsquo;t answer a pricing or scope question that falls outside the rules you set. Where you have explicitly told us to handle something, we follow that instead.</p></div>
       </details>
     </div>
   </div>

@@ -562,6 +562,19 @@ strong { color: var(--ink-900); font-weight: 700; }
 .form-status:empty { margin: 0; }
 .form-status--error { color: #b4232b; font-weight: 600; }
 
+/* ---------- Compact pricing summary (integration pages) ---------- */
+.price-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.price-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 24px 26px; box-shadow: var(--shadow-sm); }
+.price-card--addon { background: var(--cream); }
+.price-card h3 { font-size: 17px; margin: 10px 0 10px; }
+.price-card .price-amount { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); font-size: 30px; line-height: 1.1; margin-bottom: 10px; }
+.price-card .price-amount small { font-family: var(--font-body); font-weight: 500; font-size: 15px; color: var(--ink-500); }
+.price-card p { font-size: 15px; color: var(--ink-700); margin: 0 0 10px; line-height: 1.55; }
+.price-card ul { display: flex; flex-direction: column; gap: 7px; margin: 0; }
+.price-card li { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 14.5px; color: var(--ink-500); border-top: 1px solid var(--line); padding-top: 7px; }
+.price-card li .amt { font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); white-space: nowrap; }
+@media (max-width: 720px) { .price-cards { grid-template-columns: 1fr; gap: 18px; } }
+
 /* ---------- Footer ---------- */
 .site-footer { background: var(--navy-950); color: #9aa2c0; padding: 72px 0 30px; }
 .footer-grid {
