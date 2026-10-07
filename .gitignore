@@ -1,1 +1,8 @@
 CLAUDE-CODE-TASK.md
+
+# Measurement handoff files. These document the GTM container's tag source and
+# are not part of the website: committing them would publish them at
+# callvixsolutions.com/docs/. Ignored by exact path so the rest of docs/ stays
+# available for anything that genuinely belongs on the site.
+docs/gtm-calendly-attribution-tag.html
+docs/gtm-calendly-attribution-tests.html
