@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 506" width="900" height="506" role="img" aria-labelledby="t d">
+  <title id="t">Three staffing options for handling pest control calls</title>
+  <desc id="d">An abstract diagram: one inbound call line branching to three labelled routes — an in-house hire, an answering service, and an existing team with overflow support.</desc>
+  <rect width="900" height="506" fill="#f4efe8"/>
+  <circle cx="762" cy="78" r="150" fill="#26a8b6" opacity="0.09"/>
+  <circle cx="118" cy="440" r="118" fill="#101c4c" opacity="0.05"/>
+
+  <!-- inbound call -->
+  <rect x="330" y="54" width="240" height="60" rx="14" fill="#101c4c"/>
+  <circle cx="368" cy="84" r="13" fill="#26a8b6" opacity="0.9"/>
+  <path d="M363 80a16 16 0 0 0 9 9l3-3a2 2 0 0 1 2 0l4 1a2 2 0 0 1 1 2v4a2 2 0 0 1-2 2 20 20 0 0 1-19-19 2 2 0 0 1 2-2h4a2 2 0 0 1 2 1l1 4a2 2 0 0 1 0 2z" fill="#101c4c"/>
+  <text x="394" y="90" font-family="Inter,Segoe UI,sans-serif" font-size="19" font-weight="600" fill="#ffffff">An incoming call</text>
+
+  <!-- branch lines -->
+  <path d="M450 114v46M450 160H170v40M450 160h280v40M450 160v40" stroke="#26a8b6" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <circle cx="170" cy="204" r="5" fill="#26a8b6"/><circle cx="450" cy="204" r="5" fill="#26a8b6"/><circle cx="730" cy="204" r="5" fill="#26a8b6"/>
+
+  <!-- three option cards -->
+  <g>
+    <rect x="48" y="222" width="244" height="214" rx="18" fill="#ffffff" stroke="#e8e1d7" stroke-width="2"/>
+    <rect x="48" y="222" width="244" height="7" rx="3.5" fill="#101c4c"/>
+    <text x="72" y="276" font-family="Sora,Inter,sans-serif" font-size="21" font-weight="700" fill="#101c4c">Hire in-house</text>
+    <text x="72" y="312" font-family="Inter,sans-serif" font-size="16" fill="#696d7b">Calls, plus the</text>
+    <text x="72" y="336" font-family="Inter,sans-serif" font-size="16" fill="#696d7b">wider office work</text>
+    <rect x="72" y="362" width="150" height="10" rx="5" fill="#e8e1d7"/>
+    <rect x="72" y="384" width="106" height="10" rx="5" fill="#e8e1d7"/>
+    <rect x="72" y="406" width="128" height="10" rx="5" fill="#e8e1d7"/>
+  </g>
+  <g>
+    <rect x="328" y="222" width="244" height="214" rx="18" fill="#ffffff" stroke="#26a8b6" stroke-width="2"/>
+    <rect x="328" y="222" width="244" height="7" rx="3.5" fill="#26a8b6"/>
+    <text x="352" y="276" font-family="Sora,Inter,sans-serif" font-size="21" font-weight="700" fill="#101c4c">Answering service</text>
+    <text x="352" y="312" font-family="Inter,sans-serif" font-size="16" fill="#696d7b">Call handling and</text>
+    <text x="352" y="336" font-family="Inter,sans-serif" font-size="16" fill="#696d7b">booking, agreed hours</text>
+    <rect x="352" y="362" width="150" height="10" rx="5" fill="#e3f5f7"/>
+    <rect x="352" y="384" width="106" height="10" rx="5" fill="#e3f5f7"/>
+    <rect x="352" y="406" width="128" height="10" rx="5" fill="#e3f5f7"/>
+  </g>
+  <g>
+    <rect x="608" y="222" width="244" height="214" rx="18" fill="#ffffff" stroke="#e8e1d7" stroke-width="2"/>
+    <rect x="608" y="222" width="244" height="7" rx="3.5" fill="#1b2c63"/>
+    <text x="632" y="276" font-family="Sora,Inter,sans-serif" font-size="21" font-weight="700" fill="#101c4c">Team + overflow</text>
+    <text x="632" y="312" font-family="Inter,sans-serif" font-size="16" fill="#696d7b">Your staff, with cover</text>
+    <text x="632" y="336" font-family="Inter,sans-serif" font-size="16" fill="#696d7b">at peaks and absences</text>
+    <rect x="632" y="362" width="150" height="10" rx="5" fill="#e8e1d7"/>
+    <rect x="632" y="384" width="106" height="10" rx="5" fill="#e3f5f7"/>
+    <rect x="632" y="406" width="128" height="10" rx="5" fill="#e8e1d7"/>
+  </g>
+
+  <text x="450" y="474" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" fill="#696d7b">Illustrative diagram &#8212; not a depiction of real staff or customers</text>
+</svg>
