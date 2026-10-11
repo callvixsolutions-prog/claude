@@ -6,3 +6,9 @@ CLAUDE-CODE-TASK.md
 # available for anything that genuinely belongs on the site.
 docs/gtm-calendly-attribution-tag.html
 docs/gtm-calendly-attribution-tests.html
+
+# Local preview tooling. A static file server and its launch config; committing
+# them would publish a server script at callvixsolutions.com/.claude/.
+.claude/launch.json
+.claude/static-server.js
+.claude/test-server.js

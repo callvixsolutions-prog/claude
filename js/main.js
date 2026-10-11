@@ -66,7 +66,12 @@ document.addEventListener('DOMContentLoaded', function () {
             // generate_lead event fires on the thank-you page, not here, so a
             // failed submit can never be counted and the push is not lost to
             // the navigation that follows.
-            try { sessionStorage.setItem('cvx_lead_pending', '1'); } catch (e) {}
+            try {
+              sessionStorage.setItem('cvx_lead_pending', '1');
+              // Which form converted, so the confirmation page can report it
+              // instead of labelling every lead 'contact_form'.
+              sessionStorage.setItem('cvx_lead_where', form.getAttribute('data-cta-location') || 'contact_form');
+            } catch (e) {}
             window.location.href = form.getAttribute('data-success') || '/thank-you';
             return;
           }
@@ -154,13 +159,20 @@ document.addEventListener('DOMContentLoaded', function () {
     // generate_lead fires only on a genuine thank-you arrival that followed a
     // successful submit, and only once per session, so refreshing the
     // thank-you page (or landing on it directly) does not create a lead.
-    if (!/^\/thank-you(\.html)?\/?$/.test(window.location.pathname)) return;
+    // A confirmation page marks itself with data-lead-confirmation on <body>.
+    // The path test stays for /thank-you, which predates the attribute; adding
+    // a funnel should not mean lengthening a regex that is easy to forget.
+    var isConfirmation = document.body.hasAttribute('data-lead-confirmation') ||
+      /^\/thank-you(\.html)?\/?$/.test(window.location.pathname);
+    if (!isConfirmation) return;
     try {
       if (sessionStorage.getItem('cvx_lead_fired') === '1') return;
       if (sessionStorage.getItem('cvx_lead_pending') !== '1') return;
+      var where = sessionStorage.getItem('cvx_lead_where') || 'contact_form';
       sessionStorage.removeItem('cvx_lead_pending');
+      sessionStorage.removeItem('cvx_lead_where');
       sessionStorage.setItem('cvx_lead_fired', '1');
-      pushEvent('generate_lead', { cta_location: 'contact_form' });
+      pushEvent('generate_lead', { cta_location: where });
     } catch (e) { /* storage blocked: stay silent rather than over-count */ }
   });
 })();

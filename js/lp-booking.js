@@ -104,10 +104,13 @@
   /* ------------------------------------------- callback form: context only -- */
   // Campaign context goes to the form backend, not into analytics parameters.
   document.addEventListener('DOMContentLoaded', function () {
-    var lp = document.getElementById('cb_landing');
-    var cp = document.getElementById('cb_campaign');
-    if (lp) lp.value = window.location.pathname;
-    if (cp) {
+    // Selected by name, not id: the page carries more than one lead form and
+    // every copy needs the same context.
+    var landing = document.querySelectorAll('input[name="landing_page"]');
+    var campaign = document.querySelectorAll('input[name="campaign_source"]');
+    landing.forEach(function (el) { el.value = window.location.pathname; });
+    if (campaign.length) {
+      var value = '';
       try {
         var q = new URLSearchParams(window.location.search);
         var bits = [];
@@ -115,8 +118,9 @@
           var v = q.get(k);
           if (v) bits.push(k + '=' + v.slice(0, 120));
         });
-        cp.value = bits.join('&').slice(0, 600);
+        value = bits.join('&').slice(0, 600);
       } catch (e) { /* leave blank */ }
+      campaign.forEach(function (el) { el.value = value; });
     }
 
     /* ------------------------------------- sticky CTA, out of the way when booking -- */
