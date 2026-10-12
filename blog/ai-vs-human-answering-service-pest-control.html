@@ -27,6 +27,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Comparison graphic: AI answering service versus trained human agent for pest control calls">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Answering Service for Pest Control vs. Human | Callvix">
+<meta name="twitter:image" content="https://callvixsolutions.com/assets/blog-ai-vs-human-1200x630.jpg">
 <link rel="icon" href="/assets/favicon.ico?v=2" sizes="any">
 <link rel="icon" type="image/png" href="/assets/favicon-32.png" sizes="32x32">
 <link rel="icon" type="image/png" href="/assets/favicon-192.png" sizes="192x192">
@@ -301,18 +303,6 @@ strong { color: var(--ink-900); font-weight: 700; }
 .hero-proof p { margin: 0; font-size: 13.5px; color: var(--ink-500); }
 .hero-proof strong { color: var(--navy-900); }
 
-/* Avatar stack */
-.avatar-stack { display: flex; align-items: center; gap: var(--space-xs); flex-wrap: wrap; }
-.avatar-stack .avatars { display: flex; }
-.avatar-stack .avatars img {
-  width: 44px; height: 44px; border-radius: 50%; object-fit: cover;
-  border: 3px solid var(--cream); margin-left: -var(--space-xs); box-shadow: var(--shadow-sm);
-}
-.avatar-stack .avatars img:first-child { margin-left: 0; }
-.avatar-stack p { margin: 0; font-size: 14px; font-weight: 600; color: var(--ink-700); font-family: var(--font-heading); }
-.avatar-stack--dark .avatars img { border-color: var(--navy-800); }
-.avatar-stack--dark p { color: #aeb6d0; }
-
 /* Hero visual — call card */
 .hero-visual { position: relative; }
 .call-card {
@@ -526,6 +516,14 @@ strong { color: var(--ink-900); font-weight: 700; }
 /* ---------- Page hero (interior) ---------- */
 .page-hero { position: relative; padding: var(--space-xl) 0 var(--space-xl); overflow: hidden;
   background: radial-gradient(700px 340px at 85% -20%, rgba(38,168,182,0.12), transparent 62%); }
+/* The hero seam. .page-hero's bottom padding and .section's top padding are
+   not a gap, they are two gaps touching: 64 + 96 + a line box measured 180px
+   between the hero lede and the first thing under it, identically on /contact,
+   /about and /faq. One element owns a seam — the hero keeps its padding and the
+   section below gives up its own. Adjacent-sibling rather than a hand-applied
+   class so it cannot be got wrong on one page out of twenty. */
+.page-hero + .section { padding-top: var(--space-md); }
+
 .page-hero .eyebrow { color: var(--teal-600); }
 .page-hero h1 { font-size: clamp(31px, 4.2vw, 47px); max-width: 800px; color: var(--navy-900); }
 .page-hero p.lede { max-width: 640px; }
