@@ -1,0 +1,15 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "callvix-preview",
+      "runtimeExecutable": "/Users/kerollouswassily/.local/tools/node-v22.12.0-darwin-arm64/bin/node",
+      "runtimeArgs": [
+        "/Users/kerollouswassily/Desktop/code/callvix-website/.claude/static-server.js",
+        "/Users/kerollouswassily/Desktop/code/callvix-website",
+        "8788"
+      ],
+      "port": 8788
+    }
+  ]
+}

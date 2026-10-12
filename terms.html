@@ -654,7 +654,17 @@ strong { color: var(--ink-900); font-weight: 700; }
 }
 /* The full nav + Book a Call need ~930px; below that, use the menu button
    (it previously switched at 720px, so 721-929px tablets overflowed sideways) */
-@media (max-width: 940px) {
+/* The primary nav carries eight items. Between the hamburger breakpoint and
+   roughly 1180px that overflows the header and clips the booking button, so
+   close the gaps here rather than hiding the nav earlier or dropping a link. */
+@media (min-width: 1024px) and (max-width: 1180px) {
+  .main-nav { gap: 16px; }
+}
+
+@media (max-width: 1023px) {
+  /* Raised from 940px when the nav went from seven items to eight: below this
+     the row needs ~1013px and would clip the booking button. The hamburger
+     menu carries the same links, Integrations included. */
   .main-nav { display: none; }
   .nav-toggle { display: block; }
 }
@@ -707,6 +717,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <a href="/">Home</a>
       <a href="/services">How It Works</a>
       <a href="/pricing">Pricing</a>
+      <a href="/integrations/">Integrations</a>
       <a href="/about">Why Callvix</a>
       <a href="/blog/">Resources</a>
       <a href="/faq">FAQ</a>
@@ -720,7 +731,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   </div>
 </header>
   <div class="mobile-nav" id="mobileNav">
-    <ul><li><a href="/">Home</a></li><li><a href="/services">How It Works</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/about">Why Callvix</a></li><li><a href="/blog/">Resources</a></li><li><a href="/faq">FAQ</a></li><li><a href="/contact">Contact</a></li></ul>
+    <ul><li><a href="/">Home</a></li><li><a href="/services">How It Works</a></li><li><a href="/pricing">Pricing</a></li>
+      <li><a href="/integrations/">Integrations</a></li><li><a href="/about">Why Callvix</a></li><li><a href="/blog/">Resources</a></li><li><a href="/faq">FAQ</a></li><li><a href="/contact">Contact</a></li></ul>
     <a href="tel:+15513736777" class="header-phone" style="margin-top:14px;">(551) 373-6777</a>
     <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-block">Book a Discovery Call</a>
   </div>

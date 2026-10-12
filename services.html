@@ -19,7 +19,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Callvix Solutions">
-<meta property="og:title" content="Pest Control Answering Service | Callvix Solutions">
+<meta property="og:title" content="Human Pest Control Answering Service | Callvix Solutions">
 <meta property="og:description" content="Trained people answer in your company name, qualify the pest issue and book the job. $399/month plus $2.99 per inbound call, Monday to Friday.">
 <meta property="og:url" content="https://callvixsolutions.com/services">
 <meta property="og:image" content="https://callvixsolutions.com/assets/og-default.jpg">
@@ -656,7 +656,17 @@ strong { color: var(--ink-900); font-weight: 700; }
 }
 /* The full nav + Book a Call need ~930px; below that, use the menu button
    (it previously switched at 720px, so 721-929px tablets overflowed sideways) */
-@media (max-width: 940px) {
+/* The primary nav carries eight items. Between the hamburger breakpoint and
+   roughly 1180px that overflows the header and clips the booking button, so
+   close the gaps here rather than hiding the nav earlier or dropping a link. */
+@media (min-width: 1024px) and (max-width: 1180px) {
+  .main-nav { gap: 16px; }
+}
+
+@media (max-width: 1023px) {
+  /* Raised from 940px when the nav went from seven items to eight: below this
+     the row needs ~1013px and would clip the booking button. The hamburger
+     menu carries the same links, Integrations included. */
   .main-nav { display: none; }
   .nav-toggle { display: block; }
 }
@@ -885,6 +895,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <a href="/">Home</a>
       <a href="/services" aria-current="page">How It Works</a>
       <a href="/pricing">Pricing</a>
+      <a href="/integrations/">Integrations</a>
       <a href="/about">Why Callvix</a>
       <a href="/blog/">Resources</a>
       <a href="/faq">FAQ</a>
@@ -898,7 +909,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   </div>
 </header>
   <div class="mobile-nav" id="mobileNav">
-    <ul><li><a href="/">Home</a></li><li><a href="/services">How It Works</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/about">Why Callvix</a></li><li><a href="/blog/">Resources</a></li><li><a href="/faq">FAQ</a></li><li><a href="/contact">Contact</a></li></ul>
+    <ul><li><a href="/">Home</a></li><li><a href="/services">How It Works</a></li><li><a href="/pricing">Pricing</a></li>
+      <li><a href="/integrations/">Integrations</a></li><li><a href="/about">Why Callvix</a></li><li><a href="/blog/">Resources</a></li><li><a href="/faq">FAQ</a></li><li><a href="/contact">Contact</a></li></ul>
     <a href="tel:+15513736777" class="header-phone" style="margin-top:14px;">(551) 373-6777</a>
     <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-block">Book a Discovery Call</a>
   </div>
@@ -910,7 +922,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div>
       <div class="breadcrumbs"><a href="/">Home</a> / How It Works</div>
       <div class="eyebrow">Service overview</div>
-      <h1>Pest Control Answering Service</h1>
+      <h1>Human Pest Control Answering Service</h1>
       <p class="hero-subhead">Pest control calls handled the way your own office would.</p>
       <p class="lede">Trained people answer your calls in your company&rsquo;s name, qualify the pest issue, check the address against your service area, and book the job on your availability. Entering those bookings and call notes directly into <a href="/integrations/">the system your office already uses</a> is an optional paid add-on. Built only for U.S. pest control companies.</p>
       <ul class="svc-facts">
