@@ -110,6 +110,18 @@ const ALLOWED_IMAGES = {
   'blog-checklist-1200x630.png': 'branded cover, no people',
   'vendor-scorecard-1200x630.png': 'branded cover with an illustrated checklist, no people',
 
+  /* Aspect-ratio variants referenced ONLY from JSON-LD, for rich results.
+     Invisible to this test until it learned to read schema. Each opened: they
+     are re-crops of the covers and diagrams above, with the flow diagram
+     restacking from a row to a column at 4x3 and 1x1. Nothing appears in a crop
+     that is absent from the wide version. */
+  'blog-after-hours-call-flow-16x9.png': 'flow diagram, five boxes in a row, no people',
+  'blog-after-hours-call-flow-4x3.png': 'same flow diagram stacked vertically, no people',
+  'blog-after-hours-call-flow-1x1.png': 'same flow diagram stacked vertically, square, no people',
+  'blog-ai-vs-human-4x3.jpg': 'the comparison graphic, 4x3 crop, no people',
+  'blog-ai-vs-human-1x1.jpg': 'the comparison graphic, square crop, no people',
+  'blog-checklist-16x9.png': 'branded cover, 16x9 crop, no people',
+
   /* The one photograph of a person left on the site. Allowed because it depicts
      the CUSTOMER'S world, not the vendor's: nothing labels it as Callvix, and it
      illustrates no claim about who answers the phone. That is the line, written
@@ -124,6 +136,37 @@ const ALLOWED_IMAGES = {
     + 'The subject is the caller who did not get through',
 };
 
+/**
+ * Images referenced inside JSON-LD — Article.image, Organization.logo,
+ * ImageObject.url, the aspect-ratio variants Google wants for rich results.
+ *
+ * This surface was invisible to the first version of this test, which read
+ * markup only. That is the sixth instance of one pattern on this site: the
+ * og:image, the blog index thumbnail, the integration transcript headers, an
+ * alt string standing in for a file nobody opened, claim text living in
+ * FAQPage schema, and now this. Every one of them was a place where reading
+ * the page does not show you what the page references.
+ */
+function schemaImageRefs(html) {
+  const out = [];
+  const walk = (node) => {
+    if (Array.isArray(node)) { node.forEach(walk); return; }
+    if (node && typeof node === 'object') {
+      for (const [k, v] of Object.entries(node)) {
+        const imageKey = ['image', 'logo', 'thumbnailUrl', 'contentUrl', 'primaryImageOfPage'].includes(k);
+        for (const s of (Array.isArray(v) ? v : [v])) {
+          if (typeof s === 'string' && /\.(png|jpe?g|webp|svg|ico)(\?|$)/i.test(s) && (imageKey || k === 'url')) out.push(s);
+        }
+        walk(v);
+      }
+    }
+  };
+  for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    try { walk(JSON.parse(m[1])); } catch { /* a parse failure is site-checks' problem, not this test's */ }
+  }
+  return out;
+}
+
 test('every referenced image is one a person has looked at', () => {
   const offenders = [];
   for (const [file, html] of pages) {
@@ -131,6 +174,7 @@ test('every referenced image is one a person has looked at', () => {
     for (const m of bodyOf(html).matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g)) refs.add(m[1]);
     for (const m of html.matchAll(/<meta\b[^>]*\b(?:property|name)="(?:og:image|twitter:image)"[^>]*\bcontent="([^"]+)"/gi)) refs.add(m[1]);
     for (const m of html.matchAll(/<link\b[^>]*\brel="(?:icon|apple-touch-icon)[^"]*"[^>]*\bhref="([^"]+)"/gi)) refs.add(m[1]);
+    for (const url of schemaImageRefs(html)) refs.add(url);
     for (const url of refs) {
       const name = basename(url);
       if (!(name in ALLOWED_IMAGES)) offenders.push(`${file}: ${name}`);

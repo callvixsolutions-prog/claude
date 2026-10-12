@@ -664,11 +664,6 @@ strong { color: var(--ink-900); font-weight: 700; }
   .plan-combo-plus { width: 100%; height: 36px; }
   .hero-float { display: none; }
   .base-band { padding: var(--space-base); }
-  .cc-factor, .cc-result { flex-direction: row; gap: var(--space-2xs); width: 100%; max-width: 300px; padding: var(--space-xs) var(--space-sm); justify-content: center; }
-  .cc-factor .cc-label, .cc-result .cc-label { text-align: left; }
-  .cc-factor br, .cc-result br { display: none; }
-  .cc-op { transform: rotate(90deg); }
-  .cc-op--eq { transform: none; }
 }
 
 /* A question heading exists for structure only; the button keeps the visual
