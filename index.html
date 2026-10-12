@@ -726,6 +726,26 @@ strong { color: var(--ink-900); font-weight: 700; }
 .author-box a { color: var(--teal-600); font-weight: 600; }
 .article-meta time { color: inherit; }
 
+/* ---------- Rate table (pricing add-ons) ----------
+   The pricing section is the commercial answer, so it carries the most
+   structure on the page. A real table also keeps the figures as plain
+   extractable text rather than locking them inside a styled component. */
+.rate-table-head { text-align: center; font-size: 19px; margin: var(--space-xl) 0 var(--space-md); }
+.rate-table { width: 100%; border-collapse: collapse; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; font-size: 15px; }
+.rate-table th, .rate-table td { padding: var(--space-sm) var(--space-md); border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.rate-table tbody tr:last-child th, .rate-table tbody tr:last-child td { border-bottom: 0; }
+.rate-table thead th { background: var(--sand); font-family: var(--font-heading); font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--navy-900); }
+.rate-table tbody th { font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); white-space: nowrap; }
+.rate-table-price { font-family: var(--font-heading); font-weight: 800; font-size: 20px; color: var(--navy-900); white-space: nowrap; }
+.rate-table-price span { font-size: 13px; font-weight: 600; color: var(--ink-500); }
+.rate-table td a { color: var(--teal-600); font-weight: 600; }
+.rate-table-note { text-align: center; font-size: 14px; color: var(--ink-500); margin-top: var(--space-sm); max-width: 680px; margin-inline: auto; }
+.rate-table-cta { text-align: center; margin-top: var(--space-md); }
+@media (max-width: 720px) {
+  .rate-table { font-size: 14px; }
+  .rate-table th, .rate-table td { padding: var(--space-xs) var(--space-sm); }
+}
+
 </style>
 
 <script type="application/ld+json">
@@ -1177,13 +1197,14 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
 <!-- ===================== COMPARISON ===================== -->
 
 <!-- ===================== PRICING ===================== -->
-<section class="section">
+<section class="section" id="pricing">
   <div class="container">
     <div class="section-head section-head--center">
-      <div class="eyebrow">Simple pricing</div>
-      <h2>A low monthly base, then a flat fee only for calls we handle</h2>
-      <p class="lede">No per-minute meter: the rate per call is fixed, though your total still rises with call volume and any add-ons. You pay a flat <strong>$2.99</strong> per inbound call—the same whether it is a quick question or a complete booking.</p>
+      <div class="eyebrow">Pricing</div>
+      <h2>Callvix costs $399 a month, plus $2.99 per inbound call</h2>
+      <p class="lede">Callvix charges U.S. pest control companies a $399 monthly base, a flat $2.99 for each inbound call answered and $0.99 for each outbound follow-up placed, as of October 2026. The per-call rate is fixed rather than metered by the minute, so a long, difficult call costs the same as a quick one. Your total rises with call volume and with any add-ons you choose.</p>
     </div>
+
     <div class="plan-combo">
       <div class="plan-combo-item plan-combo-item--base">
         <span class="plan-combo-label">Base subscription</span>
@@ -1200,19 +1221,47 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <span class="plan-combo-value">$0.99<small>/call</small></span>
       </div>
     </div>
-    <p class="plan-combo-note">Flat per call, not per minute — a long, tricky call costs the same as a quick one. Plus optional add-ons: After-Hours $199/mo, Weekend $149/mo, CRM Management $99/mo. Base coverage Mon&ndash;Fri, 9am&ndash;6pm your local time.</p>
-    <p style="text-align:center; margin-top:30px;"><a href="/pricing" class="btn btn-navy">See full pricing</a></p>
+    <p class="plan-combo-note">The $399 base covers live answering and booking Monday to Friday, 9am&ndash;6pm your local time. Flat per call, not per minute. Month-to-month, with no long-term contract.</p>
+
+    <h3 class="rate-table-head">Optional add-ons, priced separately</h3>
+    <div class="table-scroll">
+      <table class="rate-table">
+        <caption class="visually-hidden">Callvix optional add-on pricing, as of October 2026</caption>
+        <thead>
+          <tr><th scope="col">Add-on</th><th scope="col">Price</th><th scope="col">What it covers</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">After-Hours Coverage</th>
+            <td class="rate-table-price">$199<span>/month</span></td>
+            <td>Live call handling in the evening, after your standard business hours close.</td>
+          </tr>
+          <tr>
+            <th scope="row">Weekend Coverage</th>
+            <td class="rate-table-price">$149<span>/month</span></td>
+            <td>Saturday and Sunday live answering, on your weekend availability.</td>
+          </tr>
+          <tr>
+            <th scope="row">CRM Management</th>
+            <td class="rate-table-price">$99<span>/month</span></td>
+            <td>A Callvix representative enters call notes and booking details directly into <a href="/integrations/">the system your office already runs</a>, working in your own account using access you grant and can revoke. This is a person working in your system, not a native integration or data sync.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="rate-table-note">Turn add-ons on for peak season and off afterwards; there is no penalty either way. Without the CRM Management add-on, booking and call details reach your team by the method agreed during setup.</p>
+
+    <p class="rate-table-cta"><a href="/pricing" class="btn btn-navy">See full pricing</a></p>
   </div>
 </section>
 
-<!-- ===================== BUILT FOR PEST CONTROL / CRMs ===================== -->
 <section class="section section--navy">
   <div class="container">
     <div class="split">
       <div>
         <div class="eyebrow">Fits how you already work</div>
         <h2>Works with the tools your office already runs on</h2>
-        <p class="lede">Our representatives can work in <a href="/integrations/" style="color:var(--teal-300);font-weight:600;">the CRM or scheduling system your office already uses</a> with the <strong>CRM Management add-on ($99/month)</strong>, entering call notes and booking details in your own account using access you grant and can revoke. Without the add-on, booking and call details reach your team by the method agreed during setup. There is no native integration or data sync.</p>
+        <p class="lede">Our representatives can work in <a href="/integrations/" style="color:var(--teal-300);font-weight:600;">the CRM or scheduling system your office already uses</a> with the <strong><a href="#pricing" style="color:var(--teal-300);">CRM Management add-on</a></strong>, entering call notes and booking details in your own account using access you grant and can revoke. Without the add-on, booking and call details reach your team by the method agreed during setup. There is no native integration or data sync.</p>
         <div class="hero-badges" style="margin-top:8px;">
           <a class="pill" href="/integrations/fieldroutes">FieldRoutes / PestRoutes</a>
           <a class="pill" href="/integrations/servicetitan">ServiceTitan</a>
