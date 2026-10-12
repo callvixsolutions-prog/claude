@@ -55,13 +55,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   /* Warm neutrals (the "human" canvas) */
   --cream:   #fbf9f6;
-  --sand:    #f4efe8;
+  --sand-line: #ded2c0;
+  --sand:    #e9e0d3;
   --sand-2:  #efe8de;
   --white:   #ffffff;
   --ink-900: #1c2033;   /* headings on light where not navy */
   --ink-700: #3a3f52;   /* body text — warm, not cold slate */
-  --ink-500: #646879;   /* muted */
-  --ink-400: #696d7b;
+  --ink-500: #5d6172;   /* muted */
+  --ink-400: #5d6170;
   --line:    #e8e1d7;   /* warm hairline border */
   --line-2:  #ded5c8;
 
@@ -155,8 +156,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .section { padding: var(--space-2xl) 0; }
 .section--tight { padding: var(--space-xl) 0; }   /* 60px snapped to 64 */
 .section--roomy { padding: var(--space-3xl) 0; }
-.section--alt { background: var(--sand); }
-.section--white { background: var(--white); }
+.section--alt { background: var(--sand); border-top: 1px solid var(--sand-line); }
 .section--navy {
   background:
     radial-gradient(900px 500px at 88% -5%, rgba(38,168,182,0.25), transparent 60%),
@@ -164,7 +164,6 @@ strong { color: var(--ink-900); font-weight: 700; }
   color: #cdd3e6;
 }
 .section--navy h2, .section--navy h3, .section--navy h4 { color: var(--white); }
-.section--teal { background: linear-gradient(160deg, var(--teal-50), var(--teal-100)); }
 
 .eyebrow {
   display: inline-flex; align-items: center; gap: 9px;
@@ -781,7 +780,7 @@ figure.figure figcaption { font-size: 13.5px; color: var(--ink-500); margin-top:
   .site-header, .mobile-nav, .site-footer, .cta-band, .page-hero, .print-btn, noscript { display: none !important; }
   .article-body > * { display: none !important; }
   .article-body > #printable-checklist { display: block !important; }
-  body, .section, .section--white, .container, .container.article { margin: 0 !important; padding: 0 !important; background: #fff !important; max-width: none !important; }
+  body, .section, .container, .container.article { margin: 0 !important; padding: 0 !important; background: #fff !important; max-width: none !important; }
   #printable-checklist { border: 1px solid #333; border-radius: 0; box-shadow: none; padding: 16px 18px; }
   .cl-list li { break-inside: avoid; }
   @page { margin: 12mm; }
@@ -868,7 +867,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   </div>
 </section>
 
-<section class="section section--white">
+<section class="section">
   <div class="container article">
     <div class="article-body">
       <p class="article-disclosure">By Callvix Solutions. Disclosure: Callvix runs a human-fronted call-handling and booking service for U.S. pest-control companies, so we have a commercial interest here; the framework works whether or not you hire us.</p>

@@ -57,13 +57,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   /* Warm neutrals (the "human" canvas) */
   --cream:   #fbf9f6;
-  --sand:    #f4efe8;
+  --sand-line: #ded2c0;
+  --sand:    #e9e0d3;
   --sand-2:  #efe8de;
   --white:   #ffffff;
   --ink-900: #1c2033;   /* headings on light where not navy */
   --ink-700: #3a3f52;   /* body text — warm, not cold slate */
-  --ink-500: #646879;   /* muted */
-  --ink-400: #696d7b;
+  --ink-500: #5d6172;   /* muted */
+  --ink-400: #5d6170;
   --line:    #e8e1d7;   /* warm hairline border */
   --line-2:  #ded5c8;
 
@@ -157,8 +158,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .section { padding: var(--space-2xl) 0; }
 .section--tight { padding: var(--space-xl) 0; }   /* 60px snapped to 64 */
 .section--roomy { padding: var(--space-3xl) 0; }
-.section--alt { background: var(--sand); }
-.section--white { background: var(--white); }
+.section--alt { background: var(--sand); border-top: 1px solid var(--sand-line); }
 .section--navy {
   background:
     radial-gradient(900px 500px at 88% -5%, rgba(38,168,182,0.25), transparent 60%),
@@ -166,7 +166,6 @@ strong { color: var(--ink-900); font-weight: 700; }
   color: #cdd3e6;
 }
 .section--navy h2, .section--navy h3, .section--navy h4 { color: var(--white); }
-.section--teal { background: linear-gradient(160deg, var(--teal-50), var(--teal-100)); }
 
 .eyebrow {
   display: inline-flex; align-items: center; gap: 9px;
@@ -849,7 +848,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   </div>
 </section>
 
-<section class="section section--white">
+<section class="section">
   <div class="container article">
     <div class="article-body">
       <p>An AI answering service for pest control can be a sensible choice for repetitive questions, basic caller intake, and capturing calls around the clock. Trained human agents are generally better suited to conversations that are emotional, unusual, urgent, or complicated. Which one fits your company depends on the calls you actually receive, your budget, the hours you need covered, and how detailed your booking rules are &mdash; and for some pest control companies, a hybrid of the two is the right answer.</p>

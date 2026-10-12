@@ -56,13 +56,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   /* Warm neutrals (the "human" canvas) */
   --cream:   #fbf9f6;
-  --sand:    #f4efe8;
+  --sand-line: #ded2c0;
+  --sand:    #e9e0d3;
   --sand-2:  #efe8de;
   --white:   #ffffff;
   --ink-900: #1c2033;   /* headings on light where not navy */
   --ink-700: #3a3f52;   /* body text — warm, not cold slate */
-  --ink-500: #646879;   /* muted */
-  --ink-400: #696d7b;
+  --ink-500: #5d6172;   /* muted */
+  --ink-400: #5d6170;
   --line:    #e8e1d7;   /* warm hairline border */
   --line-2:  #ded5c8;
 
@@ -156,8 +157,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .section { padding: var(--space-2xl) 0; }
 .section--tight { padding: var(--space-xl) 0; }   /* 60px snapped to 64 */
 .section--roomy { padding: var(--space-3xl) 0; }
-.section--alt { background: var(--sand); }
-.section--white { background: var(--white); }
+.section--alt { background: var(--sand); border-top: 1px solid var(--sand-line); }
 .section--navy {
   background:
     radial-gradient(900px 500px at 88% -5%, rgba(38,168,182,0.25), transparent 60%),
@@ -165,7 +165,6 @@ strong { color: var(--ink-900); font-weight: 700; }
   color: #cdd3e6;
 }
 .section--navy h2, .section--navy h3, .section--navy h4 { color: var(--white); }
-.section--teal { background: linear-gradient(160deg, var(--teal-50), var(--teal-100)); }
 
 .eyebrow {
   display: inline-flex; align-items: center; gap: 9px;
@@ -856,7 +855,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   </div>
 </section>
 
-<section class="section section--white">
+<section class="section">
   <div class="container article">
     <div class="article-body">
       <p>Your phone rings while you are under a house with a flashlight in your mouth. The usual answer is &ldquo;hire someone&rdquo; &mdash; but that is one of three real options, and the cheapest is not automatically the right one. This guide compares hiring an in-house receptionist, using a human <a href="/services">pest control answering service</a>, and keeping the office staff you already have while sending selected calls elsewhere.</p>
