@@ -110,18 +110,18 @@ const ALLOWED_IMAGES = {
   'blog-checklist-1200x630.png': 'branded cover, no people',
   'vendor-scorecard-1200x630.png': 'branded cover with an illustrated checklist, no people',
 
-  /* The two photographs of people on the site. Both are allowed on the same
-     reasoning: they depict the CUSTOMER'S world, not the vendor's. Nothing
-     labels either as Callvix, and neither illustrates a claim about who answers
-     the phone. That is the line. It is written here rather than in a verdict
-     because the judgement is what a future reader needs. */
+  /* The one photograph of a person left on the site. Allowed because it depicts
+     the CUSTOMER'S world, not the vendor's: nothing labels it as Callvix, and it
+     illustrates no claim about who answers the phone. That is the line, written
+     here rather than as a verdict because the judgement is what a future reader
+     needs.
+
+     photo-tech.jpg was allowed under the same line and turned out not to meet it
+     — see RETIRED below. One image passing this test and one failing it is the
+     reason the line is worth writing down. */
   'blog-missed-calls.jpg':
     'photograph: a pair of hands holding a phone. No face, no headset, no office. '
     + 'The subject is the caller who did not get through',
-  'photo-tech.jpg':
-    'photograph: a worker in a hard hat and respirator using a backpack sprayer. '
-    + 'FLAGGED, see the note in the warning output — the image does not match its '
-    + 'alt text and is awaiting a decision; allow-listed meanwhile because it is live',
 };
 
 test('every referenced image is one a person has looked at', () => {
@@ -208,6 +208,14 @@ test('alt text mentioning a working role is worth a second look', () => {
 const RETIRED = [
   'av-1', 'av-2', 'av-3', 'av-4', 'av-5', 'av-6', 'av-7', 'av-8',
   'av-rep', 'av-rep2', 'photo-team', 'photo-agent-desk', 'blog-ai-human',
+  /* photo-tech.jpg was kept through two reviews on the strength of its alt text
+     — "a pest control technician treating the exterior of a home" — which nobody
+     had checked against the file. It showed a worker in a hard hat and
+     respirator with a backpack sprayer, an Indonesian flag on the sleeve,
+     beside stacked tyres and parked scooters, under a badge reading "You stay in
+     the field. We stay on the phone." on a site built for U.S. companies. It
+     surfaced only when this test forced every asset to be opened. */
+  'photo-tech',
 ];
 
 test('retired people-depicting assets are referenced nowhere', () => {
