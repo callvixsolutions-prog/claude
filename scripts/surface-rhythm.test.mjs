@@ -40,14 +40,24 @@ const OPENING = new Set(['hero', 'page-hero']);
 const NOT_A_SURFACE = new Set(['section--tight', 'section--roomy', 'section--continues']);
 
 /**
- * Format signature, inferred from the section's own markup. Order matters only
+ * Format signature, inferred from the section's own markup.
+ *
+ * STOPGAP. This is a hand-maintained vocabulary of class names, and markup drifts
+ * away from it in whichever direction nobody is watching: over-matching gave us
+ * `card` catching `call-card` and `stat` catching `stat-band`; under-matching gave
+ * us `step` missing `svc-setup` and `faq-list` missing `svc-faq`, which printed
+ * three prose sections on /services where two were a numbered process and an
+ * accordion. Adding strings makes the table right today and wrong again next time.
+ * The fix is to infer from structure — ordered lists, aria-expanded toggles,
+ * parallel sibling counts, image share of layout width — with class names as hints
+ * only. Scheduled for the next round. Order matters only
  * for readability of the printed sequence, so the parts are sorted.
  */
 const FORMATS = [
   ['table', /<table\b/],
-  ['steps', /class="[^"]*\bstep\b/],
+  ['steps', /class="[^"]*\b(?:step|svc-setup)\b/],
   ['cards', /class="[^"]*\b(?:card|blog-card|price-card|stat)\b/],
-  ['list', /class="[^"]*\b(?:read-list|checklist|faq-list)\b/],
+  ['list', /class="[^"]*\b(?:read-list|checklist|faq-list|svc-faq)\b/],
   ['quote', /class="[^"]*\bquote-card\b/],
   ['cta', /class="[^"]*\bcta-band\b/],
   ['media', /class="[^"]*\b(?:photo-split|hero-visual|call-card|avatar-stack)\b/],

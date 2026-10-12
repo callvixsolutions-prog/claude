@@ -262,7 +262,10 @@ strong { color: var(--ink-900); font-weight: 700; }
 .hero-proof p { margin: 0; font-size: 13.5px; color: var(--ink-500); }
 .hero-proof strong { color: var(--navy-900); }
 
-/* Avatar stack */
+/* Avatar stack — UNUSED since commit e276673, remove with next CSS pass.
+   The stock headshots these styled were removed because they depicted strangers
+   as Callvix staff. Left in place only because deleting them means re-inlining
+   style.css into 28 pages; do not reach for these rules in the meantime. */
 .avatar-stack { display: flex; align-items: center; gap: var(--space-xs); flex-wrap: wrap; }
 .avatar-stack .avatars { display: flex; }
 .avatar-stack .avatars img {
