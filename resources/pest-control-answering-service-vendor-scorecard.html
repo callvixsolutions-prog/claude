@@ -48,7 +48,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --navy-900: #101c4c;
   --navy-800: #1b2c63;
   --navy-700: #2a3d7a;
-  --teal-600: #087480;
+  --teal-600: #016d79;   /* darkened 7/channel so links clear AA on the deepened sand surface */
   --teal-500: #26a8b6;
   --teal-400: #48bcc8;
   --teal-300: #83d6df;
@@ -745,6 +745,31 @@ strong { color: var(--ink-900); font-weight: 700; }
   .rate-table { font-size: 14px; }
   .rate-table th, .rate-table td { padding: var(--space-xs) var(--space-sm); }
 }
+
+/* ---------- Read list (resources) ----------
+   The lowest-weight block on the homepage. Deliberately not cards: the job of
+   this section is "there is more to read", and thumbnails gave it the same
+   visual weight as the offer. */
+.read-list { display: flex; flex-direction: column; gap: var(--space-sm); border-top: 1px solid var(--line); }
+.read-list li { display: grid; grid-template-columns: 1fr auto; gap: 4px var(--space-md); align-items: baseline; padding: var(--space-sm) 0; border-bottom: 1px solid var(--line); }
+.read-list li > a { font-family: var(--font-heading); font-weight: 700; font-size: 17px; color: var(--navy-900); }
+.read-list li > a:hover { color: var(--teal-600); }
+.read-list-kicker { grid-column: 2; grid-row: 1; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--teal-600); white-space: nowrap; }
+.read-list li > span:last-child { grid-column: 1 / -1; font-size: 15px; color: var(--ink-500); line-height: 1.6; }
+.read-list-more { margin-top: var(--space-md); }
+.read-list-more a { font-weight: 700; color: var(--teal-600); }
+@media (max-width: 600px) {
+  .read-list li { grid-template-columns: 1fr; }
+  .read-list-kicker { grid-column: 1; grid-row: auto; }
+}
+
+/* Prose-led sections: an argument, not a feature list. */
+.container-narrow > p { font-size: 17.5px; line-height: 1.7; color: var(--ink-700); margin-bottom: var(--space-md); }
+.container-narrow > p:last-child { margin-bottom: 0; }
+.section--navy .container-narrow > p { color: #c3cbe2; }
+/* Inline links in prose must not read as plain text. */
+.container-narrow > p a { color: var(--teal-600); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.section--navy .container-narrow > p a { color: var(--teal-300); }
 
 </style>
 <style>

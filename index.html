@@ -48,7 +48,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --navy-900: #101c4c;
   --navy-800: #1b2c63;
   --navy-700: #2a3d7a;
-  --teal-600: #087480;
+  --teal-600: #016d79;   /* darkened 7/channel so links clear AA on the deepened sand surface */
   --teal-500: #26a8b6;
   --teal-400: #48bcc8;
   --teal-300: #83d6df;
@@ -746,6 +746,31 @@ strong { color: var(--ink-900); font-weight: 700; }
   .rate-table th, .rate-table td { padding: var(--space-xs) var(--space-sm); }
 }
 
+/* ---------- Read list (resources) ----------
+   The lowest-weight block on the homepage. Deliberately not cards: the job of
+   this section is "there is more to read", and thumbnails gave it the same
+   visual weight as the offer. */
+.read-list { display: flex; flex-direction: column; gap: var(--space-sm); border-top: 1px solid var(--line); }
+.read-list li { display: grid; grid-template-columns: 1fr auto; gap: 4px var(--space-md); align-items: baseline; padding: var(--space-sm) 0; border-bottom: 1px solid var(--line); }
+.read-list li > a { font-family: var(--font-heading); font-weight: 700; font-size: 17px; color: var(--navy-900); }
+.read-list li > a:hover { color: var(--teal-600); }
+.read-list-kicker { grid-column: 2; grid-row: 1; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--teal-600); white-space: nowrap; }
+.read-list li > span:last-child { grid-column: 1 / -1; font-size: 15px; color: var(--ink-500); line-height: 1.6; }
+.read-list-more { margin-top: var(--space-md); }
+.read-list-more a { font-weight: 700; color: var(--teal-600); }
+@media (max-width: 600px) {
+  .read-list li { grid-template-columns: 1fr; }
+  .read-list-kicker { grid-column: 1; grid-row: auto; }
+}
+
+/* Prose-led sections: an argument, not a feature list. */
+.container-narrow > p { font-size: 17.5px; line-height: 1.7; color: var(--ink-700); margin-bottom: var(--space-md); }
+.container-narrow > p:last-child { margin-bottom: 0; }
+.section--navy .container-narrow > p { color: #c3cbe2; }
+/* Inline links in prose must not read as plain text. */
+.container-narrow > p a { color: var(--teal-600); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.section--navy .container-narrow > p a { color: var(--teal-300); }
+
 </style>
 
 <script type="application/ld+json">
@@ -1087,42 +1112,18 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
 
 <!-- ===================== PROBLEM / STATS ===================== -->
 <section class="section">
-  <div class="container">
-    <div class="section-head section-head--center">
+  <div class="container-narrow">
+    <div class="section-head">
       <div class="eyebrow">The cost of a ringing phone</div>
-      <h2>In pest control, a missed call is often a lost customer.</h2>
-      <p class="lede">Pest problems feel urgent — a wasp nest, mice in the walls, ants across the counter. When the first company doesn't answer, many callers simply contact the next available provider instead of waiting or leaving a voicemail.</p>
+      <h2>In pest control, a missed call is usually a lost customer</h2>
     </div>
-    <div class="stat-band">
-      <div class="stat">
-        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-        <h3 class="stat-title">The problem can't wait</h3>
-        <p>A wasp nest or mice in the walls feels like an emergency. If you don't pick up, the caller just tries the next company.</p>
-      </div>
-      <div class="stat">
-        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-11.8A8 8 0 0 0 4 10.2C4 17.5 12 22 12 22Z"/><circle cx="12" cy="10" r="3"/></svg></div>
-        <h3 class="stat-title">Give callers a person to speak to</h3>
-        <p>When your office cannot pick up, we answer during your agreed coverage.</p>
-      </div>
-      <div class="stat">
-        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-        <h3 class="stat-title">Turn enquiries into clear next steps</h3>
-        <p>We qualify the request and book eligible appointments or escalate according to your rules.</p>
-      </div>
-      <div class="stat">
-        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-        <h3 class="stat-title">One call keeps paying</h3>
-        <p>A single new customer can turn into recurring service — so every call you recover keeps adding up over time.</p>
-      </div>
-    </div>
-
-    <p class="cost-close">You know the pattern — you're mid-treatment, driving between stops, or the office is already stretched, and the phone just rings out. That's the gap Callvix covers during your agreed coverage. If you want to put a number on it, our guide to <a href="/blog/missed-calls-cost-pest-control">what missed calls really cost</a> walks through the arithmetic using your own booking rate and job value.</p>
+    <p>Pest problems feel urgent. A wasp nest by the front door, mice in the walls, ants across the counter &mdash; the caller wants it dealt with today, not after a callback. When the first company doesn&rsquo;t answer, most people simply ring the next one, and the call that rang out is rarely the call that comes back.</p>
+    <p>You know the pattern. You are mid-treatment, driving between stops, or the office is already stretched, and the phone just rings. Nothing about that is a failure of effort; it is what happens when the people who do the work are also the people expected to answer.</p>
+    <p>Callvix covers that gap during your agreed coverage hours. A trained person answers in your company&rsquo;s name, qualifies the pest issue, and books the job or escalates it by the rules you set &mdash; so the caller gets a person rather than a voicemail, and you get the job rather than your competitor.</p>
+    <p>If you want to put a number on it, our guide to <a href="/blog/missed-calls-cost-pest-control">what missed calls really cost</a> walks through the arithmetic using your own booking rate and job value rather than an industry average.</p>
   </div>
 </section>
 
-<!-- ===================== HUMAN VS AI (CORE PILLAR) ===================== -->
-
-<!-- ===================== WHAT WE DO ===================== -->
 <section class="section section--alt">
   <div class="container">
     <div class="section-head section-head--center">
@@ -1256,84 +1257,38 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
 </section>
 
 <section class="section section--navy">
-  <div class="container">
-    <div class="split">
-      <div>
-        <div class="eyebrow">Fits how you already work</div>
-        <h2>Works with the tools your office already runs on</h2>
-        <p class="lede">Our representatives can work in <a href="/integrations/" style="color:var(--teal-300);font-weight:600;">the CRM or scheduling system your office already uses</a> with the <strong><a href="#pricing" style="color:var(--teal-300);">CRM Management add-on</a></strong>, entering call notes and booking details in your own account using access you grant and can revoke. Without the add-on, booking and call details reach your team by the method agreed during setup. There is no native integration or data sync.</p>
-        <div class="hero-badges" style="margin-top:8px;">
-          <a class="pill" href="/integrations/fieldroutes">FieldRoutes / PestRoutes</a>
-          <a class="pill" href="/integrations/servicetitan">ServiceTitan</a>
-          <a class="pill" href="/integrations/gorilladesk">GorillaDesk</a>
-          <a class="pill" href="/integrations/briostack">Briostack</a>
-          <a class="pill" href="/integrations/pestpac">PestPac</a>
-          <a class="pill" href="/integrations/housecall-pro">Housecall Pro</a>
-        </div>
-        <p style="margin-top:18px;"><a href="/integrations/" class="btn btn-ghost btn-sm">See how we work with each system</a></p>
-        <p style="margin-top:22px; font-size:13px; color:#8a93b5;">Use something else? We adapt to your workflow on the discovery call. Software names and trademarks belong to their respective owners; no partnership or native integration is implied.</p>
-      </div>
-      <div class="grid" style="gap:18px;">
-        <div class="card card--navy icon-row">
-          <div class="icon-sm" style="background:rgba(38,168,182,0.16)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--teal-300)" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
-          <div><h3 style="color:#fff">Your rules, not a generic script</h3><p style="color:#aeb6d0">We follow your coverage areas, pricing, and booking logic as configured.</p></div>
-        </div>
-        <div class="card card--navy icon-row">
-          <div class="icon-sm" style="background:rgba(38,168,182,0.16)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--teal-300)" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-          <div><h3 style="color:#fff">No long-term contract</h3><p style="color:#aeb6d0">Scale up for peak season, down for winter. Leave anytime.</p></div>
-        </div>
-        <div class="card card--navy icon-row">
-          <div class="icon-sm" style="background:rgba(38,168,182,0.16)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--teal-300)" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg></div>
-          <div><h3 style="color:#fff">A guided onboarding</h3><p style="color:#aeb6d0">Launch timing depends on your workflow, phone setup and approval — usually a short onboarding.</p></div>
-        </div>
-      </div>
+  <div class="container-narrow">
+    <div class="eyebrow">Fits how you already work</div>
+    <h2>Works with the tools your office already runs on</h2>
+    <p class="lede">Callvix representatives work inside <a href="/integrations/">the system your office already runs</a>. With the <a href="#pricing">CRM Management add-on</a> they enter call notes and booking details in your own account, using access you grant and can revoke. There is no native integration and no data sync.</p>
+    <div class="hero-badges" style="margin-top:var(--space-md);">
+      <a class="pill" href="/integrations/fieldroutes">FieldRoutes / PestRoutes</a>
+      <a class="pill" href="/integrations/servicetitan">ServiceTitan</a>
+      <a class="pill" href="/integrations/gorilladesk">GorillaDesk</a>
+      <a class="pill" href="/integrations/briostack">Briostack</a>
+      <a class="pill" href="/integrations/pestpac">PestPac</a>
+      <a class="pill" href="/integrations/housecall-pro">Housecall Pro</a>
     </div>
+    <p style="margin-top:var(--space-sm); font-size:13px; color:#8a93b5;">Use something else? We adapt to your workflow on the discovery call. Software names and trademarks belong to their respective owners; no partnership or native integration is implied.</p>
   </div>
 </section>
 
-<!-- ===================== RESOURCES / BLOG ===================== -->
 <section class="section section--alt">
-  <div class="container">
-    <div class="section-head section-head--center">
+  <div class="container-narrow">
+    <div class="section-head">
       <div class="eyebrow">Resources</div>
       <h2>Straight answers for pest control owners</h2>
-      <p class="lede">No fluff — just the questions owners actually ask before hiring a call answering service.</p>
     </div>
-    <div class="blog-grid">
-      <a class="blog-card" href="/blog/pest-control-answering-service-cost">
-        <div class="thumb"><img src="/assets/blog-pricing.jpg" alt="Calculator and cash representing answering service pricing" width="900" height="506" loading="lazy"></div>
-        <div class="body">
-          <span class="kicker">Pricing</span>
-          <h3>How much does a pest control answering service cost in 2026?</h3>
-          <p>Per-minute and per-call billing — and how to compare them at your own call volume.</p>
-          <span class="more">Read the guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-        </div>
-      </a>
-      <a class="blog-card" href="/blog/ai-vs-human-answering-service-pest-control">
-        <div class="thumb"><img src="/assets/blog-ai-human.jpg" alt="Two call representatives working at their desks" width="900" height="506" loading="lazy"></div>
-        <div class="body">
-          <span class="kicker">Human vs AI</span>
-          <h3>AI answering service for pest control vs. human: which is better?</h3>
-          <p>How AI and trained human answering compare on cost, coverage, urgency and booking &mdash; and how to test both on your own calls.</p>
-          <span class="more">Read the guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-        </div>
-      </a>
-      <a class="blog-card" href="/blog/missed-calls-cost-pest-control">
-        <div class="thumb"><img src="/assets/blog-missed-calls.jpg" alt="A person holding a phone with a missed call" width="900" height="506" loading="lazy"></div>
-        <div class="body">
-          <span class="kicker">Lead capture</span>
-          <h3>What missed calls really cost a pest control business</h3>
-          <p>The math behind every unanswered ring — and how many jobs you're likely losing.</p>
-          <span class="more">Read the guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-        </div>
-      </a>
-    </div>
-    <p style="text-align:center; margin-top:36px;"><a href="/blog/" class="btn btn-outline">Visit the resource hub</a></p>
+    <ul class="read-list">
+      <li><a href="/blog/pest-control-answering-service-cost">How much does a pest control answering service cost in 2026?</a> <span class="read-list-kicker">Pricing</span><span>Per-minute and per-call billing — and how to compare them at your own call volume.</span></li>
+      <li><a href="/blog/ai-vs-human-answering-service-pest-control">AI answering service for pest control vs. human: which is better?</a> <span class="read-list-kicker">Human vs AI</span><span>How AI and trained human answering compare on cost, coverage, urgency and booking &mdash; and how to test both on your own calls.</span></li>
+      <li><a href="/blog/missed-calls-cost-pest-control">What missed calls really cost a pest control business</a> <span class="read-list-kicker">Lead capture</span><span>The math behind every unanswered ring — and how many jobs you're likely losing.</span></li>
+    </ul>
+    <p class="read-list-more"><a href="/blog/">All guides</a></p>
   </div>
 </section>
 
-<!-- ===================== FINAL CTA ===================== -->
-<section class="section">
+<section class="section section--roomy">
   <div class="container">
     <div class="cta-band">
       <div class="eyebrow">Talk to the founder</div>
