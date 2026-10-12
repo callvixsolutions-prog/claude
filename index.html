@@ -701,6 +701,17 @@ strong { color: var(--ink-900); font-weight: 700; }
   .cc-op--eq { transform: none; }
 }
 
+/* A question heading exists for structure only; the button keeps the visual
+   and the accordion behaviour, so the wrapper must add nothing of its own. */
+.faq-q-head { margin: 0; font: inherit; font-weight: inherit; letter-spacing: inherit; }
+
+/* Author attribution at the foot of an article. */
+.author-box { margin-top: 48px; padding: 24px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-alt, #f7f9fb); }
+.author-box-label { font-size: 12px; letter-spacing: .09em; text-transform: uppercase; font-weight: 700; color: var(--teal-600); margin: 0 0 8px; }
+.author-box p { margin: 0; color: var(--ink-500); font-size: 15.5px; line-height: 1.65; }
+.author-box a { color: var(--teal-600); font-weight: 600; }
+.article-meta time { color: inherit; }
+
 </style>
 
 <script type="application/ld+json">
@@ -938,7 +949,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <a href="/" aria-current="page">Home</a>
       <a href="/services">How It Works</a>
       <a href="/pricing">Pricing</a>
-      <a href="/integrations/">Integrations</a>
+      <a href="/integrations/">Works With</a>
       <a href="/about">Why Callvix</a>
       <a href="/blog/">Resources</a>
       <a href="/faq">FAQ</a>
@@ -961,7 +972,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <li><a href="/">Home</a></li>
       <li><a href="/services">How It Works</a></li>
       <li><a href="/pricing">Pricing</a></li>
-      <li><a href="/integrations/">Integrations</a></li>
+      <li><a href="/integrations/">Works With</a></li>
       <li><a href="/about">Why Callvix</a></li>
       <li><a href="/blog/">Resources</a></li>
       <li><a href="/faq">FAQ</a></li>
@@ -1298,7 +1309,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           <li><a href="/">Home</a></li>
           <li><a href="/services">How It Works</a></li>
           <li><a href="/pricing">Pricing</a></li>
-          <li><a href="/integrations/">Integrations</a></li>
+          <li><a href="/integrations/">Works With</a></li>
           <li><a href="/about">Why Callvix</a></li>
           <li><a href="/contact">Contact</a></li>
         </ul>

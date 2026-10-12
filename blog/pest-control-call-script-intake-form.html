@@ -699,6 +699,17 @@ strong { color: var(--ink-900); font-weight: 700; }
   .cc-op--eq { transform: none; }
 }
 
+/* A question heading exists for structure only; the button keeps the visual
+   and the accordion behaviour, so the wrapper must add nothing of its own. */
+.faq-q-head { margin: 0; font: inherit; font-weight: inherit; letter-spacing: inherit; }
+
+/* Author attribution at the foot of an article. */
+.author-box { margin-top: 48px; padding: 24px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-alt, #f7f9fb); }
+.author-box-label { font-size: 12px; letter-spacing: .09em; text-transform: uppercase; font-weight: 700; color: var(--teal-600); margin: 0 0 8px; }
+.author-box p { margin: 0; color: var(--ink-500); font-size: 15.5px; line-height: 1.65; }
+.author-box a { color: var(--teal-600); font-weight: 600; }
+.article-meta time { color: inherit; }
+
 </style>
 <style>
 /* ===== Call-script & intake-form resource: scoped visual + print styles ===== */
@@ -787,10 +798,11 @@ strong { color: var(--ink-900); font-weight: 700; }
     "https://callvixsolutions.com/assets/blog-call-script-1200x630.png"
   ],
   "author": {
-    "@type": "Organization",
-    "@id": "https://callvixsolutions.com/#organization",
-    "name": "Callvix Solutions",
-    "url": "https://callvixsolutions.com/"
+    "@type": "Person",
+    "name": "Chris Taylor",
+    "jobTitle": "Founder",
+    "url": "https://callvixsolutions.com/about",
+    "worksFor": { "@id": "https://callvixsolutions.com/#organization" }
   },
   "publisher": {
     "@type": "Organization",
@@ -835,7 +847,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <a href="/" class="logo" aria-label="Callvix Solutions home"><picture><source srcset="/assets/logo.webp?v=2" type="image/webp"><img src="/assets/logo.png?v=2" alt="Callvix Solutions logo" width="117" height="40" decoding="async"></picture></a>
     <nav class="main-nav" aria-label="Primary">
       <a href="/">Home</a><a href="/services">How It Works</a><a href="/pricing">Pricing</a>
-      <a href="/integrations/">Integrations</a><a href="/about">Why Callvix</a><a href="/blog/" aria-current="page">Resources</a><a href="/faq">FAQ</a><a href="/contact">Contact</a>
+      <a href="/integrations/">Works With</a><a href="/about">Why Callvix</a><a href="/blog/" aria-current="page">Resources</a><a href="/faq">FAQ</a><a href="/contact">Contact</a>
     </nav>
     <div class="header-actions">
       <div class="header-phone-wrap"><a class="header-phone" href="tel:+15513736777" aria-label="Call Callvix on (551) 373-6777"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="header-phone-num">(551) 373-6777</span></a></div>
@@ -846,7 +858,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
 </header>
   <div class="mobile-nav" id="mobileNav">
     <ul><li><a href="/">Home</a></li><li><a href="/services">How It Works</a></li><li><a href="/pricing">Pricing</a></li>
-      <li><a href="/integrations/">Integrations</a></li><li><a href="/about">Why Callvix</a></li><li><a href="/blog/">Resources</a></li><li><a href="/faq">FAQ</a></li><li><a href="/contact">Contact</a></li></ul>
+      <li><a href="/integrations/">Works With</a></li><li><a href="/about">Why Callvix</a></li><li><a href="/blog/">Resources</a></li><li><a href="/faq">FAQ</a></li><li><a href="/contact">Contact</a></li></ul>
     <a href="tel:+15513736777" class="header-phone" style="margin-top:14px;">(551) 373-6777</a>
     <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-block">Book a Discovery Call</a>
   </div>
@@ -858,7 +870,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="breadcrumbs"><a href="/">Home</a> / <a href="/blog/">Resources</a> / Call operations</div>
     <div class="eyebrow">Call operations</div>
     <h1>Pest Control Call Script and Customer Intake Form: Free Template</h1>
-    <div class="article-meta"><span>Callvix Solutions</span><span class="sep"></span><span>14 min read</span><span class="sep"></span><span>Published September 2026</span><span class="sep"></span><span>Updated October 2026</span></div>
+    <div class="article-meta"><span>By <a href="/about">Chris Taylor</a>, Founder</span><span class="sep"></span><span>14 min read</span><span class="sep"></span><span>Published <time datetime="2026-09-10">10 September 2026</time></span><span class="sep"></span><span>Updated <time datetime="2026-10-05">5 October 2026</time></span></div>
   </div>
 </section>
 
@@ -1099,6 +1111,10 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <p>If you would rather not staff the phone yourself, <a href="/services">how Callvix works</a> explains the call-handling and booking model, and <a href="/pricing">pricing</a> is published rather than quoted.</p>
     </div>
 
+    <div class="author-box">
+      <p class="author-box-label">About the author</p>
+      <p><strong>Chris Taylor</strong> is the founder of Callvix Solutions, a human-answered call service built only for U.S. pest control companies. Callvix is founder-led, with hands-on setup around your services, service areas, pricing and booking rules before the first call is taken. <a href="/about">More about Callvix</a>.</p>
+    </div>
     <div class="cta-band" style="margin-top:56px;">
       <div class="eyebrow">Put the script to work</div>
       <h2>Have us run this script on your line</h2>
@@ -1128,7 +1144,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           <li><a href="/">Home</a></li>
           <li><a href="/services">How It Works</a></li>
           <li><a href="/pricing">Pricing</a></li>
-          <li><a href="/integrations/">Integrations</a></li>
+          <li><a href="/integrations/">Works With</a></li>
           <li><a href="/about">Why Callvix</a></li>
           <li><a href="/contact">Contact</a></li>
         </ul>
