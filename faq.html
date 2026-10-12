@@ -669,11 +669,18 @@ strong { color: var(--ink-900); font-weight: 700; }
 }
 /* The full nav + Book a Call need ~930px; below that, use the menu button
    (it previously switched at 720px, so 721-929px tablets overflowed sideways) */
-@media (max-width: 899px) {
-  /* Five nav items need 864px of header, measured. The breakpoint sits at
-     900px, leaving a small margin for font-loading shifts. It was briefly
-     1023px while the nav carried eight items; trimming to five released the
-     941-1023px band back to the full nav. */
+@media (min-width: 960px) and (max-width: 1140px) {
+  /* Six items at the full 26px gap need 950px, which would leave only 10px of
+     margin at the breakpoint below. Closing the gaps in this band brings the
+     requirement to roughly 910px and restores a sane margin without dropping a
+     nav item. */
+  .main-nav { gap: 18px; }
+}
+
+@media (max-width: 959px) {
+  /* Six nav items, measured: 950px at the full gap, ~910px at the tightened
+     gap above. Contact is back in the nav because for an answering service a
+     contact route is part of the proposition, not a secondary convenience. */
   .main-nav { display: none; }
   .nav-toggle { display: block; }
 }
@@ -761,6 +768,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <a href="/integrations/">Works With</a>
       <a href="/about">Why Callvix</a>
       <a href="/blog/">Resources</a>
+      <a href="/contact">Contact</a>
     </nav>
     <div class="header-actions">
       <div class="header-phone-wrap"><a class="header-phone" href="tel:+15513736777" aria-label="Call Callvix on (551) 373-6777"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="header-phone-num">(551) 373-6777</span></a></div>
@@ -771,7 +779,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
 </header>
   <div class="mobile-nav" id="mobileNav">
     <ul><li><a href="/services">How It Works</a></li><li><a href="/pricing">Pricing</a></li>
-      <li><a href="/integrations/">Works With</a></li><li><a href="/about">Why Callvix</a></li><li><a href="/blog/">Resources</a></li></ul>
+      <li><a href="/integrations/">Works With</a></li><li><a href="/about">Why Callvix</a></li><li><a href="/blog/">Resources</a></li>
+      <li><a href="/contact">Contact</a></li></ul>
     <a href="tel:+15513736777" class="header-phone" style="margin-top:14px;">(551) 373-6777</a>
     <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-block">Book a Discovery Call</a>
   </div>

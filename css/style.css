@@ -631,11 +631,18 @@ strong { color: var(--ink-900); font-weight: 700; }
 }
 /* The full nav + Book a Call need ~930px; below that, use the menu button
    (it previously switched at 720px, so 721-929px tablets overflowed sideways) */
-@media (max-width: 899px) {
-  /* Five nav items need 864px of header, measured. The breakpoint sits at
-     900px, leaving a small margin for font-loading shifts. It was briefly
-     1023px while the nav carried eight items; trimming to five released the
-     941-1023px band back to the full nav. */
+@media (min-width: 960px) and (max-width: 1140px) {
+  /* Six items at the full 26px gap need 950px, which would leave only 10px of
+     margin at the breakpoint below. Closing the gaps in this band brings the
+     requirement to roughly 910px and restores a sane margin without dropping a
+     nav item. */
+  .main-nav { gap: 18px; }
+}
+
+@media (max-width: 959px) {
+  /* Six nav items, measured: 950px at the full gap, ~910px at the tightened
+     gap above. Contact is back in the nav because for an answering service a
+     contact route is part of the proposition, not a secondary convenience. */
   .main-nav { display: none; }
   .nav-toggle { display: block; }
 }
