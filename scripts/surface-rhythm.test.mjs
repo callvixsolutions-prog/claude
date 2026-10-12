@@ -89,6 +89,7 @@ function sectionsOf(html) {
     const after = slice.slice(m[0].length, m[0].length + 300);
     const comment = after.match(/^\s*<!--([\s\S]*?)-->/);
     return {
+      html: slice,
       surface: classes.find((c) => c.startsWith('section--') && !NOT_A_SURFACE.has(c)) || 'base',
       signature: signatureOf(slice),
       isOpening: classes.some((c) => OPENING.has(c)),
@@ -114,6 +115,60 @@ test('no two adjacent sections share both surface and format', () => {
   assert.deepEqual(collisions, [],
     `adjacent sections are visually indistinguishable:\n  ${collisions.join('\n  ')}\n` +
     'Change one section\'s format or surface, or mark the second section--continues with a reason.');
+});
+
+/**
+ * The guard on the guard.
+ *
+ * Every signature above is matched by class name, and a hand-maintained
+ * vocabulary drifts away from the markup in whichever direction nobody is
+ * watching. This does not need to know the right answer — only that `prose` is
+ * a suspicious answer for a section containing an ordered list, a disclosure
+ * widget, or a repeated run of sibling components.
+ *
+ * It warns rather than fails on purpose. It is a second opinion, and a second
+ * opinion that can block a commit would just get its patterns edited until it
+ * stopped talking.
+ */
+function suspicionsOf(html) {
+  const why = [];
+  if (/<ol\b/.test(html)) why.push('<ol>');
+  if (/<details\b/.test(html)) why.push('<details>');
+  /* Parallel siblings, approximated without a DOM: the same tag carrying the
+     same class three or more times inside one section. Good enough for a hint.
+     The lookahead skips elements that close immediately: <span class="sep"></span>
+     is a decorative dot repeated in every byline, not a repeated component, and
+     without this it was seven of the fourteen first warnings this check produced.
+     The tag name is pinned with (?=[\s>]) so the engine cannot backtrack to a
+     shorter tag just to make the backreference in the lookahead fail. */
+  const runs = new Map();
+  for (const m of html.matchAll(/<([a-z][a-z0-9]*)(?=[\s>])[^>]*\sclass="([^"]+)"[^>]*>(?!\s*<\/\1>)/gi)) {
+    const key = `${m[1]}.${m[2]}`;
+    runs.set(key, (runs.get(key) || 0) + 1);
+  }
+  for (const [key, n] of runs) if (n >= 3) { why.push(`${n}x ${key}`); break; }
+  return why;
+}
+
+test('sections resolving to prose are not obviously something else', () => {
+  const suspect = [];
+  for (const [file, secs] of pages) {
+    secs.forEach((s, i) => {
+      if (s.signature !== 'prose') return;
+      const why = suspicionsOf(s.html);
+      if (why.length) suspect.push(`${file} section ${i}: prose, but contains ${why.join(', ')}`);
+    });
+  }
+  if (suspect.length) {
+    console.log(`    WARNING — ${suspect.length} section(s) may be misclassified:`);
+    for (const line of suspect) console.log(`      ${line}`);
+    console.log('      prose is suspicious here. Either the signature table is missing a');
+    console.log('      pattern, or the section genuinely is prose and this is noise.');
+  } else {
+    console.log('    no misclassified-prose suspicions');
+  }
+  /* Warning only — see the comment above. */
+  assert.ok(true);
 });
 
 test('format signatures are visible for review', () => {
