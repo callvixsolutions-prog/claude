@@ -1,22 +1,27 @@
 /**
  * Surface rhythm guard.
  *
- * Two adjacent sections painting the same surface give the eye no cue that a
- * new idea has started. The page then reads as one undifferentiated column
- * however correct the padding is. This check fails when that happens.
+ * The original rule was "no two adjacent sections share a surface". That was a
+ * band-aid: it produced a stripe pattern across nine structurally identical
+ * containers, which reads as metronomic rather than rhythmic.
  *
- * Two deliberate exemptions:
+ * The real question is whether two adjacent sections are visually
+ * distinguishable. Two sections with clearly different internal formats are
+ * distinguishable even on the same surface, so the guard now fails only when
+ * both the surface AND the format signature match.
+ *
+ * The signature is inferred from what a section actually contains, never from
+ * a hand-applied class. A `data-format="prose"` attribute would drift from
+ * reality the first time someone added a card to the section.
+ *
+ * Exemptions:
  *
  * 1. The page opening. A hero or page-hero followed by the first body section
- *    sharing a surface is normal: the opening is the top of the page, not part
- *    of the body rhythm. Without this exemption the check flags 49 pairs
- *    across 20 pages, almost all of them page openings, and measures the wrong
- *    thing.
+ *    sharing a surface is the top of the page, not body rhythm.
  *
  * 2. An explicit `section--continues` opt-out, which must carry an inline
- *    comment giving the reason. The opt-out count is printed on every run and
- *    capped: exceptions may be paid down, never accumulated. A guard that
- *    silently tolerates a growing list of exceptions has stopped being a guard.
+ *    comment giving the reason. The count is printed on every run and capped:
+ *    exceptions may be paid down, never accumulated.
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -31,8 +36,27 @@ const MAX_OPT_OUTS = 0;
 
 const EXCLUDED = new Set(['pest-control-call-demo', 'docs', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
 const OPENING = new Set(['hero', 'page-hero']);
-/* Density modifiers, not surfaces. */
+/* Density and behaviour modifiers, not surfaces. */
 const NOT_A_SURFACE = new Set(['section--tight', 'section--roomy', 'section--continues']);
+
+/**
+ * Format signature, inferred from the section's own markup. Order matters only
+ * for readability of the printed sequence, so the parts are sorted.
+ */
+const FORMATS = [
+  ['table', /<table\b/],
+  ['steps', /class="[^"]*\bstep\b/],
+  ['cards', /class="[^"]*\b(?:card|blog-card|price-card|stat)\b/],
+  ['list', /class="[^"]*\b(?:read-list|checklist|faq-list)\b/],
+  ['quote', /class="[^"]*\bquote-card\b/],
+  ['cta', /class="[^"]*\bcta-band\b/],
+  ['media', /class="[^"]*\b(?:photo-split|hero-visual|call-card|avatar-stack)\b/],
+];
+
+function signatureOf(html) {
+  const parts = FORMATS.filter(([, re]) => re.test(html)).map(([name]) => name);
+  return parts.length ? parts.sort().join('+') : 'prose';
+}
 
 function htmlFiles(dir = ROOT, out = []) {
   for (const entry of readdirSync(dir)) {
@@ -47,15 +71,16 @@ function htmlFiles(dir = ROOT, out = []) {
 function sectionsOf(html) {
   const main = html.match(/<main\b[\s\S]*?<\/main>/);
   if (!main) return [];
-  return [...main[0].matchAll(/<section class="([^"]+)"[^>]*>/g)].map((m) => {
+  const body = main[0];
+  const opens = [...body.matchAll(/<section class="([^"]+)"[^>]*>/g)];
+  return opens.map((m, i) => {
     const classes = m[1].split(/\s+/);
-    const surface = classes.find((c) => c.startsWith('section--') && !NOT_A_SURFACE.has(c)) || 'base';
-    /* The reason must be an HTML comment immediately after the opening tag,
-       so it sits where a reviewer reading the markup will see it. */
-    const after = main[0].slice(m.index + m[0].length, m.index + m[0].length + 300);
+    const slice = body.slice(m.index, i + 1 < opens.length ? opens[i + 1].index : body.length);
+    const after = slice.slice(m[0].length, m[0].length + 300);
     const comment = after.match(/^\s*<!--([\s\S]*?)-->/);
     return {
-      surface,
+      surface: classes.find((c) => c.startsWith('section--') && !NOT_A_SURFACE.has(c)) || 'base',
+      signature: signatureOf(slice),
       isOpening: classes.some((c) => OPENING.has(c)),
       optOut: classes.includes('section--continues'),
       reason: comment ? comment[1].trim() : '',
@@ -65,19 +90,33 @@ function sectionsOf(html) {
 
 const pages = htmlFiles().map((f) => [f, sectionsOf(readFileSync(join(ROOT, f), 'utf8'))]);
 
-test('no two adjacent body sections share a surface', () => {
+test('no two adjacent sections share both surface and format', () => {
   const collisions = [];
   for (const [file, secs] of pages) {
     for (let i = 0; i < secs.length - 1; i++) {
-      if (secs[i].isOpening) continue;              // page opening, exempt
+      if (secs[i].isOpening) continue;
       if (secs[i].surface !== secs[i + 1].surface) continue;
-      if (secs[i + 1].optOut) continue;             // declared exception
-      collisions.push(`${file}: sections ${i} and ${i + 1} both "${secs[i].surface}"`);
+      if (secs[i].signature !== secs[i + 1].signature) continue;
+      if (secs[i + 1].optOut) continue;
+      collisions.push(`${file}: sections ${i} and ${i + 1} are both ${secs[i].surface}/${secs[i].signature}`);
     }
   }
   assert.deepEqual(collisions, [],
-    `adjacent sections share a surface:\n  ${collisions.join('\n  ')}\n` +
-    'Re-tag one of them, or mark the second section--continues with a comment saying why.');
+    `adjacent sections are visually indistinguishable:\n  ${collisions.join('\n  ')}\n` +
+    'Change one section\'s format or surface, or mark the second section--continues with a reason.');
+});
+
+test('format signatures are visible for review', () => {
+  /* Printed every run. Nine identical signatures in a column is the fastest
+     way for a human to see that the page has flattened again. */
+  for (const [file, secs] of pages) {
+    if (secs.length < 2) continue;
+    console.log(`    ${file}`);
+    secs.forEach((s, i) => {
+      console.log(`      ${String(i).padEnd(2)} ${s.surface.padEnd(14)} ${s.signature}${s.isOpening ? '   (page opening, exempt)' : ''}`);
+    });
+  }
+  assert.ok(pages.length > 0);
 });
 
 test('surface opt-outs stay at or below the ceiling', () => {
@@ -94,5 +133,5 @@ test('surface opt-outs stay at or below the ceiling', () => {
 
   assert.ok(optOuts.length <= MAX_OPT_OUTS,
     `${optOuts.length} surface opt-outs, ceiling is ${MAX_OPT_OUTS}. ` +
-    'Exceptions may be paid down, not accumulated: re-tag instead, or raise the ceiling deliberately.');
+    'Exceptions may be paid down, not accumulated: change a format instead, or raise the ceiling deliberately.');
 });

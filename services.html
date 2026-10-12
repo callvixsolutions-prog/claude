@@ -63,7 +63,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --ink-900: #1c2033;   /* headings on light where not navy */
   --ink-700: #3a3f52;   /* body text — warm, not cold slate */
   --ink-500: #5d6172;   /* muted */
-  --ink-400: #5d6170;
   --line:    #e8e1d7;   /* warm hairline border */
   --line-2:  #ded5c8;
 
@@ -334,7 +333,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .call-result { display: flex; align-items: center; gap: var(--space-2xs); margin-top: 6px; padding: var(--space-xs) 16px; background: var(--navy-900); border-radius: 14px; }
 .call-result svg { width: 22px; height: 22px; color: #fff; background: var(--teal-500); border-radius: 50%; padding: 4px; flex-shrink: 0; }
 .call-result span { font-size: 13.5px; color: #fff; font-family: var(--font-heading); font-weight: 600; }
-.card-disclaimer { text-align: center; font-size: 12.5px; color: var(--ink-400); margin: 12px 0 0; font-style: italic; }
+.card-disclaimer { text-align: center; font-size: 12.5px; color: var(--ink-500); margin: 12px 0 0; font-style: italic; }
 .hero-float {
   position: absolute; right: -14px; bottom: 34px; background: var(--white); color: var(--navy-900);
   border-radius: var(--radius-md); padding: var(--space-xs) var(--space-sm); box-shadow: var(--shadow-lg);
@@ -368,7 +367,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .stat-title { font-family: var(--font-heading); font-size: 17.5px; font-weight: 700; color: var(--navy-900); line-height: 1.25; margin: 0 0 8px; letter-spacing: -0.01em; }
 .stat p { margin: 0; font-size: 14.5px; color: var(--ink-500); line-height: 1.55; }
 .stat p strong { color: var(--navy-900); }
-.stat cite { display: block; margin-top: var(--space-2xs); font-size: 11.5px; color: var(--ink-400); font-style: normal; }
+.stat cite { display: block; margin-top: var(--space-2xs); font-size: 11.5px; color: var(--ink-500); font-style: normal; }
 
 /* Cost-of-a-missed-call visual equation */
 
@@ -434,20 +433,20 @@ strong { color: var(--ink-900); font-weight: 700; }
 .plan-combo-label { display: block; font-family: var(--font-heading); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.72; margin-bottom: var(--space-2xs); }
 .plan-combo-value { display: block; font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--navy-900); letter-spacing: -0.02em; }
 .plan-combo-item--base .plan-combo-value { color: #fff; }
-.plan-combo-value small { font-size: 14px; font-weight: 600; color: var(--ink-400); }
+.plan-combo-value small { font-size: 14px; font-weight: 600; color: var(--ink-500); }
 .plan-combo-item--base .plan-combo-value small { color: #9fb8d6; }
 .plan-combo-plus { display: flex; align-items: center; justify-content: center; width: 56px; flex-shrink: 0; background: var(--sand); font-family: var(--font-heading); font-size: 22px; font-weight: 800; color: var(--teal-600); }
 .price-headline { font-family: var(--font-heading); font-size: 40px; font-weight: 800; color: var(--navy-900); letter-spacing: -0.02em; line-height: 1.1; margin: 6px 0 var(--space-xs); }
 .price-headline small { font-family: var(--font-body); font-weight: 500; font-size: 17px; color: var(--ink-500); letter-spacing: 0; }
 .price-hero-note { font-size: 14.5px; color: var(--ink-500); margin-top: 12px; }
 @media (max-width: 480px) { .price-headline { font-size: 31px; } }
-.plan-combo-note { text-align: center; font-size: 13.5px; color: var(--ink-400); margin-top: var(--space-sm); }
+.plan-combo-note { text-align: center; font-size: 13.5px; color: var(--ink-500); margin-top: var(--space-sm); }
 
 .price-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 32px; position: relative; box-shadow: var(--shadow-sm); }
 
 .price-card h3 { font-size: 20px; margin-bottom: 6px; }
 .price-card .price { font-family: var(--font-heading); font-size: 34px; font-weight: 800; color: var(--navy-900); margin: var(--space-2xs) 0 4px; letter-spacing: -0.02em; }
-.price-card .price span { font-size: 14px; font-weight: 600; color: var(--ink-400); }
+.price-card .price span { font-size: 14px; font-weight: 600; color: var(--ink-500); }
 .price-card p.desc { color: var(--ink-500); font-size: 14.5px; margin-bottom: var(--space-sm); }
 .price-card ul { display: flex; flex-direction: column; gap: var(--space-xs); margin-bottom: 4px; }
 .price-card li { display: flex; gap: var(--space-2xs); align-items: flex-start; font-size: 14.5px; color: var(--ink-700); }
@@ -470,7 +469,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .quote-card .by { display: flex; align-items: center; gap: 12px; }
 .quote-card .by img { width: 44px; height: 44px; border-radius: 50%; }
 .quote-card .by strong { display: block; font-size: 14.5px; color: var(--navy-900); }
-.quote-card .by span { font-size: 13px; color: var(--ink-400); }
+.quote-card .by span { font-size: 13px; color: var(--ink-500); }
 
 /* ---------- FAQ ---------- */
 .faq-list { max-width: 820px; margin: 0 auto; }
@@ -507,7 +506,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 
 /* Article body */
 .article { max-width: 760px; margin: 0 auto; }
-.article-meta { display: flex; align-items: center; gap: 12px; font-size: 13.5px; color: var(--ink-400); margin-bottom: var(--space-md); }
+.article-meta { display: flex; align-items: center; gap: 12px; font-size: 13.5px; color: var(--ink-500); margin-bottom: var(--space-md); }
 .article-meta .sep { width: 4px; height: 4px; border-radius: 50%; background: var(--line-2); }
 .article-body { font-size: 17.5px; line-height: 1.75; color: var(--ink-700); }
 .article-body h2 { font-size: 27px; margin: var(--space-lg) 0 16px; }
@@ -529,8 +528,8 @@ strong { color: var(--ink-900); font-weight: 700; }
 .page-hero .eyebrow { color: var(--teal-600); }
 .page-hero h1 { font-size: clamp(31px, 4.2vw, 47px); max-width: 800px; color: var(--navy-900); }
 .page-hero p.lede { max-width: 640px; }
-.breadcrumbs { font-size: 13px; color: var(--ink-400); margin-bottom: var(--space-sm); }
-.breadcrumbs a { color: var(--ink-400); }
+.breadcrumbs { font-size: 13px; color: var(--ink-500); margin-bottom: var(--space-sm); }
+.breadcrumbs a { color: var(--ink-500); }
 .breadcrumbs a:hover { color: var(--teal-600); }
 
 /* ---------- Contact ---------- */
@@ -541,10 +540,10 @@ strong { color: var(--ink-900); font-weight: 700; }
 .form-field { margin-bottom: var(--space-sm); }
 .form-field label { display: block; font-family: var(--font-heading); font-weight: 600; font-size: 14px; margin-bottom: 7px; color: var(--navy-900); }
 .form-field input, .form-field select, .form-field textarea { width: 100%; padding: var(--space-xs) var(--space-sm); border: 1px solid var(--line-2); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 15px; color: var(--text); background: var(--cream); }
-.form-field .opt { font-weight: 500; font-size: 13px; color: var(--ink-400); }
+.form-field .opt { font-weight: 500; font-size: 13px; color: var(--ink-500); }
 .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: 2px solid var(--teal-400); outline-offset: 1px; background: var(--white); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); }
-.form-note { font-size: 13px; color: var(--ink-400); margin-top: var(--space-2xs); }
+.form-note { font-size: 13px; color: var(--ink-500); margin-top: var(--space-2xs); }
 .form-status { font-size: 14px; margin: 12px 0 0; min-height: 1px; }
 .form-status:empty { margin: 0; }
 .form-status--error { color: #b4232b; font-weight: 600; }
@@ -798,7 +797,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .flow-branch { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2xs); margin-left: var(--space-base); }
 .flow-branch div { background: var(--teal-50); border: 1px solid var(--teal-100); border-radius: var(--radius-sm); padding: var(--space-2xs) 12px; font-size: 14px; line-height: 1.45; color: var(--ink-700); }
 .flow-branch strong { display: block; font-family: var(--font-heading); color: var(--navy-900); font-size: 14.5px; margin-bottom: 2px; }
-.flow-foot { font-size: 13px; color: var(--ink-400); margin: 16px 0 0; }
+.flow-foot { font-size: 13px; color: var(--ink-500); margin: 16px 0 0; }
 
 /* Compact "who it's for" strip */
 .svc-fits { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-sm); margin-top: var(--space-base); }
@@ -1154,7 +1153,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <p class="lede">No &ldquo;press 1 for scheduling,&rdquo; and no script that falls apart when the caller goes off-topic. Handlers are trained on pest control conversations and learn your services, service area, pricing and booking rules before they answer in your name.</p>
         <p>A homeowner with rats in the kitchen or wasps by the door wants someone who can hear the urgency, ask the right follow-up question and book the job. An automated system can read a script; the judgment calls are where people still do better. We think that through in our <a href="/blog/ai-vs-human-answering-service-pest-control">comparison of AI and human answering</a>, written to be useful whichever you choose.</p>
         <p class="svc-note">With the <strong>CRM Management add-on ($99/month)</strong>, our representatives work inside your own system &mdash; <a href="/integrations/fieldroutes">FieldRoutes</a>, <a href="/integrations/servicetitan">ServiceTitan</a>, <a href="/integrations/gorilladesk">GorillaDesk</a>, <a href="/integrations/briostack">Briostack</a>, <a href="/integrations/pestpac">PestPac</a>, <a href="/integrations/housecall-pro">Housecall Pro</a> or whatever you run &mdash; using a login you grant and can revoke. There is no native integration or data sync.</p>
-        <p class="svc-note" style="font-size:13.5px;color:var(--ink-400);">FieldRoutes, PestRoutes, ServiceTitan, GorillaDesk, Briostack, PestPac and Housecall Pro are trademarks of their respective owners. Callvix is independent of them.</p>
+        <p class="svc-note" style="font-size:13.5px;color:var(--ink-500);">FieldRoutes, PestRoutes, ServiceTitan, GorillaDesk, Briostack, PestPac and Housecall Pro are trademarks of their respective owners. Callvix is independent of them.</p>
       </div>
     </div>
   </div>

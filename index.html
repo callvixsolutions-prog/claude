@@ -64,7 +64,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --ink-900: #1c2033;   /* headings on light where not navy */
   --ink-700: #3a3f52;   /* body text — warm, not cold slate */
   --ink-500: #5d6172;   /* muted */
-  --ink-400: #5d6170;
   --line:    #e8e1d7;   /* warm hairline border */
   --line-2:  #ded5c8;
 
@@ -335,7 +334,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .call-result { display: flex; align-items: center; gap: var(--space-2xs); margin-top: 6px; padding: var(--space-xs) 16px; background: var(--navy-900); border-radius: 14px; }
 .call-result svg { width: 22px; height: 22px; color: #fff; background: var(--teal-500); border-radius: 50%; padding: 4px; flex-shrink: 0; }
 .call-result span { font-size: 13.5px; color: #fff; font-family: var(--font-heading); font-weight: 600; }
-.card-disclaimer { text-align: center; font-size: 12.5px; color: var(--ink-400); margin: 12px 0 0; font-style: italic; }
+.card-disclaimer { text-align: center; font-size: 12.5px; color: var(--ink-500); margin: 12px 0 0; font-style: italic; }
 .hero-float {
   position: absolute; right: -14px; bottom: 34px; background: var(--white); color: var(--navy-900);
   border-radius: var(--radius-md); padding: var(--space-xs) var(--space-sm); box-shadow: var(--shadow-lg);
@@ -369,7 +368,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .stat-title { font-family: var(--font-heading); font-size: 17.5px; font-weight: 700; color: var(--navy-900); line-height: 1.25; margin: 0 0 8px; letter-spacing: -0.01em; }
 .stat p { margin: 0; font-size: 14.5px; color: var(--ink-500); line-height: 1.55; }
 .stat p strong { color: var(--navy-900); }
-.stat cite { display: block; margin-top: var(--space-2xs); font-size: 11.5px; color: var(--ink-400); font-style: normal; }
+.stat cite { display: block; margin-top: var(--space-2xs); font-size: 11.5px; color: var(--ink-500); font-style: normal; }
 
 /* Cost-of-a-missed-call visual equation */
 
@@ -435,20 +434,20 @@ strong { color: var(--ink-900); font-weight: 700; }
 .plan-combo-label { display: block; font-family: var(--font-heading); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.72; margin-bottom: var(--space-2xs); }
 .plan-combo-value { display: block; font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--navy-900); letter-spacing: -0.02em; }
 .plan-combo-item--base .plan-combo-value { color: #fff; }
-.plan-combo-value small { font-size: 14px; font-weight: 600; color: var(--ink-400); }
+.plan-combo-value small { font-size: 14px; font-weight: 600; color: var(--ink-500); }
 .plan-combo-item--base .plan-combo-value small { color: #9fb8d6; }
 .plan-combo-plus { display: flex; align-items: center; justify-content: center; width: 56px; flex-shrink: 0; background: var(--sand); font-family: var(--font-heading); font-size: 22px; font-weight: 800; color: var(--teal-600); }
 .price-headline { font-family: var(--font-heading); font-size: 40px; font-weight: 800; color: var(--navy-900); letter-spacing: -0.02em; line-height: 1.1; margin: 6px 0 var(--space-xs); }
 .price-headline small { font-family: var(--font-body); font-weight: 500; font-size: 17px; color: var(--ink-500); letter-spacing: 0; }
 .price-hero-note { font-size: 14.5px; color: var(--ink-500); margin-top: 12px; }
 @media (max-width: 480px) { .price-headline { font-size: 31px; } }
-.plan-combo-note { text-align: center; font-size: 13.5px; color: var(--ink-400); margin-top: var(--space-sm); }
+.plan-combo-note { text-align: center; font-size: 13.5px; color: var(--ink-500); margin-top: var(--space-sm); }
 
 .price-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 32px; position: relative; box-shadow: var(--shadow-sm); }
 
 .price-card h3 { font-size: 20px; margin-bottom: 6px; }
 .price-card .price { font-family: var(--font-heading); font-size: 34px; font-weight: 800; color: var(--navy-900); margin: var(--space-2xs) 0 4px; letter-spacing: -0.02em; }
-.price-card .price span { font-size: 14px; font-weight: 600; color: var(--ink-400); }
+.price-card .price span { font-size: 14px; font-weight: 600; color: var(--ink-500); }
 .price-card p.desc { color: var(--ink-500); font-size: 14.5px; margin-bottom: var(--space-sm); }
 .price-card ul { display: flex; flex-direction: column; gap: var(--space-xs); margin-bottom: 4px; }
 .price-card li { display: flex; gap: var(--space-2xs); align-items: flex-start; font-size: 14.5px; color: var(--ink-700); }
@@ -471,7 +470,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .quote-card .by { display: flex; align-items: center; gap: 12px; }
 .quote-card .by img { width: 44px; height: 44px; border-radius: 50%; }
 .quote-card .by strong { display: block; font-size: 14.5px; color: var(--navy-900); }
-.quote-card .by span { font-size: 13px; color: var(--ink-400); }
+.quote-card .by span { font-size: 13px; color: var(--ink-500); }
 
 /* ---------- FAQ ---------- */
 .faq-list { max-width: 820px; margin: 0 auto; }
@@ -508,7 +507,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 
 /* Article body */
 .article { max-width: 760px; margin: 0 auto; }
-.article-meta { display: flex; align-items: center; gap: 12px; font-size: 13.5px; color: var(--ink-400); margin-bottom: var(--space-md); }
+.article-meta { display: flex; align-items: center; gap: 12px; font-size: 13.5px; color: var(--ink-500); margin-bottom: var(--space-md); }
 .article-meta .sep { width: 4px; height: 4px; border-radius: 50%; background: var(--line-2); }
 .article-body { font-size: 17.5px; line-height: 1.75; color: var(--ink-700); }
 .article-body h2 { font-size: 27px; margin: var(--space-lg) 0 16px; }
@@ -530,8 +529,8 @@ strong { color: var(--ink-900); font-weight: 700; }
 .page-hero .eyebrow { color: var(--teal-600); }
 .page-hero h1 { font-size: clamp(31px, 4.2vw, 47px); max-width: 800px; color: var(--navy-900); }
 .page-hero p.lede { max-width: 640px; }
-.breadcrumbs { font-size: 13px; color: var(--ink-400); margin-bottom: var(--space-sm); }
-.breadcrumbs a { color: var(--ink-400); }
+.breadcrumbs { font-size: 13px; color: var(--ink-500); margin-bottom: var(--space-sm); }
+.breadcrumbs a { color: var(--ink-500); }
 .breadcrumbs a:hover { color: var(--teal-600); }
 
 /* ---------- Contact ---------- */
@@ -542,10 +541,10 @@ strong { color: var(--ink-900); font-weight: 700; }
 .form-field { margin-bottom: var(--space-sm); }
 .form-field label { display: block; font-family: var(--font-heading); font-weight: 600; font-size: 14px; margin-bottom: 7px; color: var(--navy-900); }
 .form-field input, .form-field select, .form-field textarea { width: 100%; padding: var(--space-xs) var(--space-sm); border: 1px solid var(--line-2); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 15px; color: var(--text); background: var(--cream); }
-.form-field .opt { font-weight: 500; font-size: 13px; color: var(--ink-400); }
+.form-field .opt { font-weight: 500; font-size: 13px; color: var(--ink-500); }
 .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: 2px solid var(--teal-400); outline-offset: 1px; background: var(--white); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); }
-.form-note { font-size: 13px; color: var(--ink-400); margin-top: var(--space-2xs); }
+.form-note { font-size: 13px; color: var(--ink-500); margin-top: var(--space-2xs); }
 .form-status { font-size: 14px; margin: 12px 0 0; min-height: 1px; }
 .form-status:empty { margin: 0; }
 .form-status--error { color: #b4232b; font-weight: 600; }
@@ -1115,9 +1114,9 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   <div class="container-narrow">
     <div class="section-head">
       <div class="eyebrow">The cost of a ringing phone</div>
-      <h2>In pest control, a missed call is usually a lost customer</h2>
+      <h2>In pest control, a missed call is often a lost customer</h2>
     </div>
-    <p>Pest problems feel urgent. A wasp nest by the front door, mice in the walls, ants across the counter &mdash; the caller wants it dealt with today, not after a callback. When the first company doesn&rsquo;t answer, most people simply ring the next one, and the call that rang out is rarely the call that comes back.</p>
+    <p>Pest problems feel urgent. A wasp nest by the front door, mice in the walls, ants across the counter &mdash; the caller wants it dealt with today, not after a callback. When the first company doesn&rsquo;t answer, many callers simply ring the next one rather than wait or leave a voicemail.</p>
     <p>You know the pattern. You are mid-treatment, driving between stops, or the office is already stretched, and the phone just rings. Nothing about that is a failure of effort; it is what happens when the people who do the work are also the people expected to answer.</p>
     <p>Callvix covers that gap during your agreed coverage hours. A trained person answers in your company&rsquo;s name, qualifies the pest issue, and books the job or escalates it by the rules you set &mdash; so the caller gets a person rather than a voicemail, and you get the job rather than your competitor.</p>
     <p>If you want to put a number on it, our guide to <a href="/blog/missed-calls-cost-pest-control">what missed calls really cost</a> walks through the arithmetic using your own booking rate and job value rather than an industry average.</p>
