@@ -43,6 +43,7 @@
 - [Contact](https://callvixsolutions.com/contact): Contact details, business address and discovery call booking.
 - [Integrations by CRM](https://callvixsolutions.com/integrations/): How representatives work inside the client's existing pest control software under the CRM Management add-on.
 - [Resource Hub](https://callvixsolutions.com/blog/): Guides for pest control owners on answering services, pricing and lead capture.
+- [Free tools for pest control offices](https://callvixsolutions.com/tools/): Three ungated tools - an answering service vendor scorecard, a call script and customer intake form, and an after-hours escalation checklist. No email required, and usable with any provider.
 - [Privacy Policy](https://callvixsolutions.com/privacy-policy)
 - [Terms of Service](https://callvixsolutions.com/terms)
 
