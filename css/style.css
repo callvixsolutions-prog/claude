@@ -618,17 +618,11 @@ strong { color: var(--ink-900); font-weight: 700; }
 }
 /* The full nav + Book a Call need ~930px; below that, use the menu button
    (it previously switched at 720px, so 721-929px tablets overflowed sideways) */
-/* The primary nav carries eight items. Between the hamburger breakpoint and
-   roughly 1180px that overflows the header and clips the booking button, so
-   close the gaps here rather than hiding the nav earlier or dropping a link. */
-@media (min-width: 1024px) and (max-width: 1180px) {
-  .main-nav { gap: 16px; }
-}
-
-@media (max-width: 1023px) {
-  /* Raised from 940px when the nav went from seven items to eight: below this
-     the row needs ~1013px and would clip the booking button. The hamburger
-     menu carries the same links, Integrations included. */
+@media (max-width: 899px) {
+  /* Five nav items need 864px of header, measured. The breakpoint sits at
+     900px, leaving a small margin for font-loading shifts. It was briefly
+     1023px while the nav carried eight items; trimming to five released the
+     941-1023px band back to the full nav. */
   .main-nav { display: none; }
   .nav-toggle { display: block; }
 }
