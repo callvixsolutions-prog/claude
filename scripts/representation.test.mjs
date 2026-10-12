@@ -8,14 +8,29 @@
  * was illustrating. A labelled stock headshot next to "a real person, not a bot"
  * is a sentence arguing with its own picture.
  *
- * That was removed in commit e276673. Removals do not stay removed: the next time
- * someone wants the homepage to feel warmer, a stock headshot is the obvious thing
- * to reach for, and nothing else in this suite would object.
+ * That was removed in e276673 and d580e8f. Removals do not stay removed: the next
+ * time someone wants a page to feel warmer, a stock photograph is the obvious
+ * thing to reach for, and nothing else in this suite would object.
  *
- * Note the direction of test 2. It is an ALLOW-LIST, not a deny-list, because the
- * failure that nearly shipped was an og:image — a surface more prominent than the
- * page itself and invisible to anyone auditing the page. A deny-list of known-bad
- * filenames would have passed it. A newly added photo has to fail by default.
+ * WHAT THIS CONTROLS, AND WHY IT IS SHAPED THIS WAY
+ *
+ * The thing we actually want is: no new photograph of a person enters the site
+ * without a human deciding. The first version of this file tried to detect that
+ * from alt wording, with a deny-list of role nouns. That was the wrong object.
+ * Alt text is a description of an asset written by whoever added it, so a
+ * deny-list over wording flags accurate descriptions of diagrams ("a trained
+ * human agent", "an existing team with overflow support" — both charts, neither
+ * depicting anyone) while a photograph with bland alt text sails through. Every
+ * false positive is then pressure to reword a correct alt or weaken the pattern,
+ * and a test you edit to make a run pass has stopped being a test.
+ *
+ * So the control is on the asset. Every image the markup references must appear
+ * below with a line saying what it is. Anything else fails. A new image fails by
+ * default, and the only way to pass is for a person to look at it and write down
+ * what they saw — which is exactly the decision we want forced.
+ *
+ * The role-noun scan is kept, demoted to a warning. It is a useful hint and it
+ * no longer shapes copy.
  *
  * Run with `npm test`.
  */
@@ -45,80 +60,138 @@ function htmlFiles(dir = ROOT, out = []) {
 const read = (rel) => readFileSync(join(ROOT, rel), 'utf8');
 
 /* css/style.css is inlined into every page's <head>, so scanning markup means
-   scanning past ~700 lines of CSS on each file. Everything these tests care
-   about lives in the body. */
+   scanning past ~700 lines of CSS on each file. <img> tags live in the body;
+   og:image and the favicons live in the head, so those are matched separately. */
 const bodyOf = (html) => {
   const i = html.indexOf('<body');
   return i === -1 ? html : html.slice(i);
 };
 
+const basename = (url) => url.split('/').pop().split('?')[0];
 const pages = htmlFiles().map((f) => [f, read(f)]);
 
 /* ------------------------------------------------------------------ */
 
 /**
- * Alt text that describes a person in a working role. The site may depict the
- * customer's world — see photo-tech.jpg on /about — but it may not depict, or
- * describe, someone doing the job Callvix sells.
+ * Every image this site references, and what is in it. Each line was written
+ * after opening the file — not after reading its name or its alt text, both of
+ * which have already been wrong once each.
+ *
+ * To add an image: open it, look at it, write the line. If you cannot describe
+ * it without using the word "representative", it probably does not belong here.
  */
-const PERSON_ROLE = /representative|agent|team|staff|our people|headset/i;
+const ALLOWED_IMAGES = {
+  /* Brand marks. */
+  'logo.png': 'Callvix wordmark',
+  'logo-white.png': 'Callvix wordmark, reversed',
+  'favicon.ico': 'Callvix mark',
+  'favicon-32.png': 'Callvix mark',
+  'favicon-192.png': 'Callvix mark',
+  'apple-touch-icon.png': 'Callvix mark',
+  'badge-designrush.png': 'DesignRush directory badge: chevron mark, five stars, no people',
+  'og-default.jpg': 'branded share card, navy with the wordmark and a strapline, no people',
 
-test('no image is described as a person doing Callvix\'s job', () => {
+  /* Blog card thumbnails, 900x506. These are SEPARATE FILES from the og images
+     below, which is how a stock call-centre photograph survived a round of
+     removals: the branded cover existing for an article did not mean the index
+     was using it. Each one opened individually. */
+  'blog-after-hours.jpg': 'flow diagram, five labelled boxes, no people',
+  'blog-ai-vs-human-16x9.jpg': 'two-column comparison graphic with icons, no people',
+  'blog-call-script.jpg': 'branded cover, title and subtitle on navy, no people',
+  'blog-checklist.jpg': 'branded cover, title and subtitle on navy, no people',
+  'blog-pricing.jpg': 'photograph: calculator, banknotes and a notepad. Objects only',
+  'blog-receptionist-vs-service.svg': 'three-column diagram, vector text and shapes, no embedded raster',
+  'vendor-scorecard.jpg': 'branded cover with an illustrated checklist, no people',
+
+  /* Open Graph images, 1200x630. */
+  'blog-after-hours-call-flow-1200x630.png': 'flow diagram, five labelled boxes, no people',
+  'blog-ai-vs-human-1200x630.jpg': 'two-column comparison graphic with icons, no people',
+  'blog-call-script-1200x630.png': 'branded cover, no people',
+  'blog-checklist-1200x630.png': 'branded cover, no people',
+  'vendor-scorecard-1200x630.png': 'branded cover with an illustrated checklist, no people',
+
+  /* The two photographs of people on the site. Both are allowed on the same
+     reasoning: they depict the CUSTOMER'S world, not the vendor's. Nothing
+     labels either as Callvix, and neither illustrates a claim about who answers
+     the phone. That is the line. It is written here rather than in a verdict
+     because the judgement is what a future reader needs. */
+  'blog-missed-calls.jpg':
+    'photograph: a pair of hands holding a phone. No face, no headset, no office. '
+    + 'The subject is the caller who did not get through',
+  'photo-tech.jpg':
+    'photograph: a worker in a hard hat and respirator using a backpack sprayer. '
+    + 'FLAGGED, see the note in the warning output — the image does not match its '
+    + 'alt text and is awaiting a decision; allow-listed meanwhile because it is live',
+};
+
+test('every referenced image is one a person has looked at', () => {
   const offenders = [];
   for (const [file, html] of pages) {
-    for (const tag of bodyOf(html).match(/<img\b[^>]*>/g) || []) {
-      const alt = tag.match(/\balt="([^"]*)"/);
-      if (alt && PERSON_ROLE.test(alt[1])) {
-        const src = (tag.match(/\bsrc="([^"]*)"/) || [, '?'])[1];
-        offenders.push(`${file}: ${src.split('/').pop()} — alt="${alt[1]}"`);
-      }
+    const refs = new Set();
+    for (const m of bodyOf(html).matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g)) refs.add(m[1]);
+    for (const m of html.matchAll(/<meta\b[^>]*\b(?:property|name)="(?:og:image|twitter:image)"[^>]*\bcontent="([^"]+)"/gi)) refs.add(m[1]);
+    for (const m of html.matchAll(/<link\b[^>]*\brel="(?:icon|apple-touch-icon)[^"]*"[^>]*\bhref="([^"]+)"/gi)) refs.add(m[1]);
+    for (const url of refs) {
+      const name = basename(url);
+      if (!(name in ALLOWED_IMAGES)) offenders.push(`${file}: ${name}`);
     }
   }
   assert.deepEqual(offenders, [],
-    `image alt text describes a person in a Callvix working role:\n  ${offenders.join('\n  ')}\n` +
-    'Callvix has no stock photographs of its own staff. Use a branded graphic, or depict ' +
-    'the customer\'s world rather than the vendor\'s.');
+    `image referenced that nobody has signed off:\n  ${offenders.join('\n  ')}\n`
+    + 'Open the file. Look at it. If it shows a person who could be read as Callvix '
+    + 'staff, do not use it. Otherwise add it to ALLOWED_IMAGES with a line saying '
+    + 'what it shows. Do not add it blind to make a run pass.');
+});
+
+test('flagged images are still flagged', () => {
+  /* An entry whose note says FLAGGED is allow-listed only because it is already
+     live and removing it is somebody's decision, not the test's. Printed every
+     run so it cannot quietly become permanent by being in a comment nobody
+     reopens. */
+  const flagged = Object.entries(ALLOWED_IMAGES).filter(([, note]) => /FLAGGED/.test(note));
+  if (flagged.length) {
+    console.log(`    WARNING — ${flagged.length} allow-listed image(s) awaiting a decision:`);
+    for (const [name, note] of flagged) console.log(`      ${name}: ${note}`);
+  } else {
+    console.log('    no images awaiting a decision');
+  }
+  assert.ok(true); /* warning only */
+});
+
+test('every page carries an og:image', () => {
+  const missing = pages.filter(([, html]) => !/<meta\b[^>]*property="og:image"/i.test(html)).map(([f]) => f);
+  assert.deepEqual(missing, [],
+    `no og:image:\n  ${missing.join('\n  ')}\n`
+    + 'The homepage og:image was a stock team photograph for months. It is the most '
+    + 'prominent surface on the site and the one an audit of the page cannot see.');
 });
 
 /* ------------------------------------------------------------------ */
 
 /**
- * Every og:image on the site, each one opened and confirmed to contain no
- * depiction of a person. Adding an entry here means someone looked at the file.
- *
- * blog-missed-calls.jpg is the one photograph in the list. It shows a pair of
- * hands holding a phone — no face, and its subject is the caller who did not get
- * through, not anyone working for Callvix. It is allowed on the same reasoning
- * that keeps photo-tech.jpg on /about: it depicts the customer's world. If that
- * reasoning stops holding, this is the line to delete.
+ * Role nouns in alt text. A hint, never a failure — see the header. It earns its
+ * place by being cheap and occasionally right, not by being correct.
  */
-const ALLOWED_OG_IMAGES = new Set([
-  'og-default.jpg',                            // branded card, no people
-  'blog-after-hours-call-flow-1200x630.png',   // flow diagram
-  'blog-ai-vs-human-1200x630.jpg',             // comparison graphic
-  'blog-call-script-1200x630.png',             // branded cover
-  'blog-checklist-1200x630.png',               // branded cover
-  'blog-pricing.jpg',                          // calculator and cash, no people
-  'vendor-scorecard-1200x630.png',             // branded cover
-  'blog-missed-calls.jpg',                     // caller's hands, no face — see above
-]);
+const PERSON_ROLE = /representative|agent|team|staff|our people|headset/i;
 
-test('every og:image is an allow-listed asset with no people in it', () => {
-  const offenders = [];
+test('alt text mentioning a working role is worth a second look', () => {
+  const hits = [];
   for (const [file, html] of pages) {
-    const tags = html.match(/<meta\s+property="og:image"[^>]*>/gi) || [];
-    if (!tags.length) { offenders.push(`${file}: no og:image`); continue; }
-    for (const tag of tags) {
-      const content = (tag.match(/content="([^"]*)"/) || [, ''])[1];
-      const name = content.split('/').pop().split('?')[0];
-      if (!ALLOWED_OG_IMAGES.has(name)) offenders.push(`${file}: og:image is "${name}"`);
+    for (const tag of bodyOf(html).match(/<img\b[^>]*>/g) || []) {
+      const alt = tag.match(/\balt="([^"]*)"/);
+      if (alt && PERSON_ROLE.test(alt[1])) {
+        hits.push(`${file}: ${basename((tag.match(/\bsrc="([^"]*)"/) || [, '?'])[1])} — alt="${alt[1]}"`);
+      }
     }
   }
-  assert.deepEqual(offenders, [],
-    `og:image is not on the allow-list:\n  ${offenders.join('\n  ')}\n` +
-    'This is an allow-list on purpose. Open the image, confirm it depicts no one who ' +
-    'could be read as Callvix staff, then add it to ALLOWED_OG_IMAGES with a comment ' +
-    'saying what it shows. Do not add it to make a run pass.');
+  if (hits.length) {
+    console.log(`    WARNING — ${hits.length} alt string(s) name a working role:`);
+    for (const h of hits) console.log(`      ${h}`);
+    console.log('      Often a diagram legitimately describing roles. Check the asset, not the words.');
+  } else {
+    console.log('    no alt text naming a working role');
+  }
+  assert.ok(true); /* warning only */
 });
 
 /* ------------------------------------------------------------------ */
@@ -149,6 +222,6 @@ test('retired people-depicting assets are referenced nowhere', () => {
     }
   }
   assert.deepEqual(offenders, [],
-    `retired asset referenced again:\n  ${offenders.join('\n  ')}\n` +
-    'These were removed because they depicted people as Callvix staff.');
+    `retired asset referenced again:\n  ${offenders.join('\n  ')}\n`
+    + 'These were removed because they depicted people as Callvix staff.');
 });
