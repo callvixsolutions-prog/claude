@@ -42,29 +42,118 @@ const NOT_A_SURFACE = new Set(['section--tight', 'section--roomy', 'section--con
 /**
  * Format signature, inferred from the section's own markup.
  *
- * STOPGAP. This is a hand-maintained vocabulary of class names, and markup drifts
- * away from it in whichever direction nobody is watching: over-matching gave us
- * `card` catching `call-card` and `stat` catching `stat-band`; under-matching gave
- * us `step` missing `svc-setup` and `faq-list` missing `svc-faq`, which printed
- * three prose sections on /services where two were a numbered process and an
- * accordion. Adding strings makes the table right today and wrong again next time.
- * The fix is to infer from structure — ordered lists, aria-expanded toggles,
- * parallel sibling counts, image share of layout width — with class names as hints
- * only. Scheduled for the next round. Order matters only
- * for readability of the printed sequence, so the parts are sorted.
+ * This used to be a hand-maintained vocabulary of class names, and it drifted
+ * away from the markup in whichever direction nobody was watching: over-matching
+ * gave us `card` catching `call-card` and `stat` catching `stat-band`;
+ * under-matching gave us `step` missing `svc-setup` and `faq-list` missing
+ * `svc-faq`, which printed three prose sections on /services where two were a
+ * numbered process and an accordion. Adding strings made the table right that day
+ * and wrong again the next time a section got a new class.
+ *
+ * So structure decides. Class names are kept, but only as hints for the formats
+ * that have no structural signal of their own — a checklist and a pull quote are
+ * styling decisions, not shapes.
+ *
+ * Order matters only for readability of the printed sequence; parts are sorted.
  */
+
+/* The .container max-width. The media rule asks whether an image is a major
+   element of its section rather than an inline ornament, and 40% of the content
+   column is the threshold. Kept here so it moves if the container does. */
+const CONTAINER_WIDTH = 1180;
+const MEDIA_WIDTH_THRESHOLD = Math.round(CONTAINER_WIDTH * 0.4); /* 472px */
+
+/** Text content of leaf elements, in document order. */
+function leafTexts(html) {
+  return [...html.matchAll(/>([^<>]+)</g)].map((m) => m[1].trim()).filter(Boolean);
+}
+
+/**
+ * A numbered process. Either a real ordered list, or three or more elements
+ * whose entire text is a small integer, running consecutively from 1.
+ *
+ * The "consecutive from 1" part is load-bearing: the pricing table is full of
+ * bare figures, and without it a price list reads as a sequence of steps.
+ */
+function isSteps(html) {
+  if (/<ol\b/.test(html)) return true;
+  const ints = leafTexts(html)
+    .filter((t) => /^\d{1,2}$/.test(t))
+    .map(Number);
+  if (ints.length < 3) return false;
+  for (let i = 0; i < 3; i++) if (ints[i] !== i + 1) return false;
+  return true;
+}
+
+/**
+ * An accordion. This site has TWO implementations and both clauses are needed:
+ * .svc-faq uses native <details>/<summary>, while .faq-list uses
+ * button.faq-q[aria-expanded] driven by js/main.js. Either clause alone misses
+ * half the accordions on the site — do not "simplify" this to one.
+ */
+function isAccordion(html) {
+  return /<details\b/.test(html) || /\baria-expanded=/.test(html);
+}
+
+/**
+ * A card grid: three or more sibling elements with the same tag and class, each
+ * carrying a heading. The heading is the discriminator — .checklist .ck is three
+ * or more parallel siblings too, but a card is a unit with a title and a list
+ * item is a line.
+ *
+ * Approximated without a DOM: a repeated tag.class run of three or more, and at
+ * least that many headings in the section.
+ */
+function isCards(html) {
+  const runs = new Map();
+  for (const m of html.matchAll(/<([a-z][a-z0-9]*)(?=[\s>])[^>]*\sclass="([^"]+)"/gi)) {
+    const key = `${m[1]}.${m[2]}`;
+    runs.set(key, (runs.get(key) || 0) + 1);
+  }
+  const headings = (html.match(/<h[2-6]\b/g) || []).length;
+  for (const n of runs.values()) if (n >= 3 && headings >= n) return true;
+  return false;
+}
+
+/**
+ * Media. A <figure>, or an image declared wide enough to be a major element of
+ * the section. Every <img> on this site carries explicit width/height, so this
+ * reads from markup — measuring true layout share would mean putting a headless
+ * browser in the suite to classify nine sections, which is out of proportion.
+ */
+function isMedia(html) {
+  if (/<figure\b/.test(html)) return true;
+  for (const m of html.matchAll(/<img\b[^>]*\bwidth="(\d+)"/gi)) {
+    if (Number(m[1]) >= MEDIA_WIDTH_THRESHOLD) return true;
+  }
+  /* Hint only: components that are structurally media but carry no <img> of
+     their own — the transcript card and the hero visual are built from divs. */
+  return /class="[^"]*\b(?:photo-split|hero-visual|call-card)\b/.test(html);
+}
+
 const FORMATS = [
-  ['table', /<table\b/],
-  ['steps', /class="[^"]*\b(?:step|svc-setup)\b/],
-  ['cards', /class="[^"]*\b(?:card|blog-card|price-card|stat)\b/],
-  ['list', /class="[^"]*\b(?:read-list|checklist|faq-list|svc-faq)\b/],
-  ['quote', /class="[^"]*\bquote-card\b/],
-  ['cta', /class="[^"]*\bcta-band\b/],
-  ['media', /class="[^"]*\b(?:photo-split|hero-visual|call-card|avatar-stack)\b/],
+  ['table', (h) => /<table\b/.test(h)],
+  ['steps', isSteps],
+  ['accordion', isAccordion],
+  ['cards', isCards],
+  ['media', isMedia],
+  /* Hints: styling choices with no structural signal to read. */
+  ['list', (h) => /class="[^"]*\b(?:read-list|checklist)\b/.test(h)],
+  ['quote', (h) => /class="[^"]*\bquote-card\b/.test(h)],
+  ['cta', (h) => /class="[^"]*\bcta-band\b/.test(h)],
 ];
 
+/* Precedence. A numbered step is also "a repeated unit with a heading", so a
+   steps section satisfies the card test as well. Steps is the more specific
+   answer, and reporting both would say a section is two formats when a reader
+   sees one. */
+const SUPPRESSED_BY = { steps: ['cards'] };
+
 function signatureOf(html) {
-  const parts = FORMATS.filter(([, re]) => re.test(html)).map(([name]) => name);
+  let parts = FORMATS.filter(([, fn]) => fn(html)).map(([name]) => name);
+  for (const [winner, losers] of Object.entries(SUPPRESSED_BY)) {
+    if (parts.includes(winner)) parts = parts.filter((p) => !losers.includes(p));
+  }
   return parts.length ? parts.sort().join('+') : 'prose';
 }
 
