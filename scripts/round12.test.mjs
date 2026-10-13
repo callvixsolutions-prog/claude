@@ -133,6 +133,10 @@ const RETIRED = [
   'office gets every week', 'shows up in your revenue',
   'will follow up with you today', 'books faster', 'single sheet', 'one-page after-hours plan',
 ];
+/* Round 13. These four are also checked on the campaign page (/pest-control-call-demo/),
+   which every other rule in this file leaves alone: the owner removed the parent-company
+   line from every public page, that one included. */
+const RETIRED_EVERYWHERE = ['zenova', 'registration is finalized', 'often a lost customer', 'win back on a callback'];
 /* "$2.99 per call" loses the word that says which calls. "$2.99 per inbound call" and the
    "/call" unit in a price table are the two allowed forms. */
 const PER_CALL = /\$2\.99 per call/gi;
@@ -155,7 +159,7 @@ test('strings retired in round 12 have not come back', () => {
   const hits = []; const used = new Set();
   for (const [file, html] of pages) {
     const text = readable(html); const lower = text.toLowerCase();
-    const found = RETIRED.filter((s) => lower.includes(s));
+    const found = [...RETIRED, ...RETIRED_EVERYWHERE].filter((s) => lower.includes(s));
     if (PER_CALL.test(text)) found.push('$2.99 per call'); PER_CALL.lastIndex = 0;
     for (const s of found) {
       const pend = RETIRED_PENDING.findIndex(([f, t]) => f === file && t === s);
@@ -163,6 +167,12 @@ test('strings retired in round 12 have not come back', () => {
       const i = lower.indexOf(s.toLowerCase());
       hits.push(`${file}: "${s}" — "…${text.slice(Math.max(0, i - 45), i + s.length + 45)}…"`);
     }
+  }
+  {
+    const file = 'pest-control-call-demo/index.html'; const text = readable(read(file)); const lower = text.toLowerCase();
+    for (const s of RETIRED_EVERYWHERE.filter((x) => lower.includes(x))) { const i = lower.indexOf(s); hits.push(`${file}: "${s}" — "…${text.slice(Math.max(0, i - 45), i + s.length + 45)}…"`); }
+    const llms = read('llms.txt').toLowerCase();
+    for (const s of RETIRED_EVERYWHERE.filter((x) => llms.includes(x))) hits.push(`llms.txt: "${s}"`);
   }
   const stale = RETIRED_PENDING.filter((_, i) => !used.has(i)).map(([f, t, c]) => `${f}: "${t}" (${c})`);
   assert.deepEqual(hits, [], `retired strings:\n  ${hits.join('\n  ')}`);
