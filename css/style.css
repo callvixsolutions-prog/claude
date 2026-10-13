@@ -240,9 +240,10 @@ strong { color: var(--ink-900); font-weight: 700; }
 /* .btn-lg is still in the markup and is now the same button: one size. */
 
 /* ---------- Header ---------- */
-/* A frosted header: the cream canvas at 92%, with whatever scrolls under it
+/* A frosted header: the cream canvas at 88%, with whatever scrolls under it
    blurred. No script and no scroll listener — it is translucent at every scroll
-   position. 92% is high enough that nav text keeps its contrast over the
+   position. 88% (the value the header had before round 11) is high enough that
+   nav text keeps its contrast over the
    darkest things that pass beneath it (the navy bands and the footer).
    Two fallbacks to solid cream: browsers without backdrop-filter, where a
    translucent bar with sharp text behind it is harder to read, and visitors who
@@ -251,7 +252,7 @@ strong { color: var(--ink-900); font-weight: 700; }
    does not become the containing block for its position: fixed; it stays opaque. */
 .site-header {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(251, 249, 246, 0.92);
+  background: rgba(251, 249, 246, 0.88);
   -webkit-backdrop-filter: saturate(160%) blur(12px);
   backdrop-filter: saturate(160%) blur(12px);
   border-bottom: 1px solid var(--line);
