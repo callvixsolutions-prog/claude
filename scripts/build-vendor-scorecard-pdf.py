@@ -36,12 +36,9 @@ RUBRIC = [
     ('Visibility', 'Minimal reporting', 'Summaries or recordings', 'Calls, outcomes and QA are reviewable'),
     ('Pricing clarity', 'Vague or incomplete', 'Most charges explained', 'Complete busy-season cost example'),
 ]
-BANDS = [
-    ('9&ndash;10', 'Strong candidate for a controlled pilot.'),
-    ('7&ndash;8', 'Promising, but resolve the weak category in writing.'),
-    ('5&ndash;6', 'High implementation risk; test carefully before forwarding all calls.'),
-    ('0&ndash;4', 'The provider is not ready to operate as your front office.'),
-]
+HOW_TO_USE = ('<strong>How to use the total:</strong> use it to structure the comparison, not to certify a provider. '
+              'A low score in any category is a question to resolve in writing; a high total is a reason to run '
+              'a controlled test, not proof the provider is ready.')
 
 
 def find_chrome():
@@ -85,7 +82,6 @@ def build_html(parts):
             '<tbody>%s<tr class="tally"><td colspan="4">Part %d tally &nbsp; Clear ____ &nbsp; Partial ____ &nbsp; Unclear ____</td></tr></tbody></table>'
             % (num, title, body, num))
     rubric = ''.join('<tr><th scope="row">%s</th><td>%s</td><td>%s</td><td>%s</td><td class="score"><span class="circle">0</span><span class="circle">1</span><span class="circle">2</span></td></tr>' % r for r in RUBRIC)
-    bands = ''.join('<tr><th scope="row">%s</th><td>%s</td></tr>' % b for b in BANDS)
     lines = '<div class="line"></div>' * 3
     return '''<!doctype html>
 <html lang="en-US"><head><meta charset="utf-8">
@@ -134,8 +130,7 @@ table.rb { break-inside: avoid; }
 .circle { display: inline-block; width: 15pt; height: 15pt; border: 0.9pt solid #1c2033; border-radius: 50%; text-align: center; line-height: 13.5pt; font-size: 8pt; margin-right: 3pt; }
 .total { display: flex; gap: 14pt; align-items: center; margin: 9pt 0 0; }
 .total .t { white-space: nowrap; border: 1.5pt solid #101c4c; border-radius: 4pt; padding: 7pt 12pt; font: 700 12pt Helvetica, Arial, sans-serif; color: #101c4c; }
-.bands th, .bands td { padding: 1.5pt 6pt 1.5pt 0; text-align: left; font-size: 8.8pt; }
-.bands th { width: 0.55in; color: #087480; }
+.total .use { margin: 0; font-size: 8.8pt; }
 .note { background: #f9edd6; border-radius: 4pt; padding: 5pt 9pt; font-size: 8.6pt; margin: 7pt 0 0; }
 .decide { display: grid; grid-template-columns: 1fr 1fr; gap: 9pt 14pt; }
 .decide div.b { border: 0.9pt solid #9aa0ae; border-radius: 4pt; padding: 5pt 8pt 8pt; }
@@ -175,7 +170,7 @@ table.rb { break-inside: avoid; }
 <thead><tr><th scope="col">Category</th><th scope="col">0 points</th><th scope="col">1 point</th><th scope="col">2 points</th><th scope="col">Score</th></tr></thead>
 <tbody>''' + rubric + '''</tbody></table>
 <div class="total"><span class="t">Total ____ / 10</span>
-<table class="bands"><caption class="visually-hidden" style="display:none">Interpretation</caption><tbody>''' + bands + '''</tbody></table></div>
+<p class="use">''' + HOW_TO_USE + '''</p></div>
 <p class="note"><strong>The total is a comparison aid, not a guarantee of service quality.</strong> The score is a screening tool, not a substitute for a pilot. A provider should still prove it can follow your actual rules on real or simulated calls.</p>
 
 </section>
