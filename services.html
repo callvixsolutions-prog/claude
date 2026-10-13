@@ -119,6 +119,133 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   },
   "url": "https://callvixsolutions.com/services",
   "description": "A pest control answering service staffed by trained people who answer in your company name, qualify the pest issue, and book the job. Live Monday to Friday answering and booking as standard, with optional after-hours and weekend coverage. $399/month plus $2.99 per inbound call; pricing is defined on the homepage offer for this service.",
+  "offers": {
+    "@type": "Offer",
+    "@id": "https://callvixsolutions.com/#offer-base",
+    "name": "Base subscription plus call usage",
+    "url": "https://callvixsolutions.com/pricing",
+    "seller": {
+      "@id": "https://callvixsolutions.com/#organization"
+    },
+    "description": "$399/month base plus $2.99 per inbound call and $0.99 per outbound follow-up call. No long-term contract. Optional add-ons cost extra. Total charges depend on call volume and selected add-ons.",
+    "priceSpecification": {
+      "@type": "CompoundPriceSpecification",
+      "priceCurrency": "USD",
+      "name": "Monthly base plus inbound and outbound call usage",
+      "priceComponent": [
+        {
+          "@type": "UnitPriceSpecification",
+          "name": "Base subscription",
+          "price": 399,
+          "priceCurrency": "USD",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": 1,
+            "unitText": "month"
+          }
+        },
+        {
+          "@type": "UnitPriceSpecification",
+          "name": "Inbound call usage",
+          "price": 2.99,
+          "priceCurrency": "USD",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": 1,
+            "unitText": "inbound call"
+          }
+        },
+        {
+          "@type": "UnitPriceSpecification",
+          "name": "Outbound follow-up call usage, when used",
+          "price": 0.99,
+          "priceCurrency": "USD",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": 1,
+            "unitText": "outbound follow-up call"
+          }
+        }
+      ]
+    },
+    "addOn": [
+      {
+        "@type": "Offer",
+        "@id": "https://callvixsolutions.com/#offer-crm-management",
+        "name": "CRM Management",
+        "url": "https://callvixsolutions.com/pricing",
+        "description": "Optional add-on: representatives enter call notes and booking details directly into the client's CRM using authorized account access. No native integration or automatic data sync. Requires the base subscription; usage charges still apply.",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "name": "CRM Management monthly",
+          "price": 99,
+          "priceCurrency": "USD",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": 1,
+            "unitText": "month"
+          }
+        },
+        "itemOffered": {
+          "@type": "Service",
+          "name": "CRM Management",
+          "provider": {
+            "@id": "https://callvixsolutions.com/#organization"
+          }
+        }
+      },
+      {
+        "@type": "Offer",
+        "@id": "https://callvixsolutions.com/#offer-after-hours",
+        "name": "After-Hours Coverage",
+        "url": "https://callvixsolutions.com/pricing",
+        "description": "Optional evening coverage; the coverage window is agreed during setup. Requires the base subscription; usage charges still apply.",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "name": "After-Hours Coverage monthly",
+          "price": 199,
+          "priceCurrency": "USD",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": 1,
+            "unitText": "month"
+          }
+        },
+        "itemOffered": {
+          "@type": "Service",
+          "name": "After-Hours Coverage",
+          "provider": {
+            "@id": "https://callvixsolutions.com/#organization"
+          }
+        }
+      },
+      {
+        "@type": "Offer",
+        "@id": "https://callvixsolutions.com/#offer-weekend",
+        "name": "Weekend Coverage",
+        "url": "https://callvixsolutions.com/pricing",
+        "description": "Optional weekend coverage; the coverage window is agreed during setup. Requires the base subscription; usage charges still apply.",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "name": "Weekend Coverage monthly",
+          "price": 149,
+          "priceCurrency": "USD",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": 1,
+            "unitText": "month"
+          }
+        },
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Weekend Coverage",
+          "provider": {
+            "@id": "https://callvixsolutions.com/#organization"
+          }
+        }
+      }
+    ]
+  },
   "@id": "https://callvixsolutions.com/#answering-service"
 }
 </script>
