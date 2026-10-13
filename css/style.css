@@ -390,7 +390,9 @@ strong { color: var(--ink-900); font-weight: 700; }
 .price-headline small { font-family: var(--font-body); font-weight: 500; font-size: 17px; color: var(--ink-500); letter-spacing: 0; }
 .price-hero-note { font-size: 14.5px; color: var(--ink-500); margin-top: 12px; }
 @media (max-width: 480px) { .price-headline { font-size: 31px; } }
-.plan-combo-note { text-align: center; font-size: 13.5px; color: var(--ink-500); margin-top: var(--space-sm); }
+/* 55ch: this ran to 162 characters a line at 1440px, more than twice a
+   readable measure, because it inherited the full container width. */
+.plan-combo-note { text-align: center; font-size: 13.5px; color: var(--ink-500); margin-top: var(--space-sm); max-width: 55ch; margin-left: auto; margin-right: auto; }
 
 .price-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 32px; position: relative; box-shadow: var(--shadow-sm); }
 
@@ -718,6 +720,28 @@ strong { color: var(--ink-900); font-weight: 700; }
 .crmflow-arrow{display:flex;align-items:center;justify-content:center;color:var(--teal-400);padding: 0 6px;flex-shrink:0}
 .crmflow-arrow svg{width:26px;height:26px}
 @media (max-width:760px){.crmflow{flex-direction:column}.crmflow-arrow{padding:8px 0}.crmflow-arrow svg{transform:rotate(90deg)}}
+
+/* ---------- FAQ accordion (native) ----------
+   <details>/<summary>, so it works without JavaScript and cannot clip its own
+   height. Lived in page-specific <style> blocks on services.html and
+   integrations/fieldroutes.html; promoted here because the homepage needs it
+   and copying it a third time is how two versions start to diverge.
+
+   The measure cap is a live defect, not a preference: answers ran to 82
+   characters a line at 1440px because the box inherited container width. */
+.svc-faq { max-width: 820px; margin: 0 auto; }
+.svc-faq details { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-sm); margin-bottom: 12px; }
+.svc-faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; padding: var(--space-sm) var(--space-sm); font-family: var(--font-heading); font-weight: 700; font-size: 17px; color: var(--navy-900); line-height: 1.35; list-style: none; min-height: 44px; }
+.svc-faq summary::-webkit-details-marker { display: none; }
+.svc-faq summary::after { content: ''; flex: 0 0 auto; width: 13px; height: 13px; border-right: 2.5px solid var(--teal-500); border-bottom: 2.5px solid var(--teal-500); transform: rotate(45deg); margin-top: -5px; transition: transform .18s ease; }
+.svc-faq details[open] summary::after { transform: rotate(225deg); margin-top: 3px; }
+.svc-faq summary:focus-visible { outline: 3px solid var(--teal-500); outline-offset: 2px; border-radius: var(--radius-sm); }
+.svc-faq .a { padding: 0 var(--space-sm) var(--space-sm); color: var(--ink-700); font-size: 16px; line-height: 1.65; }
+.svc-faq .a p { margin: 0 0 var(--space-2xs); }
+.svc-faq .a p:last-child { margin-bottom: 0; }
+.svc-faq .a a { color: var(--teal-600); font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { .svc-faq summary::after { transition: none; } }
+.svc-faq .a p { max-width: 55ch; }
 
 /* ---------- Read list (resources) ----------
    The lowest-weight block on the homepage. Deliberately not cards: the job of

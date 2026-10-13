@@ -40,6 +40,59 @@ const OPENING = new Set(['hero', 'page-hero']);
 const NOT_A_SURFACE = new Set(['section--tight', 'section--roomy', 'section--continues']);
 
 /**
+ * The surface vocabulary, derived from the stylesheet rather than hardcoded.
+ *
+ * This used to be `classes.find(c => c.startsWith('section--'))`. That is a
+ * hardcoded prefix, and it was wrong the first time markup used anything else:
+ * run against three homepage directions whose sections were `.d-sec--tint`,
+ * `.w-sec--alt` and `.c-sec--light`, it reported every section as `base` and
+ * then failed all three for "adjacent sections sharing a surface" — on pages
+ * that measurably had two and three distinct grounds. It suppressed good pages
+ * because the instrument could not see.
+ *
+ * So the vocabulary comes from the stylesheet: any lone class selector that
+ * paints a background is a candidate surface. Add a surface to style.css and
+ * the guard learns it; rename one and the guard follows. Nothing to maintain
+ * here.
+ *
+ * Classes that paint a background but are not section surfaces — .card, .btn —
+ * end up in the set harmlessly, because a section is only ever matched against
+ * its own class list.
+ *
+ * KNOWN LIMIT: only css/style.css is parsed. A surface declared in a page's own
+ * <style> block is still invisible, so a page that paints sections locally will
+ * report them all as 'base'. That is acceptable while every surface on the site
+ * is a shared one, and it is the reason the preview directions still read as
+ * single-surface. If a page ever needs a local surface, parse its block too
+ * rather than adding the class name here.
+ */
+function surfaceVocabulary() {
+  const css = readFileSync(join(ROOT, 'css/style.css'), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '');            /* comments carry example code */
+  const out = new Set();
+  /* Split on the closing brace rather than matching whole rules. A global regex
+     over "selector { ... }" consumes each closing brace, so it is unavailable as
+     the delimiter for the next rule and every second rule goes unseen — which is
+     how .section--navy was missing from the vocabulary the first time this ran. */
+  for (const chunk of css.split('}')) {
+    const i = chunk.indexOf('{');
+    if (i === -1) continue;
+    const selector = chunk.slice(0, i);
+    const body = chunk.slice(i + 1);
+    if (!/(^|;|\s)background(-color|-image)?\s*:/.test(body)) continue;
+    for (const sel of selector.split(',')) {
+      const t = sel.trim();
+      if (!/^\.[A-Za-z0-9_-]+$/.test(t)) continue;   /* lone class only */
+      const name = t.slice(1);
+      if (!NOT_A_SURFACE.has(name)) out.add(name);
+    }
+  }
+  return out;
+}
+
+const SURFACES = surfaceVocabulary();
+
+/**
  * Format signature, inferred from the section's own markup.
  *
  * This used to be a hand-maintained vocabulary of class names, and it drifted
@@ -116,6 +169,17 @@ function isCards(html) {
 }
 
 /**
+ * The built artifacts. These carry no <img> and no <figure>, so neither the
+ * media rule nor any structural signal reaches them: a call record is a stack
+ * of divs, and a configure panel is a list with ticks. They are named here
+ * because there is nothing else to read, which is the same honest exception
+ * the list/quote/cta hints already are.
+ */
+function isArtifact(html) {
+  return /class="[^"]*\b(?:rec|jobnote|config|systems|coverage)\b/.test(html);
+}
+
+/**
  * Media. A <figure>, or an image declared wide enough to be a major element of
  * the section. Every <img> on this site carries explicit width/height, so this
  * reads from markup — measuring true layout share would mean putting a headless
@@ -137,6 +201,7 @@ const FORMATS = [
   ['accordion', isAccordion],
   ['cards', isCards],
   ['media', isMedia],
+  ['artifact', isArtifact],
   /* Hints: styling choices with no structural signal to read. */
   ['list', (h) => /class="[^"]*\b(?:read-list|checklist)\b/.test(h)],
   ['quote', (h) => /class="[^"]*\bquote-card\b/.test(h)],
@@ -179,7 +244,7 @@ function sectionsOf(html) {
     const comment = after.match(/^\s*<!--([\s\S]*?)-->/);
     return {
       html: slice,
-      surface: classes.find((c) => c.startsWith('section--') && !NOT_A_SURFACE.has(c)) || 'base',
+      surface: classes.find((c) => SURFACES.has(c) && !NOT_A_SURFACE.has(c)) || 'base',
       signature: signatureOf(slice),
       isOpening: classes.some((c) => OPENING.has(c)),
       optOut: classes.includes('section--continues'),
