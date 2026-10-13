@@ -140,7 +140,6 @@ const PER_CALL = /\$2\.99 per call/gi;
 /* PENDING — strings still live until the round-12 commit that rewrites them. Each entry
    names that commit and must be deleted in it: a stale entry fails this test. */
 const RETIRED_PENDING = [
-  ['index.html', '$2.99 per call', 'commit 5, homepage per-inbound-call wording'],
 ];
 
 function readable(html) {
