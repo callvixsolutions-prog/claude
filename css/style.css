@@ -566,9 +566,26 @@ strong { color: var(--ink-900); font-weight: 700; }
 .breadcrumbs a:hover { color: var(--teal-600); }
 
 /* ---------- Contact ---------- */
-.contact-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 48px; align-items: start; }
-.contact-method { display: flex; gap: var(--space-xs); align-items: flex-start; padding: var(--space-sm) 0; border-top: 1px solid var(--border); }
-.contact-method:first-child { border-top: none; }
+/* DOM order is the phone order: book a call, the form, then other ways to
+   reach us. From 981px the grid places the two text panels in the left column
+   and the form beside them. Nothing in the left column is set larger than the
+   form's own title. */
+.contact-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; grid-template-rows: auto 1fr; gap: var(--space-md) 48px; align-items: start; }
+.contact-book  { grid-column: 1; grid-row: 1; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 24px; }
+.contact-grid .form-card { grid-column: 2; grid-row: 1 / 3; }
+.contact-other { grid-column: 1; grid-row: 2; }
+.contact-book h2 { font-size: 24px; line-height: 1.25; margin-bottom: 8px; }
+.contact-book p { color: var(--ink-500); margin-bottom: var(--space-sm); }
+.contact-other h2 { font-size: 20px; line-height: 1.3; margin-bottom: 4px; }
+.contact-method { padding: var(--space-sm) 0; border-top: 1px solid var(--line); }
+.contact-other h2 + .contact-method { border-top: none; }
+.contact-method h3 { font-family: var(--font-body); font-size: 16px; font-weight: 600; line-height: 1.4; letter-spacing: 0; color: var(--navy-900); margin-bottom: 2px; }
+.contact-method p { margin: 0; color: var(--ink-500); }
+.contact-method p + p { margin-top: 4px; }
+.contact-small { font-size: 14px; line-height: 1.5; }
+.form-title { font-size: 24px; line-height: 1.25; margin-bottom: 6px; }
+.form-sub { color: var(--ink-500); margin-bottom: var(--space-md); }
+.form-note a { color: var(--teal-600); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .form-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: var(--space-base); }
 @media (max-width: 599px) { .form-card { padding: 20px; } }
 .form-field { margin-bottom: var(--space-sm); }
@@ -728,7 +745,8 @@ strong { color: var(--ink-900); font-weight: 700; }
 
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .base-band { grid-template-columns: 1fr; }
-  .contact-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; grid-template-rows: none; }
+  .contact-book, .contact-other, .contact-grid .form-card { grid-column: auto; grid-row: auto; }
   .blog-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 720px) {
@@ -737,7 +755,7 @@ strong { color: var(--ink-900); font-weight: 700; }
   .grid-2, .grid-3, .grid-4, .blog-grid { grid-template-columns: 1fr; }
   .cta-band { padding: var(--space-lg) 24px; }
   .footer-grid { grid-template-columns: 1fr; }
-  .form-row { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; gap: 0; }
 
   .base-band { padding: var(--space-base); }
 }

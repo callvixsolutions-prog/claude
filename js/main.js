@@ -48,12 +48,31 @@ document.addEventListener('DOMContentLoaded', function () {
     var submitBtn = form.querySelector('[type="submit"]');
     var originalLabel = submitBtn ? submitBtn.textContent : '';
 
+    // Entered values are never cleared on failure; only the error marking is.
+    function clearInvalid() {
+      form.querySelectorAll('[aria-invalid="true"]').forEach(function (el) {
+        el.removeAttribute('aria-invalid'); el.removeAttribute('aria-describedby');
+      });
+    }
+    function markInvalid(name) {
+      var el = form.elements[name];
+      if (!el || !el.setAttribute) return;
+      el.setAttribute('aria-invalid', 'true');
+      if (status && status.id) el.setAttribute('aria-describedby', status.id);
+    }
+    form.addEventListener('input', function (e) {
+      if (e.target && e.target.getAttribute && e.target.getAttribute('aria-invalid') === 'true') {
+        e.target.removeAttribute('aria-invalid'); e.target.removeAttribute('aria-describedby');
+      }
+    });
+
     form.addEventListener('submit', function (e) {
       if (!window.fetch) return;           // very old browser: normal POST
       e.preventDefault();
 
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
       if (status) { status.textContent = ''; status.className = 'form-status'; }
+      clearInvalid();
 
       fetch(form.action, {
         method: 'POST',
@@ -71,6 +90,9 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
           }
           return res.json().then(function (data) {
+            // Formspree names the field on a validation error. Mark it, so the
+            // failure is announced on the control and not only in the status line.
+            if (data && data.errors) data.errors.forEach(function (x) { if (x.field) markInvalid(x.field); });
             var msg = (data && data.errors)
               ? data.errors.map(function (x) { return x.message; }).join(', ')
               : 'Something went wrong. Please email contact@callvixsolutions.com.';
@@ -79,7 +101,10 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(function (err) {
           if (status) {
-            status.textContent = err.message || 'Could not send. Please call (551) 373-6777 or email us.';
+            // A network failure rejects with a TypeError whose message is the
+            // browser's own ("Failed to fetch", "Load failed"). That is not
+            // something to show a visitor, so it gets the fallback text.
+            status.textContent = (err && err.name !== 'TypeError' && err.message) || 'Could not send. Please call (551) 373-6777 or email us.';
             status.className = 'form-status form-status--error';
           }
           if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalLabel; }
