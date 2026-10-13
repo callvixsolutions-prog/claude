@@ -137,6 +137,13 @@ const RETIRED = [
    which every other rule in this file leaves alone: the owner removed the parent-company
    line from every public page, that one included. */
 const RETIRED_EVERYWHERE = ['zenova', 'registration is finalized', 'often a lost customer', 'win back on a callback'];
+/* Round 14. Capability and loss claims that outran what Callvix can show: "anything a
+   caller throws at them", "we adapt to your workflow", unsourced call lengths and
+   "lost revenue" framing. Checked on every main-site page and in llms.txt. Written in
+   lower case with straight apostrophes; the page text is folded the same way. */
+const RETIRED_R14 = ['anything a caller throws', 'we adapt to your workflow', 'whichever system your office runs', 'is often a job that goes to a competitor',
+  'cost you thousands', '4–6 minute', 'pest calls tend to run long', 'long pest calls', 'every call is answered by a trained', "how many jobs you're losing", 'estimating lost revenue'];
+const fold = (t) => t.toLowerCase().replace(/[‘’]/g, "'");
 /* "$2.99 per call" loses the word that says which calls. "$2.99 per inbound call" and the
    "/call" unit in a price table are the two allowed forms. */
 const PER_CALL = /\$2\.99 per call/gi;
@@ -158,8 +165,8 @@ function readable(html) {
 test('strings retired in round 12 have not come back', () => {
   const hits = []; const used = new Set();
   for (const [file, html] of pages) {
-    const text = readable(html); const lower = text.toLowerCase();
-    const found = [...RETIRED, ...RETIRED_EVERYWHERE].filter((s) => lower.includes(s));
+    const text = readable(html); const lower = fold(text);
+    const found = [...RETIRED, ...RETIRED_EVERYWHERE, ...RETIRED_R14].filter((s) => lower.includes(s));
     if (PER_CALL.test(text)) found.push('$2.99 per call'); PER_CALL.lastIndex = 0;
     for (const s of found) {
       const pend = RETIRED_PENDING.findIndex(([f, t]) => f === file && t === s);
@@ -171,8 +178,8 @@ test('strings retired in round 12 have not come back', () => {
   {
     const file = 'pest-control-call-demo/index.html'; const text = readable(read(file)); const lower = text.toLowerCase();
     for (const s of RETIRED_EVERYWHERE.filter((x) => lower.includes(x))) { const i = lower.indexOf(s); hits.push(`${file}: "${s}" — "…${text.slice(Math.max(0, i - 45), i + s.length + 45)}…"`); }
-    const llms = read('llms.txt').toLowerCase();
-    for (const s of RETIRED_EVERYWHERE.filter((x) => llms.includes(x))) hits.push(`llms.txt: "${s}"`);
+    const llms = fold(read('llms.txt'));
+    for (const s of [...RETIRED_EVERYWHERE, ...RETIRED_R14].filter((x) => llms.includes(x))) hits.push(`llms.txt: "${s}"`);
   }
   const stale = RETIRED_PENDING.filter((_, i) => !used.has(i)).map(([f, t, c]) => `${f}: "${t}" (${c})`);
   assert.deepEqual(hits, [], `retired strings:\n  ${hits.join('\n  ')}`);
