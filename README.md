@@ -81,6 +81,37 @@ Your old site was verified in Search Console. After launch:
 4. Under **Indexing → Pages**, watch for the old URLs redirecting correctly
    (they're 301-redirected — see section 4).
 
+### Click events and their two location parameters
+
+`js/main.js` pushes four events to the dataLayer: `phone_click`, `email_click`,
+`calendly_click` and `generate_lead`. One GTM trigger (a regex on the event name)
+fires one GA4 event tag, which forwards `page_path`, `link_location` and
+`cta_location`. Both are registered in GA4 as event-scoped custom dimensions.
+
+| Parameter | What it means | Values |
+|---|---|---|
+| `link_location` | Where on the page the link sits. Coarse and structural, so it stays comparable over time. Sent with every click event. | `header`, `mobile_nav`, `footer`, `cta_band`, `hero`, `article_body`, `body` |
+| `cta_location` | Which call to action it was. Sent with `calendly_click` and `generate_lead`. Read from the nearest `data-cta-location` attribute; where there is none it equals `link_location`. | `hero_primary`, `hero_secondary`, `pricing`, `works_with`, `faq`, `closing_primary`, `closing_secondary`, `contact_calendly`, `contact_form`, plus any `link_location` value |
+
+To name a new call to action, add `data-cta-location="..."` to the link (or to a
+wrapper around several links). Do not change what `link_location` returns.
+
+**There is a second thing called `cta_location`, and it is not this one.** A custom
+HTML tag in the GTM container rewrites every Calendly link on the page and adds a
+`cta_location` **URL query parameter** so that Calendly's own reports show where a
+booking started. It picks its value by position, in its own vocabulary:
+`home_hero`, `<page>_header`, `<page>_footer`, `<page>_body_cta` (for example
+`pricing_header`). That value travels to Calendly in the link. It never reaches the
+dataLayer or GA4, and the dataLayer `cta_location` above never reaches Calendly.
+The two share a name only. When comparing a GA4 report with a Calendly report,
+do not expect the values to match.
+
+The campaign page (`/pest-control-call-demo/`) loads the same `main.js` plus
+`js/lp-booking.js`, which pushes its own events (`callvix_cta_click`,
+`callvix_booking_step`, `callvix_meeting_booked`). Only that page reports a
+completed booking; on the main site a Calendly link opens in a new tab and is
+recorded as a click.
+
 ---
 
 ## 3. Session recording & heatmaps — free option
