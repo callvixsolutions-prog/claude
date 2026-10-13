@@ -142,6 +142,11 @@ document.addEventListener('DOMContentLoaded', function () {
   // Normalized description of where a link sits. Contains no user data.
   function linkLocation(el) {
     if (!el || !el.closest) return 'body';
+    // An explicit location on the element or an ancestor wins. Without one the
+    // structural guesses below apply exactly as before, so pages that carry no
+    // data-cta-location (the campaign page among them) push what they always did.
+    var marked = el.closest('[data-cta-location]');
+    if (marked) { var v = marked.getAttribute('data-cta-location'); if (v) return v; }
     if (el.closest('.site-header')) return 'header';
     if (el.closest('.mobile-nav')) return 'mobile_nav';
     if (el.closest('.site-footer')) return 'footer';
