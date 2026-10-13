@@ -6,7 +6,7 @@
     "node": ">=18"
   },
   "scripts": {
-    "test": "node --test scripts/submit-indexnow.test.mjs scripts/site-checks.test.mjs scripts/surface-rhythm.test.mjs scripts/representation.test.mjs scripts/css-version.test.mjs scripts/round11.test.mjs scripts/round12.test.mjs",
+    "test": "node --test scripts/submit-indexnow.test.mjs scripts/site-checks.test.mjs scripts/surface-rhythm.test.mjs scripts/representation.test.mjs scripts/css-version.test.mjs scripts/round11.test.mjs scripts/round12.test.mjs scripts/round15.test.mjs",
     "indexnow": "node scripts/submit-indexnow.mjs --production --urls",
     "indexnow:sitemap": "node scripts/submit-indexnow.mjs --production --sitemap",
     "indexnow:changed": "node scripts/submit-indexnow.mjs --production --changed --wait-for-deploy",
