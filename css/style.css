@@ -291,16 +291,8 @@ strong { color: var(--ink-900); font-weight: 700; }
 @media (max-width: 1023px) { .hero { padding: 40px 0 32px; } .hero--home { padding: 48px 0 64px; } }
 @media (max-width: 599px)  { .hero { padding: 32px 0; }      .hero--home { padding: 32px 0 48px; } }
 
-.hero .container { position: relative; display: grid; grid-template-columns: 1.06fr 0.94fr; gap: var(--space-lg); align-items: center; }
-.hero-badges { display: flex; flex-wrap: wrap; gap: var(--space-2xs); margin-bottom: 24px; }
-.pill {
-  display: inline-flex; align-items: center; gap: 7px;
-  background: var(--white); border: 1px solid var(--line-2);
-  padding: 8px var(--space-sm); border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--navy-800);
-}
-.pill svg { width: 15px; height: 15px; color: var(--teal-500); }
-.pill--live { color: var(--teal-600); }
-.pill--live .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal-500); box-shadow: 0 0 0 4px rgba(38,168,182,0.18); }
+.hero .container { position: relative; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: var(--space-lg); align-items: center; }
+@media (max-width: 959px) { .hero .container { grid-template-columns: 1fr; gap: var(--space-base); } }
 .hero h1 { color: var(--navy-900); max-width: 18ch; }
 /* Always >= the interior H1: 34 vs 31 at the floor, 48 vs 44 at the ceiling. */
 .hero--home h1 { font-size: clamp(34px, 1.6vw + 25px, 48px); line-height: 1.1; }
@@ -709,7 +701,7 @@ strong { color: var(--ink-900); font-weight: 700; }
   .nav-toggle { display: block; }
 }
 @media (max-width: 980px) {
-  .hero .container, .split, .split--lean{ grid-template-columns: 1fr; gap: var(--space-base); }
+  .split, .split--lean { grid-template-columns: 1fr; gap: var(--space-base); }
   .hero-visual { max-width: 480px; }
 
   .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
@@ -914,7 +906,7 @@ strong { color: var(--ink-900); font-weight: 700; }
    call record: call comes in, job appears.
    --------------------------------------------------------------------------- */
 .jobnote {
-  background: var(--white);
+  background: var(--warm-50);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
@@ -961,12 +953,16 @@ strong { color: var(--ink-900); font-weight: 700; }
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
-  padding: 22px 24px 24px;
+  overflow: hidden;
+  margin-top: var(--space-md);
 }
-.config-title {
-  font-family: var(--font-heading); font-size: 11.5px; font-weight: 700;
-  letter-spacing: .09em; text-transform: uppercase; color: var(--teal-600);
-  margin-bottom: 14px;
+.config-head { padding: 16px 24px; border-bottom: 1px solid var(--line); }
+h3.config-title { font-size: 18px; line-height: 1.3; margin: 0; color: var(--navy-900); }
+.config-body { background: var(--warm-50); padding: 8px 24px 20px; }
+p.config-title {
+  font-family: var(--font-body); font-size: 13px; font-weight: 600; line-height: 1.4;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal-600);
+  margin-bottom: 8px;
 }
 .config-list { display: grid; gap: 0; }
 .config-item {
@@ -979,10 +975,15 @@ strong { color: var(--ink-900); font-weight: 700; }
   display: block; font-family: var(--font-heading); font-size: 14.5px;
   font-weight: 700; color: var(--navy-900); line-height: 1.3;
 }
-.config-item span { display: block; font-size: 13.5px; color: var(--ink-500); line-height: 1.5; }
-.config-esc {
-  margin-top: 14px; padding-top: 16px; border-top: 2px solid var(--line-2);
+.config-item span { display: block; font-size: 14px; color: var(--ink-500); line-height: 1.5; }
+.config-esc { margin-top: 8px; padding-top: 16px; border-top: 1px solid var(--line-2); }
+/* From 1024px the panel is two columns: what is agreed on the left, where a
+   call goes when it is not a booking on the right. */
+@media (min-width: 1024px) {
+  .config-body { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--space-lg); align-items: start; }
+  .config-esc { margin-top: 0; padding-top: 11px; border-top: 0; }
 }
+@media (max-width: 599px) { .config-head { padding: 14px 20px; } .config-body { padding: 4px 20px 16px; } }
 .config-esc-rule {
   display: grid; grid-template-columns: minmax(0,1fr) 16px minmax(0,1.3fr);
   align-items: center; gap: 10px;
@@ -1000,7 +1001,12 @@ strong { color: var(--ink-900); font-weight: 700; }
    ADD. The point is that the "not 24/7" limit becomes something you can see
    rather than a caveat under a claim.
    --------------------------------------------------------------------------- */
-.coverage { --cov-label: 104px; }
+.coverage {
+  --cov-label: 104px;
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md); padding: 24px; margin: var(--space-base) 0 0;
+}
+@media (max-width: 599px) { .coverage { padding: 16px; } }
 .coverage-grid {
   display: grid;
   grid-template-columns: var(--cov-label) repeat(7, minmax(0, 1fr));
@@ -1036,37 +1042,26 @@ strong { color: var(--ink-900); font-weight: 700; }
 .cov-swatch--off { background: var(--warm-50); box-shadow: inset 0 0 0 1px var(--line); }
 
 /* ---------------------------------------------------------------------------
-   Section 6 — THE SYSTEMS GRID
-   Replaces the seven text pills. Not vendor wordmarks: using their logos needs
-   six separate brand-guideline reviews we would probably half-lose, and the
+   WORKS WITH — a linked list on the navy band.
+   It was seven white cards, 1,554px of them on a phone. Not vendor wordmarks:
+   using their logos needs six separate brand-guideline reviews, and the
    non-affiliation disclaimer makes a logo wall the wrong signal anyway. Each
-   name already has a page of its own, so these are linked cards.
+   name already has a page of its own, so each row is one link.
    --------------------------------------------------------------------------- */
-.systems {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(214px, 1fr)); gap: 14px;
+.section--band { padding: 64px 0; }
+@media (max-width: 599px) { .section--band { padding: 48px 0; } }
+.syslist {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--space-base);
+  margin-top: var(--space-base); border-top: 1px solid rgba(255,255,255,0.14);
 }
-.system-card {
-  /* Explicit colour: the card is white, but on the navy section it would
-     otherwise inherit #cdd3e6 from .section--navy. No direct text renders in it
-     today, so nothing is visibly broken — it is set so that adding a bare word
-     to the card later cannot produce 1.49:1 on white. */
-  color: var(--ink-700);
-  display: flex; flex-direction: column; gap: 6px;
-  background: var(--white); border: 1px solid var(--line);
-  border-radius: var(--radius-md); padding: 18px 18px 16px;
-  text-decoration: none; transition: border-color .16s ease;
-}
-.system-card:hover { border-color: var(--control); }
-.system-card b {
-  font-family: var(--font-heading); font-size: 15.5px; font-weight: 700;
-  color: var(--navy-900); line-height: 1.25;
-}
-.system-card span { font-size: 13px; line-height: 1.5; color: var(--ink-500); flex: 1; }
-.system-card i {
-  font-style: normal; font-family: var(--font-heading); font-size: 12.5px;
-  font-weight: 700; color: var(--teal-600);
-}
-@media (prefers-reduced-motion: reduce) { .system-card { transition: none; } }
+/* (0,3,2) to sit level with the prose-link rule above it in the file and win on order:
+   the row is one link, so the underline belongs to the name on hover, not the block. */
+.section--navy .syslist li a:not(.btn) { display: block; height: 100%; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.14); color: inherit; font-weight: 400; text-decoration: none; }
+.syslist b { display: block; font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.3; color: var(--white); }
+.syslist span { display: block; margin-top: 4px; font-size: 15px; line-height: 1.5; color: #cdd3e6; }
+.syslist a:hover b, .syslist a:focus-visible b { color: var(--teal-300); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+@media (max-width: 1023px) { .syslist { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 599px)  { .syslist { grid-template-columns: 1fr; } }
 
 /* ---------------------------------------------------------------------------
    Shared: the illustrative marker.
@@ -1104,19 +1099,72 @@ strong { color: var(--ink-900); font-weight: 700; }
 .container-narrow > .lede { max-width: 55ch; }
 .d-measure { max-width: 55ch; }
 
-/* The hero pair: call record beside job note, across the full width.
-   The live .hero .container is a 1.06fr / 0.94fr grid, which squeezed both
-   cards into the right-hand column at ~530px and crushed the job note. The
-   hero goes single-column here so the pair gets the measure it needs. */
-.hero .container { grid-template-columns: 1fr; }
-
+/* Text beside an artifact. Stacks under 960px. */
 .d-split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: center; }
-.d-split--text-left { grid-template-columns: 1.02fr 0.98fr; }
-@media (max-width: 900px) {  .d-split, .d-split--text-left { grid-template-columns: 1fr; } }
+@media (max-width: 959px) { .d-split { grid-template-columns: 1fr; gap: var(--space-base); } }
 
-/* ---- hero variants ----
-   Shared: the job note is gone from the hero, the four specifics lead, and the
-   actions are one primary plus pricing. */
+/* The editorial split: heading in a 5fr column, prose in a 7fr column. The
+   prose used to sit at reading width in a full-width row, which left the right
+   half of the section empty; the heading now holds that space instead. */
+.d-editorial { display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: start; }
+.d-editorial h2 { margin-bottom: 0; }
+.d-editorial > :last-child { max-width: 68ch; }
+.d-editorial p:last-child { margin-bottom: 0; }
+@media (max-width: 1023px) { .d-editorial { grid-template-columns: 1fr; gap: var(--space-md); } }
+
+/* The four steps. .crmflow is the rail the Works With pages use; this modifier
+   gives the homepage its own breakpoints: four columns with arrows from 900px,
+   2x2 from 600px, and under 600px a plain list — icon left, label right, a
+   hairline between rows and no card borders. */
+/* margin: 0 also clears the 40px side margin a <figure> carries by default, which
+   indented the steps from the section's left edge. */
+.crmflow--steps { margin: 0; }
+@media (min-width: 600px) and (max-width: 899px) {
+  .crmflow--steps { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); }
+  .crmflow--steps .crmflow-arrow { display: none; }
+}
+@media (max-width: 599px) {
+  .crmflow--steps { display: block; border-top: 1px solid var(--line); }
+  .crmflow--steps .crmflow-arrow { display: none; }
+  .crmflow--steps .crmflow-node {
+    display: grid; grid-template-columns: 40px 1fr; column-gap: var(--space-sm); row-gap: 2px; align-items: center;
+    text-align: left; background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 14px 0;
+  }
+  .crmflow--steps .crmflow-ico { grid-row: 1 / 3; }
+  .crmflow--steps .crmflow-t { align-self: end; }
+  .crmflow--steps .crmflow-s { align-self: start; font-size: 14px; }
+}
+
+/* Pricing: the module, the week and the add-ons share one 920px column. */
+.d-pricing { max-width: 920px; margin: 0 auto; }
+.addons { margin-top: var(--space-md); border-top: 1px solid var(--line); }
+.addons li {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto; gap: 4px var(--space-md); align-items: baseline;
+  padding: 14px 0; border-bottom: 1px solid var(--line);
+}
+.addons-name { font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--navy-900); }
+.section .addons li .addons-name a { color: inherit; font-weight: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.addons-name a:hover { text-decoration-thickness: 2px; }
+.addons-desc { font-size: 15px; line-height: 1.5; color: var(--ink-500); }
+.addons-price { font-family: var(--font-heading); font-weight: 700; font-size: 17px; color: var(--navy-900); white-space: nowrap; text-align: right; }
+.addons-price span { font-family: var(--font-body); font-weight: 600; font-size: 13px; color: var(--ink-500); }
+@media (max-width: 599px) {
+  .addons li { grid-template-columns: minmax(0, 1fr) auto; }
+  .addons-desc { grid-column: 1 / -1; grid-row: 2; }
+}
+.d-pricing-more { text-align: center; margin: var(--space-md) 0 0; }
+.faq-more { text-align: center; margin: var(--space-md) 0 0; }
+
+/* The closing band: full-width navy, sitting directly on the footer. */
+.cta-close { text-align: center; }
+.cta-close h2 { margin-bottom: 16px; }
+.cta-close .lede { max-width: 600px; margin: 0 auto; }
+.cta-close-actions { display: flex; flex-direction: column; align-items: center; gap: var(--space-sm); margin-top: var(--space-base); }
+.cta-close-link { color: var(--teal-300); font-weight: 500; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.cta-close-link:hover { text-decoration-thickness: 2px; }
+@media (max-width: 479px) { .cta-close-actions .btn { width: 100%; } }
+
+/* ---- the hero's four specifics ---- */
 .hero-facts { list-style: none; margin: var(--space-md) 0 0; padding: 0;
   display: flex; flex-wrap: wrap; gap: 10px 22px; }
 .hero-facts li { position: relative; font-size: 14.5px; line-height: 1.4; color: var(--ink-700); padding-left: 22px; }
@@ -1154,19 +1202,13 @@ main > section { order: 4; }
   main > .d-jobband { order: 3; }
 }
 
-/* H2 — side by side. Text left, record right in a narrow column, so the whole
-   hero lands in roughly one viewport on desktop. Stacks under 900px, where the
-   record follows the CTA rather than preceding the argument. */
-.hero .container { grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: var(--space-lg); }
+/* The call record sits in a narrow right-hand column so the whole hero lands in
+   one viewport on desktop. No max-height clip: clipping the transcript cut it
+   mid-exchange, leaving a speaker label with nothing under it — that reads as
+   broken, not as an excerpt, and a fade would imply an expand control that
+   does not exist. The record always runs its full length. */
 .hero-art { max-width: 460px; justify-self: end; width: 100%; }
-/* No max-height clip. Clipping the transcript cut it mid-exchange, leaving a
-   speaker label with nothing under it — that reads as broken, not as an
-   excerpt, and a fade would imply an expand control that does not exist. The
-   record runs its full length and the hero is a little over one screen. */
-@media (max-width: 900px) {
-  .hero .container { grid-template-columns: 1fr; }
-  .hero-art { max-width: 100%; justify-self: stretch; margin-top: var(--space-md); }
-}
+@media (max-width: 959px) { .hero-art { max-width: 100%; justify-self: stretch; } }
 
 /* ---------- Reduced motion ----------
    One global rule rather than a per-component opt-out, so a component added
