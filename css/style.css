@@ -240,10 +240,27 @@ strong { color: var(--ink-900); font-weight: 700; }
 /* .btn-lg is still in the markup and is now the same button: one size. */
 
 /* ---------- Header ---------- */
+/* A frosted header: the cream canvas at 92%, with whatever scrolls under it
+   blurred. No script and no scroll listener — it is translucent at every scroll
+   position. 92% is high enough that nav text keeps its contrast over the
+   darkest things that pass beneath it (the navy bands and the footer).
+   Two fallbacks to solid cream: browsers without backdrop-filter, where a
+   translucent bar with sharp text behind it is harder to read, and visitors who
+   ask for reduced transparency.
+   The mobile menu panel is a sibling of the header, not a child, so the filter
+   does not become the containing block for its position: fixed; it stays opaque. */
 .site-header {
   position: sticky; top: 0; z-index: 100;
-  background: var(--cream);
+  background: rgba(251, 249, 246, 0.92);
+  -webkit-backdrop-filter: saturate(160%) blur(12px);
+  backdrop-filter: saturate(160%) blur(12px);
   border-bottom: 1px solid var(--line);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header { background: var(--cream); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .site-header { background: var(--cream); -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
 .site-header .container {
   display: flex; align-items: center; justify-content: space-between;
