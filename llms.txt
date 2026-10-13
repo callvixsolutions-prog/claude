@@ -15,11 +15,11 @@
 
 ## Pricing
 - $399/month base, plus $2.99 per inbound call and $0.99 per outbound follow-up call when used. Call length does not change the rate per inbound call; the total still rises with call volume and any add-ons.
-- The base covers live answering, qualification and appointment booking by the client's rules, Monday–Friday 9am–6pm in the client's local time, urgent-call triage and escalation during covered hours, and a weekly activity summary.
+- The base covers live answering, qualification and appointment booking by the client's rules, Monday–Friday 9am–6pm in the client's local time, urgent-call triage and escalation during covered hours, and reporting on the calls Callvix handles.
 - Without the CRM Management add-on, booking and call details are shared with the client's team using the method agreed during setup.
 - Optional add-ons: After-Hours Coverage $199/month (evenings, during an agreed window; overnight coverage is not offered), Weekend Coverage $149/month (during agreed windows), CRM Management $99/month.
 - CRM Management means representatives enter call notes and booking details directly into the client's own CRM using account access the client grants and can revoke. This is manual work by a person, not a native integration, an API connection or automatic data synchronisation, and Callvix has no partnership with any CRM vendor.
-- Base and add-ons are billed monthly in advance; call usage is billed weekly. No long-term contract.
+- Month-to-month. No long-term contract.
 
 ## Service
 - Industry served: pest control companies, United States only.
@@ -31,7 +31,7 @@
 
 ## Delivery
 - Founder-led, with hands-on setup around each client's services, service areas, pricing and booking rules.
-- The team includes representatives based in Cairo, Egypt, selected for English communication and trained specifically on pest control terminology and the client's own workflows.
+- Representatives are selected for English communication and trained specifically on pest control terminology and the client's own workflows.
 - Listed in the DesignRush call center company directory.
 
 ## Pages
