@@ -69,7 +69,11 @@
 
 /* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+/* The header is sticky, so an in-page target (#pricing, the skip link's #main)
+   would otherwise land underneath it. 88px clears the 72px desktop header,
+   80px the 64px mobile one. */
+@media (max-width: 959px) { html { scroll-padding-top: 80px; } }
 body {
   margin: 0;
   font-family: var(--font-body);
@@ -381,12 +385,12 @@ strong { color: var(--ink-900); font-weight: 700; }
 .plan-combo-item { flex: 1; padding: 32px var(--space-md); text-align: center; }
 .plan-combo-item--base { background: linear-gradient(150deg, var(--navy-900), var(--navy-800)); color: #fff; }
 .plan-combo-label { display: block; font-family: var(--font-heading); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.72; margin-bottom: var(--space-2xs); }
-.plan-combo-value { display: block; font-family: var(--font-heading); font-size: 32px; font-weight: 800; color: var(--navy-900); letter-spacing: -0.02em; }
+.plan-combo-value { display: block; font-family: var(--font-heading); font-size: 32px; font-weight: 700; color: var(--navy-900); letter-spacing: -0.02em; }
 .plan-combo-item--base .plan-combo-value { color: #fff; }
 .plan-combo-value small { font-size: 14px; font-weight: 600; color: var(--ink-500); }
 .plan-combo-item--base .plan-combo-value small { color: #9fb8d6; }
-.plan-combo-plus { display: flex; align-items: center; justify-content: center; width: 56px; flex-shrink: 0; background: var(--sand); font-family: var(--font-heading); font-size: 22px; font-weight: 800; color: var(--teal-600); }
-.price-headline { font-family: var(--font-heading); font-size: 40px; font-weight: 800; color: var(--navy-900); letter-spacing: -0.02em; line-height: 1.1; margin: 6px 0 var(--space-xs); }
+.plan-combo-plus { display: flex; align-items: center; justify-content: center; width: 56px; flex-shrink: 0; background: var(--sand); font-family: var(--font-heading); font-size: 22px; font-weight: 700; color: var(--teal-600); }
+.price-headline { font-family: var(--font-heading); font-size: 40px; font-weight: 700; color: var(--navy-900); letter-spacing: -0.02em; line-height: 1.1; margin: 6px 0 var(--space-xs); }
 .price-headline small { font-family: var(--font-body); font-weight: 500; font-size: 17px; color: var(--ink-500); letter-spacing: 0; }
 .price-hero-note { font-size: 14.5px; color: var(--ink-500); margin-top: 12px; }
 @media (max-width: 480px) { .price-headline { font-size: 31px; } }
@@ -397,7 +401,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .price-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 32px; position: relative; box-shadow: var(--shadow-sm); }
 
 .price-card h3 { font-size: 20px; margin-bottom: 6px; }
-.price-card .price { font-family: var(--font-heading); font-size: 34px; font-weight: 800; color: var(--navy-900); margin: var(--space-2xs) 0 4px; letter-spacing: -0.02em; }
+.price-card .price { font-family: var(--font-heading); font-size: 34px; font-weight: 700; color: var(--navy-900); margin: var(--space-2xs) 0 4px; letter-spacing: -0.02em; }
 .price-card .price span { font-size: 14px; font-weight: 600; color: var(--ink-500); }
 .price-card p.desc { color: var(--ink-500); font-size: 14.5px; margin-bottom: var(--space-sm); }
 .price-card ul { display: flex; flex-direction: column; gap: var(--space-xs); margin-bottom: 4px; }
@@ -505,7 +509,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .form-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-base); box-shadow: var(--shadow-md); }
 .form-field { margin-bottom: var(--space-sm); }
 .form-field label { display: block; font-family: var(--font-heading); font-weight: 600; font-size: 14px; margin-bottom: 7px; color: var(--navy-900); }
-.form-field input, .form-field select, .form-field textarea { width: 100%; padding: var(--space-xs) var(--space-sm); border: 1px solid var(--line-2); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 15px; color: var(--text); background: var(--cream); }
+.form-field input, .form-field select, .form-field textarea { width: 100%; padding: var(--space-xs) var(--space-sm); border: 1px solid var(--line-2); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 16px; color: var(--text); background: var(--cream); }
 .form-field .opt { font-weight: 500; font-size: 13px; color: var(--ink-500); }
 .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: 2px solid var(--teal-400); outline-offset: 1px; background: var(--white); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); }
@@ -695,7 +699,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .rate-table tbody tr:last-child th, .rate-table tbody tr:last-child td { border-bottom: 0; }
 .rate-table thead th { background: var(--sand); font-family: var(--font-heading); font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--navy-900); }
 .rate-table tbody th { font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); white-space: nowrap; }
-.rate-table-price { font-family: var(--font-heading); font-weight: 800; font-size: 20px; color: var(--navy-900); white-space: nowrap; }
+.rate-table-price { font-family: var(--font-heading); font-weight: 700; font-size: 20px; color: var(--navy-900); white-space: nowrap; }
 .rate-table-price span { font-size: 13px; font-weight: 600; color: var(--ink-500); }
 .rate-table td a { color: var(--teal-600); font-weight: 600; }
 .rate-table-note { text-align: center; font-size: 14px; color: var(--ink-500); margin-top: var(--space-sm); max-width: 680px; margin-inline: auto; }
@@ -1146,4 +1150,16 @@ main > section { order: 4; }
 @media (max-width: 900px) {
   .hero .container { grid-template-columns: 1fr; }
   .hero-art { max-width: 100%; justify-self: stretch; margin-top: var(--space-md); }
+}
+
+/* ---------- Reduced motion ----------
+   One global rule rather than a per-component opt-out, so a component added
+   later is covered without anyone remembering to. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
 }
