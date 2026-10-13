@@ -255,6 +255,53 @@ function sectionsOf(html) {
 
 const pages = htmlFiles().map((f) => [f, sectionsOf(readFileSync(join(ROOT, f), 'utf8'))]);
 
+/**
+ * The surface parser, cross-checked against an independently written one.
+ *
+ * "Prove it can fail" does not catch an enumerator that silently finds too few:
+ * an undercount is not a failure, it is a quieter pass. The first version of
+ * surfaceVocabulary() found 29 of 41 lone-class background rules and omitted
+ * .section--navy — the homepage's one real pause — and every test still passed.
+ *
+ * A hardcoded 41 would be wrong the next time someone adds a background. So the
+ * check is that two differently-built parsers agree: the production one splits
+ * on the closing brace, this one matches whole rules using a lookbehind so the
+ * delimiter is never consumed. The brace-consuming bug breaks exactly one of
+ * those two, which is the point.
+ */
+function surfaceVocabularyIndependent() {
+  const css = readFileSync(join(ROOT, 'css/style.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+  const out = new Set();
+  for (const m of css.matchAll(/(?<=^|[};])\s*([^{}]+?)\s*\{([^{}]*)\}/g)) {
+    if (!/(^|;|\s)background(-color|-image)?\s*:/.test(m[2])) continue;
+    for (const sel of m[1].split(',')) {
+      const t = sel.trim();
+      if (!/^\.[A-Za-z0-9_-]+$/.test(t)) continue;
+      const name = t.slice(1);
+      if (!NOT_A_SURFACE.has(name)) out.add(name);
+    }
+  }
+  return out;
+}
+
+test('the surface parser agrees with an independently written one', () => {
+  const b = surfaceVocabularyIndependent();
+  const onlyA = [...SURFACES].filter((x) => !b.has(x));
+  const onlyB = [...b].filter((x) => !SURFACES.has(x));
+  console.log(`    surface vocabulary: ${SURFACES.size} classes, cross-check ${b.size}`);
+  assert.deepEqual({ onlyA, onlyB }, { onlyA: [], onlyB: [] },
+    'the two surface parsers disagree, so at least one is missing rules:\n'
+    + `  only the production parser: ${onlyA.join(', ') || '(none)'}\n`
+    + `  only the cross-check:       ${onlyB.join(', ') || '(none)'}\n`
+    + 'An undercount here is silent — it does not fail anything, it just makes the '
+    + 'guard blind to a surface. That is how .section--navy went missing.');
+  /* The homepage's three grounds must always be in the vocabulary; if the page
+     ever stops using one, this is the right place to notice. */
+  for (const required of ['section--alt', 'section--navy']) {
+    assert.ok(SURFACES.has(required), `${required} is missing from the derived vocabulary`);
+  }
+});
+
 test('no two adjacent sections share both surface and format', () => {
   const collisions = [];
   for (const [file, secs] of pages) {

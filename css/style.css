@@ -428,7 +428,13 @@ strong { color: var(--ink-900); font-weight: 700; }
 .faq-item { border-bottom: 1px solid var(--border); }
 .faq-item:first-child { border-top: 1px solid var(--border); }
 .faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: none; border: none; text-align: left; padding: 24px 4px; font-family: var(--font-heading); font-weight: 700; font-size: 17.5px; color: var(--heading); }
-.faq-q svg { width: 22px; height: 22px; color: var(--teal-500); flex-shrink: 0; transition: transform 0.2s ease; }
+/* teal-600, not teal-500. This chevron is the only FUNCTIONAL use of the icon
+   colour on the site — it indicates open/closed state, so WCAG 1.4.11 applies
+   and teal-500 on white measures 2.85:1 against a 3:1 requirement. The six
+   decorative teal-500 icons elsewhere sit beside text that carries their
+   meaning, so they are left alone rather than repainting seven rules to fix
+   one chevron. */
+.faq-q svg { width: 22px; height: 22px; color: var(--teal-600); flex-shrink: 0; transition: transform 0.2s ease; }
 .faq-item.open .faq-q svg { transform: rotate(45deg); }
 .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.28s ease; }
 .faq-item.open .faq-a { max-height: 500px; }
