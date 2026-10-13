@@ -44,7 +44,7 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 
 /* Same exclusions as site-checks: the paid-ads landing page is out of scope for
    every main-site rule, and docs/ holds gitignored measurement handoffs. */
-const EXCLUDED_DIRS = new Set(['pest-control-call-demo', 'docs', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
+const EXCLUDED_DIRS = new Set(['pest-control-call-demo', 'docs', 'preview', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
 
 function htmlFiles(dir = ROOT, out = []) {
   for (const entry of readdirSync(dir)) {

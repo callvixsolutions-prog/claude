@@ -31,8 +31,11 @@ import { fileURLToPath } from 'node:url';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 
 /* The paid-ads landing page keeps its own divergent copy of the stylesheet and
-   is out of scope for every main-site rule. docs/ is gitignored handoff files. */
-const EXCLUDED_DIRS = new Set(['pest-control-call-demo', 'docs', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
+   is out of scope for every main-site rule. docs/ is gitignored handoff files.
+   preview/ holds client preview sites that live in this repo but are not this
+   site: different stylesheet, different structure, noindex. Scanning them made
+   five checks fail on pages none of these rules were written for. */
+const EXCLUDED_DIRS = new Set(['pest-control-call-demo', 'docs', 'preview', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
 
 function htmlFiles(dir = ROOT, out = []) {
   for (const entry of readdirSync(dir)) {
