@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"></noscript>
-<link rel="stylesheet" href="/css/style.css?v=2e12a7925c">
+<link rel="stylesheet" href="/css/style.css?v=2be1f287c1">
 <style>
 /* ===== After-hours article: scoped visual + print styles (uses shared design tokens) ===== */
 .article-disclosure { font-size: 14px; color: var(--ink-500); font-style: italic; margin: 0 0 var(--space-md); line-height: 1.55; }
@@ -49,7 +49,7 @@ figure.figure figcaption { font-size: 13.5px; color: var(--ink-500); margin-top:
 .illus-label { display: inline-block; font-family: var(--font-heading); font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--teal-600); background: var(--teal-50); border: 1px solid var(--teal-100); border-radius: 999px; padding: 4px 12px; margin-bottom: var(--space-xs); }
 
 /* Hero call-flow (responsive flex pills) */
-.callflow { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-md) 24px var(--space-md); position: relative; overflow: hidden; box-shadow: var(--shadow-sm); }
+.callflow { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: var(--space-md) 24px var(--space-md); position: relative; overflow: hidden; }
 .callflow::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 4px; background: linear-gradient(90deg, var(--teal-500), var(--teal-300)); }
 .cf-title { font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); font-size: 18px; margin: 4px 0 16px; }
 .cf-row { display: flex; flex-wrap: nowrap; align-items: stretch; gap: 8px; }
@@ -64,11 +64,11 @@ figure.figure figcaption { font-size: 13.5px; color: var(--ink-500); margin-top:
 }
 
 /* Eligibility gate + escalation decision tree */
-.tree { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); }
+.tree { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 24px; }
 .tree-start { text-align: center; font-family: var(--font-heading); font-weight: 700; color: #fff; background: var(--navy-900); border-radius: 12px; padding: 12px var(--space-xs); margin-bottom: 8px; }
 .tree-down { text-align: center; color: var(--ink-500); font-size: 12px; margin: 6px 0; }
 .tree-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch; }
-.tree-q { flex: 1 1 300px; background: var(--sand); border: 1px solid var(--line-2); border-radius: 12px; padding: var(--space-xs) 16px; color: var(--navy-900); font-weight: 600; font-size: 15px; }
+.tree-q { flex: 1 1 300px; background: var(--warm-50); border: 1px solid var(--line-2); border-radius: 12px; padding: var(--space-xs) 16px; color: var(--navy-900); font-weight: 600; font-size: 15px; }
 .tree-out { flex: 1 1 300px; border-radius: 12px; padding: var(--space-xs) 16px; font-size: 14.5px; color: var(--ink-700); }
 .tree-out .yl { display: block; font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); margin-bottom: 3px; }
 .tree-out.lvl4 { background: #fdeceb; border: 1px solid #f2c4c1; }
@@ -77,7 +77,7 @@ figure.figure figcaption { font-size: 13.5px; color: var(--ink-500); margin-top:
 .tree-out.lvl1 { background: var(--teal-100); border: 1px solid var(--teal-300); font-weight: 700; color: var(--navy-900); }
 
 /* Printable one-page checklist */
-.checklist-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-base); box-shadow: var(--shadow-sm); }
+.checklist-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: var(--space-base); }
 .checklist-card .cl-title { font-family: var(--font-heading); font-size: 21px; color: var(--navy-900); margin: 0 0 4px; }
 .checklist-card .cl-sub { color: var(--ink-500); font-size: 14px; margin: 0 0 var(--space-sm); }
 .cl-actions { margin: 0 0 var(--space-sm); }
@@ -85,7 +85,7 @@ figure.figure figcaption { font-size: 13.5px; color: var(--ink-500); margin-top:
 .cl-group h4 { font-family: var(--font-heading); font-size: 14px; color: var(--teal-600); text-transform: uppercase; letter-spacing: .04em; margin: 0 0 8px; }
 .cl-list { list-style: none; margin: 0; padding: 0; }
 .cl-list li { display: flex; gap: var(--space-2xs); align-items: flex-start; padding: 5px 0; font-size: 15px; color: var(--ink-700); line-height: 1.45; }
-.cl-box { flex: 0 0 auto; width: 16px; height: 16px; border: 2px solid var(--teal-500); border-radius: 4px; margin-top: 3px; }
+.cl-box { flex: 0 0 auto; width: 16px; height: 16px; border: 2px solid var(--teal-600); border-radius: 4px; margin-top: 3px; }
 .cl-safety { margin-top: var(--space-sm); background: #fdeceb; border: 1px solid #f2c4c1; border-radius: 12px; padding: var(--space-xs) 16px; font-size: 14.5px; color: var(--ink-700); }
 .cl-safety strong { color: var(--navy-900); }
 .cl-foot { margin-top: var(--space-sm); font-size: 13px; color: var(--ink-500); font-style: italic; border-top: 1px solid var(--line); padding-top: 12px; }
