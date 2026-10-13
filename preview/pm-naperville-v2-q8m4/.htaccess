@@ -1,0 +1,19 @@
+# Goes into the page's own folder as ".htaccess" (the preview folder today, the
+# launch host later). It must not replace any .htaccess above that folder.
+Header set X-Robots-Tag "noindex, nofollow, noarchive, noimageindex"
+Options -Indexes
+AddType image/avif .avif
+
+# Caching. Everything under assets/ has a content hash in its file name, so it can
+# be cached for a year. The pages and site-config.js keep their names and are
+# re-checked on every visit. The no-cache block must stay second: it is what wins
+# for site-config.js.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(avif|webp|jpe?g|png|svg|woff2|js|css)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "^(.*\.html|site-config\.js)$">
+    Header set Cache-Control "no-cache"
+    Header unset Expires
+  </FilesMatch>
+</IfModule>
