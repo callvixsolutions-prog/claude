@@ -37,7 +37,7 @@
 ## Pages
 - [Home](https://callvixsolutions.com/): Overview of the human-run pest control answering service.
 - [How It Works](https://callvixsolutions.com/services): Call-handling process, a sample call, what is included and what is an optional add-on, setup steps and FAQ.
-- [Pricing](https://callvixsolutions.com/pricing): Base subscription, per-call rates, add-ons and billing cadence.
+- [Pricing](https://callvixsolutions.com/pricing): Base subscription, per-call rates, add-ons and plan basics.
 - [Why Callvix](https://callvixsolutions.com/about): Focus, training and delivery model.
 - [FAQ](https://callvixsolutions.com/faq): Common questions about the service.
 - [Contact](https://callvixsolutions.com/contact): Contact details, business address and discovery call booking.
