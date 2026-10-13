@@ -1232,12 +1232,16 @@ p.config-title {
    If a link or button is ever added here, this reorder stops being safe. Move
    the band after #d-cost in the DOM for both breakpoints instead and accept the
    desktop order — a correct sequence beats an adjacency. */
-main { display: flex; flex-direction: column; }
-main > section { order: 4; }
+/* Scoped to the homepage's <main class="home-main">. These rules used to sit on
+   the bare `main` selector and so applied to every page: harmless while every
+   child of <main> was a <section>, but any other child added later (a <div>, a
+   <nav>) would have had no order and jumped above the sections. */
+.home-main { display: flex; flex-direction: column; }
+.home-main > section { order: 4; }
 @media (max-width: 900px) {
-  main > .hero { order: 1; }
-  main > #d-cost { order: 2; }
-  main > .d-jobband { order: 3; }
+  .home-main > .hero { order: 1; }
+  .home-main > #d-cost { order: 2; }
+  .home-main > .d-jobband { order: 3; }
 }
 
 /* The call record sits in a narrow right-hand column so the whole hero lands in
