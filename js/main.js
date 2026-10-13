@@ -147,18 +147,23 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   window.cvxPushEvent = pushEvent;
 
+  // Which call to action this is, when the markup says so. link_location stays
+  // coarse (header, hero, cta_band...) so it is comparable across time;
+  // cta_location is the specific one and falls back to link_location.
+  function ctaLocation(el, fallback) {
+    var marked = (el && el.closest) ? el.closest('[data-cta-location]') : null;
+    return (marked && marked.getAttribute('data-cta-location')) || fallback;
+  }
+
   // Normalized description of where a link sits. Contains no user data.
   function linkLocation(el) {
     if (!el || !el.closest) return 'body';
-    // An explicit location on the element or an ancestor wins. Without one the
-    // structural guesses below apply exactly as before, so pages that carry no
-    // data-cta-location (the campaign page among them) push what they always did.
-    var marked = el.closest('[data-cta-location]');
-    if (marked) { var v = marked.getAttribute('data-cta-location'); if (v) return v; }
     if (el.closest('.site-header')) return 'header';
     if (el.closest('.mobile-nav')) return 'mobile_nav';
     if (el.closest('.site-footer')) return 'footer';
-    if (el.closest('.cta-band')) return 'cta_band';
+    // .cta-close is the homepage's full-width closing band; it reports as the
+    // cta_band it replaced so link_location stays comparable with older data.
+    if (el.closest('.cta-band, .cta-close')) return 'cta_band';
     if (el.closest('.hero, .page-hero')) return 'hero';
     if (el.closest('.article-body')) return 'article_body';
     return 'body';
@@ -176,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (href.indexOf('mailto:') === 0) {
       pushEvent('email_click', { link_location: where });
     } else if (href.indexOf('calendly.com') !== -1) {
-      pushEvent('calendly_click', { link_location: where, cta_location: where });
+      pushEvent('calendly_click', { link_location: where, cta_location: ctaLocation(a, where) });
     }
   }, true);
 
