@@ -90,6 +90,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 @media (max-width: 620px) { .form-card { padding: var(--space-sm) var(--space-sm); } }
 
+/* Safety first. Sits before step 1 of the script and at the top of the printable
+   form, because the routing it describes overrides every step below it. The
+   var() fallbacks are the design-system values, so the box renders correctly
+   whether or not those tokens are defined yet. */
+.safety-first { background: var(--warm-50, #F5F0E8); border-left: 4px solid var(--error, #A32632); color: var(--ink-900); border-radius: 0 10px 10px 0; padding: var(--space-sm) var(--space-md); margin: var(--space-md) 0; font-size: 16px; line-height: 1.6; }
+.form-card .safety-first { font-size: 13.5px; line-height: 1.5; padding: var(--space-xs) var(--space-sm); margin: 0 0 var(--space-sm); }
+
 /* Print: isolate the one-page form only */
 @media print {
   .site-header, .mobile-nav, .site-footer, .cta-band, .page-hero, .print-btn, noscript { display: none !important; }
@@ -98,6 +105,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   body, .section, .container, .container.article { margin: 0 !important; padding: 0 !important; background: #fff !important; max-width: none !important; }
   #printable-form { border: 1px solid #333; border-radius: 0; box-shadow: none; padding: var(--space-xs) 16px; }
   #printable-form .fc-title { font-size: 17px; }
+  .safety-first { break-inside: avoid; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  #printable-form .safety-first { font-size: 11.5px; line-height: 1.4; padding: 6px 10px; margin: 0 0 8px; }
   .fc-group { margin-bottom: var(--space-xs); break-inside: avoid; }
   .fc-list li, .fc-field { break-inside: avoid; margin-bottom: 7px; }
   @page { margin: 12mm; }
@@ -220,6 +229,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
 
       <h2>The call script, step by step</h2>
 
+      <p class="safety-first"><strong>Before you start: safety overrides everything.</strong> If at any point the caller describes a medical emergency, a severe reaction to a sting or a possible pesticide exposure, stop the intake and route the call immediately &mdash; 911 if it may be life-threatening, the Poison Help line at 1-800-222-1222 otherwise. Give no medical, chemical or treatment advice. Document the call and report it the same day.</p>
+
       <div class="script-step">
         <h3>1. Opening greeting &mdash; in your company&rsquo;s name</h3>
         <div class="say"><span class="lbl">Say</span>&ldquo;Thank you for calling [Company Name], this is [First Name]. How can I help you today?&rdquo;</div>
@@ -237,7 +248,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <h3>3. Caller name and a confirmed callback number</h3>
         <div class="say"><span class="lbl">Ask</span>&ldquo;Can I start with your name and the best number to reach you on, in case we get cut off?&rdquo;</div>
         <div class="say"><span class="lbl">Read back</span>&ldquo;Let me repeat that back &mdash; [number]. Is that right?&rdquo;</div>
-        <p class="why">Take this first, before the problem description. If the call drops mid-sentence you still have a lead. Always read the number back digit by digit; a transposed digit is the most common reason a morning callback never happens.</p>
+        <p class="why">Take this first, before the problem description. If the call drops mid-sentence you still have a lead. Always read the number back digit by digit; it catches errors before the call ends.</p>
         <ul class="capture"><li>Caller name</li><li>Callback number (read back)</li><li>Email, if offered</li></ul>
       </div>
 
@@ -308,7 +319,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <h3>11. Existing customers: reschedule and cancellation</h3>
         <div class="say"><span class="lbl">Reschedule</span>&ldquo;I can move that for you. I have [option] or [option] &mdash; which suits?&rdquo;</div>
         <div class="say"><span class="lbl">Cancellation</span>&ldquo;I&rsquo;m sorry to hear that. Can I ask what&rsquo;s prompting the change? I&rsquo;ll pass this to [name] and they&rsquo;ll follow up with you today.&rdquo;</div>
-        <p class="why">Rescheduling is usually safe to handle at intake. Cancellations generally are not: capture the reason in the caller&rsquo;s words and route them to an owner or manager the same day rather than processing the cancellation on the call. A recorded reason is retention data worth having, and it is easy to lose if nobody writes it down.</p>
+        <p class="why">Rescheduling is usually safe to handle at intake. Handle cancellations the way your written policy says: if it routes them to an owner or manager, capture the reason in the caller&rsquo;s words, tell the caller who will follow up, and pass it on the same day. Don&rsquo;t refuse or delay a cancellation your policy allows the handler to process. A recorded reason is retention data worth having, and it is easy to lose if nobody writes it down.</p>
       </div>
 
       <h2>After-call CRM note template</h2>
@@ -364,6 +375,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           </button>
         </div>
 
+        <p class="safety-first"><strong>Before you start: safety overrides everything.</strong> If at any point the caller describes a medical emergency, a severe reaction to a sting or a possible pesticide exposure, stop the intake and route the call immediately &mdash; 911 if it may be life-threatening, the Poison Help line at 1-800-222-1222 otherwise. Give no medical, chemical or treatment advice. Document the call and report it the same day.</p>
+
         <div class="fc-group">
           <h3>A. Call flow &mdash; in order</h3>
           <ul class="fc-list">
@@ -405,7 +418,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
             <li><span class="fc-box" aria-hidden="true"></span><span>Quote outside the written pricing boundary.</span></li>
             <li><span class="fc-box" aria-hidden="true"></span><span>Promise a named technician or an unstaffed arrival time.</span></li>
             <li><span class="fc-box" aria-hidden="true"></span><span>Offer a slot before the service area is confirmed.</span></li>
-            <li><span class="fc-box" aria-hidden="true"></span><span>Process a cancellation without routing it to a manager.</span></li>
+            <li><span class="fc-box" aria-hidden="true"></span><span>Handle a cancellation in a way your written policy doesn&rsquo;t allow.</span></li>
           </ul>
         </div>
 
