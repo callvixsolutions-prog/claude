@@ -12,11 +12,14 @@ window.PM_SITE_CONFIG = {
   productionOrigins: [], // add the final HTTPS domain, e.g. ['https://www.example-domain.com']
 
   form: {
-    // Where leads are posted. Use EITHER a FormSubmit random-alias URL
-    // (https://formsubmit.co/ajax/<random-alias>, never a plain email address)
-    // OR a webhook URL that accepts JSON. It should deliver to a dedicated
-    // inbox/webhook for this client. Empty = the form stays mocked.
-    endpoint: '',
+    // Where requests are posted. 'send.php' is this page's own script, in the same
+    // folder: it emails each request to the business from this website's server (the
+    // recipient is set inside send.php, never here). It may also be a full https URL
+    // of a webhook that answers with JSON {"ok": true}. Empty = the form stays mocked.
+    endpoint: 'send.php',
+    // true = the form really sends, even while the page itself is still a preview
+    // (noindex, no tags). false = mocked, with the "Preview build" notice.
+    live: true,
     format: 'json', // 'json' or 'form' (application/x-www-form-urlencoded)
     subject: 'New quote request: PestMaster landing page',
     callbackPromise: '' // client-approved only, e.g. 'We call back within 1 business hour.'
