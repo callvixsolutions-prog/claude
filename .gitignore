@@ -13,5 +13,3 @@ docs/gtm-calendly-attribution-tests.html
 # reachable for one deploy before this rule existed. Internal working files do
 # not belong on the public site, and competitors' pages especially do not
 # belong on our domain.
-docs/homepage-review/
-docs/homepage-directions/
