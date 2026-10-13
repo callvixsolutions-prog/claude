@@ -1,0 +1,119 @@
+{
+ "_comment": "Values frozen at the round 11 baseline (origin/main at 066f078). Regenerate only by deliberate decision; see scripts/round11.test.mjs.",
+ "services": {
+  "title": "Human Pest Control Answering Service | Callvix Solutions",
+  "description": "Trained people answer in your company name, qualify the pest issue and book the job. $399/month plus $2.99 per inbound call, Monday to Friday.",
+  "h1": "Human Pest Control Answering Service"
+ },
+ "pages": {
+  "404.html": {
+   "canonical": "https://callvixsolutions.com/404",
+   "robots": "noindex,follow"
+  },
+  "about.html": {
+   "canonical": "https://callvixsolutions.com/about",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "blog/after-hours-pest-control-call-handling.html": {
+   "canonical": "https://callvixsolutions.com/blog/after-hours-pest-control-call-handling",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "blog/ai-vs-human-answering-service-pest-control.html": {
+   "canonical": "https://callvixsolutions.com/blog/ai-vs-human-answering-service-pest-control",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "blog/index.html": {
+   "canonical": "https://callvixsolutions.com/blog/",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "blog/missed-calls-cost-pest-control.html": {
+   "canonical": "https://callvixsolutions.com/blog/missed-calls-cost-pest-control",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "blog/pest-control-answering-service-checklist.html": {
+   "canonical": "https://callvixsolutions.com/blog/pest-control-answering-service-checklist",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "blog/pest-control-answering-service-cost.html": {
+   "canonical": "https://callvixsolutions.com/blog/pest-control-answering-service-cost",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "blog/pest-control-call-script-intake-form.html": {
+   "canonical": "https://callvixsolutions.com/blog/pest-control-call-script-intake-form",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "blog/pest-control-receptionist-vs-answering-service.html": {
+   "canonical": "https://callvixsolutions.com/blog/pest-control-receptionist-vs-answering-service",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "contact.html": {
+   "canonical": "https://callvixsolutions.com/contact",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "faq.html": {
+   "canonical": "https://callvixsolutions.com/faq",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "index.html": {
+   "canonical": "https://callvixsolutions.com/",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "integrations/briostack.html": {
+   "canonical": "https://callvixsolutions.com/integrations/briostack",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "integrations/fieldroutes.html": {
+   "canonical": "https://callvixsolutions.com/integrations/fieldroutes",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "integrations/gorilladesk.html": {
+   "canonical": "https://callvixsolutions.com/integrations/gorilladesk",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "integrations/housecall-pro.html": {
+   "canonical": "https://callvixsolutions.com/integrations/housecall-pro",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "integrations/index.html": {
+   "canonical": "https://callvixsolutions.com/integrations/",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "integrations/pestpac.html": {
+   "canonical": "https://callvixsolutions.com/integrations/pestpac",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "integrations/servicetitan.html": {
+   "canonical": "https://callvixsolutions.com/integrations/servicetitan",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "pricing.html": {
+   "canonical": "https://callvixsolutions.com/pricing",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "privacy-policy.html": {
+   "canonical": "https://callvixsolutions.com/privacy-policy",
+   "robots": "index,follow"
+  },
+  "resources/pest-control-answering-service-vendor-scorecard.html": {
+   "canonical": "https://callvixsolutions.com/resources/pest-control-answering-service-vendor-scorecard",
+   "robots": "index,follow"
+  },
+  "services.html": {
+   "canonical": "https://callvixsolutions.com/services",
+   "robots": "index,follow,max-image-preview:large"
+  },
+  "terms.html": {
+   "canonical": "https://callvixsolutions.com/terms",
+   "robots": "index,follow"
+  },
+  "thank-you.html": {
+   "canonical": "https://callvixsolutions.com/thank-you",
+   "robots": "noindex,follow"
+  },
+  "tools/index.html": {
+   "canonical": "https://callvixsolutions.com/tools/",
+   "robots": "index, follow, max-image-preview:large"
+  }
+ },
+ "campaignSha256": "b2b6ea6ccadc02ece11814d194d07624696d2e0f47bb787d4ad2e1bf926f7529"
+}

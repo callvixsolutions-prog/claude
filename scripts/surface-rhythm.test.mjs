@@ -93,6 +93,45 @@ function surfaceVocabulary() {
 const SURFACES = surfaceVocabulary();
 
 /**
+ * Which surfaces are LIGHT.
+ *
+ * Round 11 retired sand. Light sections now alternate cream (the canvas, so a
+ * section with no surface class) and white (.section--alt), and those two are
+ * about 2 dL* apart — not a boundary a reader can see. Treating them as two
+ * surfaces would let the guard pass a page of nine identical sections purely
+ * because their classes alternate, which is the stripe pattern the guard was
+ * rewritten to stop rewarding. So every light surface resolves to one name,
+ * 'light', and adjacent light sections have to differ in FORMAT.
+ *
+ * Read from the stylesheet like the vocabulary itself: a surface is light when
+ * its rule paints var(--white) or var(--cream). Nothing to maintain here if a
+ * third light token is ever added to that list on purpose.
+ */
+const LIGHT_TOKENS = ['var(--white)', 'var(--cream)'];
+function lightSurfaces() {
+  const css = readFileSync(join(ROOT, 'css/style.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+  const out = new Set();
+  for (const chunk of css.split('}')) {
+    const i = chunk.indexOf('{');
+    if (i === -1) continue;
+    const m = chunk.slice(i + 1).match(/(?:^|;|\s)background(?:-color)?\s*:\s*([^;]+)/);
+    if (!m || !LIGHT_TOKENS.includes(m[1].trim())) continue;
+    for (const sel of chunk.slice(0, i).split(',')) {
+      const t = sel.trim();
+      if (/^\.[A-Za-z0-9_-]+$/.test(t)) out.add(t.slice(1));
+    }
+  }
+  return out;
+}
+const LIGHT = lightSurfaces();
+/** The name a reader would give the ground: 'light', or the class that paints something else. */
+function surfaceName(classes) {
+  const own = classes.find((c) => SURFACES.has(c) && !NOT_A_SURFACE.has(c));
+  if (!own || LIGHT.has(own)) return 'light';
+  return own;
+}
+
+/**
  * Format signature, inferred from the section's own markup.
  *
  * This used to be a hand-maintained vocabulary of class names, and it drifted
@@ -181,7 +220,7 @@ function isArtifact(html) {
      "artifact+media" where a reader sees one thing. The printed sequence exists
      for a human scanning for flatness, so it must not inflate a section's
      format count. */
-  return /class="[^"]*\b(?:rec|jobnote|config|systems)\b/.test(html);
+  return /class="[^"]*\b(?:rec|jobnote|config)\b/.test(html);
 }
 
 /**
@@ -191,7 +230,9 @@ function isArtifact(html) {
  * browser in the suite to classify nine sections, which is out of proportion.
  */
 function isMedia(html) {
-  if (/<figure\b/.test(html)) return true;
+  /* A .crmflow figure is the call-flow rail. It is a <figure> for its aria-label,
+     not because it is a picture; it has its own format, 'flow', below. */
+  if (/<figure\b(?![^>]*\bcrmflow\b)/.test(html)) return true;
   for (const m of html.matchAll(/<img\b[^>]*\bwidth="(\d+)"/gi)) {
     if (Number(m[1]) >= MEDIA_WIDTH_THRESHOLD) return true;
   }
@@ -203,14 +244,19 @@ function isMedia(html) {
 const FORMATS = [
   ['table', (h) => /<table\b/.test(h)],
   ['steps', isSteps],
+  /* The call-flow rail: nodes joined by arrows. Not 'steps' — on the six Works
+     With pages the rail is followed directly by a numbered list, and calling
+     both 'steps' reported two sections as the same format when one is a
+     horizontal diagram and the other a vertical numbered procedure. */
+  ['flow', (h) => /class="[^"]*\bcrmflow\b/.test(h)],
   ['accordion', isAccordion],
   ['cards', isCards],
   ['media', isMedia],
   ['artifact', isArtifact],
   /* Hints: styling choices with no structural signal to read. */
-  ['list', (h) => /class="[^"]*\b(?:read-list|checklist)\b/.test(h)],
+  ['list', (h) => /class="[^"]*\b(?:read-list|checklist|syslist)\b/.test(h)],
   ['quote', (h) => /class="[^"]*\bquote-card\b/.test(h)],
-  ['cta', (h) => /class="[^"]*\bcta-band\b/.test(h)],
+  ['cta', (h) => /class="[^"]*\b(?:cta-band|cta-close)\b/.test(h)],
 ];
 
 /* Precedence. A numbered step is also "a repeated unit with a heading", so a
@@ -249,7 +295,7 @@ function sectionsOf(html) {
     const comment = after.match(/^\s*<!--([\s\S]*?)-->/);
     return {
       html: slice,
-      surface: classes.find((c) => SURFACES.has(c) && !NOT_A_SURFACE.has(c)) || 'base',
+      surface: surfaceName(classes),
       signature: signatureOf(slice),
       isOpening: classes.some((c) => OPENING.has(c)),
       optOut: classes.includes('section--continues'),
