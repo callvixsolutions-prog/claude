@@ -140,9 +140,6 @@ const PER_CALL = /\$2\.99 per call/gi;
 /* PENDING — strings still live until the round-12 commit that rewrites them. Each entry
    names that commit and must be deleted in it: a stale entry fails this test. */
 const RETIRED_PENDING = [
-  ['blog/pest-control-call-script-intake-form.html', 'books faster', 'commit 4, call script and print labels'],
-  ['blog/pest-control-call-script-intake-form.html', 'single sheet', 'commit 4, call script and print labels'],
-  ['blog/after-hours-pest-control-call-handling.html', 'one-page after-hours plan', 'commit 4, call script and print labels'],
   ['index.html', '$2.99 per call', 'commit 5, homepage per-inbound-call wording'],
 ];
 
