@@ -95,7 +95,7 @@ const ALLOWED_IMAGES = {
      below, which is how a stock call-centre photograph survived a round of
      removals: the branded cover existing for an article did not mean the index
      was using it. Each one opened individually. */
-  'blog-after-hours.jpg': 'flow diagram, five labelled boxes, no people',
+  'blog-after-hours.jpg': 'flow diagram rendered from the article figure (2026-10-13): five labelled boxes in a row, note reads "Safety check at any point. Then the eligibility gate, then Levels 1–4.", no people',
   'blog-ai-vs-human-16x9.jpg': 'two-column comparison graphic with icons, no people',
   'blog-call-script.jpg': 'branded cover, title and subtitle on navy, no people',
   'blog-checklist.jpg': 'branded cover, title and subtitle on navy, no people',
@@ -104,7 +104,7 @@ const ALLOWED_IMAGES = {
   'vendor-scorecard.jpg': 'branded cover with an illustrated checklist, no people',
 
   /* Open Graph images, 1200x630. */
-  'blog-after-hours-call-flow-1200x630.png': 'flow diagram, five labelled boxes, no people',
+  'blog-after-hours-call-flow-1200x630.png': 'flow diagram rendered from the article figure (2026-10-13): five labelled boxes in a row, note reads "Safety check at any point. Then the eligibility gate, then Levels 1–4.", no people',
   'blog-ai-vs-human-1200x630.jpg': 'two-column comparison graphic with icons, no people',
   'blog-call-script-1200x630.png': 'branded cover, no people',
   'blog-checklist-1200x630.png': 'branded cover, no people',
@@ -115,9 +115,9 @@ const ALLOWED_IMAGES = {
      are re-crops of the covers and diagrams above, with the flow diagram
      restacking from a row to a column at 4x3 and 1x1. Nothing appears in a crop
      that is absent from the wide version. */
-  'blog-after-hours-call-flow-16x9.png': 'flow diagram, five boxes in a row, no people',
-  'blog-after-hours-call-flow-4x3.png': 'same flow diagram stacked vertically, no people',
-  'blog-after-hours-call-flow-1x1.png': 'same flow diagram stacked vertically, square, no people',
+  'blog-after-hours-call-flow-16x9.png': 'flow diagram rendered from the article figure (2026-10-13): five boxes in a row, note reads "Safety check at any point. Then the eligibility gate, then Levels 1–4.", no people',
+  'blog-after-hours-call-flow-4x3.png': 'same flow diagram stacked vertically (2026-10-13), same note under the fifth box, no people',
+  'blog-after-hours-call-flow-1x1.png': 'same flow diagram stacked vertically, square (2026-10-13), same note under the fifth box, no people',
   'blog-ai-vs-human-4x3.jpg': 'the comparison graphic, 4x3 crop, no people',
   'blog-ai-vs-human-1x1.jpg': 'the comparison graphic, square crop, no people',
   'blog-checklist-16x9.png': 'branded cover, 16x9 crop, no people',
