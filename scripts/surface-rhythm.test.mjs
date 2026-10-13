@@ -176,7 +176,12 @@ function isCards(html) {
  * the list/quote/cta hints already are.
  */
 function isArtifact(html) {
-  return /class="[^"]*\b(?:rec|jobnote|config|systems|coverage)\b/.test(html);
+  /* .coverage is deliberately absent. It is a <figure>, so isMedia already
+     claims it, and listing it here reported the pricing section as
+     "artifact+media" where a reader sees one thing. The printed sequence exists
+     for a human scanning for flatness, so it must not inflate a section's
+     format count. */
+  return /class="[^"]*\b(?:rec|jobnote|config|systems)\b/.test(html);
 }
 
 /**

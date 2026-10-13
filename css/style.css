@@ -773,3 +773,377 @@ strong { color: var(--ink-900); font-weight: 700; }
 /* Inline links in prose must not read as plain text. */
 .container-narrow > p a { color: var(--teal-600); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 .section--navy .container-narrow > p a { color: var(--teal-300); }
+
+/* ===========================================================================
+   Homepage artifacts — the built visual density.
+
+   Ten components, all HTML and CSS, no sourced imagery. They exist because the
+   homepage had zero images across nine sections and was asking background
+   colour to do a job that pictures do.
+
+   Every diagram here is a <figure role="img"> with an aria-label that narrates
+   it in a sentence, following the .crmflow pattern already in style.css. A
+   diagram without one is a hole in the page for anyone using a screen reader,
+   and this file adds six of them.
+
+   Shipped from the homepage redesign. The photograph slots are deliberately not
+   here: two sections reflow to full width until the images exist.
+   =========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   B1 — THE CALL RECORD
+   The transcript rendered as an artifact of the work rather than paragraphs in
+   a card: a record header with status, the exchange as speaker rows, and an
+   outcome strip. Same words as the live .call-card. Still illustrative, still
+   marked, still not a recording.
+   --------------------------------------------------------------------------- */
+.rec {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.rec-head {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px;
+  background: var(--navy-900);
+  color: #fff;
+}
+.rec-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--teal-400); flex-shrink: 0; }
+.rec-who { flex: 1; min-width: 0; }
+.rec-who strong {
+  display: block; font-family: var(--font-heading); font-weight: 700;
+  font-size: 14.5px; line-height: 1.25; color: #fff;
+}
+.rec-who span { display: block; font-size: 12.5px; color: #9fb8d6; line-height: 1.35; }
+.rec-tag {
+  flex-shrink: 0; font-family: var(--font-heading); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .09em; text-transform: uppercase;
+  color: var(--teal-300); border: 1px solid rgba(131,214,223,.45);
+  border-radius: 999px; padding: 4px 9px;
+}
+.rec-meta {
+  display: flex; gap: 18px; flex-wrap: wrap;
+  padding: 10px 18px;
+  background: var(--teal-50);
+  border-bottom: 1px solid var(--line);
+  font-size: 12px; color: var(--ink-500);
+}
+.rec-meta b { font-weight: 600; color: var(--ink-700); }
+.rec-body { padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.rec-turn { max-width: 84%; }
+.rec-turn--them { align-self: flex-start; }
+.rec-turn--us { align-self: flex-end; }
+.rec-label {
+  display: block; font-family: var(--font-heading); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase; margin-bottom: 4px;
+}
+.rec-turn--them .rec-label { color: var(--ink-500); }
+.rec-turn--us .rec-label { color: var(--teal-600); text-align: right; }
+.rec-bubble {
+  padding: 11px 14px; border-radius: 14px; font-size: 14.5px; line-height: 1.5;
+  color: var(--ink-700);
+}
+.rec-turn--them .rec-bubble { background: var(--sand-2); border-bottom-left-radius: 4px; }
+.rec-turn--us .rec-bubble { background: var(--teal-100); border-bottom-right-radius: 4px; }
+.rec-out {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 13px 18px; background: var(--navy-900);
+}
+.rec-out svg { width: 17px; height: 17px; color: var(--teal-300); flex-shrink: 0; }
+.rec-out span {
+  font-family: var(--font-heading); font-size: 13px; font-weight: 700; color: #fff;
+}
+.rec-out em {
+  font-style: normal; font-size: 12px; color: #9fb8d6; font-family: var(--font-body);
+  font-weight: 400;
+}
+.rec-note {
+  font-size: 12.5px; line-height: 1.5; color: var(--ink-500); font-style: italic;
+  margin-top: 10px;
+}
+
+/* ---------------------------------------------------------------------------
+   B7 — THE JOB NOTE
+   What the office actually receives. The deliverable, drawn. Sits beside the
+   call record: call comes in, job appears.
+   --------------------------------------------------------------------------- */
+.jobnote {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.jobnote-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 13px 18px;
+  background: var(--teal-600);
+}
+.jobnote-head strong {
+  font-family: var(--font-heading); font-size: 13.5px; font-weight: 700;
+  letter-spacing: .04em; text-transform: uppercase; color: #fff;
+}
+.jobnote-head span { font-size: 12px; color: rgba(255,255,255,.85); }
+.jobnote-rows { padding: 6px 18px 14px; }
+.jobnote-row {
+  display: grid; grid-template-columns: 112px 1fr; gap: 14px;
+  padding: 9px 0; border-bottom: 1px solid var(--line);
+  font-size: 14px; line-height: 1.45;
+}
+.jobnote-row:last-child { border-bottom: 0; }
+.jobnote-row dt {
+  font-family: var(--font-heading); font-size: 11.5px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--ink-500);
+  padding-top: 2px;
+}
+.jobnote-row dd { margin: 0; color: var(--ink-700); }
+.jobnote-row dd b { font-weight: 600; color: var(--navy-900); }
+.jobnote-flag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--gold-100); color: #7a5410;
+  font-family: var(--font-heading); font-size: 11.5px; font-weight: 700;
+  border-radius: 999px; padding: 3px 10px;
+}
+
+/* ---------------------------------------------------------------------------
+   B5 — WHAT WE CONFIGURE (with escalation folded in)
+   The onboarding artifact. The escalation rules are part of what gets
+   configured, so they live inside this panel rather than as a second diagram.
+   --------------------------------------------------------------------------- */
+.config {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 22px 24px 24px;
+}
+.config-title {
+  font-family: var(--font-heading); font-size: 11.5px; font-weight: 700;
+  letter-spacing: .09em; text-transform: uppercase; color: var(--teal-600);
+  margin-bottom: 14px;
+}
+.config-list { display: grid; gap: 0; }
+.config-item {
+  display: grid; grid-template-columns: 22px 1fr; gap: 12px;
+  padding: 11px 0; border-bottom: 1px solid var(--line);
+}
+.config-item:last-child { border-bottom: 0; }
+.config-item svg { width: 18px; height: 18px; color: var(--teal-500); margin-top: 2px; }
+.config-item b {
+  display: block; font-family: var(--font-heading); font-size: 14.5px;
+  font-weight: 700; color: var(--navy-900); line-height: 1.3;
+}
+.config-item span { display: block; font-size: 13.5px; color: var(--ink-500); line-height: 1.5; }
+.config-esc {
+  margin-top: 14px; padding-top: 16px; border-top: 2px solid var(--line-2);
+}
+.config-esc-rule {
+  display: grid; grid-template-columns: minmax(0,1fr) 16px minmax(0,1.3fr);
+  align-items: center; gap: 10px;
+  padding: 7px 0; font-size: 13.5px;
+}
+.config-esc-rule b { font-weight: 600; color: var(--navy-900); }
+/* teal-600, not teal-500: the arrow is a text character and teal-500 on white
+   measures 2.85:1, below AA for 13.5px. teal-600 is 6.06. */
+.config-esc-rule i { font-style: normal; color: var(--teal-600); text-align: center; }
+.config-esc-rule span { color: var(--ink-500); }
+
+/* ---------------------------------------------------------------------------
+   B9 — THE COVERAGE GRID
+   A week, with standard hours solid and the two paid add-ons shown as what they
+   ADD. The point is that the "not 24/7" limit becomes something you can see
+   rather than a caveat under a claim.
+   --------------------------------------------------------------------------- */
+.coverage { --cov-label: 104px; }
+.coverage-grid {
+  display: grid;
+  grid-template-columns: var(--cov-label) repeat(7, minmax(0, 1fr));
+  gap: 4px;
+}
+.coverage-grid > * { min-width: 0; }
+.cov-day-s { display: none; }
+.cov-day {
+  font-family: var(--font-heading); font-size: 11.5px; font-weight: 700;
+  letter-spacing: .05em; text-transform: uppercase; color: var(--ink-500);
+  text-align: center; padding-bottom: 4px;
+}
+.cov-row-label {
+  display: flex; flex-direction: column; justify-content: center;
+  font-size: 12.5px; line-height: 1.3; color: var(--ink-700); padding-right: 8px;
+}
+.cov-row-label b { font-family: var(--font-heading); font-weight: 700; font-size: 13px; color: var(--navy-900); }
+.cov-row-label em { font-style: normal; font-size: 11.5px; color: var(--ink-500); }
+.cov-cell { height: 38px; border-radius: 7px; background: var(--sand-2); }
+.cov-cell--on { background: var(--teal-600); }
+.cov-cell--add { background: var(--teal-100); border: 1px dashed var(--teal-400); }
+.coverage-key {
+  display: flex; gap: 20px; flex-wrap: wrap; margin-top: 16px;
+  font-size: 12.5px; color: var(--ink-500);
+}
+.coverage-key b { color: var(--ink-700); font-weight: 600; }
+.cov-swatch {
+  display: inline-block; width: 13px; height: 13px; border-radius: 4px;
+  vertical-align: -2px; margin-right: 7px;
+}
+.cov-swatch--on { background: var(--teal-600); }
+.cov-swatch--add { background: var(--teal-100); border: 1px dashed var(--teal-400); }
+.cov-swatch--off { background: var(--sand-2); }
+
+/* ---------------------------------------------------------------------------
+   Section 6 — THE SYSTEMS GRID
+   Replaces the seven text pills. Not vendor wordmarks: using their logos needs
+   six separate brand-guideline reviews we would probably half-lose, and the
+   non-affiliation disclaimer makes a logo wall the wrong signal anyway. Each
+   name already has a page of its own, so these are linked cards.
+   --------------------------------------------------------------------------- */
+.systems {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(214px, 1fr)); gap: 14px;
+}
+.system-card {
+  /* Explicit colour: the card is white, but on the navy section it would
+     otherwise inherit #cdd3e6 from .section--navy. No direct text renders in it
+     today, so nothing is visibly broken — it is set so that adding a bare word
+     to the card later cannot produce 1.49:1 on white. */
+  color: var(--ink-700);
+  display: flex; flex-direction: column; gap: 6px;
+  background: var(--white); border: 1px solid var(--line);
+  border-radius: var(--radius-md); padding: 18px 18px 16px;
+  text-decoration: none; transition: border-color .16s ease, transform .16s ease;
+}
+.system-card:hover { border-color: var(--teal-400); transform: translateY(-2px); }
+.system-card b {
+  font-family: var(--font-heading); font-size: 15.5px; font-weight: 700;
+  color: var(--navy-900); line-height: 1.25;
+}
+.system-card span { font-size: 13px; line-height: 1.5; color: var(--ink-500); flex: 1; }
+.system-card i {
+  font-style: normal; font-family: var(--font-heading); font-size: 12.5px;
+  font-weight: 700; color: var(--teal-600);
+}
+@media (prefers-reduced-motion: reduce) { .system-card { transition: none; } }
+
+/* ---------------------------------------------------------------------------
+   Shared: the illustrative marker.
+   Goes INSIDE the artifact, never beside it. A figure lifted as a screenshot or
+   quoted by an answer engine has to carry its own caveat, because a disclaimer
+   in adjacent prose does not travel with it.
+   --------------------------------------------------------------------------- */
+.illus {
+  display: block; font-size: 12px; line-height: 1.5; color: var(--ink-500);
+  font-style: italic; padding: 10px 18px 0;
+}
+.illus--inside { padding: 0; margin-top: 10px; }
+
+@media (max-width: 760px) {
+  .coverage-grid { grid-template-columns: 72px repeat(7, minmax(0, 1fr)); gap: 3px; }
+  .cov-cell { height: 30px; border-radius: 5px; }
+  /* 3-letter labels wrapped to two lines at 375px: the tracking pushed MON past
+     the column. No tracking, no wrapping, and the column is narrow enough. */
+  /* 3-letter labels do not fit a 22px column at 375px: nowrap stopped them
+     wrapping and made them overflow instead. Single letters at mobile; the
+     full names stay in the DOM for the accessible name. */
+  .cov-day-l { display: none; }
+  .cov-day-s { display: inline; }
+  .cov-day { font-size: 11px; letter-spacing: 0; }
+  .cov-row-label { font-size: 11px; }
+  .rec-turn { max-width: 94%; }
+  .jobnote-row { grid-template-columns: 1fr; gap: 2px; }
+}
+
+/* ---- D: the type scale ----
+   The live page runs h1 46 and h2 at 42 / 40 / 26 — three h2 sizes doing two
+   jobs, which is why the hierarchy reads as noise rather than as levels. */
+.hero h1 { font-size: clamp(34px, 3.8vw, 52px); line-height: 1.08; letter-spacing: -0.022em; }
+main h2,
+main .section-head h2 { font-size: clamp(27px, 2.9vw, 40px); letter-spacing: -0.016em; }
+main .section-head--center h2,
+main .cta-band h2 { font-size: clamp(26px, 2.7vw, 36px); }
+/* .section-head h2 is (0,1,1) in style.css and outranks a bare 'main h2', which
+   is how a third size survived the first pass at a two-size scale. */
+
+/* ---- D: the measure ----
+   Scoped to the container, not to every p beneath a section. A broad
+   descendant rule at specificity (0,1,1) is what put #aab4d2 on white inside
+   direction C's artifact panels at 2.07:1, invisible at 11.5px. */
+.container-narrow > p,
+.container-narrow > .lede { max-width: 55ch; }
+.d-measure { max-width: 55ch; }
+
+/* ---- D: the seams ----
+   Not "vary the spacing". Use it to group. 96px everywhere tells the reader
+   that no two sections are more related than any other two.
+
+   3 + 4  who answers / how it works — one idea in two parts, so the seam
+          between them closes to 64px and they read as a pair
+   5 + 6  pricing / works with — two separate arguments, so 96px stays
+   8      closing CTA — 128px, as now */
+#d-who   { padding-bottom: var(--space-xl); }
+#d-how   { padding-top: var(--space-xl); }
+
+/* The hero pair: call record beside job note, across the full width.
+   The live .hero .container is a 1.06fr / 0.94fr grid, which squeezed both
+   cards into the right-hand column at ~530px and crushed the job note. The
+   hero goes single-column here so the pair gets the measure it needs. */
+.hero .container { grid-template-columns: 1fr; }
+.hero .lede { max-width: 62ch; }
+.d-hero-pair { display: grid; grid-template-columns: 1.08fr 0.92fr; gap: var(--space-md); align-items: start; margin-top: var(--space-lg); }
+.d-split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: center; }
+.d-split--text-left { grid-template-columns: 1.02fr 0.98fr; }
+@media (max-width: 900px) { .d-hero-pair, .d-split, .d-split--text-left { grid-template-columns: 1fr; } }
+
+/* ---- hero variants ----
+   Shared: the job note is gone from the hero, the four specifics lead, and the
+   actions are one primary plus pricing. */
+.hero-facts { list-style: none; margin: var(--space-md) 0 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 10px 22px; }
+.hero-facts li { position: relative; font-size: 14.5px; line-height: 1.4; color: var(--ink-700); padding-left: 22px; }
+.hero-facts li::before { content: ''; position: absolute; left: 0; top: 6px; width: 13px; height: 7px;
+  border-left: 2.4px solid var(--teal-600); border-bottom: 2.4px solid var(--teal-600);
+  transform: rotate(-45deg); }
+.hero-facts b { font-weight: 700; color: var(--navy-900); }
+.hero .lede { max-width: 56ch; }
+
+/* ---- mobile reorders the beats ----
+   Measured at 390x844: with the job note sitting between the hero and the
+   argument, the first line of argument landed at 3.95 screens — WORSE than the
+   3.35 it replaced, because the band adds a heading, a paragraph and a tall
+   card before the reader reaches a word of reasoning.
+
+   On a phone the order that works is headline, what it is, the CTA, the call
+   record, then the argument, and the outcome after it. On desktop the
+   call-then-job pairing is adjacent and reads better, so the two are ordered
+   differently rather than one compromising for the other.
+
+   SAFE ONLY BECAUSE THE BAND HAS NOTHING FOCUSABLE IN IT. Tab order and screen
+   readers follow the DOM, not the visual order, so a reorder like this normally
+   sends a keyboard user into a region they have not visually reached. Checked:
+   the band is DIV, H2, P, STRONG, SPAN, DL, DT, DD, B — no link, no button, no
+   control. Reading order differs from visual order and both sequences make
+   sense on their own, which is the case where that is acceptable.
+
+   If a link or button is ever added here, this reorder stops being safe. Move
+   the band after #d-cost in the DOM for both breakpoints instead and accept the
+   desktop order — a correct sequence beats an adjacency. */
+main { display: flex; flex-direction: column; }
+main > section { order: 4; }
+@media (max-width: 900px) {
+  main > .hero { order: 1; }
+  main > #d-cost { order: 2; }
+  main > .d-jobband { order: 3; }
+}
+
+/* H2 — side by side. Text left, record right in a narrow column, so the whole
+   hero lands in roughly one viewport on desktop. Stacks under 900px, where the
+   record follows the CTA rather than preceding the argument. */
+.hero .container { grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: var(--space-lg); }
+.hero-art { max-width: 460px; justify-self: end; width: 100%; }
+/* No max-height clip. Clipping the transcript cut it mid-exchange, leaving a
+   speaker label with nothing under it — that reads as broken, not as an
+   excerpt, and a fade would imply an expand control that does not exist. The
+   record runs its full length and the hero is a little over one screen. */
+@media (max-width: 900px) {
+  .hero .container { grid-template-columns: 1fr; }
+  .hero-art { max-width: 100%; justify-self: stretch; margin-top: var(--space-md); }
+}
