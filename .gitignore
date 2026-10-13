@@ -6,3 +6,12 @@ CLAUDE-CODE-TASK.md
 # available for anything that genuinely belongs on the site.
 docs/gtm-calendly-attribution-tag.html
 docs/gtm-calendly-attribution-tests.html
+
+# Design-review material: screenshots of our own pages, captures of other
+# companies' websites, and the standalone homepage direction previews. Anything
+# under docs/ is served at callvixsolutions.com/docs/, so these were publicly
+# reachable for one deploy before this rule existed. Internal working files do
+# not belong on the public site, and competitors' pages especially do not
+# belong on our domain.
+docs/homepage-review/
+docs/homepage-directions/
