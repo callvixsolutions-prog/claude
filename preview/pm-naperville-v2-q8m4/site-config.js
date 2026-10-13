@@ -46,8 +46,8 @@ window.PM_SITE_CONFIG = {
   offer: {
     enabled: true,
     headline: 'Pest control starting from $150',
-    footnote: 'Starting price for general pest control. Mice, rats and specialty services are priced separately. Final price confirmed by phone before booking.',
-    faqAnswer: 'General pest control starts from $150. We confirm your final price by phone before you book. Mice and rats, bed bugs and specialty services such as wildlife and termite (WDI) inspections are priced separately.',
+    footnote: 'Starting price for an initial general pest control service. Exact price confirmed by phone before booking.',
+    faqAnswer: 'General pest control starts from $150 for the initial service. We confirm your exact price on the phone before you book. Mice and rats, bed bugs and specialty services such as wildlife and termite (WDI) inspections are priced separately.',
     eligibleSvc: ['general']
   },
 
