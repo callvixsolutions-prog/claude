@@ -1,0 +1,161 @@
+/* ==========================================================================
+   Homepage only — Round 15. Linked from index.html and nowhere else, so no
+   other page can be affected. Every selector starts at .home-main and every
+   class is prefixed h15-. Tokens come from style.css; none is redefined.
+   ========================================================================== */
+
+/* ---------- 1. Hero: copy 5 / photo 7 ---------- */
+.home-main .h15-hero { padding: 48px 0 56px; }
+.home-main .h15-hero-grid { display: flex; flex-direction: column; gap: var(--space-base); }
+.home-main .h15-hero-copy { display: flex; flex-direction: column; }
+.home-main .h15-hero h1 { color: var(--navy-900); font-size: clamp(34px, 1.6vw + 25px, 48px); line-height: 1.1; max-width: 17ch; margin-bottom: 0; }
+.home-main .h15-hero .lede { max-width: 34em; margin-top: var(--space-sm); }
+.home-main .h15-facts { order: 2; margin: var(--space-md) 0 0; font-size: 14.5px; line-height: 1.5; color: var(--ink-700); }
+/* Separators are borders, so one never dangles at the end of a wrapped line:
+   an item that starts a line has its rule pushed outside the clipped box. The
+   middle dots stay in the HTML text for readers that ignore CSS. */
+.home-main .h15-facts { display: flex; flex-wrap: wrap; row-gap: 4px; overflow: hidden; margin-left: -12px; }
+.home-main .h15-facts span { white-space: nowrap; padding: 0 12px; margin-left: -1px; border-left: 1px solid var(--control); line-height: 1.3; }
+.home-main .h15-facts i { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.home-main .h15-hero-cta { order: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; margin-top: var(--space-md); }
+.home-main .h15-hero-cta .btn { min-height: 48px; }
+.home-main .h15-textlink { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; color: var(--teal-600); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.home-main .h15-textlink:hover { text-decoration-thickness: 2px; }
+.home-main .h15-hero-note { order: 1; margin: 4px 0 0; font-size: 14px; color: var(--ink-500); }
+.home-main .h15-photo { margin: 0; border-radius: 14px; overflow: hidden; background: var(--navy-900); }
+.home-main .h15-photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: 38% 50%; }
+.home-main .h15-photo figcaption { padding: 12px 20px; font-family: var(--font-heading); font-weight: 600; font-size: 15px; line-height: 1.35; color: #fff; }
+@media (max-width: 479px) {
+  .home-main .h15-hero-cta .btn { width: 100%; }
+}
+@media (min-width: 600px) {
+  .home-main .h15-photo img { aspect-ratio: 16 / 10; object-position: 30% 50%; }
+}
+@media (min-width: 1024px) {
+  .home-main .h15-hero { padding: 80px 0 88px; }
+  .home-main .h15-hero-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-lg); align-items: center; }
+  .home-main .h15-facts { order: 0; }
+  .home-main .h15-hero-cta, .home-main .h15-hero-note { order: 0; }
+  .home-main .h15-hero-cta { margin-top: 28px; }
+  /* Asymmetric: the frame runs past the grid on the right and is squared off
+     where it meets the copy column. */
+  .home-main .h15-photo { border-radius: 4px 14px 14px 14px; }
+  .home-main .h15-photo figcaption { font-size: 16px; padding: 14px 24px; }
+}
+@media (min-width: 1280px) {
+  .home-main .h15-hero h1 { font-size: 50px; }
+}
+
+/* ---------- 2. One call, start to finish ---------- */
+.home-main .h15-call { border-top: 1px solid var(--line); }
+.home-main .h15-call-head { max-width: 62ch; }
+.home-main .h15-call-head p { margin-top: var(--space-sm); color: var(--ink-700); }
+.home-main .h15-call-grid { margin-top: var(--space-lg); display: grid; gap: var(--space-lg); }
+.home-main .h15-steps { list-style: none; margin: 0; padding: 0; counter-reset: h15; }
+.home-main .h15-step { counter-increment: h15; padding: 0 0 var(--space-md); }
+.home-main .h15-step + .h15-step { padding-top: var(--space-md); border-top: 1px solid var(--line); }
+.home-main .h15-step:last-child { padding-bottom: 0; }
+.home-main .h15-turn { margin: 0; font-size: 17px; line-height: 1.55; color: var(--ink-900); }
+.home-main .h15-turn + .h15-turn { margin-top: 10px; }
+.home-main .h15-turn b { display: block; font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-500); margin-bottom: 2px; }
+.home-main .h15-turn--us b { color: var(--teal-600); }
+.home-main .h15-note { position: relative; margin: 14px 0 0; padding-left: 40px; font-size: 14.5px; line-height: 1.45; color: var(--ink-500); }
+.home-main .h15-note::before { content: counter(h15); position: absolute; left: 0; top: -1px; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--teal-600); color: var(--teal-600); background: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 13px; line-height: 23px; text-align: center; }
+.home-main .h15-note strong { display: block; color: var(--navy-900); font-weight: 700; font-size: 15px; }
+.home-main .h15-sheet { background: var(--white); border: 1px solid var(--line-2); border-radius: 6px; box-shadow: var(--shadow-md); padding: 22px 24px 20px; max-width: 420px; }
+.home-main .h15-sheet-title { margin: 0 0 4px; padding-bottom: 12px; border-bottom: 2px solid var(--navy-900); font-family: var(--font-heading); font-weight: 700; font-size: 16px; line-height: 1.3; color: var(--navy-900); }
+.home-main .h15-sheet dl { margin: 0; }
+.home-main .h15-sheet-row { display: grid; grid-template-columns: 78px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14.5px; line-height: 1.4; }
+.home-main .h15-sheet-row:last-child { border-bottom: 0; padding-bottom: 0; }
+.home-main .h15-sheet dt { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-500); padding-top: 2px; }
+.home-main .h15-sheet dd { margin: 0; color: var(--ink-900); }
+.home-main .h15-caption { margin: var(--space-md) 0 0; font-size: 13px; color: var(--ink-500); }
+.home-main .h15-after { margin: var(--space-sm) 0 0; max-width: 62ch; font-size: 15.5px; color: var(--ink-700); }
+@media (min-width: 1024px) {
+  .home-main .h15-call-grid { grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); gap: 56px; align-items: start; }
+  .home-main .h15-step { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: 0; padding: 0; }
+  .home-main .h15-step + .h15-step { padding-top: 0; border-top: 0; }
+  .home-main .h15-turns { padding: 0 40px 36px 0; }
+  .home-main .h15-step:last-child .h15-turns, .home-main .h15-step:last-child .h15-note { padding-bottom: 4px; }
+  /* The centre rule: each annotation hangs off one continuous hairline. */
+  .home-main .h15-note { margin: 0; padding: 0 0 36px 32px; border-left: 1px solid var(--line-2); }
+  .home-main .h15-note::before { left: -14px; top: 0; }
+  .home-main .h15-sheet { justify-self: end; width: 100%; }
+}
+
+/* Text kept for readers that ignore CSS, hidden from sight. */
+.home-main .h15-vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ---------- 3. Your rules stay in charge: photo 38 / text 62 ---------- */
+.home-main .h15-rules-grid { display: grid; gap: var(--space-base); }
+.home-main .h15-rules-photo { margin: 0; border-radius: 14px; overflow: hidden; background: var(--warm-50); }
+.home-main .h15-rules-photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: 42% 50%; }
+.home-main .h15-rules-intro { margin: 0; font-size: 18px; color: var(--ink-500); }
+.home-main .h15-rules-list { list-style: none; counter-reset: h15r; margin: var(--space-md) 0 0; padding: 0; border-top: 1px solid var(--line-2); }
+.home-main .h15-rules-list li { counter-increment: h15r; position: relative; padding: 16px 0 16px 48px; border-bottom: 1px solid var(--line-2); }
+.home-main .h15-rules-list li::before { content: counter(h15r, decimal-leading-zero); position: absolute; left: 0; top: 17px; font-family: var(--font-heading); font-weight: 700; font-size: 15px; color: var(--teal-600); }
+.home-main .h15-rules-list strong { display: block; font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.3; color: var(--navy-900); }
+.home-main .h15-rules-list span { display: block; margin-top: 4px; font-size: 16px; line-height: 1.55; color: var(--ink-700); max-width: 58ch; }
+.home-main .h15-rules h3 { margin: var(--space-base) 0 var(--space-2xs); font-size: 18px; }
+.home-main .h15-routes { margin: 0; }
+.home-main .h15-routes > div { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 15.5px; line-height: 1.5; }
+.home-main .h15-routes > div:last-child { border-bottom: 0; }
+.home-main .h15-routes dt { font-weight: 700; color: var(--navy-900); }
+.home-main .h15-routes dd { margin: 0; color: var(--ink-700); }
+.home-main .h15-routes dd span { color: var(--teal-600); font-weight: 700; padding-right: 4px; }
+.home-main .h15-rules-more { margin: var(--space-md) 0 0; font-size: 15px; }
+.home-main .h15-rules-more a { display: inline-flex; align-items: center; min-height: 44px; }
+@media (min-width: 600px) {
+  .home-main .h15-routes > div { display: grid; grid-template-columns: 220px 1fr; gap: 16px; }
+}
+@media (min-width: 1024px) {
+  .home-main .h15-rules-grid { grid-template-columns: minmax(0, 38fr) minmax(0, 62fr); gap: 64px; align-items: start; }
+  .home-main .h15-rules-photo { border-radius: 14px 14px 14px 4px; }
+  .home-main .h15-rules-photo img { aspect-ratio: 4 / 5; object-position: 50% 50%; }
+}
+
+/* ---------- 4. Pricing: a navy panel on white ---------- */
+.home-main .h15-panel { background: var(--navy-900); color: #cdd3e6; border-radius: 20px; padding: 32px 24px; display: grid; gap: var(--space-base); }
+.home-main .h15-panel :focus-visible { outline-color: var(--teal-300); }
+.home-main .h15-panel .eyebrow { color: var(--teal-300); }
+.home-main .h15-panel h2 { color: var(--white); max-width: 18ch; }
+.home-main .h15-price { margin: var(--space-md) 0 var(--space-sm); display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; color: #cdd3e6; font-size: 16px; }
+.home-main .h15-price b { font-family: var(--font-heading); font-weight: 700; color: var(--white); letter-spacing: -0.02em; }
+.home-main .h15-price-base b { font-size: 44px; line-height: 1; }
+.home-main .h15-price-use b { font-size: 34px; line-height: 1; }
+.home-main .h15-price-plus { font-family: var(--font-heading); font-weight: 600; font-size: 26px; color: var(--teal-300); }
+.home-main .h15-price-base, .home-main .h15-price-use { white-space: nowrap; }
+.home-main .h15-price-line { margin: 0 0 6px; font-size: 16px; color: #cdd3e6; }
+.home-main .h15-panel-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; margin-top: var(--space-md); }
+.home-main .h15-panel-cta .btn { min-height: 48px; }
+.home-main .h15-panel .h15-textlink { color: var(--teal-300); }
+.home-main .h15-week { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.home-main .h15-week li { padding: 10px 0; text-align: center; border-radius: 6px; background: rgba(131, 214, 223, 0.16); border: 1px solid rgba(131, 214, 223, 0.45); font-family: var(--font-heading); font-weight: 600; font-size: 14px; color: var(--white); }
+.home-main .h15-week-label { margin: 10px 0 0; font-size: 14.5px; color: #cdd3e6; }
+.home-main .h15-addons { list-style: none; margin: var(--space-md) 0 0; padding: 0; border-top: 1px solid rgba(255, 255, 255, 0.18); }
+.home-main .h15-addons li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.18); }
+.home-main .h15-addon-name { font-family: var(--font-heading); font-weight: 600; font-size: 16px; color: var(--white); }
+.home-main .h15-addon-name small { display: block; margin-top: 2px; font-family: var(--font-body); font-weight: 400; font-size: 14px; color: #cdd3e6; }
+.home-main .h15-addon-price { font-weight: 600; font-size: 16px; color: var(--teal-300); white-space: nowrap; }
+.home-main .h15-panel-note { margin: 14px 0 0; font-size: 14px; line-height: 1.5; color: #cdd3e6; }
+@media (max-width: 479px) {
+  .home-main .h15-panel-cta .btn { width: 100%; }
+}
+@media (min-width: 600px) {
+  .home-main .h15-panel { padding: 48px 40px; }
+}
+@media (min-width: 1024px) {
+  .home-main .h15-panel { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 72px; padding: 64px 64px; align-items: center; }
+  .home-main .h15-price-base b { font-size: 52px; }
+  .home-main .h15-price-use b { font-size: 40px; }
+}
+
+/* ---------- 5. Works with: compact band ---------- */
+.home-main .h15-tools { padding: 44px 0; }
+.home-main .h15-tools h2 { font-size: clamp(22px, 0.6vw + 19px, 26px); margin-bottom: var(--space-2xs); }
+.home-main .h15-tools p { max-width: 64ch; margin: 0; font-size: 16px; color: var(--ink-700); }
+.home-main .h15-toollist { list-style: none; margin: var(--space-sm) 0 var(--space-2xs); padding: 0; display: flex; flex-wrap: wrap; overflow: hidden; margin-left: -16px; }
+.home-main .h15-toollist li { margin-left: -1px; padding: 0 16px; border-left: 1px solid var(--line-2); }
+.home-main .h15-toollist a { display: inline-flex; align-items: center; min-height: 44px; font-family: var(--font-heading); font-weight: 600; font-size: 17px; color: var(--navy-900); text-decoration: underline; text-decoration-color: var(--teal-500); text-decoration-thickness: 1px; text-underline-offset: 5px; }
+.home-main .h15-toollist a:hover { color: var(--teal-600); text-decoration-thickness: 2px; }
+.home-main .h15-tools .h15-tools-else { font-size: 15px; color: var(--ink-500); }

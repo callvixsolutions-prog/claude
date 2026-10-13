@@ -220,7 +220,9 @@ function isArtifact(html) {
      "artifact+media" where a reader sees one thing. The printed sequence exists
      for a human scanning for flatness, so it must not inflate a section's
      format count. */
-  return /class="[^"]*\b(?:rec|jobnote|config)\b/.test(html);
+  /* h15-sheet and h15-panel are the Round 15 homepage's handoff sheet and navy
+     price panel: built from divs and lists, like the three before them. */
+  return /class="[^"]*\b(?:rec|jobnote|config|h15-sheet|h15-panel)\b/.test(html);
 }
 
 /**
@@ -254,7 +256,7 @@ const FORMATS = [
   ['media', isMedia],
   ['artifact', isArtifact],
   /* Hints: styling choices with no structural signal to read. */
-  ['list', (h) => /class="[^"]*\b(?:read-list|checklist|syslist)\b/.test(h)],
+  ['list', (h) => /class="[^"]*\b(?:read-list|checklist|syslist|h15-toollist)\b/.test(h)],
   ['quote', (h) => /class="[^"]*\bquote-card\b/.test(h)],
   ['cta', (h) => /class="[^"]*\b(?:cta-band|cta-close)\b/.test(h)],
 ];

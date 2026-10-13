@@ -91,6 +91,14 @@ const ALLOWED_IMAGES = {
   'badge-designrush.png': 'DesignRush directory badge: chevron mark, five stars, no people',
   'og-default.jpg': 'branded share card, navy with the wordmark and a strapline, no people',
 
+  /* Homepage field photographs (Round 15). Stock, licensed, sources in
+     assets/photos/MANIFEST.md. Neither person is, or is presented as, Callvix
+     staff: the alt text and the caption describe the work, not the company.
+     Only the JPEG fallbacks are listed because the check reads <img src>; the
+     AVIF and WebP beside each are the same crop of the same photograph. */
+  'home-hero-desktop.jpg': 'photograph (opened 2026-10-14): a bald man in sunglasses, green work shirt and long black glove, white backpack sprayer, walking along a cream house wall spraying low shrubs; red shutters, a window, a lawn. No logo, vehicle, plate or text',
+  'home-rules-desktop.jpg': 'photograph (opened 2026-10-14): a white-haired man in glasses, white polo and khaki trousers crouching on mulch beside an open crawl-space hatch in grey shingle siding, the white hatch door lying open. The small chest logo on the polo was painted out; no text remains',
+
   /* Blog card thumbnails, 900x506. These are SEPARATE FILES from the og images
      below, which is how a stock call-centre photograph survived a round of
      removals: the branded cover existing for an article did not mean the index
