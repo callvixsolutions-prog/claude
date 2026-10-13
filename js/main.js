@@ -3,13 +3,21 @@ document.addEventListener('DOMContentLoaded', function () {
   var toggle = document.querySelector('.nav-toggle');
   var mobileNav = document.querySelector('.mobile-nav');
   if (toggle && mobileNav) {
-    toggle.addEventListener('click', function () {
-      mobileNav.classList.toggle('open');
-      var expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!expanded));
-    });
+    // One setter, so the panel and aria-expanded cannot disagree. They used to:
+    // following a link closed the panel and left the button saying "expanded".
+    var setOpen = function (open) {
+      mobileNav.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    };
+    toggle.addEventListener('click', function () { setOpen(!mobileNav.classList.contains('open')); });
     mobileNav.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () { mobileNav.classList.remove('open'); });
+      link.addEventListener('click', function () { setOpen(false); });
+    });
+    // Escape closes the menu and hands focus back to the button that opened it.
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape' || !mobileNav.classList.contains('open')) return;
+      setOpen(false);
+      toggle.focus();
     });
   }
 
