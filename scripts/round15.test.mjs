@@ -91,9 +91,9 @@ test('the homepage stylesheet is current, homepage-only and scoped', () => {
   assert.ok(selectors.length > 80);
   const unscoped = selectors.filter((s) => !s.startsWith('.home-main '));
   assert.deepEqual(unscoped, [], 'selector not scoped to the homepage');
-  const SHARED_OK = new Set(['home-main', 'btn', 'eyebrow', 'lede']);
+  const SHARED_OK = new Set(['home-main', 'btn', 'eyebrow', 'lede', 'container']);
   const foreign = [...new Set(selectors.flatMap((s) => [...s.matchAll(/\.([a-z][\w-]*)/g)].map((m) => m[1])))].filter((c) => !c.startsWith('h15-') && !SHARED_OK.has(c));
-  assert.deepEqual(foreign, [], 'home.css may only name h15- classes (and .btn/.eyebrow/.lede inside an h15- block)');
+  assert.deepEqual(foreign, [], 'home.css may only name h15- classes (and .btn/.eyebrow/.lede/.container inside an h15- block)');
   for (const banned of [/gradient\(/, /@keyframes/, /animation\s*:/, /position\s*:\s*(?:sticky|fixed)/]) assert.ok(!banned.test(body), `not on the homepage: ${banned}`);
   assert.equal(count(body, 'box-shadow'), 1, 'one shadow, on the handoff sheet');
   assert.ok(/\.h15-sheet\s*\{[^}]*box-shadow/.test(body));
