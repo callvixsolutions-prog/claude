@@ -174,7 +174,6 @@ const CLAIM_PATTERNS = [
   [/\bleaking\b[^.?!]{0,40}/gi, 'unmeasurable promise'],
 ];
 const CLAIM_ALLOW = [
-  ['blog/missed-calls-cost-pest-control.html', 'most companies respond to inbound enquiries', 'the sourced HBR finding (Oldroyd, McElheran & Elkington, 2011), attributed in the same sentence'],
   /* General statements about how pest control companies operate, not about Callvix's
      customers. Unsourced; listed in the round 11 review for the owner's judgement. */
   ['blog/ai-vs-human-answering-service-pest-control.html', 'some pest control companies, a hybrid', 'a conditional about the market ("for some companies a hybrid is right"), not a customer count'],
