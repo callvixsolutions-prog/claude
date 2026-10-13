@@ -180,12 +180,7 @@ const CLAIM_ALLOW = [
   ['blog/ai-vs-human-answering-service-pest-control.html', 'some pest control companies, a hybrid', 'a conditional about the market ("for some companies a hybrid is right"), not a customer count'],
   ['blog/ai-vs-human-answering-service-pest-control.html', 'Some companies split the work', 'describes an arrangement that exists in the market, not Callvix customers'],
   ['blog/ai-vs-human-answering-service-pest-control.html', 'Some companies use an automated system', 'the same sentence as an FAQ answer and its JSON-LD copy'],
-  ['blog/pest-control-call-script-intake-form.html', 'Many companies route every commercial enquiry', 'general practice offered as an example rule; unsourced, flagged in the round 11 review'],
-  /* PENDING OWNER WORDING. These two read like the PestPac and GorillaDesk sentences
-     round 11 rewrote, but they were not in the brief's list, so they are reported
-     rather than rewritten. Remove each entry when its sentence is replaced. */
-  ['integrations/briostack.html', 'offices tend to run heavily on recurring service', 'PENDING: describes Briostack offices as a group; reported in the round 11 review'],
-  ['integrations/housecall-pro.html', 'offices often run an estimate flow', 'PENDING: describes Housecall Pro offices as a group; reported in the round 11 review'],
+  ['blog/pest-control-call-script-intake-form.html', 'Some companies route every commercial enquiry', 'owner-approved wording (round 11 pre-merge): an example of a rule some companies use, not a claim about Callvix customers'],
 ];
 test('no sentence claims a customer base, an absolute or an unmeasurable result', () => {
   const hits = []; const used = new Set();
