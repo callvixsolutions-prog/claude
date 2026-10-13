@@ -120,6 +120,7 @@ ErrorDocument 404 /404.html
   ExpiresByType image/jpeg              "access plus 1 year"
   ExpiresByType image/png               "access plus 1 year"
   ExpiresByType image/webp              "access plus 1 year"
+  ExpiresByType image/avif              "access plus 1 year"
   ExpiresByType image/svg+xml           "access plus 1 year"
   ExpiresByType image/x-icon            "access plus 1 year"
   ExpiresByType text/xml                "access plus 1 day"
@@ -140,6 +141,7 @@ ErrorDocument 404 /404.html
 # --------------------------------------------------------------------------
 <IfModule mod_mime.c>
   AddType image/webp .webp
+  AddType image/avif .avif
   AddType image/svg+xml .svg
   AddType application/xml .xml
   AddType text/plain .txt
