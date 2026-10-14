@@ -264,7 +264,9 @@
 .home-main .h15-pricing { padding: 64px 0 72px; }
 
 /* ---------- 1. Hero: headline first, the illustration as the one image ---------- */
-.home-main .h18-hero h1 { max-width: 13ch; }
+/* em, not ch: ch is measured in the font in use, so the headline re-wrapped
+   and pushed the picture down when the web font arrived. */
+.home-main .h18-hero h1 { max-width: 8.5em; }
 .home-main .h18-hero .lede { max-width: 31em; }
 .home-main .h18-hero .h15-facts { order: 3; margin-top: var(--space-md); padding-top: var(--space-sm); border-top: 1px solid var(--line-2); font-size: 14px; color: var(--ink-500); overflow: visible; margin-left: 0; display: block; }
 .home-main .h18-hero .h15-facts span { padding: 0; border: 0; margin: 0; white-space: normal; }
