@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"></noscript>
-<link rel="stylesheet" href="/css/style.css?v=88e4b760b8">
+<link rel="stylesheet" href="/css/style.css?v=fd4d171b21">
 <style>
 /* Integration page — branded hero override */
 .hero h1{max-width:none}
@@ -213,7 +213,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "name": "Will you cancel a customer's service if they ask?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No, not unless you explicitly tell us to. The default is that we listen, capture the reason properly, tell the customer someone will call them back, and escalate to you under your escalation instructions. Cancellations are a retention conversation, and that one is yours."
+        "text": "No. Cancellation requests are recorded and escalated under your instructions: we listen, capture the reason properly, explain how the office will follow up, and pass it to your named contact. Any other handling must be specifically agreed and supported before service starts. Cancellations are a retention conversation, and that one is yours."
       }
     },
     {
@@ -229,7 +229,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "name": "What about billing questions?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Captured and escalated. We don't quote balances or take payment."
+        "text": "Recorded and escalated under your instructions. We don't quote balances or take payment."
       }
     },
     {
@@ -237,7 +237,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "name": "What won’t your representatives do without instructions?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "By default they don’t take payment, quote account balances or process cancellations — those are captured and escalated under your instructions. They also don’t answer a pricing or scope question that falls outside the rules you set. Where you have explicitly told us to handle something, we follow that instead."
+        "text": "Billing questions, payment requests and cancellation requests are recorded and escalated under your instructions. Any additional account action must be specifically agreed and supported before service starts. Representatives also don’t answer a pricing or scope question that falls outside the rules you set."
       }
     }
   ]
@@ -286,8 +286,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="breadcrumbs"><a href="/">Home</a> / <a href="/integrations/">Works With</a> / Briostack</div>
     <div class="eyebrow">Works with Briostack</div>
     <h1>A pest control answering service for Briostack offices</h1>
-    <p class="hero-subhead">Recurring accounts protected — by default we don&rsquo;t process cancellations.</p>
-    <p class="lede">If your office runs heavily on recurring service and automated customer communication, an answering service that books the wrong thing doesn&#x27;t just cost one job — it fouls up a subscription and a comms sequence at the same time. So we book conservatively and escalate anything we&#x27;re not certain about.</p>
+    <p class="hero-subhead">Clear rules for recurring-service and cancellation calls.</p>
+    <p class="lede">If your office runs heavily on recurring service and automated customer communication, an incorrect booking can affect a recurring-service schedule or trigger an unwanted customer message. So we book conservatively and escalate anything we&#x27;re not certain about.</p>
     <div class="hero-cta" style="margin-top:26px;">
       <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary">Book a Discovery Call</a>
       <a href="/pricing" class="btn btn-outline">See pricing</a>
@@ -302,14 +302,13 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           <span class="live-tag"><span class="dot"></span> EXAMPLE</span>
         </div>
         <div class="call-card-body">
-          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;There&rsquo;s a wasp nest right by our front door &mdash; can someone come out?&rdquo;</div>
-          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Let&rsquo;s get that looked at. Can I take the service address so I can check you&rsquo;re in the coverage area?&rdquo;</div>
-          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;It&rsquo;s 14 Oak Lane.&rdquo;</div>
-          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;That&rsquo;s covered. There&rsquo;s a slot tomorrow between 10am and 12pm &mdash; does that work?&rdquo;</div>
-          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;Yes, that&rsquo;s fine.&rdquo;</div>
+          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;I&rsquo;d like to cancel my quarterly plan.&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;I can make sure the office gets that request. Can I confirm the service address on the account?&rdquo;</div>
+          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;It&rsquo;s 14 Cedar Street.&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Thank you. May I ask what&rsquo;s prompting the change? I&rsquo;ll pass your request and your reason to the person who handles plan changes, along with the best number to reach you.&rdquo;</div>
           <div class="call-result">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
-            <span>Job booked &middot; entered in Briostack with the add-on</span>
+            <span>Cancellation request recorded and escalated</span>
           </div>
         </div>
       </div>
@@ -345,9 +344,9 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <p class="lede">The steps below describe the work inside Briostack that the CRM Management add-on covers ($99/month). Answering, qualification and booking by your rules are included in the base plan.</p>
     </div>
     <div class="steps">
-      <div class="step"><div class="step-num">1</div><div><h3>Lookup</h3><p>Phone, then address. Recurring accounts get read before the conversation goes anywhere near scheduling.</p></div></div>
+      <div class="step"><div class="step-num">1</div><div><h3>Lookup</h3><p>Phone, then address. Recurring accounts are reviewed before creating a record or discussing booking.</p></div></div>
       <div class="step"><div class="step-num">2</div><div><h3>New customer</h3><p>Created with the fields and source tracking your office requires.</p></div></div>
-      <div class="step"><div class="step-num">3</div><div><h3>The appointment</h3><p>Booked against the service type and window you&#x27;ve authorised, with recurring plans offered only where you&#x27;ve said they should be.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div><h3>The appointment</h3><p>Booked against the service type and window you&#x27;ve authorized, with recurring plans offered only where you&#x27;ve said they should be.</p></div></div>
       <div class="step"><div class="step-num">4</div><div><h3>Notes</h3><p>Pest, urgency, access, pets, and the caller&#x27;s own words on anything unusual — verbatim where it matters.</p></div></div>
       <div class="step"><div class="step-num">5</div><div><h3>Escalation</h3><p>Billing questions, cancellation requests, contract or plan changes, and commercial work go to your named contact rather than being handled on the spot.</p></div></div>
     </div>
@@ -362,9 +361,9 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     </div>
     <div class="checklist">
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Cancellation and plan-change calls are the ones you least want a call center improvising on. Our default is to capture, reassure and escalate rather than process a cancellation.</p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Where your office runs automated reminders and follow-ups, we avoid actions that would double up on a sequence the customer is already in.</p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Re-service and warranty calls are booked or escalated exactly as you specify, since those affect margin rather than revenue.</p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Every new customer we create carries the lead source your reporting depends on.</p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>During setup, we identify which permitted actions may trigger customer messages and agree which actions representatives should avoid or escalate.</p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Re-service and warranty calls may have different eligibility and billing rules; we follow the rule you approve or escalate unclear cases.</p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>We record the lead-source information available under your agreed mapping, using your approved value when the source is unknown.</p></div>
     </div>
   </div>
 </section>
@@ -377,9 +376,9 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <p class="lede">Illustrative scenarios &mdash; your own booking and escalation rules decide the actual response.</p>
     </div>
     <div class="grid grid-3">
-      <div class="card"><h3>“I want to cancel my plan”</h3><p>The highest-stakes call your phone gets, and the one you least want improvised. We listen, capture the real reason in the customer&#x27;s own words, tell them someone will call back, and escalate under your escalation instructions. By default we don&rsquo;t process the cancellation.</p></div>
-      <div class="card"><h3>“Why was I charged this month?”</h3><p>Billing questions on recurring accounts get captured and escalated, never answered. We don&#x27;t quote balances, and a wrong answer here costs more than the call.</p></div>
-      <div class="card"><h3>“Nobody showed up”</h3><p>A missed appointment call is a retention event. We confirm what the record shows, apologise on your behalf without admitting fault or promising a credit, and escalate with the full timeline, under your escalation instructions.</p></div>
+      <div class="card"><h3>“I want to cancel my plan”</h3><p>A request that needs clear ownership and a careful handoff, as in the example call above. We listen, capture the reason in the customer&#x27;s own words, explain how the office will follow up under your instructions, and escalate. By default we don&rsquo;t process the cancellation.</p></div>
+      <div class="card"><h3>“Why was I charged this month?”</h3><p>Billing questions on recurring accounts are recorded and escalated under your instructions, with the caller&#x27;s question in their own words. We don&#x27;t quote balances.</p></div>
+      <div class="card"><h3>“Nobody showed up”</h3><p>A missed appointment call is a retention event. We confirm what the record shows, apologize on your behalf without admitting fault or promising a credit, and escalate with the full timeline, under your escalation instructions.</p></div>
     </div>
   </div>
 </section>
@@ -398,6 +397,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>A mapping between what a caller describes and the service or job type you want booked.</p></div>
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Your escalation contact, the method, and what counts as urgent enough to use it.</p></div>
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>The greeting, in your company&rsquo;s name, exactly as you want it spoken.</p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><strong>Forwarding, handoff and test calls.</strong> We confirm the numbers you forward, how booking and call details reach your team, and run test calls before coverage starts. <a href="/services#setup">See the setup steps</a>.</p></div>
     </div>
   </div>
 </section>
@@ -440,14 +440,24 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     </div>
     <div class="faq-list">
       <div class="faq-item"><button class="faq-q" aria-expanded="false">Do you have a Briostack integration?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">No — no native integration and no partnership. Briostack is a trademark of its owner. Our representatives work inside your account using access you grant, and you can revoke it at any point.</div></div></div>
-      <div class="faq-item"><button class="faq-q" aria-expanded="false">Will you cancel a customer&#x27;s service if they ask?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">No, not unless you explicitly tell us to. The default is that we listen, capture the reason properly, tell the customer someone will call them back, and escalate to you under your escalation instructions. Cancellations are a retention conversation, and that one is yours.</div></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">Will you cancel a customer&#x27;s service if they ask?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">No. Cancellation requests are recorded and escalated under your instructions: we listen, capture the reason properly, explain how the office will follow up, and pass it to your named contact. Any other handling must be specifically agreed and supported before service starts. Cancellations are a retention conversation, and that one is yours.</div></div></div>
       <div class="faq-item"><button class="faq-q" aria-expanded="false">Can you sell recurring plans?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">Only where you&#x27;ve told us to, with the wording you&#x27;ve approved. If you&#x27;d rather every plan conversation come to you, we qualify and hand it over.</div></div></div>
-      <div class="faq-item"><button class="faq-q" aria-expanded="false">What about billing questions?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">Captured and escalated. We don&#x27;t quote balances or take payment.</div></div></div>
-      <div class="faq-item"><button class="faq-q" aria-expanded="false">What won&rsquo;t your representatives do without instructions?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">By default they don&rsquo;t take payment, quote account balances or process cancellations &mdash; those are captured and escalated under your instructions. They also don&rsquo;t answer a pricing or scope question that falls outside the rules you set. Where you have explicitly told us to handle something, we follow that instead.</div></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">What about billing questions?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">Recorded and escalated under your instructions. We don&#x27;t quote balances or take payment.</div></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">What won&rsquo;t your representatives do without instructions?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">Billing questions, payment requests and cancellation requests are recorded and escalated under your instructions. Any additional account action must be specifically agreed and supported before service starts. Representatives also don&rsquo;t answer a pricing or scope question that falls outside the rules you set.</div></div></div>
     </div>
   </div>
 </section>
 
+<section class="section section--tight">
+  <div class="container container-narrow">
+    <h2 style="font-size:22px;">Related reading</h2>
+    <div class="checklist" style="margin-top:16px;">
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/pest-control-call-script-intake-form">Pest control call script and customer intake form (free template)</a></p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/after-hours-pest-control-call-handling">Building an after-hours call and escalation plan</a></p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/pricing">Pricing, usage and optional add-ons</a></p></div>
+    </div>
+  </div>
+</section>
 <section class="section section--alt">
   <div class="container">
     <div class="cta-band">
@@ -458,20 +468,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Book a Free Discovery Call</a>
         <a href="/contact" class="btn btn-ghost">Contact us</a>
       </div>
-    </div>
-  </div>
-</section>
-<section class="section section--tight">
-  <div class="container container-narrow">
-    <h2 style="font-size:22px;">Related reading</h2>
-    <div class="checklist" style="margin-top:16px;">
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/services">How our pest control call handling works, end to end</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/integrations/">Answering service by CRM &mdash; all six systems</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/pest-control-answering-service-cost">How much does a pest control answering service cost in 2026?</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/ai-vs-human-answering-service-pest-control">AI vs. human answering service for pest control</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/after-hours-pest-control-call-handling">Building an after-hours call and escalation plan</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/pest-control-call-script-intake-form">Pest control call script and customer intake form (free template)</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/faq">Everything pest control owners ask before getting started</a></p></div>
     </div>
   </div>
 </section>
@@ -547,6 +543,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     </div>
   </div>
 </footer>
-<script src="/js/main.js?v=20261013d"></script>
+<script src="/js/main.js?v=20261014a"></script>
 </body>
 </html>

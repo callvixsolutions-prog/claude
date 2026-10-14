@@ -39,6 +39,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // A link to /faq#booking (or any FAQ item id) opens that answer.
+  function openFaqFromHash() {
+    var id = window.location.hash.slice(1);
+    if (!id || !/^[a-z0-9-]+$/.test(id)) return;
+    var item = document.getElementById(id);
+    if (!item || !item.classList.contains('faq-item') || item.classList.contains('open')) return;
+    var q = item.querySelector('.faq-q');
+    if (q) q.click();
+  }
+  openFaqFromHash();
+  window.addEventListener('hashchange', openFaqFromHash);
+
   // Footer year
   document.querySelectorAll('.current-year').forEach(function (el) {
     el.textContent = new Date().getFullYear();
@@ -190,7 +202,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // inline onclick, so printing itself is unchanged.
     document.querySelectorAll('.print-btn').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        pushEvent('intake_form_print', { link_location: 'article_body' });
+        // The event name stays the same for continuity; file_name says which
+        // printable was printed (intake form or after-hours checklist).
+        pushEvent('intake_form_print', {
+          link_location: 'article_body',
+          file_name: btn.getAttribute('data-file-name') || 'unknown_printable'
+        });
       });
     });
 

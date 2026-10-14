@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"></noscript>
-<link rel="stylesheet" href="/css/style.css?v=88e4b760b8">
+<link rel="stylesheet" href="/css/style.css?v=fd4d171b21">
 <style>
 /* Integration page — branded hero override */
 .hero h1{max-width:none}
@@ -229,7 +229,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "name": "Do we have to give you full account access?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. You grant the permission level you're comfortable with. We'd suggest starting narrow — enough to find a customer and book a job — and widening once you've seen the call notes."
+        "text": "No. Use a named account with only the permissions needed for the agreed workflow. Any additional access should be reviewed for a specific task, and you can revoke access at any time."
       }
     },
     {
@@ -237,7 +237,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "name": "What won’t your representatives do without instructions?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "By default they don’t take payment, quote account balances or process cancellations — those are captured and escalated under your instructions. They also don’t answer a pricing or scope question that falls outside the rules you set. Where you have explicitly told us to handle something, we follow that instead."
+        "text": "Billing questions, payment requests and cancellation requests are recorded and escalated under your instructions. Any additional account action must be specifically agreed and supported before service starts. Representatives also don’t answer a pricing or scope question that falls outside the rules you set."
       }
     }
   ]
@@ -286,8 +286,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="breadcrumbs"><a href="/">Home</a> / <a href="/integrations/">Works With</a> / Housecall Pro</div>
     <div class="eyebrow">Works with Housecall Pro</div>
     <h1>A pest control answering service for Housecall Pro offices</h1>
-    <p class="hero-subhead">Your software isn&#x27;t pest-specific. Whoever answers your phone should be.</p>
-    <p class="lede">Plenty of pest control companies run on Housecall Pro because it&#x27;s fast to set up and doesn&#x27;t get in the way. The trade-off is that it isn&#x27;t pest-specific — so the person answering your phone has to bring the pest knowledge themselves. That&#x27;s the whole reason we only work in this one industry.</p>
+    <p class="hero-subhead">Pest-specific call handling for your Housecall Pro workflow.</p>
+    <p class="lede">We agree how your pest services map to job types, appointment durations, estimate requests and recurring-service rules before calls begin. Callvix works only with pest control companies, so the people answering your phone bring pest knowledge to the workflow you already run.</p>
     <div class="hero-cta" style="margin-top:26px;">
       <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary">Book a Discovery Call</a>
       <a href="/pricing" class="btn btn-outline">See pricing</a>
@@ -302,14 +302,13 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           <span class="live-tag"><span class="dot"></span> EXAMPLE</span>
         </div>
         <div class="call-card-body">
-          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;There&rsquo;s a wasp nest right by our front door &mdash; can someone come out?&rdquo;</div>
-          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Let&rsquo;s get that looked at. Can I take the service address so I can check you&rsquo;re in the coverage area?&rdquo;</div>
-          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;It&rsquo;s 14 Oak Lane.&rdquo;</div>
-          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;That&rsquo;s covered. There&rsquo;s a slot tomorrow between 10am and 12pm &mdash; does that work?&rdquo;</div>
-          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;Yes, that&rsquo;s fine.&rdquo;</div>
+          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;I&rsquo;m renting. Can you treat for roaches? My landlord says it&rsquo;s fine.&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;I can help with that. Can I take the service address, and a contact number for the landlord or property manager?&rdquo;</div>
+          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;It&rsquo;s 18 Elm Street, apartment 2. I&rsquo;ll give you the management office number.&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Thank you. I&rsquo;ll note who is paying, who is authorizing the treatment and how the technician gets in, and check the office&rsquo;s rules for rental properties before confirming anything.&rdquo;</div>
           <div class="call-result">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
-            <span>Job booked &middot; entered in Housecall Pro with the add-on</span>
+            <span>Access and authorization details captured</span>
           </div>
         </div>
       </div>
@@ -345,7 +344,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <p class="lede">The steps below describe the work inside Housecall Pro that the CRM Management add-on covers ($99/month). Answering, qualification and booking by your rules are included in the base plan.</p>
     </div>
     <div class="steps">
-      <div class="step"><div class="step-num">1</div><div><h3>Lookup</h3><p>Customer search by phone and address before the conversation goes anywhere.</p></div></div>
+      <div class="step"><div class="step-num">1</div><div><h3>Lookup</h3><p>Customer search by phone and address before creating a record or discussing booking.</p></div></div>
       <div class="step"><div class="step-num">2</div><div><h3>New customer</h3><p>Created with the fields, tags and lead source your office uses.</p></div></div>
       <div class="step"><div class="step-num">3</div><div><h3>The job</h3><p>Booked to the job type and duration you&#x27;ve mapped, inside a schedule window you&#x27;ve opened.</p></div></div>
       <div class="step"><div class="step-num">4</div><div><h3>Notes</h3><p>Pest, urgency, property type, pets, access and gate codes — the things a tech needs before they arrive.</p></div></div>
@@ -361,7 +360,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <h2>Where Housecall Pro changes how we work</h2>
     </div>
     <div class="checklist">
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Housecall Pro isn&#x27;t built around pest-specific service types, so the mapping work matters more, not less. We agree job types and durations for each pest scenario in writing before we take a live call.</p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>We agree how each pest scenario maps to your job types and durations, in writing, before we take a live call.</p></div>
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>If you use the estimate flow, we capture the details and hand it over rather than pricing work ourselves.</p></div>
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Tags are applied consistently so your follow-up and marketing filters keep working.</p></div>
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Recurring service is offered only where you&#x27;ve told us to offer it, with your wording.</p></div>
@@ -377,8 +376,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <p class="lede">Illustrative scenarios &mdash; your own booking and escalation rules decide the actual response.</p>
     </div>
     <div class="grid grid-3">
-      <div class="card"><h3>“Can you just give me a ballpark?”</h3><p>If your office runs an estimate flow rather than fixed pricing, we give a range only where you&#x27;ve authorised one, capture everything an estimate needs, and hand it over rather than pricing the job ourselves.</p></div>
-      <div class="card"><h3>“It&#x27;s a rental — the tenant will let you in”</h3><p>Access and authorisation calls create no-shows. We capture who is paying, who is authorising, who will be on site, and how the tech gets in — and put all four in the job notes.</p></div>
+      <div class="card"><h3>“Can you just give me a ballpark?”</h3><p>If your office runs an estimate flow rather than fixed pricing, we give a range only where you&#x27;ve authorized one, capture everything an estimate needs, and hand it over rather than pricing the job ourselves.</p></div>
+      <div class="card"><h3>“It&#x27;s a rental — the tenant will let you in”</h3><p>Unclear access or authorization can lead to a failed visit. As in the example call above, we capture who is paying, who is authorizing, who will be on site, and how the tech gets in, and put all four in the job notes.</p></div>
       <div class="card"><h3>“Do you do wildlife too?”</h3><p>Scope questions where the honest answer may be no. We answer from your actual service list rather than saying yes to keep the caller happy, and escalate anything adjacent that you might want.</p></div>
     </div>
   </div>
@@ -398,6 +397,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>A mapping between what a caller describes and the service or job type you want booked.</p></div>
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Your escalation contact, the method, and what counts as urgent enough to use it.</p></div>
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>The greeting, in your company&rsquo;s name, exactly as you want it spoken.</p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><strong>Forwarding, handoff and test calls.</strong> We confirm the numbers you forward, how booking and call details reach your team, and run test calls before coverage starts. <a href="/services#setup">See the setup steps</a>.</p></div>
     </div>
   </div>
 </section>
@@ -442,12 +442,22 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <div class="faq-item"><button class="faq-q" aria-expanded="false">Is Callvix integrated with Housecall Pro?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">No. No native integration, no partnership, no sync — Housecall Pro is a trademark of its owner. Our representatives work inside your account using access you grant and can revoke.</div></div></div>
       <div class="faq-item"><button class="faq-q" aria-expanded="false">We run multiple trades, not just pest. Can you still help?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">Only on the pest control side. We work exclusively with pest control companies, so we would handle your pest calls well and would be the wrong choice for anything else.</div></div></div>
       <div class="faq-item"><button class="faq-q" aria-expanded="false">Can you send estimates?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">No. We capture what&#x27;s needed for an estimate and hand it to you. Pricing work stays with your team.</div></div></div>
-      <div class="faq-item"><button class="faq-q" aria-expanded="false">Do we have to give you full account access?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">No. You grant the permission level you&#x27;re comfortable with. We&#x27;d suggest starting narrow — enough to find a customer and book a job — and widening once you&#x27;ve seen the call notes.</div></div></div>
-      <div class="faq-item"><button class="faq-q" aria-expanded="false">What won&rsquo;t your representatives do without instructions?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">By default they don&rsquo;t take payment, quote account balances or process cancellations &mdash; those are captured and escalated under your instructions. They also don&rsquo;t answer a pricing or scope question that falls outside the rules you set. Where you have explicitly told us to handle something, we follow that instead.</div></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">Do we have to give you full account access?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">No. Use a named account with only the permissions needed for the agreed workflow. Any additional access should be reviewed for a specific task, and you can revoke access at any time.</div></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">What won&rsquo;t your representatives do without instructions?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">Billing questions, payment requests and cancellation requests are recorded and escalated under your instructions. Any additional account action must be specifically agreed and supported before service starts. Representatives also don&rsquo;t answer a pricing or scope question that falls outside the rules you set.</div></div></div>
     </div>
   </div>
 </section>
 
+<section class="section section--tight">
+  <div class="container container-narrow">
+    <h2 style="font-size:22px;">Related reading</h2>
+    <div class="checklist" style="margin-top:16px;">
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/pest-control-call-script-intake-form">Pest control call script and customer intake form (free template)</a></p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/faq#booking">How booking works: the FAQ answer</a></p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/pest-control-answering-service-checklist">Pest control answering service vendor checklist</a></p></div>
+    </div>
+  </div>
+</section>
 <section class="section section--alt">
   <div class="container">
     <div class="cta-band">
@@ -458,20 +468,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Book a Free Discovery Call</a>
         <a href="/contact" class="btn btn-ghost">Contact us</a>
       </div>
-    </div>
-  </div>
-</section>
-<section class="section section--tight">
-  <div class="container container-narrow">
-    <h2 style="font-size:22px;">Related reading</h2>
-    <div class="checklist" style="margin-top:16px;">
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/services">How our pest control call handling works, end to end</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/integrations/">Answering service by CRM &mdash; all six systems</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/pest-control-answering-service-cost">How much does a pest control answering service cost in 2026?</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/ai-vs-human-answering-service-pest-control">AI vs. human answering service for pest control</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/after-hours-pest-control-call-handling">Building an after-hours call and escalation plan</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/pest-control-call-script-intake-form">Pest control call script and customer intake form (free template)</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/faq">Everything pest control owners ask before getting started</a></p></div>
     </div>
   </div>
 </section>
@@ -547,6 +543,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     </div>
   </div>
 </footer>
-<script src="/js/main.js?v=20261013d"></script>
+<script src="/js/main.js?v=20261014a"></script>
 </body>
 </html>

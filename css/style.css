@@ -524,6 +524,10 @@ strong { color: var(--ink-900); font-weight: 700; }
 .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
 .blog-card { display: flex; flex-direction: column; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; transition: border-color 0.16s ease; }
 .blog-card:hover { border-color: var(--control); }
+.hub-group + .hub-group { margin-top: var(--space-xl); }
+.hub-group-head { margin-bottom: var(--space-sm); max-width: 62ch; }
+.hub-group-head h2 { font-size: clamp(22px, 2.4vw, 28px); margin-bottom: 6px; }
+.hub-group-head p { color: var(--ink-500); margin: 0; }
 .blog-card .thumb { aspect-ratio: 16/9; overflow: hidden; background: var(--warm-50); }
 .blog-card .thumb img { width: 100%; height: 100%; object-fit: cover; }
 .blog-card .body { padding: 24px; display: flex; flex-direction: column; flex: 1; }
@@ -535,7 +539,11 @@ strong { color: var(--ink-900); font-weight: 700; }
 
 /* Article body */
 .article { max-width: 760px; margin: 0 auto; }
-.article-meta { display: flex; align-items: center; gap: 12px; font-size: 13.5px; color: var(--ink-500); margin-bottom: var(--space-md); }
+.article-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; font-size: 13.5px; color: var(--ink-500); margin-bottom: var(--space-md); }
+/* Each item stays whole. Below 600px the dots go and the items wrap as complete
+   phrases, instead of four columns squeezed into one word per line. */
+.article-meta > span:not(.sep) { white-space: nowrap; }
+@media (max-width: 599px) { .article-meta { gap: 2px 14px; margin-bottom: var(--space-sm); } .article-meta .sep { display: none; } }
 .article-meta .sep { width: 4px; height: 4px; border-radius: 50%; background: var(--line-2); }
 /* 18px from 600px up, 17px below. The 760px column is 68ch at 18px Inter. */
 .article-body { font-size: 17px; line-height: 1.7; color: var(--ink-700); }
@@ -616,6 +624,7 @@ strong { color: var(--ink-900); font-weight: 700; }
 .form-field [aria-invalid="true"] { border-color: var(--error); box-shadow: inset 0 0 0 1px var(--error); }
 .form-error { display: block; margin-top: 6px; font-size: 14px; line-height: 1.5; color: var(--error); }
 .form-field .opt { font-weight: 500; font-size: 13px; color: var(--ink-500); }
+.form-help { font-size: 14px; line-height: 1.45; color: var(--ink-500); margin: -2px 0 8px; }
 .form-field input:focus-visible, .form-field select:focus-visible, .form-field textarea:focus-visible { outline: 3px solid var(--teal-600); outline-offset: 2px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); }
 .form-note { font-size: 13px; color: var(--ink-500); margin-top: var(--space-2xs); }
@@ -856,7 +865,9 @@ strong { color: var(--ink-900); font-weight: 700; }
 .read-list li > a { font-family: var(--font-heading); font-weight: 700; font-size: 17px; color: var(--navy-900); }
 .read-list li > a:hover { color: var(--teal-600); }
 .read-list-kicker { grid-column: 2; grid-row: 1; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-600); white-space: nowrap; }
-.read-list li > span:last-child { grid-column: 1 / -1; font-size: 15px; color: var(--ink-500); line-height: 1.6; }
+.read-list li > span:not(.read-list-kicker) { grid-column: 1 / -1; font-size: 15px; color: var(--ink-500); line-height: 1.6; }
+.read-list li > .read-list-links { font-size: 14.5px; }
+.read-list-links a { color: var(--teal-600); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 .read-list-more { margin-top: var(--space-md); }
 
 @media (max-width: 600px) {
@@ -1283,3 +1294,30 @@ p.config-title {
     transition-duration: .01ms !important;
   }
 }
+
+/* ---------- Round 20: shared article aids ---------- */
+/* Shown only where the table is wider than the screen; the region itself is focusable and labelled. */
+.table-cue { display: none; margin: 18px 0 6px; font-size: 13px; font-weight: 600; color: var(--teal-600); }
+@media (max-width: 759px) { .table-cue { display: block; } }
+.table-scroll:focus-visible { outline: 3px solid var(--teal-600); outline-offset: 3px; }
+
+/* "On this page" for the long guides: a compact list, not a sidebar. */
+.toc { margin: var(--space-md) 0 var(--space-lg); padding: 18px 20px; border: 1px solid var(--line-2); border-radius: var(--radius-md); background: var(--white); }
+.toc-title { margin: 0 0 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-500); }
+.toc-lead { margin: 0 0 10px; }
+.toc-lead a { font-weight: 600; color: var(--teal-600); }
+.toc ol { margin: 0; padding-left: 20px; columns: 2; column-gap: 32px; font-size: 15px; line-height: 1.5; }
+.toc li { break-inside: avoid; padding: 3px 0; }
+.toc li a { color: var(--navy-900); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.toc li a:hover { text-decoration-color: var(--teal-600); }
+@media (max-width: 699px) { .toc ol { columns: 1; } }
+
+/* Pricing: a worked month, small and plainly labelled as an example. */
+.price-example { max-width: 560px; margin: 28px auto 0; padding: 20px 22px; border-radius: var(--radius-md); background: var(--white); border: 1px solid var(--line-2); }
+.price-example-title { margin: 0 0 10px; font-family: var(--font-heading); font-weight: 600; font-size: 16.5px; color: var(--navy-900); }
+.price-example table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.price-example th, .price-example td { padding: 7px 0; border-bottom: 1px solid var(--line); text-align: left; font-weight: 400; color: var(--ink-700); }
+.price-example td { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.price-example .price-example-total th, .price-example .price-example-total td { font-weight: 700; color: var(--navy-900); border-bottom: 2px solid var(--navy-900); }
+.price-example-note { margin: 12px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--ink-500); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }

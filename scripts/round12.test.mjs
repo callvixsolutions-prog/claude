@@ -61,7 +61,8 @@ const MIN_LENGTH = 40;
 export function blocksIn(html) {
   const a = html.indexOf('<main'); const b = html.indexOf('</main>');
   if (a === -1 || b === -1) return [];
-  const main = html.slice(a, b);
+  /* An "On this page" list repeats the H2s it links to by design; it is navigation, not copy. */
+  const main = html.slice(a, b).replace(/<nav\b[^>]*class="toc"[^>]*>[\s\S]*?<\/nav>/g, '');
   const out = [];
   for (const tag of BLOCK_TAGS) {
     const open = new RegExp(`<${tag}(?=[\\s>])[^>]*>`, 'g');
@@ -104,6 +105,9 @@ test('the duplicate detector sees a planted duplicate, a nested copy and a short
   assert.deepEqual(duplicatesIn(nested), [], 'an <li> wrapping one <p> is one block, not a duplicate');
   const nestedLists = `<main><ul><li>${para} outer<ul><li>${para} inner</li></ul></li><li>${para} inner</li></ul></main>`;
   assert.equal(duplicatesIn(nestedLists).length, 1, 'nested lists must be walked by depth, not cut at the first closing tag');
+  const toc = `<main><nav class="toc" aria-label="On this page"><ol><li><a href="#a">${para}</a></li></ol></nav><h2 id="a">${para}</h2></main>`;
+  assert.deepEqual(duplicatesIn(toc), [], 'an on-page jump list repeating its headings is not a duplicate');
+  assert.equal(duplicatesIn(`<main><nav class="toc"></nav><h2>${para}</h2><p>${para}</p></main>`).length, 1, 'copy outside the jump list is still checked');
 });
 
 test('no page says the same thing twice', () => {

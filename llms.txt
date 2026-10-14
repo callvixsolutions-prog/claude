@@ -58,12 +58,12 @@
 - [Free vendor scorecard (PDF)](https://callvixsolutions.com/resources/pest-control-answering-service-vendor-scorecard): An ungated printable scorecard for comparing providers. Direct PDF: https://callvixsolutions.com/assets/pest-control-answering-service-vendor-scorecard.pdf
 
 ## Integrations (per-CRM pages)
-- [FieldRoutes (PestRoutes)](https://callvixsolutions.com/integrations/fieldroutes): Route density, subscription accounts, lead source attribution and service-area edge cases.
+- [FieldRoutes (PestRoutes)](https://callvixsolutions.com/integrations/fieldroutes): Agreed booking windows, recurring-account rules, lead-source fields and service-area edge cases.
 - [PestPac](https://callvixsolutions.com/integrations/pestpac): Service-code mapping, multi-branch and territory rules, warranty and termite/WDO escalation.
-- [GorillaDesk](https://callvixsolutions.com/integrations/gorilladesk): Small teams and owner-operators: defined daily booking windows, job durations, tag hygiene.
+- [GorillaDesk](https://callvixsolutions.com/integrations/gorilladesk): Defined daily booking windows, job durations and customer tags for teams sharing the phone between jobs.
 - [Briostack](https://callvixsolutions.com/integrations/briostack): Recurring-service accounts, conservative booking, cancellation requests recorded and escalated by default.
-- [ServiceTitan](https://callvixsolutions.com/integrations/servicetitan): Business units, job types, arrival windows, membership status and campaign attribution.
-- [Housecall Pro](https://callvixsolutions.com/integrations/housecall-pro): Not pest-specific software, so pest knowledge comes from the representative; estimates escalated.
+- [ServiceTitan](https://callvixsolutions.com/integrations/servicetitan): Business-unit, job-type and source mapping, membership questions, and escalation of requests that do not fit.
+- [Housecall Pro](https://callvixsolutions.com/integrations/housecall-pro): Pest-service rules applied to job types, estimates, recurring service and access notes; estimates handed to your team.
 
 ## Notes
 - Figures used in marketing material, such as missed-call cost estimates, are illustrative arithmetic, not performance claims or guarantees.

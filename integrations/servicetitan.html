@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"></noscript>
-<link rel="stylesheet" href="/css/style.css?v=88e4b760b8">
+<link rel="stylesheet" href="/css/style.css?v=fd4d171b21">
 <style>
 /* Integration page — branded hero override */
 .hero h1{max-width:none}
@@ -213,7 +213,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "name": "How do you avoid mis-booking job types?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A written mapping table agreed at onboarding, and a hard rule that anything not on the table gets escalated instead of guessed. We would rather hand you a call than corrupt your reporting."
+        "text": "A written mapping table agreed at onboarding, and a rule that anything not on the table gets escalated instead of guessed. We would rather hand you a call than create a booking or reporting error."
       }
     },
     {
@@ -221,7 +221,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "name": "Do you capture campaign attribution?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes, on every new customer. If you're spending on lead generation, source accuracy is part of the job, not an extra."
+        "text": "We record the available campaign or lead-source information in the fields and categories your office approves. Unknown or conflicting sources are flagged rather than guessed."
       }
     },
     {
@@ -229,7 +229,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "name": "Can you handle membership sales?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "We can present a membership where you've approved the wording, or qualify and hand it to you. Membership changes are escalated unless you have separately authorised us to make them. Cancellation requests are recorded and escalated by default."
+        "text": "We can present a membership where you've approved the wording, or qualify and hand it to you. Membership changes and cancellation requests are recorded and escalated under your instructions; any other handling must be specifically agreed and supported before service starts."
       }
     },
     {
@@ -237,7 +237,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "name": "What won’t your representatives do without instructions?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "By default they don’t take payment, quote account balances or process cancellations — those are captured and escalated under your instructions. They also don’t answer a pricing or scope question that falls outside the rules you set. Where you have explicitly told us to handle something, we follow that instead."
+        "text": "Billing questions, payment requests and cancellation requests are recorded and escalated under your instructions. Any additional account action must be specifically agreed and supported before service starts. Representatives also don’t answer a pricing or scope question that falls outside the rules you set."
       }
     }
   ]
@@ -302,14 +302,13 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           <span class="live-tag"><span class="dot"></span> EXAMPLE</span>
         </div>
         <div class="call-card-body">
-          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;There&rsquo;s a wasp nest right by our front door &mdash; can someone come out?&rdquo;</div>
-          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Let&rsquo;s get that looked at. Can I take the service address so I can check you&rsquo;re in the coverage area?&rdquo;</div>
-          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;It&rsquo;s 14 Oak Lane.&rdquo;</div>
-          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;That&rsquo;s covered. There&rsquo;s a slot tomorrow between 10am and 12pm &mdash; does that work?&rdquo;</div>
-          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;Yes, that&rsquo;s fine.&rdquo;</div>
+          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;We&rsquo;re on your annual plan. Does that cover the spiders we&rsquo;re seeing in the basement?&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Let me check for you. Can I confirm the service address on the account?&rdquo;</div>
+          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;It&rsquo;s 3 Willow Way.&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Thanks. I&rsquo;m checking what your plan includes against the wording the office has approved. If it isn&rsquo;t clear, I&rsquo;ll pass your question to the office rather than guess.&rdquo;</div>
           <div class="call-result">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
-            <span>Job booked &middot; entered in ServiceTitan with the add-on</span>
+            <span>Membership question checked under your rules</span>
           </div>
         </div>
       </div>
@@ -346,8 +345,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     </div>
     <div class="steps">
       <div class="step"><div class="step-num">1</div><div><h3>Lookup and context</h3><p>Customer and location search before anything else, with membership status read before we discuss pricing or availability.</p></div></div>
-      <div class="step"><div class="step-num">2</div><div><h3>New customer and location</h3><p>Created with the campaign and lead source attribution your reporting depends on, so paid spend stays measurable.</p></div></div>
-      <div class="step"><div class="step-num">3</div><div><h3>The job</h3><p>Booked to the business unit, job type and arrival window you&#x27;ve mapped — never to whatever is closest to free.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div><h3>New customer and location</h3><p>Created with the campaign or lead-source information available, recorded in the fields and categories your office approves.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div><h3>The job</h3><p>We use the business unit, job type and arrival window allowed by your booking rules.</p></div></div>
       <div class="step"><div class="step-num">4</div><div><h3>Job notes</h3><p>Pest, severity, structure and access details written where your dispatcher and tech both read them.</p></div></div>
       <div class="step"><div class="step-num">5</div><div><h3>Escalation</h3><p>Commercial work, membership changes, anything with a price outside your published range, and any call your rules flag goes straight to your named contact.</p></div></div>
     </div>
@@ -361,8 +360,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <h2>Where ServiceTitan changes how we work</h2>
     </div>
     <div class="checklist">
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Business unit and job type mapping is agreed in writing at onboarding. If a call doesn&#x27;t map cleanly we escalate rather than guess — a mis-booked job distorts capacity planning as well as revenue reporting.</p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Campaign attribution is captured on every new customer, because an office that spends on lead generation needs the source to be right.</p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Business unit and job type mapping is agreed in writing at onboarding. If a call doesn&#x27;t map cleanly we escalate rather than guess, because an incorrect job type can create a booking or reporting error.</p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>We record the available campaign or lead-source information in the fields and categories your office approves. Unknown or conflicting sources are flagged rather than guessed.</p></div>
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Membership and plan status is checked, using the information available to us, before pricing is discussed, and pricing follows your approved rules. Unclear cases go to your named contact.</p></div>
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Arrival windows are booked to your capacity rules, not to the first opening.</p></div>
     </div>
@@ -377,9 +376,9 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <p class="lede">Illustrative scenarios &mdash; your own booking and escalation rules decide the actual response.</p>
     </div>
     <div class="grid grid-3">
-      <div class="card"><h3>The paid-search caller</h3><p>If you&#x27;re spending on lead generation, this call has a known cost and the attribution has to be right. We capture campaign and source on every new customer, so your cost per booked job stays a real number rather than an estimate.</p></div>
-      <div class="card"><h3>&ldquo;I&#x27;m a member &mdash; does that cover this?&rdquo;</h3><p>Membership status is checked, using the information available to us, before any pricing is discussed, and members are quoted by your approved pricing rules. Unclear cases go to your named contact. Membership changes are escalated unless you have separately authorised us to make them, and cancellation requests are recorded and escalated by default.</p></div>
-      <div class="card"><h3>“We manage twelve properties”</h3><p>Property management and commercial calls are qualified properly — sites, contacts, scope, current provider — and escalated with a written summary rather than being forced into a residential job type and distorting your capacity planning.</p></div>
+      <div class="card"><h3>The paid-search caller</h3><p>If you&#x27;re spending on lead generation, the source of this call matters. We capture the source details available for the call using your agreed mapping. Your office can combine those records with campaign spend and completed-job outcomes when reviewing marketing performance.</p></div>
+      <div class="card"><h3>&ldquo;I&#x27;m a member &mdash; does that cover this?&rdquo;</h3><p>Membership status is checked, using the information available to us, before any pricing is discussed, and members are quoted by your approved pricing rules. Unclear cases go to your named contact, as in the example call above. Membership changes and cancellation requests are recorded and escalated under your instructions.</p></div>
+      <div class="card"><h3>“We manage twelve properties”</h3><p>Property management and commercial calls are qualified properly — sites, contacts, scope, current provider — and escalated with a written summary rather than being forced into a residential job type.</p></div>
     </div>
   </div>
 </section>
@@ -398,6 +397,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>A mapping between what a caller describes and the service or job type you want booked.</p></div>
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Your escalation contact, the method, and what counts as urgent enough to use it.</p></div>
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>The greeting, in your company&rsquo;s name, exactly as you want it spoken.</p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><strong>Your ServiceTitan mapping.</strong> Which business units, job types, arrival windows and campaign categories we may use, and the permissions that requires.</p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><strong>Forwarding, handoff and test calls.</strong> We confirm the numbers you forward, how booking and call details reach your team, and run test calls before coverage starts. <a href="/services#setup">See the setup steps</a>.</p></div>
     </div>
   </div>
 </section>
@@ -440,14 +441,24 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     </div>
     <div class="faq-list">
       <div class="faq-item"><button class="faq-q" aria-expanded="false">Are you a ServiceTitan partner?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">No. There is no native integration and no partnership — ServiceTitan is a trademark of its owner. Our representatives work inside your account with access you grant and can revoke.</div></div></div>
-      <div class="faq-item"><button class="faq-q" aria-expanded="false">How do you avoid mis-booking job types?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">A written mapping table agreed at onboarding, and a hard rule that anything not on the table gets escalated instead of guessed. We would rather hand you a call than corrupt your reporting.</div></div></div>
-      <div class="faq-item"><button class="faq-q" aria-expanded="false">Do you capture campaign attribution?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">Yes, on every new customer. If you&#x27;re spending on lead generation, source accuracy is part of the job, not an extra.</div></div></div>
-      <div class="faq-item"><button class="faq-q" aria-expanded="false">Can you handle membership sales?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">We can present a membership where you&#x27;ve approved the wording, or qualify and hand it to you. Membership changes are escalated unless you have separately authorised us to make them. Cancellation requests are recorded and escalated by default.</div></div></div>
-      <div class="faq-item"><button class="faq-q" aria-expanded="false">What won&rsquo;t your representatives do without instructions?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">By default they don&rsquo;t take payment, quote account balances or process cancellations &mdash; those are captured and escalated under your instructions. They also don&rsquo;t answer a pricing or scope question that falls outside the rules you set. Where you have explicitly told us to handle something, we follow that instead.</div></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">How do you avoid mis-booking job types?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">A written mapping table agreed at onboarding, and a rule that anything not on the table gets escalated instead of guessed. We would rather hand you a call than create a booking or reporting error.</div></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">Do you capture campaign attribution?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">We record the available campaign or lead-source information in the fields and categories your office approves. Unknown or conflicting sources are flagged rather than guessed.</div></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">Can you handle membership sales?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">We can present a membership where you&#x27;ve approved the wording, or qualify and hand it to you. Membership changes and cancellation requests are recorded and escalated under your instructions; any other handling must be specifically agreed and supported before service starts.</div></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false">What won&rsquo;t your representatives do without instructions?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button><div class="faq-a"><div class="faq-a-inner">Billing questions, payment requests and cancellation requests are recorded and escalated under your instructions. Any additional account action must be specifically agreed and supported before service starts. Representatives also don&rsquo;t answer a pricing or scope question that falls outside the rules you set.</div></div></div>
     </div>
   </div>
 </section>
 
+<section class="section section--tight">
+  <div class="container container-narrow">
+    <h2 style="font-size:22px;">Related reading</h2>
+    <div class="checklist" style="margin-top:16px;">
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/pricing">Pricing, usage and optional add-ons</a></p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/pest-control-call-script-intake-form">Pest control call script and customer intake form (free template)</a></p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/pest-control-answering-service-checklist">Vendor checklist: test a membership exception and an unknown-source call</a></p></div>
+    </div>
+  </div>
+</section>
 <section class="section section--alt">
   <div class="container">
     <div class="cta-band">
@@ -458,20 +469,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Book a Free Discovery Call</a>
         <a href="/contact" class="btn btn-ghost">Contact us</a>
       </div>
-    </div>
-  </div>
-</section>
-<section class="section section--tight">
-  <div class="container container-narrow">
-    <h2 style="font-size:22px;">Related reading</h2>
-    <div class="checklist" style="margin-top:16px;">
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/services">How our pest control call handling works, end to end</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/integrations/">Answering service by CRM &mdash; all six systems</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/pest-control-answering-service-cost">How much does a pest control answering service cost in 2026?</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/ai-vs-human-answering-service-pest-control">AI vs. human answering service for pest control</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/after-hours-pest-control-call-handling">Building an after-hours call and escalation plan</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/pest-control-call-script-intake-form">Pest control call script and customer intake form (free template)</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/faq">Everything pest control owners ask before getting started</a></p></div>
     </div>
   </div>
 </section>
@@ -547,6 +544,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     </div>
   </div>
 </footer>
-<script src="/js/main.js?v=20261013d"></script>
+<script src="/js/main.js?v=20261014a"></script>
 </body>
 </html>

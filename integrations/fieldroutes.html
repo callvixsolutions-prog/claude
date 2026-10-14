@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"></noscript>
-<link rel="stylesheet" href="/css/style.css?v=88e4b760b8">
+<link rel="stylesheet" href="/css/style.css?v=fd4d171b21">
 <style>
 /* Integration page — branded hero override */
 .hero h1{max-width:none}
@@ -246,7 +246,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "name": "Can you book onto specific routes, or only into open slots?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Whatever you decide at onboarding. You can give us the full calendar, or defined windows per service area with anything that doesn't fit escalated to you. Both work. Booking still depends on a suitable slot being available."
+        "text": "We review the service-area and booking-window rules you want us to use and confirm which workflow we can support with the access available. Anything that doesn't fit those rules is escalated to you, and booking still depends on a suitable slot being available."
       }
     },
     {
@@ -254,7 +254,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "name": "What if we use PestRoutes rather than FieldRoutes?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Same thing. PestRoutes became FieldRoutes, and offices on either version of the interface are handled the same way. Tell us which one you see when you log in and we train to that."
+        "text": "FieldRoutes is the name adopted by the former PestRoutes business. Tell us which product and interface your office uses so we can confirm access and the booking workflow before service starts."
       }
     },
     {
@@ -262,7 +262,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "name": "What won’t your representatives do without instructions?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "By default they don’t take payment, quote account balances or process cancellations — those are captured and escalated under your instructions. They also don’t answer a pricing or scope question that falls outside the rules you set. Where you have explicitly told us to handle something, we follow that instead."
+        "text": "Billing questions, payment requests and cancellation requests are recorded and escalated under your instructions. Any additional account action must be specifically agreed and supported before service starts. Representatives also don’t answer a pricing or scope question that falls outside the rules you set."
       }
     }
   ]
@@ -311,7 +311,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="breadcrumbs"><a href="/">Home</a> / <a href="/integrations/">Works With</a> / FieldRoutes</div>
     <div class="eyebrow">Works with FieldRoutes</div>
     <h1>Pest control answering service for FieldRoutes offices</h1>
-    <p class="hero-subhead">Your calls answered, qualified and booked onto the right route — by people, not a bot.</p>
+    <p class="hero-subhead">Your calls answered, qualified and booked within the service areas and appointment windows you approve — by people, not a bot.</p>
     <p class="lede">Callvix Solutions provides live-human answering and job booking for U.S. pest control companies using FieldRoutes (formerly PestRoutes). The base service is $399/month plus $2.99 per inbound call. With CRM Management ($99/month), our representatives enter call notes and booking details directly into your FieldRoutes account, using the access and rules agreed during setup. That is human work in your account &mdash; not a native integration or automatic data sync.</p>
     <div class="hero-cta" style="margin-top:26px;">
       <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary">Book a Discovery Call</a>
@@ -327,14 +327,14 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           <span class="live-tag"><span class="dot"></span> EXAMPLE</span>
         </div>
         <div class="call-card-body">
-          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;There&rsquo;s a wasp nest right by our front door &mdash; can someone come out?&rdquo;</div>
-          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Let&rsquo;s get that looked at. Can I take the service address so I can check you&rsquo;re in the coverage area?&rdquo;</div>
-          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;It&rsquo;s 14 Oak Lane.&rdquo;</div>
-          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;That&rsquo;s covered. There&rsquo;s a slot tomorrow between 10am and 12pm &mdash; does that work?&rdquo;</div>
-          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;Yes, that&rsquo;s fine.&rdquo;</div>
+          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;We&rsquo;re on your quarterly plan, but we&rsquo;ve got ants in the kitchen now. Can someone come before the next visit?&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;I can help with that. Can I confirm the service address on the account?&rdquo;</div>
+          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;It&rsquo;s 22 Birch Road.&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Thanks. I&rsquo;m checking your plan against the office&rsquo;s re-service rules before I offer anything.&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Under those rules this can go in as a re-service visit. Let me find the next window the office has approved.&rdquo;</div>
           <div class="call-result">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
-            <span>Job booked &middot; entered in FieldRoutes with the add-on</span>
+            <span>Re-service booked under approved rules &middot; entered in FieldRoutes with the add-on</span>
           </div>
         </div>
       </div>
@@ -371,7 +371,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     </div>
     <div class="steps">
       <div class="step"><div class="step-num">1</div><div><h3>New caller, no record</h3><p>We search by phone number and address first. If there&#x27;s no customer, we create one with the details you require — name, service address, phone, email, and the source you use for lead tracking.</p></div></div>
-      <div class="step"><div class="step-num">2</div><div><h3>Existing customer</h3><p>We pull up the record and read the service history before we say anything else. A recurring account calling about a re-service gets handled differently from a first-time caller.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div><h3>Existing customer</h3><p>With CRM Management and appropriate access, we review the relevant account history before discussing service eligibility or booking. A recurring account calling about a re-service gets handled differently from a first-time caller.</p></div></div>
       <div class="step"><div class="step-num">3</div><div><h3>The appointment</h3><p>Booked to an available slot inside the service area and time window you&#x27;ve defined, against the service type you&#x27;ve told us to use for that pest and property type.</p></div></div>
       <div class="step"><div class="step-num">4</div><div><h3>Notes and flags</h3><p>Pest type, urgency, access details, pets on site, gate codes — anything the tech needs before they knock, written into the appointment note in the format your team already reads.</p></div></div>
       <div class="step"><div class="step-num">5</div><div><h3>Escalation</h3><p>Anything outside your booking rules — a commercial account, a termite or WDO inquiry, a complaint, a service area edge case — goes to the person you name, by the method you name, under your escalation instructions.</p></div></div>
@@ -388,7 +388,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="checklist">
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>We book against the slots you make available rather than filling the first open gap. You decide how much of the calendar we can touch.</p></div>
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Subscription and recurring service accounts are handled differently from one-time jobs. We follow your rule on when to offer a plan and when not to.</p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>With CRM Management, lead source is captured on every new customer record so your marketing reporting stays honest.</p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>With CRM Management, we record the lead-source information available under your agreed mapping. If the source is unknown, we use your approved unknown/not-provided value rather than guessing.</p></div>
       <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>If your office uses custom fields for anything a tech needs, tell us at onboarding and they become part of the call script.</p></div>
     </div>
   </div>
@@ -402,7 +402,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <p class="lede">Illustrative scenarios &mdash; your own booking and escalation rules decide the actual response.</p>
     </div>
     <div class="grid grid-3">
-      <div class="card"><h3>“My quarterly is due but I&#x27;ve got ants now”</h3><p>A recurring subscription customer with a live problem between services. The wrong move is to book a new one-time job and bill them for it. We read the subscription, check whether it falls under your re-service policy, and book it the way you&#x27;ve told us to — or escalate if the account looks unusual.</p></div>
+      <div class="card"><h3>“My quarterly is due but I&#x27;ve got ants now”</h3><p>The scenario in the example call above: a plan customer with a live problem between services. We check it against your re-service policy and book it the way you&#x27;ve told us to, or escalate if the account looks unusual, rather than opening a new one-time job.</p></div>
       <div class="card"><h3>“How much for a house my size?”</h3><p>The caller wants a number before they&#x27;ll commit. We quote from your published range where the property and pest fall inside it, and escalate the moment it doesn&#x27;t — square footage outliers, outbuildings, acreage, anything with a crawl space you price differently.</p></div>
       <div class="card"><h3>“I&#x27;m just outside your area, right?”</h3><p>Service-area edges are where a booking goes wrong. We check the address against your defined areas before offering a time, and hand borderline addresses to you rather than guessing.</p></div>
     </div>
@@ -485,20 +485,31 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       </details>
       <details>
         <summary>Can you book onto specific routes, or only into open slots?</summary>
-        <div class="a"><p>Whatever you decide at onboarding. You can give us the full calendar, or defined windows per service area with anything that doesn't fit escalated to you. Both work. Booking still depends on a suitable slot being available.</p></div>
+        <div class="a"><p>We review the service-area and booking-window rules you want us to use and confirm which workflow we can support with the access available. Anything that doesn't fit those rules is escalated to you, and booking still depends on a suitable slot being available.</p></div>
       </details>
       <details>
         <summary>What if we use PestRoutes rather than FieldRoutes?</summary>
-        <div class="a"><p>Same thing. PestRoutes became FieldRoutes, and offices on either version of the interface are handled the same way. Tell us which one you see when you log in and we train to that.</p></div>
+        <div class="a"><p>FieldRoutes is the name adopted by the former PestRoutes business. Tell us which product and interface your office uses so we can confirm access and the booking workflow before service starts.</p></div>
       </details>
       <details>
         <summary>What won&rsquo;t your representatives do without instructions?</summary>
-        <div class="a"><p>By default they don&rsquo;t take payment, quote account balances or process cancellations &mdash; those are captured and escalated under your instructions. They also don&rsquo;t answer a pricing or scope question that falls outside the rules you set. Where you have explicitly told us to handle something, we follow that instead.</p></div>
+        <div class="a"><p>Billing questions, payment requests and cancellation requests are recorded and escalated under your instructions. Any additional account action must be specifically agreed and supported before service starts. Representatives also don&rsquo;t answer a pricing or scope question that falls outside the rules you set.</p></div>
       </details>
     </div>
   </div>
 </section>
 
+<section class="section section--tight">
+  <div class="container container-narrow">
+    <h2 style="font-size:22px;">Related reading</h2>
+    <div class="checklist" style="margin-top:16px;">
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/services">How our pest control call handling works, end to end</a></p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/pricing">Pricing, usage and optional add-ons</a></p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/pest-control-call-script-intake-form">Pest control call script and customer intake form (free template)</a></p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/faq#booking">How booking works: the FAQ answer</a></p></div>
+    </div>
+  </div>
+</section>
 <section class="section section--alt">
   <div class="container">
     <div class="cta-band">
@@ -509,20 +520,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Book a Free Discovery Call</a>
         <a href="/contact" class="btn btn-ghost">Contact us</a>
       </div>
-    </div>
-  </div>
-</section>
-<section class="section section--tight">
-  <div class="container container-narrow">
-    <h2 style="font-size:22px;">Related reading</h2>
-    <div class="checklist" style="margin-top:16px;">
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/services">How our pest control call handling works, end to end</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/integrations/">Answering service by CRM &mdash; all six systems</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/pest-control-answering-service-cost">How much does a pest control answering service cost in 2026?</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/ai-vs-human-answering-service-pest-control">AI vs. human answering service for pest control</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/after-hours-pest-control-call-handling">Building an after-hours call and escalation plan</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/pest-control-call-script-intake-form">Pest control call script and customer intake form (free template)</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/faq">Everything pest control owners ask before getting started</a></p></div>
     </div>
   </div>
 </section>
@@ -598,6 +595,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     </div>
   </div>
 </footer>
-<script src="/js/main.js?v=20261013d"></script>
+<script src="/js/main.js?v=20261014a"></script>
 </body>
 </html>
