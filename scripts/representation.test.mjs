@@ -99,6 +99,21 @@ const ALLOWED_IMAGES = {
   'home-hero-desktop.jpg': 'photograph (opened 2026-10-14): a bald man in sunglasses, green work shirt and long black glove, white backpack sprayer, walking along a cream house wall spraying low shrubs; red shutters, a window, a lawn. No logo, vehicle, plate or text',
   'home-rules-desktop.jpg': 'photograph (opened 2026-10-14): a white-haired man in glasses, white polo and khaki trousers crouching on mulch beside an open crawl-space hatch in grey shingle siding, the white hatch door lying open. The small chest logo on the polo was painted out; no text remains',
 
+  /* Round 17 homepage photographs. Sources in assets/photos/MANIFEST.md.
+     The two headset photographs are FLAGGED on purpose. This file's rule is
+     that a person who could be read as Callvix staff does not go on the site,
+     and a woman in a headset beside "answered in your company's name" will be
+     read that way. They are here because the Round 17 brief asked for the
+     human service to be visible, and the page labels them in visible text:
+     "Illustrative stock photos and example call. Not Callvix staff or
+     customers." Whether that label is enough is Chris's decision, so the
+     entries stay flagged until he makes it. */
+  'home-handler-desktop.jpg': 'FLAGGED (opened 2026-10-14): stock photograph, a woman with shoulder-length brown hair, white over-ear headphones and a grey-green blazer, smiling down at a laptop on a wooden desk; plant, shelves. No logo or text. Reads as a call handler; labelled on the page as not Callvix staff',
+  'home-handoff.jpg': 'FLAGGED (opened 2026-10-14): the same woman, same shoot, looking down at the laptop, mug and notebook on the desk. No logo or text. Same label applies',
+  'home-office-tile.jpg': 'photograph (opened 2026-10-14): a bearded man in glasses holding a desk-phone handset, seen between two out-of-focus monitors, window blinds behind. Reads as a client office, not a call centre. No logo or text',
+  'home-tech-tile.jpg': 'photograph (opened 2026-10-14): 4:3 crop of the technician photograph — bald man, green work shirt, backpack sprayer, house wall with red shutters. No logo or text',
+  'home-field-close.jpg': 'photograph (opened 2026-10-14): close crop of the same photograph — gloved arm, spray wand and hose over shrubs, legs and boots, no face. No logo or text',
+
   /* Blog card thumbnails, 900x506. These are SEPARATE FILES from the og images
      below, which is how a stock call-centre photograph survived a round of
      removals: the branded cover existing for an article did not mean the index

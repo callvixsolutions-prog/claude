@@ -38,7 +38,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"></noscript>
 <link rel="stylesheet" href="/css/style.css?v=5b7efe6ddc">
-<link rel="stylesheet" href="/css/home.css?v=ff1ea346e9">
+<link rel="stylesheet" href="/css/home.css?v=b47f2ad0f0">
 
 <script type="application/ld+json">
 {
@@ -305,8 +305,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   </div>
 
 <main id="main" class="home-main">
-<!-- 1 — HERO. Cream. Copy and one field photo; no transcript here. -->
-<section class="hero h15-hero">
+<!-- 1 — HERO. Cream. The person answering, the technician still working, and the outcome. -->
+<section class="hero h15-hero h17-hero">
   <div class="container">
     <div class="h15-hero-grid">
       <div class="h15-hero-copy">
@@ -317,102 +317,167 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <div class="h15-hero-cta"><a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary" data-cta-location="hero_primary">Book a free discovery call</a><a href="#pricing" class="h15-textlink" data-cta-location="hero_secondary">See pricing</a></div>
         <p class="h15-hero-note">20 minutes, no obligation.</p>
       </div>
-      <figure class="h15-photo">
-        <picture>
-          <source media="(max-width: 599px)" type="image/avif" srcset="/assets/photos/home-hero-mobile.avif">
-          <source media="(max-width: 599px)" type="image/webp" srcset="/assets/photos/home-hero-mobile.webp">
-          <source type="image/avif" srcset="/assets/photos/home-hero-desktop.avif">
-          <source type="image/webp" srcset="/assets/photos/home-hero-desktop.webp">
-          <img src="/assets/photos/home-hero-desktop.jpg" alt="Pest control technician with a backpack sprayer treating the shrubs along the outside wall of a house" width="1360" height="850" fetchpriority="high" decoding="async">
-        </picture>
-        <figcaption>You handle the work. We handle the call.</figcaption>
-      </figure>
+      <div class="h17-collage">
+        <figure class="h17-tile h17-tile--answer">
+          <picture><source media="(max-width: 599px)" type="image/avif" srcset="/assets/photos/home-handler-mobile.avif"><source media="(max-width: 599px)" type="image/webp" srcset="/assets/photos/home-handler-mobile.webp"><source type="image/avif" srcset="/assets/photos/home-handler-desktop.avif"><source type="image/webp" srcset="/assets/photos/home-handler-desktop.webp"><img src="/assets/photos/home-handler-desktop.jpg" alt="Woman wearing a headset at a desk, smiling as she types on a laptop" width="800" height="1000" fetchpriority="high" decoding="async"></picture>
+          <figcaption class="h17-say"><span class="h17-say-who"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg> Answered in your company&rsquo;s name</span>&ldquo;Good morning, Example Pest Control. How can I help?&rdquo;</figcaption>
+        </figure>
+        <figure class="h17-tile h17-tile--field">
+          <picture><source type="image/avif" srcset="/assets/photos/home-tech-tile.avif"><source type="image/webp" srcset="/assets/photos/home-tech-tile.webp"><img src="/assets/photos/home-tech-tile.jpg" alt="Pest control technician with a backpack sprayer treating the shrubs along the outside wall of a house" width="640" height="480" decoding="async"></picture>
+          <figcaption>Your technician stays on the job</figcaption>
+        </figure>
+        <p class="h17-booked"><span class="h17-booked-ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>Job booked</strong>Tomorrow, 10am&ndash;12pm &middot; sent to your office</span></p>
+        <p class="h17-credit">Illustrative stock photos and example call. Not Callvix staff or customers.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- 2 — ONE CALL. White. The only transcript and the only handoff sheet on the page. -->
-<section class="section section--alt h15-call">
+<!-- 2 — WHO AND WHEN. White. The three moments the service is for. -->
+<section class="section section--alt h17-when">
   <div class="container">
-    <div class="h15-call-head">
+    <div class="h17-head">
+      <div class="eyebrow">Who it&rsquo;s for</div>
+      <h2>For the calls your team can&rsquo;t get to</h2>
+      <p>Callvix works only with pest control companies. You choose which calls come to us, and we answer them the way your own office would. The <a href="/services">service overview</a> has the full scope.</p>
+    </div>
+    <div class="h17-moments">
+      <article class="h17-moment">
+        <picture><source type="image/avif" srcset="/assets/photos/home-field-close.avif"><source type="image/webp" srcset="/assets/photos/home-field-close.webp"><img src="/assets/photos/home-field-close.jpg" alt="Gloved hand holding a spray wand over the shrubs beside a house wall" width="640" height="480" loading="lazy" decoding="async"></picture>
+        <h3>Technicians on a job</h3>
+        <p>Mid-treatment or driving between stops, nobody can pick up. The call is answered in your name and the job booked by your rules.</p>
+      </article>
+      <article class="h17-moment">
+        <picture><source type="image/avif" srcset="/assets/photos/home-office-tile.avif"><source type="image/webp" srcset="/assets/photos/home-office-tile.webp"><img src="/assets/photos/home-office-tile.jpg" alt="Man in glasses on a desk phone behind two computer monitors" width="640" height="480" loading="lazy" decoding="async"></picture>
+        <h3>An office at capacity</h3>
+        <p>Forward only the overflow: the calls that stack up while your office is already on the line. You keep answering the rest.</p>
+      </article>
+      <article class="h17-moment">
+        <div class="h17-clock" aria-hidden="true"><span class="h17-clock-day">9am&ndash;6pm<small>Mon&ndash;Fri, included</small></span><span class="h17-clock-add">Evenings<small>add-on</small></span><span class="h17-clock-add">Sat &amp; Sun<small>add-on</small></span></div>
+        <h3>Evenings and weekends, if you add them</h3>
+        <p>Base coverage is Monday to Friday, 9am&ndash;6pm your local time. Evening and weekend windows are optional add-ons, agreed at setup.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 3 — WHY IT MATTERS. Cream, with a photographic navy inset. -->
+<section class="section h17-cost">
+  <div class="container">
+    <div class="h17-inset">
+      <figure class="h17-inset-photo"><picture><source media="(max-width: 1023px)" type="image/avif" srcset="/assets/photos/home-rules-mobile.avif"><source media="(max-width: 1023px)" type="image/webp" srcset="/assets/photos/home-rules-mobile.webp"><source type="image/avif" srcset="/assets/photos/home-rules-desktop.avif"><source type="image/webp" srcset="/assets/photos/home-rules-desktop.webp"><img src="/assets/photos/home-rules-desktop.jpg" alt="Man crouching beside the open crawl-space hatch in the side wall of a house" width="720" height="900" loading="lazy" decoding="async"></picture></figure>
+      <div class="h17-inset-copy">
+        <div class="eyebrow">The cost of a ringing phone</div>
+        <h2>In pest control, a missed call can mean a missed booking</h2>
+        <p>Pest problems feel urgent. A wasp nest by the front door, mice in the walls, ants across the counter &mdash; the caller wants it dealt with today, not after a callback. When nobody answers, a caller can simply ring the next company instead of waiting or leaving a voicemail.</p>
+        <p>You know the pattern. You are mid-treatment, driving between stops, or the office is already stretched, and the phone just rings. Nothing about that is a failure of effort; it is what happens when the people who do the work are also the people expected to answer.</p>
+        <p class="h17-inset-more"><a href="/blog/missed-calls-cost-pest-control">What could missed calls be worth to you? Run the numbers &rarr;</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 — ONE CALL. White. The only transcript on the page: three exchanges, three decisions. -->
+<section class="section section--alt h17-call">
+  <div class="container">
+    <div class="h17-head h17-head--center">
+      <div class="eyebrow">An example call</div>
       <h2>See what happens to one call</h2>
       <p>One illustrative call, start to finish. Our representatives only handle pest control calls, so they learn the language callers use &mdash; ants vs. carpenter ants, one-time vs. quarterly, &ldquo;is it safe for my dog?&rdquo; &mdash; before they answer in your name.</p>
     </div>
-    <div class="h15-call-grid">
-      <ol class="h15-steps">
-        <li class="h15-step">
-          <div class="h15-turns">
-            <p class="h15-turn"><b>Caller</b>&ldquo;There are wasps building a nest right by our front door. Can someone come out?&rdquo;</p>
-          </div>
-          <p class="h15-note"><strong>Details captured</strong>Pest, location and urgency.</p>
-        </li>
-        <li class="h15-step">
-          <div class="h15-turns">
-            <p class="h15-turn h15-turn--us"><b>Callvix</b>&ldquo;I can help with that. What&rsquo;s the service address? I&rsquo;ll check it&rsquo;s inside your coverage area.&rdquo;</p>
-            <p class="h15-turn"><b>Caller</b>&ldquo;It&rsquo;s 14 Oak Lane.&rdquo;</p>
-          </div>
-          <p class="h15-note"><strong>Service area checked</strong>Booked only if the address is in your area.</p>
-        </li>
-        <li class="h15-step">
-          <div class="h15-turns">
-            <p class="h15-turn h15-turn--us"><b>Callvix</b>&ldquo;That&rsquo;s covered. There&rsquo;s a slot tomorrow between 10am and 12pm &mdash; does that work?&rdquo;</p>
-            <p class="h15-turn"><b>Caller</b>&ldquo;Yes, that&rsquo;s fine.&rdquo;</p>
-          </div>
-          <p class="h15-note"><strong>Booking rules applied</strong>Only the slots you allow.</p>
-        </li>
-      </ol>
-      <div class="h15-sheet">
-        <p class="h15-sheet-title">Job booked &mdash; sent to your office</p>
-        <dl>
-          <div class="h15-sheet-row"><dt>Issue</dt><dd>Wasp nest &mdash; front door eave</dd></div>
-          <div class="h15-sheet-row"><dt>Urgency</dt><dd>Urgent &mdash; by the door</dd></div>
-          <div class="h15-sheet-row"><dt>Address</dt><dd>14 Oak Lane &mdash; in your service area</dd></div>
-          <div class="h15-sheet-row"><dt>Slot</dt><dd>Tomorrow, 10am&ndash;12pm</dd></div>
-          <div class="h15-sheet-row"><dt>Access</dt><dd>Side gate, caller will be home</dd></div>
-          <div class="h15-sheet-row"><dt>Pets</dt><dd>Dog in the rear yard</dd></div>
-        </dl>
-      </div>
-    </div>
-    <p class="h15-caption">Illustrative example &mdash; not a recording, a real customer record or a performance claim.</p>
-    <p class="h15-after">How call details reach you is agreed during setup. Direct entry into your CRM is the optional CRM Management add-on ($99/month).</p>
+    <ol class="h17-track">
+      <li class="h17-stage">
+        <div class="h17-talk">
+          <p class="h17-bubble h17-bubble--them"><b>Caller</b>&ldquo;There are wasps building a nest right by our front door. Can someone come out?&rdquo;</p>
+        </div>
+        <p class="h17-decision"><span class="h17-decision-ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>Details captured</strong>Pest, location and urgency.</span></p>
+      </li>
+      <li class="h17-stage">
+        <div class="h17-talk">
+          <p class="h17-bubble h17-bubble--us"><b>Callvix</b>&ldquo;I can help with that. What&rsquo;s the service address? I&rsquo;ll check it&rsquo;s inside your coverage area.&rdquo;</p>
+          <p class="h17-bubble h17-bubble--them"><b>Caller</b>&ldquo;It&rsquo;s 14 Oak Lane.&rdquo;</p>
+        </div>
+        <p class="h17-decision"><span class="h17-decision-ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>Service area checked</strong>Booked only if the address is in your area.</span></p>
+      </li>
+      <li class="h17-stage">
+        <div class="h17-talk">
+          <p class="h17-bubble h17-bubble--us"><b>Callvix</b>&ldquo;That&rsquo;s covered. There&rsquo;s a slot tomorrow between 10am and 12pm &mdash; does that work?&rdquo;</p>
+          <p class="h17-bubble h17-bubble--them"><b>Caller</b>&ldquo;Yes, that&rsquo;s fine.&rdquo;</p>
+        </div>
+        <p class="h17-decision"><span class="h17-decision-ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>Booking rules applied</strong>Only the slots you allow.</span></p>
+      </li>
+    </ol>
+    <p class="h15-caption h17-center">Illustrative example &mdash; not a recording, a real customer record or a performance claim.</p>
   </div>
 </section>
 
-<!-- 3 — RULES. Cream. The second photo, the three rules and where other calls go. -->
-<section class="section h15-rules">
+<!-- 5 — HANDOFF. Cream. What reaches the office after that call. -->
+<section class="section h17-handoff">
   <div class="container">
-    <div class="h15-rules-grid">
-      <figure class="h15-rules-photo">
-        <picture>
-          <source media="(max-width: 1023px)" type="image/avif" srcset="/assets/photos/home-rules-mobile.avif">
-          <source media="(max-width: 1023px)" type="image/webp" srcset="/assets/photos/home-rules-mobile.webp">
-          <source type="image/avif" srcset="/assets/photos/home-rules-desktop.avif">
-          <source type="image/webp" srcset="/assets/photos/home-rules-desktop.webp">
-          <img src="/assets/photos/home-rules-desktop.jpg" alt="Man crouching beside the open crawl-space hatch in the side wall of a house" width="720" height="900" loading="lazy" decoding="async">
-        </picture>
-      </figure>
-      <div class="h15-rules-copy">
-        <h2>Your rules stay in charge</h2>
+    <div class="h17-handoff-grid">
+      <div class="h17-handoff-art">
+        <figure class="h17-handoff-photo"><picture><source type="image/avif" srcset="/assets/photos/home-handoff.avif"><source type="image/webp" srcset="/assets/photos/home-handoff.webp"><img src="/assets/photos/home-handoff.jpg" alt="Woman wearing a headset looking down at a laptop on a desk" width="800" height="640" loading="lazy" decoding="async"></picture></figure>
+        <div class="h15-sheet">
+          <p class="h15-sheet-title">Job booked &mdash; sent to your office</p>
+          <dl>
+            <div class="h15-sheet-row"><dt>Issue</dt><dd>Wasp nest &mdash; front door eave</dd></div>
+            <div class="h15-sheet-row"><dt>Urgency</dt><dd>Urgent &mdash; by the door</dd></div>
+            <div class="h15-sheet-row"><dt>Address</dt><dd>14 Oak Lane &mdash; in your service area</dd></div>
+            <div class="h15-sheet-row"><dt>Slot</dt><dd>Tomorrow, 10am&ndash;12pm</dd></div>
+            <div class="h15-sheet-row"><dt>Access</dt><dd>Side gate, caller will be home</dd></div>
+            <div class="h15-sheet-row"><dt>Pets</dt><dd>Dog in the rear yard</dd></div>
+          </dl>
+        </div>
+      </div>
+      <div class="h17-handoff-copy">
+        <div class="eyebrow">After the call</div>
+        <h2>A clear handoff after each call we take</h2>
+        <p>You receive the booking or the next step, the caller&rsquo;s details and what your technician needs to know before arriving &mdash; shared the way we agree during setup.</p>
+        <ul class="h17-ticks">
+          <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>The booking, or the next step if it wasn&rsquo;t one</span></li>
+          <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Who called, the address and the pest issue</span></li>
+          <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Access, pets and anything else the technician should know</span></li>
+        </ul>
+        <p class="h17-handoff-crm">With the <a href="#pricing">CRM Management add-on</a> ($99/month), we enter them directly in your scheduling system, using access you grant and can revoke.</p>
+        <p class="h15-caption">Illustrative example of the details we capture &mdash; not a real customer record.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 — HOW IT WORKS. White. The four steps and the rules agreed before the first call. -->
+<section class="section section--alt h17-process">
+  <div class="container">
+    <div class="h17-head h17-head--center">
+      <div class="eyebrow">How it works</div>
+      <h2>From first call to booked job</h2>
+      <p>Every call runs in the same order, and every decision in it follows a rule you set. <a href="/services">See how setup and test calls work &rarr;</a></p>
+    </div>
+    <figure class="crmflow crmflow--steps" role="img" aria-label="How a call becomes a booked job: the phone is answered in your company name, the address is checked against your service area, the pest issue is qualified, and the job is either booked into a slot you have opened or escalated to you by the rule you set."><div class="crmflow-node"><div class="crmflow-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.2 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg></div><div class="crmflow-t">Answered</div><div class="crmflow-s">In your company name</div></div><div class="crmflow-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><div class="crmflow-node"><div class="crmflow-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></div><div class="crmflow-t">Service area</div><div class="crmflow-s">Address checked first</div></div><div class="crmflow-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><div class="crmflow-node"><div class="crmflow-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><div class="crmflow-t">Qualified</div><div class="crmflow-s">Pest, urgency, access</div></div><div class="crmflow-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div><div class="crmflow-node"><div class="crmflow-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div class="crmflow-t">Booked or escalated</div><div class="crmflow-s">By your rules</div></div></figure>
+    <div class="h17-rules">
+      <div>
+        <h3>Your rules stay in charge</h3>
         <p class="h15-rules-intro">Agreed with you before we answer a single call.</p>
         <ol class="h15-rules-list">
           <li><strong>Your service area</strong><span>ZIPs or a radius, checked before anything is booked.</span></li>
           <li><strong>What we may quote</strong><span>The services and prices you allow us to discuss. Everything else goes to you.</span></li>
           <li><strong>Which slots we may offer</strong><span>How far ahead, which windows, and what we never book.</span></li>
         </ol>
+      </div>
+      <div class="h17-routes-box">
         <h3>When a call isn&rsquo;t a booking</h3>
         <dl class="h15-routes">
           <div><dt>Urgent</dt><dd><span aria-hidden="true">&rarr;</span> Your named contact, by the method you choose</dd></div>
           <div><dt>Outside your area</dt><dd><span aria-hidden="true">&rarr;</span> Logged and returned to you, never booked</dd></div>
           <div><dt>Warranty or a judgment call</dt><dd><span aria-hidden="true">&rarr;</span> Escalated. We don&rsquo;t promise on your behalf</dd></div>
         </dl>
-        <p class="h15-rules-more"><a href="/blog/missed-calls-cost-pest-control">What could missed calls be worth to you? Run the numbers &rarr;</a></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 4 — PRICING. A navy panel on white. One plan, the week it covers, three add-ons. -->
-<section class="section section--alt h15-pricing" id="pricing">
+<!-- 7 — PRICING AND COVERAGE. Cream. The navy plan panel, then the week it covers. -->
+<section class="section h15-pricing" id="pricing">
   <div class="container">
     <div class="h15-panel">
       <div class="h15-panel-main">
@@ -424,37 +489,56 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <div class="h15-panel-cta"><a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary" data-cta-location="pricing">Book a free discovery call</a><a href="/pricing" class="h15-textlink">See full pricing &rarr;</a></div>
       </div>
       <div class="h15-panel-side">
+        <p class="h17-panel-label">Included in the base</p>
         <ul class="h15-week" aria-label="Days included in the base plan"><li>Mon</li><li>Tue</li><li>Wed</li><li>Thu</li><li>Fri</li></ul>
         <p class="h15-week-label">9am&ndash;6pm, your local time &mdash; included</p>
+        <p class="h17-panel-label h17-panel-label--gap">Optional add-ons</p>
         <ul class="h15-addons">
-          <li><span class="h15-addon-name">Evenings</span><span class="h15-addon-price">$199/month</span></li>
-          <li><span class="h15-addon-name">Weekends</span><span class="h15-addon-price">$149/month</span></li>
-          <li><span class="h15-addon-name">CRM Management <small>Direct entry into your system</small></span><span class="h15-addon-price">$99/month</span></li>
+          <li><span class="h15-addon-name">After-Hours Coverage <small>Live call handling in the evening, after your standard business hours close.</small></span><span class="h15-addon-price">$199/month</span></li>
+          <li><span class="h15-addon-name">Weekend Coverage <small>Saturday and Sunday live answering on your weekend availability.</small></span><span class="h15-addon-price">$149/month</span></li>
+          <li><span class="h15-addon-name">CRM Management <small>Call notes and booking details entered directly into your CRM or system after every call.</small></span><span class="h15-addon-price">$99/month</span></li>
         </ul>
         <p class="h15-panel-note">Evening and weekend windows are agreed at setup. Overnight coverage is not offered.</p>
       </div>
     </div>
+    <div class="h17-week">
+      <div class="h17-week-copy">
+        <h3>A week of coverage</h3>
+        <p>The $399 base covers live answering and booking Monday to Friday, 9am&ndash;6pm your local time. Flat per call, not per minute. Outside the windows you choose, calls are not answered live.</p>
+      </div>
+      <figure class="coverage" role="img" aria-label="A week of coverage. The $399 base covers Monday to Friday, 9am to 6pm in your local time. Evening coverage on weekdays is the After-Hours add-on at $199 a month. Saturday and Sunday is the Weekend add-on at $149 a month. Outside those, calls are not answered live."><div class="coverage-grid"><div></div><div class="cov-day"><span class="cov-day-l">Mon</span><span class="cov-day-s" aria-hidden="true">M</span></div><div class="cov-day"><span class="cov-day-l">Tue</span><span class="cov-day-s" aria-hidden="true">T</span></div><div class="cov-day"><span class="cov-day-l">Wed</span><span class="cov-day-s" aria-hidden="true">W</span></div><div class="cov-day"><span class="cov-day-l">Thu</span><span class="cov-day-s" aria-hidden="true">T</span></div><div class="cov-day"><span class="cov-day-l">Fri</span><span class="cov-day-s" aria-hidden="true">F</span></div><div class="cov-day"><span class="cov-day-l">Sat</span><span class="cov-day-s" aria-hidden="true">S</span></div><div class="cov-day"><span class="cov-day-l">Sun</span><span class="cov-day-s" aria-hidden="true">S</span></div><div class="cov-row-label"><b>9am&ndash;6pm</b><em>included</em></div><div class="cov-cell cov-cell--on"></div><div class="cov-cell cov-cell--on"></div><div class="cov-cell cov-cell--on"></div><div class="cov-cell cov-cell--on"></div><div class="cov-cell cov-cell--on"></div><div class="cov-cell"></div><div class="cov-cell"></div><div class="cov-row-label"><b>Evenings</b><em>+$199/mo</em></div><div class="cov-cell cov-cell--add"></div><div class="cov-cell cov-cell--add"></div><div class="cov-cell cov-cell--add"></div><div class="cov-cell cov-cell--add"></div><div class="cov-cell cov-cell--add"></div><div class="cov-cell"></div><div class="cov-cell"></div><div class="cov-row-label"><b>Weekend</b><em>+$149/mo</em></div><div class="cov-cell"></div><div class="cov-cell"></div><div class="cov-cell"></div><div class="cov-cell"></div><div class="cov-cell"></div><div class="cov-cell cov-cell--add"></div><div class="cov-cell cov-cell--add"></div></div><figcaption class="coverage-key"><span><span class="cov-swatch cov-swatch--on"></span><b>Included</b> in the $399 base</span><span><span class="cov-swatch cov-swatch--add"></span><b>Add-on</b>, priced separately</span><span><span class="cov-swatch cov-swatch--off"></span>Not answered live</span></figcaption></figure>
+    </div>
   </div>
 </section>
 
-<!-- 5 — WORKS WITH. A compact white band: one row of links, no logos. -->
-<section class="section section--alt h15-tools">
+<!-- 8 — WORKS WITH. Navy. How access works, then each system with what we do in it. -->
+<section class="section section--navy h17-crm">
   <div class="container">
-    <h2>Works with the tools your office already runs on</h2>
-    <p>With the <a href="#pricing">CRM Management add-on</a>, our representatives work inside your account using access you grant and can revoke. It&rsquo;s manual work by a person &mdash; no native integration or automatic sync.</p>
-    <ul class="h15-toollist">
-      <li><a href="/integrations/fieldroutes" data-cta-location="works_with">FieldRoutes</a></li>
-      <li><a href="/integrations/servicetitan">ServiceTitan</a></li>
-      <li><a href="/integrations/gorilladesk">GorillaDesk</a></li>
-      <li><a href="/integrations/briostack">Briostack</a></li>
-      <li><a href="/integrations/pestpac">PestPac</a></li>
-      <li><a href="/integrations/housecall-pro">Housecall Pro</a></li>
+    <div class="h17-crm-top">
+      <div>
+        <div class="eyebrow">Fits how you already work</div>
+        <h2>Works with the tools your office already runs on</h2>
+        <p>With the <a href="#pricing">CRM Management add-on</a>, our representatives work inside <a href="/integrations/">the system your office already runs</a>, using access you grant and can revoke. It&rsquo;s manual work by a person &mdash; no native integration or automatic sync.</p>
+      </div>
+      <ol class="h17-access">
+        <li><b>You create a login</b><span>In your own account, with the permissions you choose.</span></li>
+        <li><b>We work inside it</b><span>A person enters call notes and booking details after each call.</span></li>
+        <li><b>You stay in control</b><span>Change or revoke that access whenever you like.</span></li>
+      </ol>
+    </div>
+    <ul class="syslist">
+      <li><a href="/integrations/fieldroutes" data-cta-location="works_with" aria-label="FieldRoutes &mdash; how Callvix works in FieldRoutes"><b>FieldRoutes</b><span>Routing, scheduling and customer history, with campaign source captured on new customers.</span></a></li>
+      <li><a href="/integrations/servicetitan" aria-label="ServiceTitan &mdash; how Callvix works in ServiceTitan"><b>ServiceTitan</b><span>Booking against your boards, with membership and campaign attribution kept right.</span></a></li>
+      <li><a href="/integrations/gorilladesk" aria-label="GorillaDesk &mdash; how Callvix works in GorillaDesk"><b>GorillaDesk</b><span>A defined daily booking window for small teams, and escalation for everything else.</span></a></li>
+      <li><a href="/integrations/briostack" aria-label="Briostack &mdash; how Callvix works in Briostack"><b>Briostack</b><span>Accounts, routes and recurring schedules, read before anything is promised.</span></a></li>
+      <li><a href="/integrations/pestpac" aria-label="PestPac &mdash; how Callvix works in PestPac"><b>PestPac</b><span>Account history read for warranty and callback calls rather than guessed at.</span></a></li>
+      <li><a href="/integrations/housecall-pro" aria-label="Housecall Pro &mdash; how Callvix works in Housecall Pro"><b>Housecall Pro</b><span>Jobs and customers, with the permission level you grant and can revoke.</span></a></li>
+      <li><a href="/integrations/" aria-label="Your own system &mdash; how Callvix works in your own system"><b>Your own system</b><span>Tell us which system you use. We&rsquo;ll confirm the workflow and access requirements during setup.</span></a></li>
     </ul>
-    <p class="h15-tools-else">Something else? <a href="/integrations/">Tell us which system you use</a> and we&rsquo;ll confirm the workflow and access requirements during setup.</p>
   </div>
 </section>
 
-<!-- 6 — FAQ. Cream. -->
+<!-- 9 — FAQ. Cream. -->
 <section class="section">
   <div class="container">
     <div class="section-head section-head--center">
@@ -465,12 +549,13 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   <details><summary>Is Callvix a real human service or an AI bot?</summary><div class="a"><p>Real people. Trained representatives answer in your company&rsquo;s name. Callvix is not an AI service and does not use a voice bot.</p></div></details>
   <details><summary>Do you answer calls as our company?</summary><div class="a"><p>Yes. We answer in your business name, using the greeting agreed during setup.</p></div></details>
   <details><summary>What hours are covered?</summary><div class="a"><p>The $399 base covers Monday to Friday, 9am&ndash;6pm in your local time. Evenings and weekends are separately priced add-ons.</p></div></details>
+  <details><summary>Which CRM or scheduling systems do you work with?</summary><div class="a"><p>Our representatives work inside the system your office already runs, using a login you grant and can revoke. That is human work in your account &mdash; there is no native integration and no automatic data sync.</p></div></details>
 </div>
     <p class="faq-more"><a href="/faq" class="h15-textlink" data-cta-location="faq">More questions &rarr;</a></p>
   </div>
 </section>
 
-<!-- 7 — CLOSING CTA. A full-width navy band sitting directly on the footer. -->
+<!-- 10 — CLOSING CTA. A full-width navy band sitting directly on the footer. -->
 <section class="section section--navy cta-close">
   <div class="container">
     <div class="eyebrow">Talk to us</div>

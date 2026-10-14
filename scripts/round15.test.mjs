@@ -29,35 +29,44 @@ const text = textOf(main);
 const count = (hay, needle) => hay.split(needle).length - 1;
 
 test('the homepage shows one call and one handoff sheet', () => {
-  assert.equal(count(main, 'class="h15-steps"'), 1, 'exactly one transcript');
+  /* Round 17 restored the sections Round 15 merged away, each with its own job:
+     the call example carries the only transcript, the handoff section the only
+     sheet. The words of that call still appear once each. */
+  assert.equal(count(main, 'class="h17-track"'), 1, 'exactly one transcript');
   assert.equal(count(main, 'class="h15-sheet"'), 1, 'exactly one handoff sheet');
-  /* The lines that used to appear twice, once in the hero and once in the band. */
-  for (const once of ['There are wasps building a nest', '14 Oak Lane.”', 'Job booked', 'Dog in the rear yard']) {
+  for (const once of ['There are wasps building a nest', '14 Oak Lane.”', 'Dog in the rear yard', 'Wasp nest — front door eave']) {
     assert.equal(count(text, once), 1, `"${once}" should appear once, found ${count(text, once)}`);
   }
-  for (const gone of ['From first call to booked job', 'A clear handoff after each call we take',
-    'In pest control, a missed call can mean a missed booking', 'Which CRM or scheduling systems do you work with?']) {
-    assert.equal(count(text, gone), 0, `"${gone}" was merged away and must not return`);
+  /* Restored in Round 17 and not to be merged away again without a decision. */
+  for (const back of ['For the calls your team can’t get to', 'In pest control, a missed call can mean a missed booking', 'See what happens to one call',
+    'A clear handoff after each call we take', 'From first call to booked job', 'Your rules stay in charge', 'When a call isn’t a booking',
+    'A week of coverage', 'Works with the tools your office already runs on', 'Which CRM or scheduling systems do you work with?']) {
+    assert.equal(count(text, back), 1, `"${back}" should be on the homepage exactly once`);
   }
-  for (const cls of ['rec-bubble', 'jobnote', 'crmflow', 'coverage-grid', 'syslist']) {
+  for (const name of ['FieldRoutes', 'ServiceTitan', 'GorillaDesk', 'Briostack', 'PestPac', 'Housecall Pro']) assert.ok(text.includes(name));
+  for (const cls of ['rec-bubble', 'jobnote']) {
     assert.ok(!new RegExp(`class="[^"]*\\b${cls}\\b`).test(main), `old component .${cls} is back on the homepage`);
   }
+  assert.ok(text.includes('Illustrative stock photos and example call. Not Callvix staff or customers.'), 'the stock-photo label must stay beside the photographs');
+  assert.ok(count(main, 'href="/services"') >= 1, 'a body link to /services');
 });
 
 test('the facts search and AI tools read are plain HTML text on the homepage', () => {
-  const FACTS = ['Real people, not an AI voice bot', 'Our representatives only handle pest control calls',
+  const FACTS = ['Real people, not an AI voice bot', 'Callvix works only with pest control companies', 'Our representatives only handle pest control calls',
     '$399/month + $2.99 per inbound call', '$399 / month', '$2.99 / inbound call', '$0.99 per outbound follow-up, when used.',
-    'Mon–Fri, 9am–6pm your local time', '9am–6pm, your local time — included', 'Evenings $199/month', 'Weekends $149/month',
-    'CRM Management Direct entry into your system $99/month', 'Overnight coverage is not offered.',
+    'Mon–Fri, 9am–6pm your local time', '9am–6pm, your local time — included', 'Overnight coverage is not offered.',
     'Month-to-month, with no long-term contract.', 'using access you grant and can revoke',
     'It’s manual work by a person — no native integration or automatic sync.'];
   for (const fact of FACTS) assert.ok(text.includes(fact), `missing from visible text: "${fact}"`);
+  for (const [name, price] of [['After-Hours Coverage', '$199/month'], ['Weekend Coverage', '$149/month'], ['CRM Management', '$99/month']]) {
+    assert.ok(new RegExp(name + '[^$]{0,140}' + price.replace('$', '\\$')).test(text), `${name} must sit beside ${price}`);
+  }
   for (const banned of [/24\s*\/\s*7/, /guarantee/i, /U\.?S\.?-based/i, /integrates with/i, /syncs? (?:to|with)/i]) {
     assert.ok(!banned.test(text), `banned claim on the homepage: ${banned}`);
   }
   /* "overnight" and "native integration" are allowed only as denials. */
   assert.equal(count(text.toLowerCase(), 'overnight'), 1);
-  assert.equal(count(text.toLowerCase(), 'native integration'), 1);
+  for (const m of text.matchAll(/native integration/gi)) assert.match(text.slice(m.index - 12, m.index), /no $/i, 'native integration only ever denied');
 });
 
 test('each call-to-action location is on one control, the right one', () => {
@@ -91,20 +100,20 @@ test('the homepage stylesheet is current, homepage-only and scoped', () => {
   assert.ok(selectors.length > 80);
   const unscoped = selectors.filter((s) => !s.startsWith('.home-main '));
   assert.deepEqual(unscoped, [], 'selector not scoped to the homepage');
-  const SHARED_OK = new Set(['home-main', 'btn', 'eyebrow', 'lede', 'container']);
-  const foreign = [...new Set(selectors.flatMap((s) => [...s.matchAll(/\.([a-z][\w-]*)/g)].map((m) => m[1])))].filter((c) => !c.startsWith('h15-') && !SHARED_OK.has(c));
-  assert.deepEqual(foreign, [], 'home.css may only name h15- classes (and .btn/.eyebrow/.lede/.container inside an h15- block)');
+  const SHARED_OK = new Set(['home-main', 'btn', 'eyebrow', 'lede', 'container', 'crmflow', 'coverage', 'syslist']);
+  const foreign = [...new Set(selectors.flatMap((s) => [...s.matchAll(/\.([a-z][\w-]*)/g)].map((m) => m[1])))].filter((c) => !c.startsWith('h15-') && !c.startsWith('h17-') && !SHARED_OK.has(c));
+  assert.deepEqual(foreign, [], 'home.css may only name h15-/h17- classes (shared classes only inside one of those blocks)');
   for (const banned of [/gradient\(/, /@keyframes/, /animation\s*:/, /position\s*:\s*(?:sticky|fixed)/]) assert.ok(!banned.test(body), `not on the homepage: ${banned}`);
   assert.equal(count(body, 'box-shadow'), 1, 'one shadow, on the handoff sheet');
   assert.ok(/\.h15-sheet\s*\{[^}]*box-shadow/.test(body));
 });
 
 test('the homepage photographs are sized, described and within budget', () => {
-  const BUDGET_KB = { 'home-hero-desktop': 180, 'home-hero-mobile': 100, 'home-rules-desktop': 120, 'home-rules-mobile': 80 };
+  const BUDGET_KB = { 'home-handler-desktop': 150, 'home-handler-mobile': 90, 'home-tech-tile': 60, 'home-field-close': 60, 'home-office-tile': 60,
+    'home-handoff': 90, 'home-rules-desktop': 120, 'home-rules-mobile': 80 };
   const manifest = read('assets/photos/MANIFEST.md');
-  const referenced = [...new Set([...main.matchAll(/\/assets\/photos\/([\w.-]+)/g)].map((m) => m[1]))].sort();
-  const expected = Object.keys(BUDGET_KB).flatMap((n) => ['avif', 'webp'].map((e) => `${n}.${e}`)).concat(['home-hero-desktop.jpg', 'home-rules-desktop.jpg']).sort();
-  assert.deepEqual(referenced, expected);
+  const referenced = [...new Set([...main.matchAll(/\/assets\/photos\/([\w-]+)\.\w+/g)].map((m) => m[1]))].sort();
+  assert.deepEqual(referenced, Object.keys(BUDGET_KB).sort());
   for (const [name, kb] of Object.entries(BUDGET_KB)) {
     for (const ext of ['avif', 'webp', 'jpg']) {
       const rel = `assets/photos/${name}.${ext}`;
@@ -115,15 +124,15 @@ test('the homepage photographs are sized, described and within budget', () => {
     assert.ok(manifest.includes(name), `${name} is not in assets/photos/MANIFEST.md`);
   }
   const imgs = [...main.matchAll(/<img\b[^>]*>/g)].map((m) => m[0]);
-  assert.equal(imgs.length, 2);
+  assert.equal(imgs.length, 6);
   for (const tag of imgs) {
     assert.ok(/\bwidth="\d+"/.test(tag) && /\bheight="\d+"/.test(tag), 'explicit width and height');
     const alt = tag.match(/\balt="([^"]*)"/)[1];
     assert.ok(alt.length > 20, 'alt text describes the photo');
-    assert.ok(!/callvix|representative|our team|staff/i.test(alt), `alt text must not imply Callvix: "${alt}"`);
+    assert.ok(!/callvix|representative|our team|staff|agent/i.test(alt), `alt text must not imply Callvix: "${alt}"`);
   }
-  assert.ok(/fetchpriority="high"/.test(imgs[0]) && !/loading="lazy"/.test(imgs[0]), 'the hero loads eagerly, high priority');
-  assert.ok(/loading="lazy"/.test(imgs[1]), 'the second photo is lazy');
+  assert.ok(/fetchpriority="high"/.test(imgs[0]) && !/loading="lazy"/.test(imgs[0]), 'the hero photo loads eagerly, high priority');
+  assert.equal(imgs.filter((tag) => /loading="lazy"/.test(tag)).length, 4, 'everything below the hero is lazy');
 });
 
 test('the homepage structured data is byte-identical to before the rebuild', () => {
