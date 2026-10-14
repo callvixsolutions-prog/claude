@@ -61,7 +61,7 @@ test('the homepage shows one call and one handoff sheet', () => {
 test('the facts search and AI tools read are plain HTML text on the homepage', () => {
   const FACTS = ['Answered by people, not an AI voice bot', 'answers in your business name', 'Callvix works only with pest control companies', 'Our representatives only handle pest control calls',
     '$399/month + $2.99 per inbound call', '$399 / month', '$2.99 / inbound call', '$0.99 per outbound follow-up, when used.',
-    'Mon–Fri, 9am–6pm your local time', '9am–6pm, your local time — included', 'Overnight coverage is not offered.',
+    'Mon–Fri, 9am–6pm your company’s local time', '9am–6pm, your company’s local time — included', 'Overnight coverage is not offered.',
     'Month-to-month, with no long-term contract.', 'using access you grant and can revoke',
     'It’s manual work by a person — no native integration or automatic sync.'];
   for (const fact of FACTS) assert.ok(text.includes(fact), `missing from visible text: "${fact}"`);
