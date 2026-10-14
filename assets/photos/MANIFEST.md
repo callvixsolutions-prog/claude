@@ -38,15 +38,14 @@ The hero is an illustration drawn for this site as inline SVG in `index.html` (n
 asset, no licence to track). It shows a technician at a house, a small front desk and an appointment slip; no
 real person appears in it.
 
-Three photographs remain, each used once:
+Two photographs remain, each used once (the missed-calls band now shows a drawn phone screen, not a photograph):
 
 | Where | Files | Photograph |
 | --- | --- | --- |
 | "Technicians on a job" | `home-case-tech.*` (280×280) | Technician with backpack sprayer (the Round 15 hero photograph) |
 | "An office at capacity" | `home-case-office.*` (280×280) | Man on a desk phone |
-| Missed-calls band | `home-rules-desktop.*`, `home-rules-mobile.*` | Crawl-space hatch (Round 15) |
 
-`home-hero-desktop.*` and `home-hero-mobile.*` (Round 15) are no longer referenced. They stay in the folder
+`home-hero-desktop.*`, `home-hero-mobile.*`, `home-rules-desktop.*` and `home-rules-mobile.*` (Round 15) are no longer referenced. They stay in the folder
 because they are cached for a year under those names and an hour-old copy of the old page may still ask for them.
 The headset photographs tried in Round 17 were never published and have been removed.
 

@@ -23,17 +23,16 @@
 .svc-main .s18-glance dd strong { color: #fff; }
 .svc-main .s18-mini { list-style: none; counter-reset: s18m; margin: 18px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 6px; align-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 14px; color: #fff; }
 .svc-main .s18-mini li { counter-increment: s18m; display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px 7px 8px; border-radius: 999px; background: rgba(131, 214, 223, 0.14); border: 1px solid rgba(131, 214, 223, 0.4); }
-.svc-main .s18-mini li::before { content: counter(s18m); display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--teal-500); color: #04252a; font-size: 12.5px; }
+.svc-main .s18-mini li::before { content: counter(s18m); content: counter(s18m) / ""; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--teal-500); color: #04252a; font-size: 12.5px; }
 @media (min-width: 1024px) {
   .svc-main .s18-hero { padding: 48px 0 72px; }
   .svc-main .s18-hero-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 72px; }
 }
 
 /* ---------- 2. Scope ---------- */
-.svc-main .s18-scope { padding: 64px 0; }
+.svc-main .s18-scope { padding: 56px 0; }
 .svc-main .s18-scope-grid { margin-top: var(--space-lg); display: grid; gap: var(--space-base); align-items: start; }
-.svc-main .s18-included h3, .svc-main .s18-optional h3 { margin: 0 0 4px; font-size: 22px; }
-.svc-main .s18-included .svc-base-line { margin: 0 0 var(--space-sm); }
+.svc-main .s18-included h3, .svc-main .s18-optional h3 { margin: 0 0 12px; font-size: 22px; }
 .svc-main .s18-deflist { margin: 0; border-top: 2px solid var(--navy-900); }
 .svc-main .s18-deflist > div { padding: 14px 0; border-bottom: 1px solid var(--line-2); }
 .svc-main .s18-deflist dt { font-family: var(--font-heading); font-weight: 600; font-size: 17px; color: var(--navy-900); }
@@ -60,10 +59,10 @@
 }
 
 /* ---------- 3. Setup: four steps on a line ---------- */
-.svc-main .s18-setup { padding: 64px 0; }
+.svc-main .s18-setup { padding: 56px 0; }
 .svc-main .s18-steps { list-style: none; counter-reset: s18s; margin: var(--space-lg) 0 0; padding: 0; display: grid; gap: var(--space-md); }
 .svc-main .s18-steps li { counter-increment: s18s; position: relative; padding: 0 0 0 56px; }
-.svc-main .s18-steps li::before { content: counter(s18s); position: absolute; left: 0; top: 0; width: 40px; height: 40px; border-radius: 50%; background: var(--navy-900); color: #fff; font-family: var(--font-heading); font-weight: 700; font-size: 16px; line-height: 40px; text-align: center; }
+.svc-main .s18-steps li::before { content: counter(s18s); content: counter(s18s) / ""; position: absolute; left: 0; top: 0; width: 40px; height: 40px; border-radius: 50%; background: var(--navy-900); color: #fff; font-family: var(--font-heading); font-weight: 700; font-size: 16px; line-height: 40px; text-align: center; }
 .svc-main .s18-steps h3 { margin: 6px 0 6px; font-size: 18px; }
 .svc-main .s18-steps p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--ink-700); }
 @media (min-width: 1024px) {
@@ -75,10 +74,10 @@
 }
 
 /* ---------- 4. A call and its outcomes ---------- */
-.svc-main .s18-call { padding: 64px 0; }
+.svc-main .s18-call { padding: 56px 0; }
 .svc-main .s18-rail { list-style: none; counter-reset: s18r; margin: var(--space-base) 0 0; padding: 0; display: grid; gap: 0; border-top: 2px solid var(--navy-900); }
 .svc-main .s18-rail li { counter-increment: s18r; position: relative; padding: 12px 0 12px 34px; border-bottom: 1px solid var(--line-2); font-size: 14.5px; line-height: 1.45; color: var(--ink-700); }
-.svc-main .s18-rail li::before { content: counter(s18r); position: absolute; left: 0; top: 12px; font-family: var(--font-heading); font-weight: 700; font-size: 15px; color: var(--teal-600); }
+.svc-main .s18-rail li::before { content: counter(s18r); content: counter(s18r) / ""; position: absolute; left: 0; top: 12px; font-family: var(--font-heading); font-weight: 700; font-size: 15px; color: var(--teal-600); }
 .svc-main .s18-rail b { display: block; font-family: var(--font-heading); font-weight: 600; font-size: 15.5px; color: var(--navy-900); }
 .svc-main .s18-call-grid { margin-top: var(--space-lg); display: grid; gap: var(--space-lg); align-items: start; }
 .svc-main .s18-chat { padding: 20px; border-radius: 18px; background: var(--cream); border: 1px solid var(--line); }
@@ -111,7 +110,7 @@
 }
 
 /* ---------- 5. Handoff and CRM entry ---------- */
-.svc-main .s18-handoff { padding: 64px 0; }
+.svc-main .s18-handoff { padding: 56px 0; }
 .svc-main .s18-split { margin-top: var(--space-lg); display: grid; border-radius: 20px; overflow: hidden; border: 1px solid var(--line-2); background: var(--white); }
 .svc-main .s18-split h3 { margin: 0 0 var(--space-sm); font-size: 22px; }
 .svc-main .s18-split-main, .svc-main .s18-split-side { padding: 28px 24px; }
@@ -129,22 +128,31 @@
 }
 
 /* ---------- 6. Operating standards ---------- */
-.svc-main .s18-standards { padding: 64px 0; }
+.svc-main .s18-standards { padding: 56px 0; }
 .svc-main .s18-standards-grid { display: grid; gap: var(--space-base); align-items: start; }
 .svc-main .s18-standards-list { list-style: none; counter-reset: s18o; margin: 0; padding: 0; border-top: 2px solid var(--navy-900); }
 .svc-main .s18-standards-list li { counter-increment: s18o; position: relative; padding: 14px 0 14px 48px; border-bottom: 1px solid var(--line-2); }
-.svc-main .s18-standards-list li::before { content: counter(s18o, decimal-leading-zero); position: absolute; left: 0; top: 16px; font-family: var(--font-heading); font-weight: 700; font-size: 15px; color: var(--teal-600); }
+.svc-main .s18-standards-list li::before { content: counter(s18o, decimal-leading-zero); content: counter(s18o, decimal-leading-zero) / ""; position: absolute; left: 0; top: 16px; font-family: var(--font-heading); font-weight: 700; font-size: 15px; color: var(--teal-600); }
 .svc-main .s18-standards-list h3 { margin: 0 0 3px; font-size: 17.5px; }
 .svc-main .s18-standards-list p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--ink-700); }
-.svc-main .s18-systems { margin-top: var(--space-lg); padding: 22px 24px; border-radius: 16px; background: var(--cream); border: 1px solid var(--line); }
-.svc-main .s18-systems p { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--ink-700); }
-.svc-main .s18-systems .s18-tm { margin-top: 10px; font-size: 13px; color: var(--ink-500); }
 @media (min-width: 1024px) { .svc-main .s18-standards-grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 72px; } }
 
 /* ---------- 7–8. FAQ and close ---------- */
-.svc-main .s18-faq { padding: 64px 0; }
+.svc-main .s18-faq { padding: 56px 0; }
 .svc-main .s18-close { padding: 56px 0 64px; }
 
 /* Links inside the new blocks. style.css styles links in <p> and bare <li>; these sit in <dd> and classed lists. */
-.svc-main .s18-deflist a, .svc-main .s18-steps a, .svc-main .s18-systems a, .svc-main .s18-split a, .svc-main .s18-aside a, .svc-main .s18-head a { color: var(--teal-600); font-weight: 500; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-.svc-main .s18-deflist a:hover, .svc-main .s18-steps a:hover, .svc-main .s18-systems a:hover, .svc-main .s18-split a:hover, .svc-main .s18-aside a:hover, .svc-main .s18-head a:hover { text-decoration-thickness: 2px; }
+.svc-main .s18-deflist a, .svc-main .s18-steps a, .svc-main .s18-split a, .svc-main .s18-aside a, .svc-main .s18-head a { color: var(--teal-600); font-weight: 500; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.svc-main .s18-deflist a:hover, .svc-main .s18-steps a:hover, .svc-main .s18-split a:hover, .svc-main .s18-aside a:hover, .svc-main .s18-head a:hover { text-decoration-thickness: 2px; }
+
+/* ---------- Round 19 ---------- */
+/* The rates are a separate statement under the list of what is included, so a price is never read as a capability. */
+.svc-main .s18-rates { margin: var(--space-md) 0 0; padding: 16px 20px; border-radius: 14px; background: var(--cream); border: 1px solid var(--line-2); font-size: 16px; line-height: 1.55; color: var(--ink-700); }
+.svc-main .s18-rates .s18-label { display: block; margin-bottom: 4px; }
+.svc-main .s18-rates strong { color: var(--navy-900); }
+.svc-main .s18-next { margin: var(--space-base) 0 0; padding-top: var(--space-md); border-top: 1px solid var(--line-2); font-size: 16px; color: var(--ink-700); }
+.svc-main .s18-next a { color: var(--teal-600); font-weight: 500; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.svc-main .s18-tm { max-width: 760px; margin: var(--space-md) auto 0; font-size: 13px; line-height: 1.5; color: var(--ink-500); text-align: center; }
+.svc-main .s18-scope-grid, .svc-main .s18-call-grid, .svc-main .s18-split { margin-top: 36px; }
+.svc-main .s18-steps { margin-top: 36px; }
+.svc-main .s18-fits { margin-top: 36px; }

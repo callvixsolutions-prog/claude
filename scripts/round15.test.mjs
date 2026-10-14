@@ -51,7 +51,9 @@ test('the homepage shows one call and one handoff sheet', () => {
   assert.ok(text.includes('Stock photographs, not Callvix customers.'), 'the stock-photo label must stay beside the photographs');
   /* The hero is one illustration, described for people who cannot see it, and not a photograph of a person. */
   const hero = main.slice(0, main.indexOf('h18-who'));
-  assert.equal(count(hero, '<svg'), 1); assert.ok(/<title id="h18t">[^<]{30,}<\/title>/.test(hero) && !/<img/.test(hero), 'the hero illustration needs its title and no photograph');
+  assert.equal(count(hero, '<svg'), 2, 'the illustration, and the tick in its one HTML label');
+  for (const label of ['A new customer calls', 'Answered in your business name', 'Booked: tomorrow, 10am–12pm']) assert.ok(textOf(hero).includes(label), `the hero label "${label}" must be HTML text, not drawn into the picture`);
+  assert.ok(!/<text\b/.test(hero), 'no words inside the SVG: they shrink with it on a phone'); assert.ok(/<title id="h19t">[^<]{30,}<\/title>/.test(hero) && !/<img/.test(hero), 'the hero illustration needs its title and no photograph');
   assert.ok(count(main, 'href="/services"') >= 1, 'a body link to /services');
 });
 
@@ -104,8 +106,8 @@ test('the homepage stylesheet is current, homepage-only and scoped', () => {
   assert.ok(selectors.length > 80);
   const unscoped = selectors.filter((s) => !s.startsWith('.home-main '));
   assert.deepEqual(unscoped, [], 'selector not scoped to the homepage');
-  const SHARED_OK = new Set(['home-main', 'btn', 'eyebrow', 'lede', 'container', 'crmflow', 'coverage', 'syslist']);
-  const foreign = [...new Set(selectors.flatMap((s) => [...s.matchAll(/\.([a-z][\w-]*)/g)].map((m) => m[1])))].filter((c) => !/^h1[578]-/.test(c) && !SHARED_OK.has(c));
+  const SHARED_OK = new Set(['home-main', 'btn', 'eyebrow', 'lede', 'container', 'coverage', 'cov-row-label', 'cov-day', 'coverage-key']);
+  const foreign = [...new Set(selectors.flatMap((s) => [...s.matchAll(/\.([a-z][\w-]*)/g)].map((m) => m[1])))].filter((c) => !/^h1[5789]-/.test(c) && !SHARED_OK.has(c));
   assert.deepEqual(foreign, [], 'home.css may only name h15-/h17- classes (shared classes only inside one of those blocks)');
   for (const banned of [/gradient\(/, /@keyframes/, /animation\s*:/, /position\s*:\s*(?:sticky|fixed)/]) assert.ok(!banned.test(body), `not on the homepage: ${banned}`);
   assert.equal(count(body, 'box-shadow'), 1, 'one shadow, on the handoff sheet');
@@ -144,7 +146,7 @@ test('the services stylesheet is current, services-only and scoped', () => {
 });
 
 test('the homepage photographs are sized, described and within budget', () => {
-  const BUDGET_KB = { 'home-case-tech': 20, 'home-case-office': 20, 'home-rules-desktop': 120, 'home-rules-mobile': 80 };
+  const BUDGET_KB = { 'home-case-tech': 20, 'home-case-office': 20 };
   const manifest = read('assets/photos/MANIFEST.md');
   const referenced = [...new Set([...main.matchAll(/\/assets\/photos\/([\w-]+)\.\w+/g)].map((m) => m[1]))].sort();
   assert.deepEqual(referenced, Object.keys(BUDGET_KB).sort());
@@ -158,7 +160,7 @@ test('the homepage photographs are sized, described and within budget', () => {
     assert.ok(manifest.includes(name), `${name} is not in assets/photos/MANIFEST.md`);
   }
   const imgs = [...main.matchAll(/<img\b[^>]*>/g)].map((m) => m[0]);
-  assert.equal(imgs.length, 3);
+  assert.equal(imgs.length, 2);
   /* One use per photograph: the same scene twice adds nothing the second time. */
   const used = imgs.map((tag) => tag.match(/photos\/([\w-]+)\./)[1].replace(/-(desktop|mobile)$/, ''));
   assert.equal(new Set(used).size, used.length, `a photograph is used more than once: ${used.join(', ')}`);
@@ -168,7 +170,7 @@ test('the homepage photographs are sized, described and within budget', () => {
     assert.ok(alt.length > 20, 'alt text describes the photo');
     assert.ok(!/callvix|representative|our team|staff|agent/i.test(alt), `alt text must not imply Callvix: "${alt}"`);
   }
-  assert.equal(imgs.filter((tag) => /loading="lazy"/.test(tag)).length, 3, 'every photograph is below the fold, so all are lazy');
+  assert.equal(imgs.filter((tag) => /loading="lazy"/.test(tag)).length, 2, 'every photograph is below the fold, so all are lazy');
 });
 
 test('the homepage structured data is byte-identical to before the rebuild', () => {

@@ -63,7 +63,7 @@
 .home-main .h15-turn b { display: block; font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-500); margin-bottom: 2px; }
 .home-main .h15-turn--us b { color: var(--teal-600); }
 .home-main .h15-note { position: relative; margin: 14px 0 0; padding-left: 40px; font-size: 14.5px; line-height: 1.45; color: var(--ink-500); }
-.home-main .h15-note::before { content: counter(h15); position: absolute; left: 0; top: -1px; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--teal-600); color: var(--teal-600); background: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 13px; line-height: 23px; text-align: center; }
+.home-main .h15-note::before { content: counter(h15); content: counter(h15) / ""; position: absolute; left: 0; top: -1px; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--teal-600); color: var(--teal-600); background: var(--white); font-family: var(--font-heading); font-weight: 700; font-size: 13px; line-height: 23px; text-align: center; }
 .home-main .h15-note strong { display: block; color: var(--navy-900); font-weight: 700; font-size: 15px; }
 .home-main .h15-sheet { background: var(--white); border: 1px solid var(--line-2); border-radius: 6px; box-shadow: var(--shadow-md); padding: 22px 24px 20px; max-width: 420px; }
 .home-main .h15-sheet-title { margin: 0 0 4px; padding-bottom: 12px; border-bottom: 2px solid var(--navy-900); font-family: var(--font-heading); font-weight: 700; font-size: 16px; line-height: 1.3; color: var(--navy-900); }
@@ -96,7 +96,7 @@
 .home-main .h15-rules-intro { margin: 0; font-size: 18px; color: var(--ink-500); }
 .home-main .h15-rules-list { list-style: none; counter-reset: h15r; margin: var(--space-md) 0 0; padding: 0; border-top: 1px solid var(--line-2); }
 .home-main .h15-rules-list li { counter-increment: h15r; position: relative; padding: 16px 0 16px 48px; border-bottom: 1px solid var(--line-2); }
-.home-main .h15-rules-list li::before { content: counter(h15r, decimal-leading-zero); position: absolute; left: 0; top: 17px; font-family: var(--font-heading); font-weight: 700; font-size: 15px; color: var(--teal-600); }
+.home-main .h15-rules-list li::before { content: counter(h15r, decimal-leading-zero); content: counter(h15r, decimal-leading-zero) / ""; position: absolute; left: 0; top: 17px; font-family: var(--font-heading); font-weight: 700; font-size: 15px; color: var(--teal-600); }
 .home-main .h15-rules-list strong { display: block; font-family: var(--font-heading); font-weight: 600; font-size: 18px; line-height: 1.3; color: var(--navy-900); }
 .home-main .h15-rules-list span { display: block; margin-top: 4px; font-size: 16px; line-height: 1.55; color: var(--ink-700); max-width: 31em; }
 .home-main .h15-rules h3 { margin: var(--space-base) 0 var(--space-2xs); font-size: 18px; }
@@ -181,8 +181,6 @@
 /* ---------- 3. Missed calls: a photographic navy inset ---------- */
 .home-main .h17-inset { display: grid; border-radius: 24px; overflow: hidden; background: var(--navy-900); color: #cdd3e6; }
 .home-main .h17-inset :focus-visible { outline-color: var(--teal-300); }
-.home-main .h17-inset-photo { margin: 0; }
-.home-main .h17-inset-photo img { display: block; width: 100%; height: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: 42% 40%; }
 .home-main .h17-inset-copy { padding: 32px 24px 36px; }
 .home-main .h17-inset-copy .eyebrow { color: var(--teal-300); }
 .home-main .h17-inset-copy h2 { color: #fff; max-width: 17ch; }
@@ -191,15 +189,13 @@
 .home-main .h17-inset-copy .h17-inset-more a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; color: var(--teal-300); }
 @media (min-width: 1024px) {
   .home-main .h17-inset { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
-  .home-main .h17-inset-photo img { aspect-ratio: auto; position: absolute; inset: 0; object-position: 50% 50%; }
-  .home-main .h17-inset-photo { position: relative; min-height: 480px; }
   .home-main .h17-inset-copy { padding: 64px 64px 64px 56px; }
 }
 
 /* ---------- 4. One call: three exchanges, three decisions ---------- */
 .home-main .h17-track { list-style: none; counter-reset: h17; margin: var(--space-lg) 0 0; padding: 0; display: grid; gap: var(--space-md); }
 .home-main .h17-stage { counter-increment: h17; position: relative; display: flex; flex-direction: column; padding: 44px 20px 20px; border-radius: 18px; background: var(--cream); border: 1px solid var(--line); }
-.home-main .h17-stage::before { content: counter(h17); position: absolute; left: 20px; top: -16px; width: 34px; height: 34px; border-radius: 50%; background: var(--navy-900); color: #fff; font-family: var(--font-heading); font-weight: 700; font-size: 15px; line-height: 34px; text-align: center; }
+.home-main .h17-stage::before { content: counter(h17); content: counter(h17) / ""; position: absolute; left: 20px; top: -16px; width: 34px; height: 34px; border-radius: 50%; background: var(--navy-900); color: #fff; font-family: var(--font-heading); font-weight: 700; font-size: 15px; line-height: 34px; text-align: center; }
 .home-main .h17-talk { display: flex; flex-direction: column; gap: 10px; margin-bottom: var(--space-md); }
 .home-main .h17-bubble { margin: 0; max-width: 92%; padding: 12px 14px; font-size: 16px; line-height: 1.45; color: var(--ink-900); }
 .home-main .h17-bubble b { display: block; margin-bottom: 2px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-500); }
@@ -236,7 +232,6 @@
 }
 
 /* ---------- 6. How it works: the rail, then the rules ---------- */
-.home-main .h17-process .crmflow { margin-top: var(--space-lg); }
 .home-main .h17-rules { margin-top: var(--space-lg); display: grid; gap: var(--space-base); }
 .home-main .h17-rules h3 { margin: 0 0 6px; font-size: 22px; }
 .home-main .h17-rules .h15-rules-intro { font-size: 16.5px; }
@@ -256,15 +251,6 @@
 .home-main .h15-pricing .h15-addon-name small { max-width: 30em; line-height: 1.45; }
 
 /* ---------- 8. Works with: how access works, then the systems ---------- */
-.home-main .h17-crm-top { display: grid; gap: var(--space-base); }
-.home-main .h17-crm-top p { margin: 0; max-width: 32em; font-size: 17px; line-height: 1.6; }
-.home-main .h17-access { list-style: none; counter-reset: h17a; margin: 0; padding: 0; display: grid; gap: 10px; }
-.home-main .h17-access li { counter-increment: h17a; position: relative; padding: 14px 16px 14px 56px; border-radius: 14px; background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.14); }
-.home-main .h17-access li::before { content: counter(h17a); position: absolute; left: 16px; top: 15px; width: 28px; height: 28px; border-radius: 50%; background: var(--teal-500); color: #04252a; font-family: var(--font-heading); font-weight: 700; font-size: 14px; line-height: 28px; text-align: center; }
-.home-main .h17-access b { display: block; font-family: var(--font-heading); font-weight: 600; font-size: 16.5px; color: #fff; }
-.home-main .h17-access span { display: block; margin-top: 2px; font-size: 14.5px; line-height: 1.45; color: #cdd3e6; }
-.home-main .h17-crm .syslist { margin-top: var(--space-lg); }
-@media (min-width: 1024px) { .home-main .h17-crm-top { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 72px; align-items: center; } }
 
 /* ==========================================================================
    Round 18 — h18- components and the page's rhythm. Sections no longer share
@@ -276,10 +262,6 @@
 .home-main .h17-call { padding: 64px 0; }
 .home-main .h17-handoff { padding: 80px 0; }
 .home-main .h15-pricing { padding: 64px 0 72px; }
-.home-main .h17-crm { padding: 72px 0 64px; }
-@media (max-width: 599px) {
-  .home-main .h18-who, .home-main .h17-cost, .home-main .h17-process, .home-main .h17-call, .home-main .h17-handoff, .home-main .h15-pricing, .home-main .h17-crm { padding: 44px 0; }
-}
 
 /* ---------- 1. Hero: headline first, the illustration as the one image ---------- */
 .home-main .h18-hero h1 { max-width: 13ch; }
@@ -288,7 +270,6 @@
 .home-main .h18-hero .h15-facts span { padding: 0; border: 0; margin: 0; white-space: normal; }
 .home-main .h18-hero .h15-facts span + i + span::before, .home-main .h18-hero .h15-facts span:not(:first-child)::before { content: '\00b7'; padding: 0 8px; color: var(--control); }
 .home-main .h18-art { margin: 0; }
-.home-main .h18-art-svg { display: block; width: 100%; height: auto; }
 .home-main .h18-art figcaption { margin: 10px 4px 0; font-size: 13px; line-height: 1.45; color: var(--ink-500); }
 @media (min-width: 1024px) {
   .home-main .h18-hero { padding: 64px 0 72px; }
@@ -318,7 +299,6 @@
 /* ---------- 3. Stakes band: shorter than before ---------- */
 @media (min-width: 1024px) {
   .home-main .h17-inset { grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); }
-  .home-main .h17-inset-photo { min-height: 0; }
   .home-main .h17-inset-copy { padding: 48px 56px; }
   .home-main .h17-inset-copy h2 { max-width: 22ch; }
 }
@@ -341,9 +321,101 @@
 }
 
 /* ---------- 8. Systems: access steps in a row, names lighter than before ---------- */
-.home-main .h17-crm .syslist { margin-top: var(--space-base); }
+
+/* ==========================================================================
+   Round 19 — finishing pass.
+   ========================================================================== */
+
+/* ---------- Hero art: the picture carries no words; its three labels are HTML ---------- */
+.home-main .h19-art { position: relative; }
+.home-main .h19-art-svg { display: block; width: 100%; height: auto; }
+.home-main .h19-notes { list-style: none; margin: 0; padding: 0; }
+.home-main .h19-note { position: absolute; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: var(--white); border: 1px solid var(--line-2); font-size: 12.5px; font-weight: 600; line-height: 1.25; color: var(--navy-900); white-space: nowrap; }
+.home-main .h19-note--call { right: 4%; top: 30%; }
+.home-main .h19-note--answer { left: 6%; top: 15%; }
+.home-main .h19-note--booked { left: 9%; bottom: 5%; padding: 8px 14px 8px 10px; background: var(--navy-900); border-color: var(--navy-900); color: #fff; font-family: var(--font-heading); font-size: 13.5px; }
+.home-main .h19-note--booked svg { flex: 0 0 auto; width: 20px; height: 20px; padding: 3px; border-radius: 50%; background: var(--teal-500); color: #04252a; }
+@media (min-width: 600px) {
+  .home-main .h19-note { font-size: 14px; padding: 7px 14px; }
+  .home-main .h19-note--booked { font-size: 15.5px; padding: 10px 18px 10px 12px; }
+}
+
+/* ---------- Process: an open line, not four boxes ---------- */
+.home-main .h19-flow { list-style: none; margin: var(--space-lg) 0 0; padding: 0; display: grid; gap: 0; }
+.home-main .h19-flow li { position: relative; display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 16px; padding: 0 0 22px; }
+.home-main .h19-flow li:last-child { padding-bottom: 0; }
+.home-main .h19-flow-ico { grid-row: 1 / span 2; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: var(--teal-100); color: var(--teal-600); position: relative; z-index: 1; }
+.home-main .h19-flow-ico svg { width: 20px; height: 20px; }
+.home-main .h19-flow strong { align-self: end; font-family: var(--font-heading); font-weight: 600; font-size: 17.5px; line-height: 1.25; color: var(--navy-900); }
+.home-main .h19-flow li > span:last-child { font-size: 15px; line-height: 1.4; color: var(--ink-500); }
+/* The connecting line: down the icons on a phone, across them on desktop. */
+.home-main .h19-flow li:not(:last-child)::after { content: ''; position: absolute; left: 21px; top: 44px; bottom: 0; width: 2px; background: var(--line-2); }
+@media (min-width: 800px) {
+  .home-main .h19-flow { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+  .home-main .h19-flow li { display: block; padding: 0; }
+  .home-main .h19-flow-ico { margin-bottom: 14px; }
+  .home-main .h19-flow strong, .home-main .h19-flow li > span:last-child { display: block; }
+  .home-main .h19-flow li > span:last-child { margin-top: 3px; }
+  .home-main .h19-flow li:not(:last-child)::after { left: 56px; right: -12px; top: 21px; bottom: auto; width: auto; height: 2px; }
+}
+.home-main .h17-process .h17-rules { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line); }
+
+/* ---------- Example call: tighter ---------- */
+.home-main .h17-call { padding: 56px 0; }
+.home-main .h17-call .h17-head p { margin-top: 10px; }
+.home-main .h17-call .h17-track { margin-top: 36px; }
+.home-main .h17-call .h17-stage { padding: 30px 16px 16px; }
+.home-main .h17-call .h17-decision { padding-top: 12px; }
+.home-main .h17-call .h15-caption { margin-top: var(--space-md); }
+
+/* ---------- Missed-call band: an unanswered phone instead of a field photograph ---------- */
+.home-main .h19-missed { display: flex; align-items: flex-end; justify-content: center; padding: 32px 24px 0; background: var(--navy-950); }
+.home-main .h19-phone { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 250px; padding: 22px 16px 28px; border-radius: 30px 30px 0 0; border: 6px solid #2a3d7a; border-bottom: 0; background: var(--navy-800); }
+.home-main .h19-phone-time { margin: 2px 0 10px; text-align: center; font-family: var(--font-heading); font-weight: 600; font-size: 44px; line-height: 1; color: #fff; }
+.home-main .h19-phone-row { display: block; padding: 11px 14px; border-radius: 14px; background: #fff; }
+.home-main .h19-phone-row b { display: block; font-family: var(--font-heading); font-weight: 600; font-size: 14.5px; color: var(--error); }
+.home-main .h19-phone-row i { display: block; font-style: normal; font-size: 12.5px; color: var(--ink-500); }
+.home-main .h19-phone-row--dim { background: rgba(255, 255, 255, 0.12); }
+.home-main .h19-phone-row--dim b { color: #fff; }
+.home-main .h19-phone-row--dim i { color: #cdd3e6; }
 @media (min-width: 1024px) {
-  .home-main .h17-crm-top { grid-template-columns: minmax(0, 1fr); gap: var(--space-base); }
-  .home-main .h17-crm-top > div { max-width: 46em; }
-  .home-main .h17-access { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .home-main .h19-missed { padding: 40px 32px 0; }
+  .home-main .h17-inset { grid-template-columns: minmax(0, 0.62fr) minmax(0, 1.38fr); }
+}
+
+/* ---------- Systems: a light directory, so the lower half is not three navy blocks ---------- */
+.home-main .h19-systems { padding: 64px 0; }
+.home-main .h19-systems-grid { display: grid; gap: var(--space-base); align-items: start; }
+.home-main .h19-systems-copy p { margin: var(--space-sm) 0 0; font-size: 17px; line-height: 1.6; color: var(--ink-700); max-width: 30em; }
+.home-main .h19-access { list-style: none; margin: var(--space-md) 0 0; padding: 0; border-top: 1px solid var(--line-2); max-width: 30em; }
+.home-main .h19-access li { padding: 11px 0; border-bottom: 1px solid var(--line-2); font-size: 15.5px; line-height: 1.5; color: var(--ink-700); }
+.home-main .h19-access b { color: var(--navy-900); }
+.home-main .h19-dir { padding: 8px 24px 20px; border-radius: 20px; background: var(--teal-50); border: 1px solid var(--teal-100); }
+.home-main .h19-dir ul { list-style: none; margin: 0; padding: 0; }
+.home-main .h19-dir li { display: grid; gap: 2px; padding: 14px 0; border-bottom: 1px solid #cfe9ec; }
+.home-main .h19-dir li a { justify-self: start; font-family: var(--font-heading); font-weight: 600; font-size: 17px; color: var(--navy-900); text-decoration: underline; text-decoration-color: var(--teal-500); text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
+.home-main .h19-dir li a:hover { color: var(--teal-600); }
+.home-main .h19-dir li span { font-size: 14.5px; line-height: 1.5; color: var(--ink-700); }
+.home-main .h19-dir-else { margin: 14px 0 0; font-size: 14.5px; line-height: 1.5; color: var(--ink-700); }
+@media (min-width: 700px) { .home-main .h19-dir li { grid-template-columns: 150px minmax(0, 1fr); gap: 16px; align-items: baseline; } }
+@media (min-width: 1024px) { .home-main .h19-systems-grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 64px; } .home-main .h19-dir { padding: 12px 32px 24px; } }
+
+/* ---------- Coverage chart inside the price panel: labels a phone can read ---------- */
+@media (max-width: 599px) {
+  .home-main .h18-cover .coverage { --cov-label: 88px; }
+  .home-main .h18-cover .cov-row-label { font-size: 12.5px; }
+  .home-main .h18-cover .cov-row-label em { font-size: 12px; }
+  .home-main .h18-cover .cov-day { font-size: 12px; }
+  .home-main .h18-cover .coverage-key { font-size: 12.5px; }
+}
+
+/* On a narrow phone the three labels would sit on top of each other and the
+   picture, so they drop underneath it as a short sequence instead. */
+@media (max-width: 479px) {
+  .home-main .h19-notes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .home-main .h19-note { position: static; white-space: normal; font-size: 12.5px; }
+  .home-main .h19-note--booked { font-size: 13px; padding: 6px 12px 6px 8px; }
+}
+@media (max-width: 599px) {
+  .home-main .h18-cover .cov-row-label b { font-size: 12.5px; white-space: nowrap; }
 }

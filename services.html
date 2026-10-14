@@ -38,7 +38,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"></noscript>
 <link rel="stylesheet" href="/css/style.css?v=5b7efe6ddc">
-<link rel="stylesheet" href="/css/services.css?v=8431b87240">
+<link rel="stylesheet" href="/css/services.css?v=1bcab9085c">
 <style>
 /* /services page-specific */
 .hero-subhead { font-family: var(--font-heading); font-size: clamp(19px, 2.2vw, 23px); font-weight: 600; color: var(--ink-700); margin: 0 0 var(--space-xs); max-width: 720px; line-height: 1.3; }
@@ -396,7 +396,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           <div><dt>Add-ons</dt><dd>Evening and weekend coverage optional</dd></div>
           <div><dt>Terms</dt><dd>No long-term contract</dd></div>
         </dl>
-        <ol class="s18-mini" aria-label="How a call runs">
+        <ol class="s18-mini" role="list" aria-label="How a call runs">
           <li>Answered</li><li>Checked</li><li>Booked or escalated</li>
         </ol>
       </div>
@@ -415,7 +415,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="s18-scope-grid">
       <div class="s18-included">
         <h3>Included as standard</h3>
-        <p class="svc-base-line">$399/month base &middot; $2.99 per inbound call &middot; $0.99 per outbound follow-up</p>
         <dl class="s18-deflist">
           <div><dt>Inbound call answering</dt><dd>Live answering in your company name for new and existing customers &mdash; calls open the way your office would.</dd></div>
           <div><dt>Lead qualification</dt><dd>The pest, the urgency and the address, checked against your service area before anything is offered.</dd></div>
@@ -424,6 +423,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           <div><dt>Daytime overflow</dt><dd>Cover the calls that stack up while your team is on a job. Not sure what unanswered calls add up to? <a href="/blog/missed-calls-cost-pest-control">Estimate it from your own numbers</a>.</dd></div>
           <div><dt>Handoff and reporting</dt><dd>Booking and call details shared with your team using the method agreed during setup, plus reporting on the calls we handle.</dd></div>
         </dl>
+        <p class="s18-rates"><span class="s18-label">What it costs</span><strong>Base service: $399/month.</strong> Usage: $2.99 per inbound call; $0.99 per outbound follow-up when used.</p>
       </div>
       <aside class="s18-optional">
         <h3>Optional paid add-ons</h3>
@@ -503,7 +503,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
 </section>
 
 <!-- 5 — HANDOFF AND CRM ENTRY. Included versus optional, side by side. -->
-<section class="section s18-handoff">
+<section class="section s18-handoff" id="after-the-call">
   <div class="container">
     <div class="s18-head">
       <div class="eyebrow">After the call</div>
@@ -551,10 +551,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <li><h3>Notes a technician can use</h3><p>Urgency, access, pets and what the caller is seeing, written down for whoever takes the job.</p></li>
       </ol>
     </div>
-    <div class="s18-systems">
-      <p>With the <strong>CRM Management add-on ($99/month)</strong>, our representatives work inside your own system &mdash; <a href="/integrations/fieldroutes">FieldRoutes</a>, <a href="/integrations/servicetitan">ServiceTitan</a>, <a href="/integrations/gorilladesk">GorillaDesk</a>, <a href="/integrations/briostack">Briostack</a>, <a href="/integrations/pestpac">PestPac</a> or <a href="/integrations/housecall-pro">Housecall Pro</a> &mdash; using a login you grant and can revoke. Using something else? Tell us which system, and we&rsquo;ll confirm the workflow and access requirements during setup. There is no native integration or data sync.</p>
-      <p class="s18-tm">FieldRoutes, PestRoutes, ServiceTitan, GorillaDesk, Briostack, PestPac and Housecall Pro are trademarks of their respective owners. Callvix is independent of them.</p>
-    </div>
+    <p class="s18-next">Want bookings typed into your own system as well? That is the optional <a href="/integrations/">CRM Management add-on</a>, described <a href="#after-the-call">above</a>.</p>
   </div>
 </section>
 
@@ -607,6 +604,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <div class="a"><p>Outside your coverage window, calls are handled by the arrangement agreed during setup. Add the After-Hours or Weekend coverage add-on and we answer and book live during those windows.</p></div>
       </details>
     </div>
+    <p class="s18-tm">FieldRoutes, PestRoutes, ServiceTitan, GorillaDesk, Briostack, PestPac and Housecall Pro are trademarks of their respective owners. Callvix is independent of them.</p>
   </div>
 </section>
 
