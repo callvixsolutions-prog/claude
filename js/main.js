@@ -256,6 +256,13 @@ document.addEventListener('DOMContentLoaded', function () {
     overlay.setAttribute('role', 'dialog');
     overlay.setAttribute('aria-modal', 'true');
     overlay.setAttribute('aria-label', 'Book a discovery call');
+    // Calendly caps the popup at 700px with !important, which also beats its own
+    // phone rule and leaves a strip of page showing under the calendar. On a
+    // narrow screen the popup should run to the bottom edge.
+    var popup = overlay.querySelector('.calendly-popup');
+    if (popup && window.matchMedia && window.matchMedia('(max-width: 975px)').matches) {
+      popup.style.setProperty('max-height', 'none', 'important');
+    }
     var frame = overlay.querySelector('iframe');
     if (frame && !frame.getAttribute('title')) frame.setAttribute('title', 'Calendly booking calendar');
     var close = overlay.querySelector('.calendly-popup-close');
@@ -275,7 +282,11 @@ document.addEventListener('DOMContentLoaded', function () {
       var watch = new MutationObserver(function () {
         if (document.querySelector('.calendly-overlay')) return;
         watch.disconnect();
-        if (opener && opener.focus) opener.focus();
+        // A link inside the mobile menu is hidden again by the time the popup
+        // closes (following it closes the menu), so focus goes to the menu button.
+        var inMenu = opener && opener.closest && opener.closest('.mobile-nav');
+        var back = inMenu ? document.querySelector('.nav-toggle') : opener;
+        if (back && back.focus) back.focus();
       });
       watch.observe(document.body, { childList: true });
     }
