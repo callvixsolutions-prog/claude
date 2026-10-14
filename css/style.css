@@ -1314,14 +1314,6 @@ p.config-title {
 .toc li a:hover { text-decoration-color: var(--teal-600); }
 @media (max-width: 699px) { .toc ol { columns: 1; } }
 
-/* Pricing: a worked month, small and plainly labelled as an example. */
-.price-example { max-width: 560px; margin: 28px auto 0; padding: 20px 22px; border-radius: var(--radius-md); background: var(--white); border: 1px solid var(--line-2); }
-.price-example-title { margin: 0 0 10px; font-family: var(--font-heading); font-weight: 600; font-size: 16.5px; color: var(--navy-900); }
-.price-example table { width: 100%; border-collapse: collapse; font-size: 15px; }
-.price-example th, .price-example td { padding: 7px 0; border-bottom: 1px solid var(--line); text-align: left; font-weight: 400; color: var(--ink-700); }
-.price-example td { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.price-example .price-example-total th, .price-example .price-example-total td { font-weight: 700; color: var(--navy-900); border-bottom: 2px solid var(--navy-900); }
-.price-example-note { margin: 12px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--ink-500); }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
 /* Round 20b — Works With pages. A short scope line, a three-stage example
@@ -1393,3 +1385,49 @@ p.config-title {
 .page-hero.page-hero--article + .section { padding-top: 28px; }
 @media (min-width: 600px) { .page-hero.page-hero--article + .section { padding-top: 36px; } }
 @media (min-width: 1024px) { .page-hero.page-hero--article + .section { padding-top: 44px; } }
+
+/* Pricing page: intro and one rate panel side by side on desktop; on narrow
+   screens the order is intro, rates, then the booking action. */
+.pricing-hero .container { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-md); grid-template-areas: "intro" "panel" "actions"; }
+.pricing-hero-intro { grid-area: intro; }
+.pricing-hero .rate-panel { grid-area: panel; }
+.pricing-hero-actions { grid-area: actions; }
+.pricing-hero h1 { max-width: 15ch; }
+.pricing-coverage { margin: var(--space-xs) 0 0; font-weight: 600; color: var(--navy-900); }
+.pricing-hero .hero-cta { margin-top: 0; }
+.pricing-hero .svc-cta-note { margin: 12px 0 0; }
+.pricing-text-link, .cta-text-link { font-weight: 600; text-decoration: underline; text-underline-offset: 3px; padding: 10px 2px; }
+.pricing-text-link { color: var(--teal-600); }
+.cta-band .cta-text-link { color: var(--teal-300); }
+@media (min-width: 900px) {
+  .pricing-hero .container { grid-template-columns: minmax(0, 1.1fr) minmax(330px, 0.9fr); grid-template-areas: "intro panel" "actions panel"; column-gap: var(--space-xl); row-gap: var(--space-sm); align-items: start; }
+  .pricing-hero .rate-panel { align-self: center; }
+}
+.rate-panel { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-md); padding: 22px 24px; }
+.rate-list { margin: 0; }
+.rate-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.rate-list:last-of-type .rate-row:last-child { border-bottom: 0; }
+.rate-row dt { font-weight: 600; color: var(--ink-700); line-height: 1.35; }
+.rate-row dd { margin: 0; font-family: var(--font-heading); font-weight: 700; font-size: 22px; color: var(--navy-900); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.rate-row dd span { font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--ink-500); margin-left: 2px; }
+.rate-row--base { padding-top: 4px; }
+.rate-row--base dt { color: var(--navy-900); }
+.rate-row--base dd { font-size: 32px; }
+.rate-group { margin: 16px 0 0; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--teal-600); }
+.rate-foot { margin: 6px 0 0; padding-top: 12px; border-top: 1px solid var(--line); font-size: 14.5px; color: var(--ink-500); }
+.base-band-title { color: #fff; font-size: clamp(22px, 1.2vw + 16px, 28px); margin: 0 0 12px; }
+ @media (max-width: 359px) {
+  .rate-panel { padding: 18px 16px; }
+  .rate-row--base dd { font-size: 27px; }
+  .rate-row dd { font-size: 20px; }
+}
+.terms-title { font-size: 20px; margin: 0 0 var(--space-xs); }
+.terms-strip { list-style: none; margin: 0; padding: 0; display: grid; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); }
+.terms-strip li { padding: 16px 20px; font-weight: 600; color: var(--navy-900); line-height: 1.45; }
+.terms-strip li + li { border-top: 1px solid var(--line); }
+@media (min-width: 760px) {
+  .terms-strip { grid-template-columns: repeat(3, 1fr); }
+  .terms-strip li + li { border-top: 0; border-left: 1px solid var(--line); }
+}
+.terms-more { margin: var(--space-xs) 0 0; font-size: 14.5px; color: var(--ink-500); }
+.terms-more a { color: var(--teal-600); font-weight: 600; }
