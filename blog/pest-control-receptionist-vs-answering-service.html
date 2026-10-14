@@ -5,10 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Tag Manager (container GTM-PJFS7HV5 — carried over from the previous site so
      Google Analytics 4 and Search Console keep reporting without reconfiguration) -->
+<!-- GTM is fetched on the first interaction, or 1.5 s after the page has loaded, so its
+     ~300 KB of tags never competes with the page itself. Events pushed before then wait
+     in dataLayer and are sent when it arrives. The campaign page and /thank-you keep the
+     standard snippet. -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+new Date().getTime(),event:'gtm.js'});var done=false;function load(){if(done)return;done=true;
+var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;
+j.src='https://www.googletagmanager.com/gtm.js?id='+i;f.parentNode.insertBefore(j,f);}
+['pointerdown','keydown','touchstart','scroll'].forEach(function(e){w.addEventListener(e,load,{once:true,passive:true});});
+if(d.readyState==='complete'){setTimeout(load,1500);}else{w.addEventListener('load',function(){setTimeout(load,1500);});}
 })(window,document,'script','dataLayer','GTM-PJFS7HV5');</script>
 <!-- End Google Tag Manager -->
 
@@ -191,7 +197,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
 
       <div class="table-scroll" role="region" aria-label="Comparison of an in-house receptionist, an answering service, and overflow support (scrolls sideways on small screens)" tabindex="0">
       <table>
-        <thead><tr><th>&nbsp;</th><th>In-house receptionist or CSR</th><th>Human answering service</th><th>Your team plus overflow</th></tr></thead>
+        <thead><tr><th scope="col"><span class="visually-hidden">Compared on</span></th><th>In-house receptionist or CSR</th><th>Human answering service</th><th>Your team plus overflow</th></tr></thead>
         <tbody>
           <tr><td><strong>Phone handling and booking</strong></td><td>Handles calls and books work directly in your systems</td><td>Handles calls and follows the booking rules and availability process agreed in advance</td><td>Your team handles most calls; the service takes what they cannot</td></tr>
           <tr><td><strong>Non-phone office work</strong></td><td>Yes &mdash; invoicing, scheduling, accounts, supplier and technician coordination</td><td>Not with Callvix &mdash; call handling and the agreed booking steps only</td><td>Stays with your team</td></tr>

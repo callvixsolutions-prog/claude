@@ -5,10 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Tag Manager (container GTM-PJFS7HV5 — carried over from the previous site so
      Google Analytics 4 and Search Console keep reporting without reconfiguration) -->
+<!-- GTM is fetched on the first interaction, or 1.5 s after the page has loaded, so its
+     ~300 KB of tags never competes with the page itself. Events pushed before then wait
+     in dataLayer and are sent when it arrives. The campaign page and /thank-you keep the
+     standard snippet. -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+new Date().getTime(),event:'gtm.js'});var done=false;function load(){if(done)return;done=true;
+var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;
+j.src='https://www.googletagmanager.com/gtm.js?id='+i;f.parentNode.insertBefore(j,f);}
+['pointerdown','keydown','touchstart','scroll'].forEach(function(e){w.addEventListener(e,load,{once:true,passive:true});});
+if(d.readyState==='complete'){setTimeout(load,1500);}else{w.addEventListener('load',function(){setTimeout(load,1500);});}
 })(window,document,'script','dataLayer','GTM-PJFS7HV5');</script>
 <!-- End Google Tag Manager -->
 
@@ -391,7 +397,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <p class="fc-title">Pest Control Call Intake Form &amp; Call-Flow Checklist</p>
         <p class="fc-sub">Adapt every rule to your own service area, licensing, pricing and booking policy.</p>
         <div class="fc-actions">
-          <button type="button" class="btn btn-primary btn-sm print-btn" data-file-name="pest-control-intake-form" onclick="window.print()" aria-label="Print the intake form and call-flow checklist">
+          <button type="button" class="btn btn-primary btn-sm print-btn" data-file-name="pest-control-intake-form" onclick="window.print()" aria-label="Print / Save as PDF: the intake form and call-flow checklist">
             <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="margin-right:2px;"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
             Print / Save as PDF
           </button>

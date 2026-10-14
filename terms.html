@@ -5,10 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Tag Manager (container GTM-PJFS7HV5 — carried over from the previous site so
      Google Analytics 4 and Search Console keep reporting without reconfiguration) -->
+<!-- GTM is fetched on the first interaction, or 1.5 s after the page has loaded, so its
+     ~300 KB of tags never competes with the page itself. Events pushed before then wait
+     in dataLayer and are sent when it arrives. The campaign page and /thank-you keep the
+     standard snippet. -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+new Date().getTime(),event:'gtm.js'});var done=false;function load(){if(done)return;done=true;
+var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;
+j.src='https://www.googletagmanager.com/gtm.js?id='+i;f.parentNode.insertBefore(j,f);}
+['pointerdown','keydown','touchstart','scroll'].forEach(function(e){w.addEventListener(e,load,{once:true,passive:true});});
+if(d.readyState==='complete'){setTimeout(load,1500);}else{w.addEventListener('load',function(){setTimeout(load,1500);});}
 })(window,document,'script','dataLayer','GTM-PJFS7HV5');</script>
 <!-- End Google Tag Manager -->
 

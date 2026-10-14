@@ -5,10 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Tag Manager (container GTM-PJFS7HV5 — carried over from the previous site so
      Google Analytics 4 and Search Console keep reporting without reconfiguration) -->
+<!-- GTM is fetched on the first interaction, or 1.5 s after the page has loaded, so its
+     ~300 KB of tags never competes with the page itself. Events pushed before then wait
+     in dataLayer and are sent when it arrives. The campaign page and /thank-you keep the
+     standard snippet. -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+new Date().getTime(),event:'gtm.js'});var done=false;function load(){if(done)return;done=true;
+var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;
+j.src='https://www.googletagmanager.com/gtm.js?id='+i;f.parentNode.insertBefore(j,f);}
+['pointerdown','keydown','touchstart','scroll'].forEach(function(e){w.addEventListener(e,load,{once:true,passive:true});});
+if(d.readyState==='complete'){setTimeout(load,1500);}else{w.addEventListener('load',function(){setTimeout(load,1500);});}
 })(window,document,'script','dataLayer','GTM-PJFS7HV5');</script>
 <!-- End Google Tag Manager -->
 
@@ -178,7 +184,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <p class="table-cue" aria-hidden="true">Swipe or scroll to compare all columns.</p>
       <div class="table-scroll" role="region" aria-label="AI answering compared with a trained human answering service (scrolls sideways on small screens)" tabindex="0">
       <table style="min-width:560px;">
-        <thead><tr><th>&nbsp;</th><th>AI answering service</th><th>Trained human answering service</th></tr></thead>
+        <thead><tr><th scope="col"><span class="visually-hidden">Compared on</span></th><th>AI answering service</th><th>Trained human answering service</th></tr></thead>
         <tbody>
           <tr><td><strong>Cost structure</strong></td><td>Usually a subscription, sometimes with usage-based charges. Compare the subscription, billable usage, human-escalation charges and required features at your expected volume.</td><td>Usually a monthly base plus per-call or per-minute charges, reflecting staffed time. Compare published plans, including add-ons.</td></tr>
           <tr><td><strong>Coverage hours</strong></td><td>Can run around the clock once configured.</td><td>Depends on the provider and plan: business hours, extended hours or 24/7. Callvix covers weekday business hours, with optional evening and weekend windows; it does not offer overnight or 24/7 coverage.</td></tr>
