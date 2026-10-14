@@ -34,6 +34,7 @@ test('the homepage shows one call and one handoff sheet', () => {
      sheet. The words of that call still appear once each. */
   assert.equal(count(main, 'class="h17-track"'), 1, 'exactly one transcript');
   assert.equal(count(main, 'class="h15-sheet"'), 1, 'exactly one handoff sheet');
+  assert.ok(!/<img[^>]*>/.test(main.slice(main.indexOf('h17-handoff'), main.indexOf('h17-process'))), 'the handoff is shown by the call summary itself, not a photograph');
   for (const once of ['There are wasps building a nest', '14 Oak Lane.”', 'Dog in the rear yard', 'Wasp nest — front door eave']) {
     assert.equal(count(text, once), 1, `"${once}" should appear once, found ${count(text, once)}`);
   }
@@ -109,8 +110,8 @@ test('the homepage stylesheet is current, homepage-only and scoped', () => {
 });
 
 test('the homepage photographs are sized, described and within budget', () => {
-  const BUDGET_KB = { 'home-handler-desktop': 150, 'home-handler-mobile': 90, 'home-tech-tile': 60, 'home-field-close': 60, 'home-office-tile': 60,
-    'home-handoff': 90, 'home-rules-desktop': 120, 'home-rules-mobile': 80 };
+  const BUDGET_KB = { 'home-handler-desktop': 150, 'home-handler-mobile': 90, 'home-hero-mobile': 100, 'home-office-tile': 60,
+    'home-rules-desktop': 120, 'home-rules-mobile': 80 };
   const manifest = read('assets/photos/MANIFEST.md');
   const referenced = [...new Set([...main.matchAll(/\/assets\/photos\/([\w-]+)\.\w+/g)].map((m) => m[1]))].sort();
   assert.deepEqual(referenced, Object.keys(BUDGET_KB).sort());
@@ -124,7 +125,10 @@ test('the homepage photographs are sized, described and within budget', () => {
     assert.ok(manifest.includes(name), `${name} is not in assets/photos/MANIFEST.md`);
   }
   const imgs = [...main.matchAll(/<img\b[^>]*>/g)].map((m) => m[0]);
-  assert.equal(imgs.length, 6);
+  assert.equal(imgs.length, 4);
+  /* One use per photograph: the same scene twice adds nothing the second time. */
+  const used = imgs.map((tag) => tag.match(/photos\/([\w-]+)\./)[1].replace(/-(desktop|mobile)$/, ''));
+  assert.equal(new Set(used).size, used.length, `a photograph is used more than once: ${used.join(', ')}`);
   for (const tag of imgs) {
     assert.ok(/\bwidth="\d+"/.test(tag) && /\bheight="\d+"/.test(tag), 'explicit width and height');
     const alt = tag.match(/\balt="([^"]*)"/)[1];
@@ -132,7 +136,7 @@ test('the homepage photographs are sized, described and within budget', () => {
     assert.ok(!/callvix|representative|our team|staff|agent/i.test(alt), `alt text must not imply Callvix: "${alt}"`);
   }
   assert.ok(/fetchpriority="high"/.test(imgs[0]) && !/loading="lazy"/.test(imgs[0]), 'the hero photo loads eagerly, high priority');
-  assert.equal(imgs.filter((tag) => /loading="lazy"/.test(tag)).length, 4, 'everything below the hero is lazy');
+  assert.equal(imgs.filter((tag) => /loading="lazy"/.test(tag)).length, 3, 'everything below the hero is lazy');
 });
 
 test('the homepage structured data is byte-identical to before the rebuild', () => {
