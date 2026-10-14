@@ -178,48 +178,6 @@
 .home-main .h17-head--center p { margin-left: auto; margin-right: auto; }
 .home-main .h17-center { text-align: center; }
 
-/* ---------- 1. Hero: one scene. The person answering is the picture; the
-   call and its outcome are a single rail fixed to its lower edge. ---------- */
-.home-main .h17-scene { position: relative; margin: 0; border-radius: 20px; overflow: hidden; background: var(--navy-900); }
-.home-main .h17-scene img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 30%; }
-.home-main .h17-rail { display: grid; gap: 10px; padding: 16px 18px 18px; color: #cdd3e6; font-size: 15px; line-height: 1.35; }
-.home-main .h17-rail-in, .home-main .h17-rail-out { display: flex; align-items: center; gap: 12px; }
-.home-main .h17-rail b { display: block; margin-bottom: 1px; font-family: var(--font-body); font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal-300); }
-.home-main .h17-rail-out { color: #fff; font-family: var(--font-heading); font-weight: 600; font-size: 16px; }
-.home-main .h17-rail-ico { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid rgba(131, 214, 223, 0.6); color: var(--teal-300); }
-.home-main .h17-rail-ico--done { border-color: var(--teal-500); background: var(--teal-500); color: #04252a; }
-.home-main .h17-rail-arrow { display: none; color: var(--teal-300); font-size: 20px; }
-.home-main .h17-credit { margin: 10px 2px 0; font-size: 12.5px; color: var(--ink-500); }
-.home-main .h17-hero .lede { max-width: 30em; }
-@media (min-width: 600px) {
-  .home-main .h17-scene img { aspect-ratio: 16 / 10; object-position: 50% 35%; }
-  .home-main .h17-rail { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 16px; padding: 18px 24px; }
-  .home-main .h17-rail-arrow { display: block; }
-}
-@media (min-width: 1024px) {
-  .home-main .h17-hero .h15-hero-grid { grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr); gap: 56px; }
-  .home-main .h17-scene img { aspect-ratio: 5 / 4; object-position: 50% 50%; }
-  .home-main .h17-credit { text-align: right; }
-}
-@media (min-width: 1024px) and (max-width: 1199px) {
-  .home-main .h17-rail { grid-template-columns: minmax(0, 1fr); gap: 10px; }
-  .home-main .h17-rail-arrow { display: none; }
-}
-
-/* ---------- 2. Who it is for: three moments ---------- */
-.home-main .h17-moments { margin-top: var(--space-lg); display: grid; gap: var(--space-base); }
-.home-main .h17-moment img, .home-main .h17-clock { display: block; width: 100%; aspect-ratio: 16 / 10; height: auto; object-fit: cover; border-radius: 14px; }
-.home-main .h17-moment h3 { margin: var(--space-sm) 0 6px; font-size: 20px; }
-.home-main .h17-moment p { margin: 0; font-size: 16px; line-height: 1.6; color: var(--ink-700); }
-.home-main .h17-clock { display: grid; grid-template-columns: 1.5fr 1fr; grid-template-rows: 1fr 1fr; gap: 8px; padding: 14px; background: var(--navy-900); }
-.home-main .h17-clock span { display: flex; flex-direction: column; justify-content: center; padding: 10px 14px; border-radius: 10px; font-family: var(--font-heading); font-weight: 700; color: #fff; line-height: 1.2; }
-.home-main .h17-clock small { margin-top: 4px; font-family: var(--font-body); font-weight: 500; font-size: 12.5px; }
-.home-main .h17-clock-day { grid-row: 1 / span 2; background: var(--teal-500); color: #04252a !important; font-size: 24px; }
-.home-main .h17-clock-day small { color: #04252a; }
-.home-main .h17-clock-add { border: 1.5px dashed rgba(131, 214, 223, 0.7); font-size: 16px; }
-.home-main .h17-clock-add small { color: var(--teal-300); }
-@media (min-width: 800px) { .home-main .h17-moments { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-
 /* ---------- 3. Missed calls: a photographic navy inset ---------- */
 .home-main .h17-inset { display: grid; border-radius: 24px; overflow: hidden; background: var(--navy-900); color: #cdd3e6; }
 .home-main .h17-inset :focus-visible { outline-color: var(--teal-300); }
@@ -296,11 +254,6 @@
 .home-main .h17-panel-label--gap { margin-top: var(--space-md); margin-bottom: 0; }
 .home-main .h15-pricing .h15-addons { margin-top: 10px; }
 .home-main .h15-pricing .h15-addon-name small { max-width: 30em; line-height: 1.45; }
-.home-main .h17-week { margin-top: var(--space-lg); display: grid; gap: var(--space-md); align-items: center; }
-.home-main .h17-week h3 { margin: 0 0 8px; font-size: 22px; }
-.home-main .h17-week p { margin: 0; font-size: 16.5px; line-height: 1.6; color: var(--ink-700); max-width: 30em; }
-.home-main .h17-week .coverage { margin: 0; }
-@media (min-width: 1024px) { .home-main .h17-week { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 64px; } }
 
 /* ---------- 8. Works with: how access works, then the systems ---------- */
 .home-main .h17-crm-top { display: grid; gap: var(--space-base); }
@@ -312,3 +265,85 @@
 .home-main .h17-access span { display: block; margin-top: 2px; font-size: 14.5px; line-height: 1.45; color: #cdd3e6; }
 .home-main .h17-crm .syslist { margin-top: var(--space-lg); }
 @media (min-width: 1024px) { .home-main .h17-crm-top { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 72px; align-items: center; } }
+
+/* ==========================================================================
+   Round 18 — h18- components and the page's rhythm. Sections no longer share
+   one padding: dense ones are tighter, the two showpieces get room.
+   ========================================================================== */
+.home-main .h18-who { padding: 64px 0 56px; }
+.home-main .h17-cost { padding: 56px 0; }
+.home-main .h17-process { padding: 72px 0 64px; }
+.home-main .h17-call { padding: 64px 0; }
+.home-main .h17-handoff { padding: 80px 0; }
+.home-main .h15-pricing { padding: 64px 0 72px; }
+.home-main .h17-crm { padding: 72px 0 64px; }
+@media (max-width: 599px) {
+  .home-main .h18-who, .home-main .h17-cost, .home-main .h17-process, .home-main .h17-call, .home-main .h17-handoff, .home-main .h15-pricing, .home-main .h17-crm { padding: 44px 0; }
+}
+
+/* ---------- 1. Hero: headline first, the illustration as the one image ---------- */
+.home-main .h18-hero h1 { max-width: 13ch; }
+.home-main .h18-hero .lede { max-width: 31em; }
+.home-main .h18-hero .h15-facts { order: 3; margin-top: var(--space-md); padding-top: var(--space-sm); border-top: 1px solid var(--line-2); font-size: 14px; color: var(--ink-500); overflow: visible; margin-left: 0; display: block; }
+.home-main .h18-hero .h15-facts span { padding: 0; border: 0; margin: 0; white-space: normal; }
+.home-main .h18-hero .h15-facts span + i + span::before, .home-main .h18-hero .h15-facts span:not(:first-child)::before { content: '\00b7'; padding: 0 8px; color: var(--control); }
+.home-main .h18-art { margin: 0; }
+.home-main .h18-art-svg { display: block; width: 100%; height: auto; }
+.home-main .h18-art figcaption { margin: 10px 4px 0; font-size: 13px; line-height: 1.45; color: var(--ink-500); }
+@media (min-width: 1024px) {
+  .home-main .h18-hero { padding: 64px 0 72px; }
+  .home-main .h18-hero .h15-hero-grid { grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr); gap: 56px; }
+  .home-main .h18-hero .h15-facts, .home-main .h18-hero .h15-hero-cta, .home-main .h18-hero .h15-hero-note { order: 0; }
+  .home-main .h18-hero .h15-hero-cta { margin-top: 28px; }
+  .home-main .h18-hero .h15-facts { order: 3; }
+}
+@media (min-width: 1280px) { .home-main .h18-hero h1 { font-size: 56px; line-height: 1.06; } }
+
+/* ---------- 2. Who it is for: heading left, three short cases right ---------- */
+.home-main .h18-who-grid { display: grid; gap: var(--space-base); }
+.home-main .h18-cases { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); }
+.home-main .h18-case { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 18px; align-items: start; padding: 18px 0; border-bottom: 1px solid var(--line-2); }
+.home-main .h18-case img, .home-main .h18-hours { display: block; width: 72px; height: 72px; border-radius: 16px; object-fit: cover; }
+.home-main .h18-case h3 { margin: 2px 0 4px; font-size: 19px; }
+.home-main .h18-case p { margin: 0; font-size: 16px; line-height: 1.55; color: var(--ink-700); max-width: 34em; }
+.home-main .h18-hours { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; background: var(--navy-900); color: var(--teal-300); font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.home-main .h18-hours b { font-family: var(--font-heading); font-size: 19px; letter-spacing: 0; color: #fff; }
+.home-main .h18-photo-note { margin: 12px 0 0; font-size: 12.5px; color: var(--ink-500); text-align: right; }
+@media (min-width: 1024px) {
+  .home-main .h18-who-grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 72px; align-items: start; }
+  .home-main .h18-case { grid-template-columns: 88px minmax(0, 1fr); gap: 22px; }
+  .home-main .h18-case img, .home-main .h18-hours { width: 88px; height: 88px; }
+}
+
+/* ---------- 3. Stakes band: shorter than before ---------- */
+@media (min-width: 1024px) {
+  .home-main .h17-inset { grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); }
+  .home-main .h17-inset-photo { min-height: 0; }
+  .home-main .h17-inset-copy { padding: 48px 56px; }
+  .home-main .h17-inset-copy h2 { max-width: 22ch; }
+}
+
+/* ---------- 5. The example call sits on cream now, so its stages are white ---------- */
+.home-main .h17-call .h17-stage { background: var(--white); padding: 36px 18px 18px; }
+.home-main .h17-call .h17-talk { margin-bottom: var(--space-sm); gap: 8px; }
+.home-main .h17-call .h17-bubble { padding: 10px 13px; font-size: 15.5px; }
+.home-main .h17-call .h17-bubble--them { background: var(--warm-50); border-color: var(--line); }
+.home-main .h17-call .h17-track { margin-top: var(--space-base); }
+
+/* ---------- 7. Pricing: the week lives inside the panel ---------- */
+.home-main .h18-cover { display: grid; gap: var(--space-md); align-items: center; padding-top: var(--space-base); border-top: 1px solid rgba(255, 255, 255, 0.18); }
+.home-main .h18-cover h3 { margin: 0 0 8px; font-size: 20px; color: #fff; }
+.home-main .h18-cover p { margin: 0; font-size: 15.5px; line-height: 1.6; color: #cdd3e6; max-width: 30em; }
+.home-main .h18-cover .coverage { margin: 0; }
+@media (min-width: 1024px) {
+  .home-main .h15-panel { align-items: start; row-gap: 40px; padding: 56px 64px; }
+  .home-main .h18-cover { grid-column: 1 / -1; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: 56px; padding-top: 40px; }
+}
+
+/* ---------- 8. Systems: access steps in a row, names lighter than before ---------- */
+.home-main .h17-crm .syslist { margin-top: var(--space-base); }
+@media (min-width: 1024px) {
+  .home-main .h17-crm-top { grid-template-columns: minmax(0, 1fr); gap: var(--space-base); }
+  .home-main .h17-crm-top > div { max-width: 46em; }
+  .home-main .h17-access { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+}

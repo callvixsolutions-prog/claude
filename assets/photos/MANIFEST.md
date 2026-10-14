@@ -32,36 +32,34 @@ opening it. Neither licence requires attribution; none is shown on the page.
 - **Shows:** a man crouching beside an open crawl-space hatch in the side wall of a house. Described by the
   uploader as a home inspector; not Callvix staff, and not presented as such.
 
-## Round 17 — homepage
+## Round 18 — homepage (current)
 
-Each photograph is used once on the page. `home-hero-desktop.*` (Round 15) is no longer referenced; it is left
-in place because it is cached for a year under that name and an hour-old copy of the old page may still ask for it.
+The hero is an illustration drawn for this site as inline SVG in `index.html` (no image file, no third-party
+asset, no licence to track). It shows a technician at a house, a small front desk and an appointment slip; no
+real person appears in it.
+
+Three photographs remain, each used once:
 
 | Where | Files | Photograph |
 | --- | --- | --- |
-| Hero | `home-handler-desktop.*` (1240×992), `home-handler-mobile.*` (800×600) | Person at a desk with a headset |
-| "Technicians on a job" | `home-hero-mobile.*` (800×600) | Technician with backpack sprayer (Round 15) |
-| "An office at capacity" | `home-office-tile.*` (640×480) | Man on a desk phone |
-| Missed-calls panel | `home-rules-desktop.*`, `home-rules-mobile.*` | Crawl-space hatch (Round 15) |
+| "Technicians on a job" | `home-case-tech.*` (280×280) | Technician with backpack sprayer (the Round 15 hero photograph) |
+| "An office at capacity" | `home-case-office.*` (280×280) | Man on a desk phone |
+| Missed-calls band | `home-rules-desktop.*`, `home-rules-mobile.*` | Crawl-space hatch (Round 15) |
 
-The handoff section has no photograph: its visual is the call summary, built in HTML.
+`home-hero-desktop.*` and `home-hero-mobile.*` (Round 15) are no longer referenced. They stay in the folder
+because they are cached for a year under those names and an hour-old copy of the old page may still ask for them.
+The headset photographs tried in Round 17 were never published and have been removed.
 
-### Hero: person at a desk with a headset
+### "Technicians on a job"
 
-- **Source:** https://unsplash.com/photos/RoGw9buwZBg
-- **Photographer:** Vitaly Gariev
-- **Licence:** Unsplash License — https://unsplash.com/license (free commercial use, no attribution required)
-- **Original:** 3840×2160. Downloaded 2026-10-14 at 2400×1350.
-- **Crops:** desktop 5:4 — x 290–1977, full height; mobile 4:3 — x 300–2100, full height.
-- **Edits:** crop and resize only.
-- **Shows:** a woman wearing over-ear headphones working at a laptop. A stock model. **She is not Callvix staff.**
-  The page says so in visible text under the hero ("Illustrative stock photos and example call. Not Callvix
-  staff or customers."). The file is FLAGGED in `ALLOWED_IMAGES` pending Chris's decision.
+- **Source, photographer, licence:** as "Homepage hero (Round 15)" above — Pro Pest Control Canberra, Unsplash License.
+- **Crop (of the 2400×1600 download):** square — x 390–1190, y 230–1030. **Edits:** crop and resize only.
 
 ### "An office at capacity"
 
 - **Source:** https://unsplash.com/photos/WEDDt-u3q3o
 - **Photographer:** Berkeley Communications
-- **Licence:** Unsplash License. **Original:** 5184×3456. Downloaded 2026-10-14 at 2400×1600.
-- **Crop:** 4:3 — x 300–2100, y 150–1500. **Edits:** crop and resize only.
-- **Shows:** a man on a desk phone behind two monitors. A stock photograph; not a Callvix customer.
+- **Licence:** Unsplash License — https://unsplash.com/license. **Original:** 5184×3456. Downloaded 2026-10-14 at 2400×1600.
+- **Crop:** square — x 720–1620, y 330–1230. **Edits:** crop and resize only.
+- **Shows:** a man on a desk phone behind a monitor. A stock photograph; not a Callvix customer. The page says
+  "Stock photographs, not Callvix customers." beside it.

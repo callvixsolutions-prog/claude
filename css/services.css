@@ -1,0 +1,150 @@
+/* ==========================================================================
+   /services only — Round 18. Linked from services.html and nowhere else.
+   Every selector starts at .svc-main and every class it adds is prefixed
+   s18-. Tokens come from style.css; none is redefined.
+   ========================================================================== */
+
+.svc-main .s18-head { max-width: 46em; }
+.svc-main .s18-head h2 { margin-bottom: 0; }
+.svc-main .s18-head p { margin: var(--space-sm) 0 0; font-size: 17px; line-height: 1.6; color: var(--ink-700); max-width: 36em; }
+.svc-main .s18-label { margin: 0 0 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal-600); }
+
+/* ---------- 1. Hero ---------- */
+.svc-main .s18-hero { padding: 40px 0 56px; }
+.svc-main .s18-hero-grid { display: grid; gap: var(--space-base); align-items: center; }
+.svc-main .s18-hero .lede { max-width: 33em; }
+.svc-main .s18-hero .hero-cta { margin-top: 26px; }
+.svc-main .s18-glance { padding: 26px 26px 22px; border-radius: 20px; background: var(--navy-900); color: #cdd3e6; }
+.svc-main .s18-glance-title { margin: 0 0 6px; font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal-300); }
+.svc-main .s18-glance dl { margin: 0; }
+.svc-main .s18-glance dl > div { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.16); font-size: 16px; line-height: 1.45; }
+.svc-main .s18-glance dt { padding-top: 3px; font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #9fb0d6; }
+.svc-main .s18-glance dd { margin: 0; color: #e6eaf5; }
+.svc-main .s18-glance dd strong { color: #fff; }
+.svc-main .s18-mini { list-style: none; counter-reset: s18m; margin: 18px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 6px; align-items: center; font-family: var(--font-heading); font-weight: 600; font-size: 14px; color: #fff; }
+.svc-main .s18-mini li { counter-increment: s18m; display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px 7px 8px; border-radius: 999px; background: rgba(131, 214, 223, 0.14); border: 1px solid rgba(131, 214, 223, 0.4); }
+.svc-main .s18-mini li::before { content: counter(s18m); display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--teal-500); color: #04252a; font-size: 12.5px; }
+@media (min-width: 1024px) {
+  .svc-main .s18-hero { padding: 48px 0 72px; }
+  .svc-main .s18-hero-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 72px; }
+}
+
+/* ---------- 2. Scope ---------- */
+.svc-main .s18-scope { padding: 64px 0; }
+.svc-main .s18-scope-grid { margin-top: var(--space-lg); display: grid; gap: var(--space-base); align-items: start; }
+.svc-main .s18-included h3, .svc-main .s18-optional h3 { margin: 0 0 4px; font-size: 22px; }
+.svc-main .s18-included .svc-base-line { margin: 0 0 var(--space-sm); }
+.svc-main .s18-deflist { margin: 0; border-top: 2px solid var(--navy-900); }
+.svc-main .s18-deflist > div { padding: 14px 0; border-bottom: 1px solid var(--line-2); }
+.svc-main .s18-deflist dt { font-family: var(--font-heading); font-weight: 600; font-size: 17px; color: var(--navy-900); }
+.svc-main .s18-deflist dd { margin: 3px 0 0; font-size: 15.5px; line-height: 1.55; color: var(--ink-700); }
+.svc-main .s18-optional { padding: 28px 26px; border-radius: 20px; background: var(--navy-900); color: #cdd3e6; }
+.svc-main .s18-optional :focus-visible { outline-color: var(--teal-300); }
+.svc-main .s18-optional h3 { color: #fff; }
+.svc-main .s18-optional ul { list-style: none; margin: var(--space-sm) 0 0; padding: 0; border-top: 1px solid rgba(255, 255, 255, 0.18); }
+.svc-main .s18-optional li { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.18); font-size: 14.5px; line-height: 1.5; }
+.svc-main .s18-optional li strong { display: block; font-family: var(--font-heading); font-weight: 600; font-size: 16.5px; color: #fff; }
+.svc-main .s18-optional li b { flex: 0 0 auto; font-weight: 600; font-size: 16px; color: var(--teal-300); }
+.svc-main .s18-optional p { margin: 14px 0 0; font-size: 14.5px; line-height: 1.5; color: #cdd3e6; }
+.svc-main .s18-optional .s18-optional-link a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; color: var(--teal-300); }
+.svc-main .s18-fits { margin-top: var(--space-lg); display: grid; gap: var(--space-md); padding: 24px 0 0; border-top: 1px solid var(--line-2); }
+.svc-main .s18-fits h3 { margin: 0 0 4px; font-size: 17px; }
+.svc-main .s18-fits p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--ink-700); }
+.svc-main .s18-aside { margin: var(--space-md) 0 0; font-size: 15px; color: var(--ink-500); }
+@media (min-width: 800px) { .svc-main .s18-fits { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; } }
+@media (min-width: 1024px) {
+  .svc-main .s18-scope-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: 64px; }
+  .svc-main .s18-deflist > div { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; }
+  .svc-main .s18-deflist dd { margin: 0; }
+  .svc-main .s18-optional { position: sticky; top: 96px; padding: 32px; }
+}
+
+/* ---------- 3. Setup: four steps on a line ---------- */
+.svc-main .s18-setup { padding: 64px 0; }
+.svc-main .s18-steps { list-style: none; counter-reset: s18s; margin: var(--space-lg) 0 0; padding: 0; display: grid; gap: var(--space-md); }
+.svc-main .s18-steps li { counter-increment: s18s; position: relative; padding: 0 0 0 56px; }
+.svc-main .s18-steps li::before { content: counter(s18s); position: absolute; left: 0; top: 0; width: 40px; height: 40px; border-radius: 50%; background: var(--navy-900); color: #fff; font-family: var(--font-heading); font-weight: 700; font-size: 16px; line-height: 40px; text-align: center; }
+.svc-main .s18-steps h3 { margin: 6px 0 6px; font-size: 18px; }
+.svc-main .s18-steps p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--ink-700); }
+@media (min-width: 1024px) {
+  .svc-main .s18-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; }
+  .svc-main .s18-steps li { padding: 60px 0 0; }
+  /* The line the four numbers sit on. */
+  .svc-main .s18-steps li::after { content: ''; position: absolute; left: 48px; right: -32px; top: 19px; height: 2px; background: var(--line-2); }
+  .svc-main .s18-steps li:last-child::after { display: none; }
+}
+
+/* ---------- 4. A call and its outcomes ---------- */
+.svc-main .s18-call { padding: 64px 0; }
+.svc-main .s18-rail { list-style: none; counter-reset: s18r; margin: var(--space-base) 0 0; padding: 0; display: grid; gap: 0; border-top: 2px solid var(--navy-900); }
+.svc-main .s18-rail li { counter-increment: s18r; position: relative; padding: 12px 0 12px 34px; border-bottom: 1px solid var(--line-2); font-size: 14.5px; line-height: 1.45; color: var(--ink-700); }
+.svc-main .s18-rail li::before { content: counter(s18r); position: absolute; left: 0; top: 12px; font-family: var(--font-heading); font-weight: 700; font-size: 15px; color: var(--teal-600); }
+.svc-main .s18-rail b { display: block; font-family: var(--font-heading); font-weight: 600; font-size: 15.5px; color: var(--navy-900); }
+.svc-main .s18-call-grid { margin-top: var(--space-lg); display: grid; gap: var(--space-lg); align-items: start; }
+.svc-main .s18-chat { padding: 20px; border-radius: 18px; background: var(--cream); border: 1px solid var(--line); }
+.svc-main .s18-chat-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; margin: 0 0 14px; padding-bottom: 12px; border-bottom: 1px solid var(--line-2); font-size: 13.5px; color: var(--ink-500); }
+.svc-main .s18-chat-head strong { font-family: var(--font-heading); font-size: 14.5px; color: var(--navy-900); }
+.svc-main .s18-chat-head span { margin-left: auto; padding: 3px 10px; border-radius: 999px; background: var(--teal-100); color: var(--teal-600); font-size: 11.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.svc-main .s18-line { margin: 0 0 8px; max-width: 88%; padding: 9px 13px; border-radius: 14px 14px 14px 4px; background: var(--white); border: 1px solid var(--line-2); font-size: 15px; line-height: 1.45; color: var(--ink-900); }
+.svc-main .s18-line b { display: block; margin-bottom: 1px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-500); }
+.svc-main .s18-line--us { margin-left: auto; border-radius: 14px 14px 4px 14px; background: var(--teal-100); border-color: transparent; }
+.svc-main .s18-line--us b { color: var(--teal-600); }
+.svc-main .s18-result { display: flex; align-items: center; gap: 10px; margin: 14px 0 0; padding: 12px 14px; border-radius: 12px; background: var(--navy-900); color: #fff; font-family: var(--font-heading); font-weight: 600; font-size: 14.5px; }
+.svc-main .s18-result svg { flex: 0 0 auto; color: var(--teal-300); }
+.svc-main .s18-outcomes h3 { margin: 0 0 6px; font-size: 22px; }
+.svc-main .s18-outcomes-intro { margin: 0 0 var(--space-sm); font-size: 16px; line-height: 1.55; color: var(--ink-700); }
+.svc-main .s18-outcomes ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); }
+.svc-main .s18-outcomes li { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 16px 0; border-bottom: 1px solid var(--line-2); }
+.svc-main .s18-outcomes h4 { margin: 0 0 4px; font-size: 17px; }
+.svc-main .s18-outcomes li p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--ink-700); }
+.svc-main .s18-tag { justify-self: start; align-self: start; padding: 4px 12px; border-radius: 999px; font-size: 11.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.svc-main .s18-tag--booked { background: var(--teal-600); color: #fff; }
+.svc-main .s18-tag--escalated { background: var(--navy-900); color: #fff; }
+.svc-main .s18-tag--returned { background: var(--warm-50); color: var(--ink-700); border: 1px solid var(--line-2); }
+.svc-main .s18-disclaimer { margin: var(--space-md) 0 0; font-size: 13px; line-height: 1.5; color: var(--ink-500); max-width: 60em; }
+@media (min-width: 700px) { .svc-main .s18-outcomes li { grid-template-columns: 104px minmax(0, 1fr); gap: 16px; } .svc-main .s18-tag { margin-top: 2px; } }
+@media (min-width: 1024px) {
+  .svc-main .s18-rail { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px; border-top: 0; }
+  .svc-main .s18-rail li { padding: 14px 0 0 0; border-bottom: 0; border-top: 2px solid var(--navy-900); }
+  .svc-main .s18-rail li::before { position: static; display: block; margin-bottom: 4px; }
+  .svc-main .s18-call-grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 64px; }
+}
+
+/* ---------- 5. Handoff and CRM entry ---------- */
+.svc-main .s18-handoff { padding: 64px 0; }
+.svc-main .s18-split { margin-top: var(--space-lg); display: grid; border-radius: 20px; overflow: hidden; border: 1px solid var(--line-2); background: var(--white); }
+.svc-main .s18-split h3 { margin: 0 0 var(--space-sm); font-size: 22px; }
+.svc-main .s18-split-main, .svc-main .s18-split-side { padding: 28px 24px; }
+.svc-main .s18-split p { margin: 0 0 12px; font-size: 16px; line-height: 1.6; color: var(--ink-700); }
+.svc-main .s18-split p:last-child { margin-bottom: 0; }
+.svc-main .s18-split .s18-label { margin-bottom: 6px; font-size: 12px; color: var(--teal-600); }
+.svc-main .s18-ticks { list-style: none; margin: 0 0 var(--space-sm); padding: 0; }
+.svc-main .s18-ticks li { display: flex; gap: 12px; align-items: flex-start; padding: 9px 0; font-size: 16px; line-height: 1.45; color: var(--ink-900); }
+.svc-main .s18-ticks svg { flex: 0 0 auto; margin-top: 2px; color: var(--teal-600); }
+.svc-main .s18-split-side { background: var(--warm-50); border-top: 1px dashed var(--control); }
+@media (min-width: 900px) {
+  .svc-main .s18-split { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); }
+  .svc-main .s18-split-main, .svc-main .s18-split-side { padding: 40px; }
+  .svc-main .s18-split-side { border-top: 0; border-left: 1px dashed var(--control); }
+}
+
+/* ---------- 6. Operating standards ---------- */
+.svc-main .s18-standards { padding: 64px 0; }
+.svc-main .s18-standards-grid { display: grid; gap: var(--space-base); align-items: start; }
+.svc-main .s18-standards-list { list-style: none; counter-reset: s18o; margin: 0; padding: 0; border-top: 2px solid var(--navy-900); }
+.svc-main .s18-standards-list li { counter-increment: s18o; position: relative; padding: 14px 0 14px 48px; border-bottom: 1px solid var(--line-2); }
+.svc-main .s18-standards-list li::before { content: counter(s18o, decimal-leading-zero); position: absolute; left: 0; top: 16px; font-family: var(--font-heading); font-weight: 700; font-size: 15px; color: var(--teal-600); }
+.svc-main .s18-standards-list h3 { margin: 0 0 3px; font-size: 17.5px; }
+.svc-main .s18-standards-list p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--ink-700); }
+.svc-main .s18-systems { margin-top: var(--space-lg); padding: 22px 24px; border-radius: 16px; background: var(--cream); border: 1px solid var(--line); }
+.svc-main .s18-systems p { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--ink-700); }
+.svc-main .s18-systems .s18-tm { margin-top: 10px; font-size: 13px; color: var(--ink-500); }
+@media (min-width: 1024px) { .svc-main .s18-standards-grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 72px; } }
+
+/* ---------- 7–8. FAQ and close ---------- */
+.svc-main .s18-faq { padding: 64px 0; }
+.svc-main .s18-close { padding: 56px 0 64px; }
+
+/* Links inside the new blocks. style.css styles links in <p> and bare <li>; these sit in <dd> and classed lists. */
+.svc-main .s18-deflist a, .svc-main .s18-steps a, .svc-main .s18-systems a, .svc-main .s18-split a, .svc-main .s18-aside a, .svc-main .s18-head a { color: var(--teal-600); font-weight: 500; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.svc-main .s18-deflist a:hover, .svc-main .s18-steps a:hover, .svc-main .s18-systems a:hover, .svc-main .s18-split a:hover, .svc-main .s18-aside a:hover, .svc-main .s18-head a:hover { text-decoration-thickness: 2px; }

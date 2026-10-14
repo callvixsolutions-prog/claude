@@ -38,6 +38,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"></noscript>
 <link rel="stylesheet" href="/css/style.css?v=5b7efe6ddc">
+<link rel="stylesheet" href="/css/services.css?v=8431b87240">
 <style>
 /* /services page-specific */
 .hero-subhead { font-family: var(--font-heading); font-size: clamp(19px, 2.2vw, 23px); font-weight: 600; color: var(--ink-700); margin: 0 0 var(--space-xs); max-width: 720px; line-height: 1.3; }
@@ -370,222 +371,195 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-block">Book a Discovery Call</a>
   </div>
 
-<main id="main">
+<main id="main" class="svc-main">
 
-<section class="page-hero svc-hero">
+<!-- 1 — HERO. Short: what it is, the four facts, the action. -->
+<section class="page-hero s18-hero">
   <div class="container">
-    <div>
-      <div class="breadcrumbs"><a href="/">Home</a> / How It Works</div>
-      <div class="eyebrow">Service overview</div>
-      <h1>Human Pest Control Answering Service</h1>
-      <p class="hero-subhead">Pest control calls handled the way your own office would.</p>
-      <p class="lede">Trained people answer your calls in your company&rsquo;s name, qualify the pest issue, check the address against your service area, and book the job on your availability. Entering those bookings and call notes directly into <a href="/integrations/">the system your office already uses</a> is an optional paid add-on. Built only for U.S. pest control companies.</p>
-      <ul class="svc-facts">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>$399/month</strong> base, plus $2.99 per inbound call</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Monday&ndash;Friday, <strong>9am&ndash;6pm your local time</strong></span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Evening and weekend coverage optional</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>No long-term contract</span></li>
-      </ul>
-      <div class="hero-cta" style="margin-top:26px;">
-        <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary">Book a Discovery Call</a>
-        <a href="/pricing" class="btn btn-outline">See pricing</a>
+    <div class="s18-hero-grid">
+      <div>
+        <div class="breadcrumbs"><a href="/">Home</a> / How It Works</div>
+        <div class="eyebrow">Service overview</div>
+        <h1>Human Pest Control Answering Service</h1>
+        <p class="lede">Trained people answer your calls in your company&rsquo;s name, check each caller against your service area and rules, and book the jobs that qualify. Built only for U.S. pest control companies.</p>
+        <div class="hero-cta">
+          <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary">Book a Discovery Call</a>
+          <a href="/pricing" class="btn btn-outline">See pricing</a>
+        </div>
+        <p class="svc-cta-note">A 20-minute call to map your current call flow. No contract, no obligation.</p>
       </div>
-      <p class="svc-cta-note">A 20-minute call to map your current call flow. No contract, no obligation.</p>
-    </div>
-
-    <div class="flow">
-      <h2 class="flow-label">Illustrative &mdash; how a call is handled</h2>
-      <div class="flow-step"><div class="n">1</div><div><h3>A customer calls your number</h3><p>Forwarded to Callvix on the rules you set.</p></div></div>
-      <div class="flow-link" aria-hidden="true"></div>
-      <div class="flow-step"><div class="n">2</div><div><h3>Answered in your company&rsquo;s name</h3><p>By a trained person, using your greeting.</p></div></div>
-      <div class="flow-link" aria-hidden="true"></div>
-      <div class="flow-step"><div class="n">3</div><div><h3>Pest issue and address captured</h3><p>Urgency, service type and location, checked against your service area.</p></div></div>
-      <div class="flow-link" aria-hidden="true"></div>
-      <div class="flow-step"><div class="n">4</div><div><h3>Then one of two things</h3></div></div>
-      <div class="flow-branch">
-        <div><strong>Booked</strong>If the job fits your rules and a slot is free.</div>
-        <div><strong>Escalated</strong>If it falls outside them, by the route you choose.</div>
+      <div class="s18-glance">
+        <h2 class="s18-glance-title">At a glance</h2>
+        <dl>
+          <div><dt>Price</dt><dd><strong>$399/month</strong> base, plus $2.99 per inbound call</dd></div>
+          <div><dt>Hours</dt><dd>Monday&ndash;Friday, <strong>9am&ndash;6pm your local time</strong></dd></div>
+          <div><dt>Add-ons</dt><dd>Evening and weekend coverage optional</dd></div>
+          <div><dt>Terms</dt><dd>No long-term contract</dd></div>
+        </dl>
+        <ol class="s18-mini" aria-label="How a call runs">
+          <li>Answered</li><li>Checked</li><li>Booked or escalated</li>
+        </ol>
       </div>
-      <div class="flow-link" aria-hidden="true" style="margin-left:13px;"></div>
-      <div class="flow-step"><div class="n">5</div><div><h3>Shared with your team</h3><p>Booking and call details are shared with your team using the method agreed during setup, plus reporting on the calls we handle. Direct entry into your CRM is the CRM Management add-on.</p></div></div>
-      <p class="flow-foot">An example of the process, not a record of a real call.</p>
     </div>
   </div>
 </section>
 
-<section class="section">
+<!-- 2 — SCOPE. Included on the left, optional on the right. -->
+<section class="section section--alt s18-scope">
   <div class="container">
-    <div class="section-head section-head--center">
+    <div class="s18-head">
       <div class="eyebrow">What&rsquo;s included</div>
       <h2>What Callvix covers, and what&rsquo;s optional</h2>
-      <p class="lede">Live answering and booking Monday&ndash;Friday, 9am&ndash;6pm your local time, with optional evening and weekend coverage during the windows you agree. Our <a href="/blog/after-hours-pest-control-call-handling">after-hours coverage and escalation plan</a> walks through choosing those windows from your own call data.</p>
+      <p>Live answering and booking Monday&ndash;Friday, 9am&ndash;6pm your local time, with optional evening and weekend coverage during the windows you agree. Our <a href="/blog/after-hours-pest-control-call-handling">after-hours coverage and escalation plan</a> walks through choosing those windows from your own call data.</p>
     </div>
-
-    <div class="grid grid-2">
-      <div class="card">
-        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-        <h3>Inbound call answering</h3>
-        <p>Live answering in your company name for new and existing customers &mdash; calls open the way your office would.</p>
-      </div>
-      <div class="card">
-        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div>
-        <h3>Urgent-call triage and escalation</h3>
-        <p>Wasps by a door, rodents in a kitchen: the handler records the urgency and follows your escalation rules, so time-sensitive calls reach you the way you decided.</p>
-      </div>
-      <div class="card">
-        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
-        <h3>Overflow, plus optional after-hours</h3>
-        <p>Cover the calls that stack up while your team is on a job &mdash; plus optional evening and weekend add-ons for when the office is closed. Not sure what unanswered calls add up to? <a href="/blog/missed-calls-cost-pest-control">Estimate it from your own numbers</a>.</p>
-      </div>
-      <div class="card">
-        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
-        <h3>Appointment scheduling</h3>
-        <p>Jobs booked on your availability, service areas and pricing rules, with the details your team needs to action them.</p>
-      </div>
-    </div>
-
-    <div class="grid grid-2" style="margin-top:28px;">
-      <div class="card">
-        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
+    <div class="s18-scope-grid">
+      <div class="s18-included">
         <h3>Included as standard</h3>
         <p class="svc-base-line">$399/month base &middot; $2.99 per inbound call &middot; $0.99 per outbound follow-up</p>
-        <div class="checklist" style="margin-top:14px;">
-          <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>Live answering in your company name, Monday&ndash;Friday, 9am&ndash;6pm your local time.</p></div>
-          <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>Lead qualification and appointment booking by your rules.</p></div>
-          <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>Daytime overflow for calls that pile up while your team is on a job.</p></div>
-          <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>Booking and call details shared with your team using the method agreed during setup, plus reporting on the calls we handle.</p></div>
-        </div>
+        <dl class="s18-deflist">
+          <div><dt>Inbound call answering</dt><dd>Live answering in your company name for new and existing customers &mdash; calls open the way your office would.</dd></div>
+          <div><dt>Lead qualification</dt><dd>The pest, the urgency and the address, checked against your service area before anything is offered.</dd></div>
+          <div><dt>Appointment scheduling</dt><dd>Jobs booked on your availability, service areas and pricing rules, with the details your team needs to action them.</dd></div>
+          <div><dt>Urgent-call triage and escalation</dt><dd>Wasps by a door, rodents in a kitchen: the handler records the urgency and follows your escalation rules, so time-sensitive calls reach you the way you decided.</dd></div>
+          <div><dt>Daytime overflow</dt><dd>Cover the calls that stack up while your team is on a job. Not sure what unanswered calls add up to? <a href="/blog/missed-calls-cost-pest-control">Estimate it from your own numbers</a>.</dd></div>
+          <div><dt>Handoff and reporting</dt><dd>Booking and call details shared with your team using the method agreed during setup, plus reporting on the calls we handle.</dd></div>
+        </dl>
       </div>
-      <div class="card">
-        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <aside class="s18-optional">
         <h3>Optional paid add-ons</h3>
-        <div class="checklist" style="margin-top:14px;">
-          <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p><strong>After-Hours Coverage</strong> &mdash; evening answering for when the office is closed ($199/mo).</p></div>
-          <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p><strong>Weekend Coverage</strong> &mdash; Saturday and Sunday live answering ($149/mo).</p></div>
-          <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p><strong>CRM Management</strong> &mdash; call notes and booking details entered directly into your CRM or system after every call ($99/mo).</p></div>
-        </div>
-        <p style="font-size:14px;color:var(--ink-500);margin-top:14px;">Choose add-on windows from your own call data &mdash; not a blanket 24/7 plan.</p>
-      </div>
+        <ul>
+          <li><span><strong>After-Hours Coverage</strong>Evening answering for when the office is closed.</span><b>$199/mo</b></li>
+          <li><span><strong>Weekend Coverage</strong>Saturday and Sunday live answering.</span><b>$149/mo</b></li>
+          <li><span><strong>CRM Management</strong>Call notes and booking details entered directly into your CRM or system after every call.</span><b>$99/mo</b></li>
+        </ul>
+        <p>Choose add-on windows from your own call data &mdash; not a blanket 24/7 plan.</p>
+        <p class="s18-optional-link"><a href="/pricing">See full pricing &rarr;</a></p>
+      </aside>
     </div>
-
-    <p class="svc-more"><a href="/pricing">See full pricing &rarr;</a></p>
-
-    <div class="svc-fits">
+    <div class="s18-fits">
       <div><h3>Solo operators</h3><p>Calls answered in your name while you&rsquo;re on a job or driving, without hiring a receptionist.</p></div>
       <div><h3>Small &amp; growing teams</h3><p>Cover overflow and the evening or weekend gaps you choose to add.</p></div>
       <div><h3>Multi-tech companies</h3><p>A consistent front desk across shifts, with appointments booked by your rules.</p></div>
     </div>
-
-    <p class="svc-note" style="text-align:center;margin:28px auto 0;max-width:640px;">Comparing providers? Use our <a href="/blog/pest-control-answering-service-checklist" style="color:var(--teal-600);font-weight:600;">questions to ask any answering service</a> &mdash; including us.</p>
+    <p class="s18-aside">Comparing providers? Use our <a href="/blog/pest-control-answering-service-checklist">questions to ask any answering service</a> &mdash; including us.</p>
   </div>
 </section>
 
-<section class="section">
+<!-- 3 — SETUP. Four steps on one line. -->
+<section class="section s18-setup">
   <div class="container">
-    <div class="section-head section-head--center">
-      <div class="eyebrow">Sample call</div>
-      <h2>A sample pest control call, step by step</h2>
-      <p class="lede">Written out to show the order a call runs in &mdash; greeting, service-area check, then booking or escalation.</p>
-    </div>
-    <div class="call-card" style="max-width:720px; margin:0 auto;">
-      <div class="call-card-top">
-        <div class="who"><div><strong>Callvix representative</strong><span>Answering as &ldquo;Example Pest Control Co.&rdquo;</span></div></div>
-        <span class="live-tag"><span class="dot"></span> EXAMPLE</span>
-      </div>
-      <div class="call-card-body">
-        <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Thanks for calling Example Pest Control Co., this is Sam &mdash; how can I help?&rdquo;</div>
-        <div class="bubble them"><span class="lbl">Caller</span>&ldquo;We&rsquo;ve got wasps building a nest right by our back door. Can someone come out soon?&rdquo;</div>
-        <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;That sounds urgent &mdash; let&rsquo;s get someone out. Can I take the address to check you&rsquo;re inside our service area?&rdquo;</div>
-        <div class="bubble them"><span class="lbl">Caller</span>&ldquo;It&rsquo;s 14 Oak Lane.&rdquo;</div>
-        <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;That&rsquo;s covered. There&rsquo;s a slot tomorrow between 10am and 12pm &mdash; does that work?&rdquo;</div>
-        <div class="bubble them"><span class="lbl">Caller</span>&ldquo;Yes, that&rsquo;s fine.&rdquo;</div>
-        <div class="call-result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg><span>Booked and flagged urgent &middot; details recorded</span></div>
-      </div>
-    </div>
-    <p class="card-disclaimer">An illustrative example, not a recording or a customer testimonial. A call only ends in a booking when the address meets your service-area rules and a slot is actually free; otherwise it is escalated or returned to you by the rule you set.</p>
-
-    <h3 style="text-align:center;margin:56px 0 8px;">The same rules, three different calls</h3>
-    <p class="lede" style="text-align:center;margin:0 auto 28px;">Not every call is a new job. What happens next depends on the rules you set, not on the handler&rsquo;s guess.</p>
-    <div class="grid grid-3">
-      <div class="card">
-        <h3>A new customer, inside your area</h3>
-        <p>&ldquo;Wasps by the back door.&rdquo; We capture the pest, the urgency and the address, check it against your service area, and offer a slot you have opened.</p>
-        <p class="svc-note" style="margin-top:12px;"><strong>Outcome: booked</strong>, flagged urgent, with access and pet notes for the technician.</p>
-      </div>
-      <div class="card">
-        <h3>An existing customer calling back</h3>
-        <p>&ldquo;You treated last week and they&rsquo;re back.&rdquo; We record who is calling, the address and what they are seeing. Whether a return visit is covered is your decision.</p>
-        <p class="svc-note" style="margin-top:12px;"><strong>Outcome: escalated</strong> to you by the route you chose. We don&rsquo;t promise a warranty visit on your behalf.</p>
-      </div>
-      <div class="card">
-        <h3>A caller outside your area</h3>
-        <p>&ldquo;Do you come out to us?&rdquo; We take the address and check it before anything else. If it falls outside the ZIPs or radius you gave us, no slot is offered.</p>
-        <p class="svc-note" style="margin-top:12px;"><strong>Outcome: logged and returned</strong> to you, never booked, or handled by the rule you set for out-of-area calls.</p>
-      </div>
-    </div>
-    <p class="card-disclaimer">Illustrative situations, not records of real calls.</p>
-  </div>
-</section>
-
-<section class="section section--alt">
-  <div class="container">
-    <div class="section-head section-head--center">
-      <div class="eyebrow">After the call</div>
-      <h2>What you receive after each call</h2>
-      <p class="lede">Booking the job and handing it to you is part of the base plan. Typing it into your CRM for you is a separate, optional add-on.</p>
-    </div>
-    <div class="grid grid-2">
-      <div class="card">
-        <h3>Included: the booking and the handoff</h3>
-        <div class="checklist" style="margin-top:14px;">
-          <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>The booking, or the next step if the call was not one.</p></div>
-          <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>The caller&rsquo;s details, the address and the pest issue.</p></div>
-          <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>What your technician needs to know before arriving, such as access and pets.</p></div>
-          <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>Calls recorded, with reporting on the calls we handle.</p></div>
-        </div>
-        <p class="svc-note" style="margin-top:12px;">These reach your team by the method we agree during setup. Your office then enters the job in your own system.</p>
-      </div>
-      <div class="card">
-        <h3>Optional: direct CRM entry</h3>
-        <p>With the <a href="/integrations/">CRM Management add-on</a> ($99/month), a representative enters the booking and the call notes in your own account after each call, using a login you grant and can revoke.</p>
-        <p class="svc-note" style="margin-top:12px;">It is manual work by a person. There is no native integration or data sync, and nothing changes in your system unless one of our representatives types it.</p>
-        <p class="svc-note" style="margin-top:12px;"><a href="/pricing">See what the base and each add-on cost &rarr;</a></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section section--alt">
-  <div class="container-narrow">
-    <div class="section-head">
-      <div class="eyebrow">Human-led</div>
-      <h2>A trained person answers, not an automated menu</h2>
-    </div>
-    <p class="lede">No &ldquo;press 1 for scheduling.&rdquo; Representatives complete pest control and account-specific training, and learn your services, service area, pricing and booking rules before they answer in your name.</p>
-    <p>Three things happen before a customer reaches us. We agree your rules in writing: what may be booked, what may be quoted and who urgent calls go to. We run test calls with you and correct the wording and routing. And we agree what happens to the exceptions, so a warranty question, a price outside your list or an address outside your area is escalated to you rather than guessed at.</p>
-    <p>A homeowner with rats in the kitchen or wasps by the door wants someone who can hear the urgency, ask the right follow-up question and book the job. We set out where an automated system fits and where it does not in our <a href="/blog/ai-vs-human-answering-service-pest-control">comparison of AI and human answering</a>, written to be useful whichever you choose.</p>
-    <p class="svc-note">With the <strong>CRM Management add-on ($99/month)</strong>, our representatives work inside your own system &mdash; <a href="/integrations/fieldroutes">FieldRoutes</a>, <a href="/integrations/servicetitan">ServiceTitan</a>, <a href="/integrations/gorilladesk">GorillaDesk</a>, <a href="/integrations/briostack">Briostack</a>, <a href="/integrations/pestpac">PestPac</a> or <a href="/integrations/housecall-pro">Housecall Pro</a> &mdash; using a login you grant and can revoke. Using something else? Tell us which system, and we&rsquo;ll confirm the workflow and access requirements during setup. There is no native integration or data sync.</p>
-    <p class="svc-note" style="font-size:13.5px;color:var(--ink-500);">FieldRoutes, PestRoutes, ServiceTitan, GorillaDesk, Briostack, PestPac and Housecall Pro are trademarks of their respective owners. Callvix is independent of them.</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="section-head section-head--center">
+    <div class="s18-head">
       <div class="eyebrow">Getting started</div>
       <h2>What setup involves</h2>
-      <p class="lede">Four steps, starting with a conversation about how your office already runs.</p>
+      <p>Four steps, starting with a conversation about how your office already runs.</p>
     </div>
-    <div class="svc-setup">
-      <div class="s"><span>1</span><h3>Agree the rules</h3><p>Coverage window, service area, what may be booked, pricing you allow us to quote, and who urgent calls go to. Our <a href="/blog/pest-control-call-script-intake-form">call script and intake form</a> shows the questions involved.</p></div>
-      <div class="s"><span>2</span><h3>Set up forwarding and access</h3><p>You forward the numbers you choose, and we agree the method for sharing booking and call details. If you take CRM Management, you also create a login in your own system with the permissions you&rsquo;re comfortable granting.</p></div>
-      <div class="s"><span>3</span><h3>Test calls</h3><p>We run calls through the rules together and correct the wording and routing before any customer reaches us.</p></div>
-      <div class="s"><span>4</span><h3>Coverage starts</h3><p>Live answering begins on the window you agreed, once the test calls look right.</p></div>
+    <ol class="s18-steps">
+      <li><h3>Agree the rules</h3><p>Coverage window, service area, what may be booked, pricing you allow us to quote, and who urgent calls go to. Our <a href="/blog/pest-control-call-script-intake-form">call script and intake form</a> shows the questions involved.</p></li>
+      <li><h3>Set up forwarding and access</h3><p>You forward the numbers you choose, and we agree the method for sharing booking and call details. If you take CRM Management, you also create a login in your own system with the permissions you&rsquo;re comfortable granting.</p></li>
+      <li><h3>Test calls</h3><p>We run calls through the rules together and correct the wording and routing before any customer reaches us.</p></li>
+      <li><h3>Coverage starts</h3><p>Live answering begins on the window you agreed, once the test calls look right.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 4 — A CALL AND ITS OUTCOMES. The order a call runs in, one example, three endings. -->
+<section class="section section--alt s18-call">
+  <div class="container">
+    <div class="s18-head">
+      <div class="eyebrow">Sample call</div>
+      <h2>A sample pest control call, step by step</h2>
+      <p>Written out to show the order a call runs in &mdash; greeting, service-area check, then booking or escalation.</p>
+    </div>
+    <ol class="s18-rail">
+      <li><b>A customer calls your number</b><span>Forwarded to Callvix on the rules you set.</span></li>
+      <li><b>Answered in your company&rsquo;s name</b><span>By a trained person, using your greeting.</span></li>
+      <li><b>Pest issue and address captured</b><span>Urgency, service type and location, checked against your service area.</span></li>
+      <li><b>Booked, or escalated</b><span>Booked if the job fits your rules and a slot is free. Escalated if it falls outside them, by the route you choose.</span></li>
+      <li><b>Shared with your team</b><span>By the method agreed during setup. Direct entry into your CRM is the CRM Management add-on.</span></li>
+    </ol>
+    <div class="s18-call-grid">
+      <div class="s18-chat">
+        <p class="s18-chat-head"><strong>Callvix representative</strong> answering as &ldquo;Example Pest Control Co.&rdquo; <span>Example</span></p>
+        <p class="s18-line s18-line--us"><b>Callvix</b>&ldquo;Thanks for calling Example Pest Control Co., this is Sam &mdash; how can I help?&rdquo;</p>
+        <p class="s18-line"><b>Caller</b>&ldquo;We&rsquo;ve got wasps building a nest right by our back door. Can someone come out soon?&rdquo;</p>
+        <p class="s18-line s18-line--us"><b>Callvix</b>&ldquo;That sounds urgent. Can I take the address first, so I can check you&rsquo;re inside our service area and see what&rsquo;s available?&rdquo;</p>
+        <p class="s18-line"><b>Caller</b>&ldquo;It&rsquo;s 14 Oak Lane.&rdquo;</p>
+        <p class="s18-line s18-line--us"><b>Callvix</b>&ldquo;That&rsquo;s covered. There&rsquo;s a slot tomorrow between 10am and 12pm &mdash; does that work?&rdquo;</p>
+        <p class="s18-line"><b>Caller</b>&ldquo;Yes, that&rsquo;s fine.&rdquo;</p>
+        <p class="s18-result"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Booked and flagged urgent &middot; details recorded</span></p>
+      </div>
+      <div class="s18-outcomes">
+        <h3>The same rules, three different calls</h3>
+        <p class="s18-outcomes-intro">Not every call is a new job. What happens next depends on the rules you set, not on the handler&rsquo;s guess.</p>
+        <ul>
+          <li><span class="s18-tag s18-tag--booked">Booked</span><div><h4>A new customer, inside your area</h4><p>&ldquo;Wasps by the back door.&rdquo; We capture the pest, the urgency and the address, check it against your service area, and offer a slot you have opened. Flagged urgent, with access and pet notes for the technician.</p></div></li>
+          <li><span class="s18-tag s18-tag--escalated">Escalated</span><div><h4>An existing customer calling back</h4><p>&ldquo;You treated last week and they&rsquo;re back.&rdquo; We record who is calling, the address and what they are seeing. Whether a return visit is covered is your decision, so it goes to you by the route you chose. We don&rsquo;t promise a warranty visit on your behalf.</p></div></li>
+          <li><span class="s18-tag s18-tag--returned">Returned</span><div><h4>A caller outside your area</h4><p>&ldquo;Do you come out to us?&rdquo; We take the address and check it before anything else. If it falls outside the ZIPs or radius you gave us, no slot is offered: it is logged and returned to you, or handled by the rule you set for out-of-area calls.</p></div></li>
+        </ul>
+      </div>
+    </div>
+    <p class="s18-disclaimer">Illustrative examples, not recordings, records of real calls or customer testimonials. A call only ends in a booking when the address meets your service-area rules and a slot is actually free; otherwise it is escalated or returned to you by the rule you set.</p>
+  </div>
+</section>
+
+<!-- 5 — HANDOFF AND CRM ENTRY. Included versus optional, side by side. -->
+<section class="section s18-handoff">
+  <div class="container">
+    <div class="s18-head">
+      <div class="eyebrow">After the call</div>
+      <h2>What you receive after each call</h2>
+      <p>Booking the job and handing it to you is part of the base plan. Typing it into your CRM for you is a separate, optional add-on.</p>
+    </div>
+    <div class="s18-split">
+      <div class="s18-split-main">
+        <p class="s18-label">Included in the base plan</p>
+        <h3>The booking and the handoff</h3>
+        <ul class="s18-ticks">
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>The booking, or the next step if the call was not one.</span></li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>The caller&rsquo;s details, the address and the pest issue.</span></li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>What your technician needs to know before arriving, such as access and pets.</span></li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Calls recorded, with reporting on the calls we handle.</span></li>
+        </ul>
+        <p>These reach your team by the method we agree during setup. Your office then enters the job in your own system.</p>
+      </div>
+      <div class="s18-split-side">
+        <p class="s18-label">Optional add-on &middot; $99/month</p>
+        <h3>Direct CRM entry</h3>
+        <p>With the <a href="/integrations/">CRM Management add-on</a> ($99/month), a representative enters the booking and the call notes in your own account after each call, using a login you grant and can revoke.</p>
+        <p>It is manual work by a person. There is no native integration or data sync, and nothing changes in your system unless one of our representatives types it.</p>
+        <p><a href="/pricing">See what the base and each add-on cost &rarr;</a></p>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section section--alt">
+<!-- 6 — OPERATING STANDARDS. What a person does on every call, and where the line is. -->
+<section class="section section--alt s18-standards">
+  <div class="container">
+    <div class="s18-standards-grid">
+      <div class="s18-head">
+        <div class="eyebrow">Human-led</div>
+        <h2>A trained person answers, not an automated menu</h2>
+        <p>No &ldquo;press 1 for scheduling.&rdquo; Representatives complete pest control and account-specific training, and learn your services, service area, pricing and booking rules before they answer in your name. We run test calls with you and correct the wording and routing before any customer reaches us.</p>
+        <p>We set out where an automated system fits and where it does not in our <a href="/blog/ai-vs-human-answering-service-pest-control">comparison of AI and human answering</a>, written to be useful whichever you choose.</p>
+      </div>
+      <ol class="s18-standards-list">
+        <li><h3>Your greeting</h3><p>Calls open in your business name, with the greeting agreed during setup.</p></li>
+        <li><h3>Location and service checks</h3><p>The address is checked against your service area, and the request against the services you offer, before anything is promised.</p></li>
+        <li><h3>Approved scheduling rules</h3><p>Only the slots you have opened, on your availability. Prices are quoted only where you allow it.</p></li>
+        <li><h3>Exceptions go to you</h3><p>A warranty question, a price outside your list or an address outside your area is escalated rather than guessed at.</p></li>
+        <li><h3>Notes a technician can use</h3><p>Urgency, access, pets and what the caller is seeing, written down for whoever takes the job.</p></li>
+      </ol>
+    </div>
+    <div class="s18-systems">
+      <p>With the <strong>CRM Management add-on ($99/month)</strong>, our representatives work inside your own system &mdash; <a href="/integrations/fieldroutes">FieldRoutes</a>, <a href="/integrations/servicetitan">ServiceTitan</a>, <a href="/integrations/gorilladesk">GorillaDesk</a>, <a href="/integrations/briostack">Briostack</a>, <a href="/integrations/pestpac">PestPac</a> or <a href="/integrations/housecall-pro">Housecall Pro</a> &mdash; using a login you grant and can revoke. Using something else? Tell us which system, and we&rsquo;ll confirm the workflow and access requirements during setup. There is no native integration or data sync.</p>
+      <p class="s18-tm">FieldRoutes, PestRoutes, ServiceTitan, GorillaDesk, Briostack, PestPac and Housecall Pro are trademarks of their respective owners. Callvix is independent of them.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7 — FAQ. -->
+<section class="section s18-faq">
   <div class="container">
     <div class="section-head section-head--center">
       <div class="eyebrow">FAQ</div>
@@ -636,7 +610,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   </div>
 </section>
 
-<section class="section">
+<!-- 8 — CLOSING. -->
+<section class="section section--alt s18-close">
   <div class="container">
     <div class="cta-band">
       <div class="eyebrow">Get started</div>

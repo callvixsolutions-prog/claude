@@ -222,7 +222,7 @@ function isArtifact(html) {
      format count. */
   /* h15-sheet and h15-panel are the Round 15 homepage's handoff sheet and navy
      price panel: built from divs and lists, like the three before them. */
-  return /class="[^"]*\b(?:rec|jobnote|config|h15-sheet|h15-panel|h17-track)\b/.test(html);
+  return /class="[^"]*\b(?:rec|jobnote|config|h15-sheet|h15-panel|h17-track|s18-chat)\b/.test(html);
 }
 
 /**

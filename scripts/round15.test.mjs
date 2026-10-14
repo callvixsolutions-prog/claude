@@ -39,21 +39,24 @@ test('the homepage shows one call and one handoff sheet', () => {
     assert.equal(count(text, once), 1, `"${once}" should appear once, found ${count(text, once)}`);
   }
   /* Restored in Round 17 and not to be merged away again without a decision. */
-  for (const back of ['For the calls your team can’t get to', 'In pest control, a missed call can mean a missed booking', 'See what happens to one call',
+  for (const back of ['Keep working. We’ll take the next call.', 'Human call answering for U.S. pest control companies', 'For the calls your team can’t get to', 'In pest control, a missed call can mean a missed booking', 'See what happens to one call',
     'A clear handoff after each call we take', 'From first call to booked job', 'Your rules stay in charge', 'When a call isn’t a booking',
-    'A week of coverage', 'Works with the tools your office already runs on', 'Which CRM or scheduling systems do you work with?']) {
+    'The week it covers', 'Works with the tools your office already runs on', 'Which CRM or scheduling systems do you work with?']) {
     assert.equal(count(text, back), 1, `"${back}" should be on the homepage exactly once`);
   }
   for (const name of ['FieldRoutes', 'ServiceTitan', 'GorillaDesk', 'Briostack', 'PestPac', 'Housecall Pro']) assert.ok(text.includes(name));
   for (const cls of ['rec-bubble', 'jobnote']) {
     assert.ok(!new RegExp(`class="[^"]*\\b${cls}\\b`).test(main), `old component .${cls} is back on the homepage`);
   }
-  assert.ok(text.includes('Illustrative stock photos and example call. Not Callvix staff or customers.'), 'the stock-photo label must stay beside the photographs');
+  assert.ok(text.includes('Stock photographs, not Callvix customers.'), 'the stock-photo label must stay beside the photographs');
+  /* The hero is one illustration, described for people who cannot see it, and not a photograph of a person. */
+  const hero = main.slice(0, main.indexOf('h18-who'));
+  assert.equal(count(hero, '<svg'), 1); assert.ok(/<title id="h18t">[^<]{30,}<\/title>/.test(hero) && !/<img/.test(hero), 'the hero illustration needs its title and no photograph');
   assert.ok(count(main, 'href="/services"') >= 1, 'a body link to /services');
 });
 
 test('the facts search and AI tools read are plain HTML text on the homepage', () => {
-  const FACTS = ['Real people, not an AI voice bot', 'Callvix works only with pest control companies', 'Our representatives only handle pest control calls',
+  const FACTS = ['Answered by people, not an AI voice bot', 'answers in your business name', 'Callvix works only with pest control companies', 'Our representatives only handle pest control calls',
     '$399/month + $2.99 per inbound call', '$399 / month', '$2.99 / inbound call', '$0.99 per outbound follow-up, when used.',
     'Mon–Fri, 9am–6pm your local time', '9am–6pm, your local time — included', 'Overnight coverage is not offered.',
     'Month-to-month, with no long-term contract.', 'using access you grant and can revoke',
@@ -102,16 +105,46 @@ test('the homepage stylesheet is current, homepage-only and scoped', () => {
   const unscoped = selectors.filter((s) => !s.startsWith('.home-main '));
   assert.deepEqual(unscoped, [], 'selector not scoped to the homepage');
   const SHARED_OK = new Set(['home-main', 'btn', 'eyebrow', 'lede', 'container', 'crmflow', 'coverage', 'syslist']);
-  const foreign = [...new Set(selectors.flatMap((s) => [...s.matchAll(/\.([a-z][\w-]*)/g)].map((m) => m[1])))].filter((c) => !c.startsWith('h15-') && !c.startsWith('h17-') && !SHARED_OK.has(c));
+  const foreign = [...new Set(selectors.flatMap((s) => [...s.matchAll(/\.([a-z][\w-]*)/g)].map((m) => m[1])))].filter((c) => !/^h1[578]-/.test(c) && !SHARED_OK.has(c));
   assert.deepEqual(foreign, [], 'home.css may only name h15-/h17- classes (shared classes only inside one of those blocks)');
   for (const banned of [/gradient\(/, /@keyframes/, /animation\s*:/, /position\s*:\s*(?:sticky|fixed)/]) assert.ok(!banned.test(body), `not on the homepage: ${banned}`);
   assert.equal(count(body, 'box-shadow'), 1, 'one shadow, on the handoff sheet');
   assert.ok(/\.h15-sheet\s*\{[^}]*box-shadow/.test(body));
 });
 
+test('the services stylesheet is current, services-only and scoped', () => {
+  const css = read('css/services.css'); const page = read('services.html');
+  const hash = createHash('sha256').update(css).digest('hex').slice(0, 10);
+  assert.ok(page.includes(`href="/css/services.css?v=${hash}"`), `services.html must link /css/services.css?v=${hash}`);
+  const others = [];
+  (function walk(dir) {
+    for (const e of readdirSync(dir)) {
+      const abs = join(dir, e); const rel = relative(ROOT, abs);
+      if (['.git', 'node_modules', 'preview', 'docs'].includes(rel.split('/')[0])) continue;
+      if (statSync(abs).isDirectory()) walk(abs);
+      else if (e.endsWith('.html') && rel !== 'services.html' && readFileSync(abs, 'utf8').includes('services.css')) others.push(rel);
+    }
+  }(ROOT));
+  assert.deepEqual(others, [], 'css/services.css is for services.html only');
+  const body = css.replace(/\/\*[\s\S]*?\*\//g, '');
+  const selectors = [...body.matchAll(/(^|[{}])\s*([^{}@]+?)\s*\{/g)].map((m) => m[2]).flatMap((s) => s.split(',')).map((s) => s.trim()).filter(Boolean);
+  assert.ok(selectors.length > 80);
+  assert.deepEqual(selectors.filter((s) => !s.startsWith('.svc-main ')), [], 'selector not scoped to /services');
+  const OK = new Set(['svc-main', 'lede', 'hero-cta', 'svc-base-line']);
+  const foreign = [...new Set(selectors.flatMap((s) => [...s.matchAll(/\.([a-z][\w-]*)/g)].map((m) => m[1])))].filter((c) => !c.startsWith('s18-') && !OK.has(c));
+  assert.deepEqual(foreign, [], 'services.css may only name s18- classes');
+  /* The protected tags, read from the file this stylesheet belongs to. */
+  assert.ok(page.includes('<title>Human Pest Control Answering Service | Callvix Solutions</title>'));
+  assert.equal((page.match(/<h1[^>]*>([^<]*)<\/h1>/g) || []).join(), '<h1>Human Pest Control Answering Service</h1>');
+  assert.ok(page.includes('<link rel="canonical" href="https://callvixsolutions.com/services">'));
+  assert.ok(/<meta name="robots" content="index,follow/.test(page), '/services must stay indexable in the repository');
+  /* The sample call checks before it promises. */
+  const svc = page.slice(page.indexOf('<main'), page.indexOf('</main>'));
+  assert.ok(!/let(&rsquo;|’|')s get someone out/i.test(svc), 'the handler must not promise a visit before the area and the diary are checked');
+});
+
 test('the homepage photographs are sized, described and within budget', () => {
-  const BUDGET_KB = { 'home-handler-desktop': 150, 'home-handler-mobile': 90, 'home-hero-mobile': 100, 'home-office-tile': 60,
-    'home-rules-desktop': 120, 'home-rules-mobile': 80 };
+  const BUDGET_KB = { 'home-case-tech': 20, 'home-case-office': 20, 'home-rules-desktop': 120, 'home-rules-mobile': 80 };
   const manifest = read('assets/photos/MANIFEST.md');
   const referenced = [...new Set([...main.matchAll(/\/assets\/photos\/([\w-]+)\.\w+/g)].map((m) => m[1]))].sort();
   assert.deepEqual(referenced, Object.keys(BUDGET_KB).sort());
@@ -125,7 +158,7 @@ test('the homepage photographs are sized, described and within budget', () => {
     assert.ok(manifest.includes(name), `${name} is not in assets/photos/MANIFEST.md`);
   }
   const imgs = [...main.matchAll(/<img\b[^>]*>/g)].map((m) => m[0]);
-  assert.equal(imgs.length, 4);
+  assert.equal(imgs.length, 3);
   /* One use per photograph: the same scene twice adds nothing the second time. */
   const used = imgs.map((tag) => tag.match(/photos\/([\w-]+)\./)[1].replace(/-(desktop|mobile)$/, ''));
   assert.equal(new Set(used).size, used.length, `a photograph is used more than once: ${used.join(', ')}`);
@@ -135,8 +168,7 @@ test('the homepage photographs are sized, described and within budget', () => {
     assert.ok(alt.length > 20, 'alt text describes the photo');
     assert.ok(!/callvix|representative|our team|staff|agent/i.test(alt), `alt text must not imply Callvix: "${alt}"`);
   }
-  assert.ok(/fetchpriority="high"/.test(imgs[0]) && !/loading="lazy"/.test(imgs[0]), 'the hero photo loads eagerly, high priority');
-  assert.equal(imgs.filter((tag) => /loading="lazy"/.test(tag)).length, 3, 'everything below the hero is lazy');
+  assert.equal(imgs.filter((tag) => /loading="lazy"/.test(tag)).length, 3, 'every photograph is below the fold, so all are lazy');
 });
 
 test('the homepage structured data is byte-identical to before the rebuild', () => {
