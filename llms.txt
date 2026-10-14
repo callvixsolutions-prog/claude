@@ -18,15 +18,15 @@
 - The base covers live answering, qualification and appointment booking by the client's rules, Monday–Friday 9am–6pm in the client's local time, urgent-call triage and escalation during covered hours, and reporting on the calls Callvix handles.
 - Without the CRM Management add-on, booking and call details are shared with the client's team using the method agreed during setup.
 - Optional add-ons: After-Hours Coverage $199/month (evenings, during an agreed window; overnight coverage is not offered), Weekend Coverage $149/month (during agreed windows), CRM Management $99/month.
-- CRM Management means representatives enter call notes and booking details directly into the client's own CRM using account access the client grants and can revoke. This is manual work by a person, not a native integration, an API connection or automatic data synchronisation, and Callvix has no partnership with any CRM vendor.
+- CRM Management means a representative manually enters agreed call notes and booking details in the client's own CRM, for the calls the agreed workflow covers, using account access the client grants and can revoke. Access and workflow are confirmed during setup. This is manual work by a person, not a native integration, an API connection or automatic data synchronization, and Callvix has no partnership with any CRM vendor.
 - Month-to-month. No long-term contract.
 
 ## Service
 - Industry served: pest control companies, United States only.
 - Calls are answered using the client's business name and greeting, following the client's service areas, pricing and booking rules.
 - Calls Callvix handles are answered by trained human representatives during the agreed coverage hours. Callvix does not use an AI voice bot on client calls.
-- By default representatives do not take payment, quote account balances or process cancellations; those are captured and escalated under the client's instructions. Where a client has explicitly instructed otherwise, that instruction governs.
-- Calls that fall outside the client's rules are captured and handed back rather than guessed at.
+- Billing questions, payment requests and cancellation requests are recorded and escalated under the client's instructions. Any additional account action must be specifically agreed and supported before service starts.
+- Calls that fall outside the client's rules are captured and handed back rather than guessed at. An appointment is described to a caller as confirmed only once it has actually been reserved; otherwise it is recorded as a pending request.
 - Setup: agree the rules, set up call forwarding and any access, run test calls, then coverage starts. Timing depends on the client's phone setup, workflow and approvals.
 
 ## Delivery
@@ -49,13 +49,13 @@
 
 ## Guides
 - [Hire a receptionist or use a pest control answering service?](https://callvixsolutions.com/blog/pest-control-receptionist-vs-answering-service): Compares an in-house receptionist or CSR, a human answering service, and overflow support for an existing office team, across responsibilities, coverage, supervision and cost structure. Uses published BLS national median hourly wages with the monthly figures calculated and labelled as such. States that the salary-versus-service gap is not savings, because the scope of work differs.
-- [How much does a pest control answering service cost?](https://callvixsolutions.com/blog/pest-control-answering-service-cost): Per-minute and per-call billing, included allowances, base charges and hidden fees, with published pricing from named providers.
+- [How much does a pest control answering service cost?](https://callvixsolutions.com/blog/pest-control-answering-service-cost): Per-minute and per-call billing, included allowances, base charges and hidden fees, with published pricing from named providers and a worked monthly example at 100 inbound calls that states its assumptions and coverage differences.
 - [AI answering service for pest control vs. human](https://callvixsolutions.com/blog/ai-vs-human-answering-service-pest-control): A neutral comparison across cost, coverage hours, urgency, off-script calls, booking and escalation, with five test calls for evaluating both.
 - [What missed calls really cost a pest control business](https://callvixsolutions.com/blog/missed-calls-cost-pest-control): A four-input planning estimate of first-job revenue at stake from unanswered calls, using the reader's own records. Not a measure of lost revenue or a guarantee of recovery. Contains no industry-average statistic.
-- [After-hours pest control call handling](https://callvixsolutions.com/blog/after-hours-pest-control-call-handling): Five coverage decisions, an eligibility gate, four escalation levels, intake fields, a weekend handoff checklist and five test calls.
-- [Pest control call script and customer intake form](https://callvixsolutions.com/blog/pest-control-call-script-intake-form): A complete inbound intake script, safety boundary, booking limits, escalation, CRM note template, QA checklist and a printable intake form.
-- [Pest control answering service checklist: 25 questions](https://callvixsolutions.com/blog/pest-control-answering-service-checklist): A vendor-neutral checklist covering caller experience, intake, booking rules, escalation, systems access, quality control and pricing, with a 0–10 scorecard and a pilot plan.
-- [Free vendor scorecard (PDF)](https://callvixsolutions.com/resources/pest-control-answering-service-vendor-scorecard): An ungated printable scorecard for comparing providers. Direct PDF: https://callvixsolutions.com/assets/pest-control-answering-service-vendor-scorecard.pdf
+- [After-hours pest control call handling](https://callvixsolutions.com/blog/after-hours-pest-control-call-handling): Five coverage decisions, an eligibility gate, four escalation levels (routine handling, priority, manager decision, safety), intake fields, a weekend handoff checklist, six test calls and a printable checklist.
+- [Pest control call script and customer intake form](https://callvixsolutions.com/blog/pest-control-call-script-intake-form): A complete inbound intake script with a safety boundary, separate confirmed-booking and request-only branches, authorized and request-only rescheduling, escalation, a call note and handoff template, QA checklist and a printable intake form.
+- [Pest control answering service checklist: 25 questions](https://callvixsolutions.com/blog/pest-control-answering-service-checklist): A vendor-neutral checklist covering caller experience, intake, booking rules, escalation, systems access, quality control and pricing, with non-negotiable gates set before scoring, a 0–10 scorecard and a pilot plan.
+- [Free vendor scorecard (PDF)](https://callvixsolutions.com/resources/pest-control-answering-service-vendor-scorecard): An ungated six-page printable scorecard for comparing providers, with a question-to-category map and "do not proceed until resolved" gates. Direct PDF: https://callvixsolutions.com/assets/pest-control-answering-service-vendor-scorecard.pdf
 
 ## Integrations (per-CRM pages)
 - [FieldRoutes (PestRoutes)](https://callvixsolutions.com/integrations/fieldroutes): Agreed booking windows, recurring-account rules, lead-source fields and service-area edge cases.
