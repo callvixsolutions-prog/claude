@@ -48,9 +48,9 @@ window.PM_SITE_CONFIG = {
   // 'general' is the default page. Every other ad version hides it.
   offer: {
     enabled: true,
-    headline: 'Pest control starting from $150',
+    headline: 'Pest control starting from $199',
     footnote: 'Starting price for an initial general pest control service. Exact price confirmed by phone before booking.',
-    faqAnswer: 'General pest control starts from $150 for the initial service. We confirm your exact price on the phone before you book. Mice and rats, bed bugs and specialty services such as wildlife and termite (WDI) inspections are priced separately.',
+    faqAnswer: 'General pest control starts from $199 for the initial service. We confirm your exact price on the phone before you book. Mice and rats, bed bugs and specialty services such as wildlife and termite (WDI) inspections are priced separately.',
     eligibleSvc: ['general']
   },
 
