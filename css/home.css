@@ -426,3 +426,6 @@
 .home-main .h19-more { margin: 6px 0 0; font-size: 15px; }
 .home-main .h19-more a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; color: var(--teal-600); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .home-main .h19-more a:hover { text-decoration-thickness: 2px; }
+
+/* The coverage chart's smallest labels were 11.5px at tablet and desktop widths. */
+.home-main .h18-cover .cov-row-label em, .home-main .h18-cover .cov-day { font-size: 12px; }
