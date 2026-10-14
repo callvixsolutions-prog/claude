@@ -187,8 +187,161 @@ document.addEventListener('DOMContentLoaded', function () {
     return 'body';
   }
 
-  // One delegated listener. It never calls preventDefault(), so navigation,
-  // dialling and mail clients behave exactly as before.
+  /* ----------------------------------------------------------------
+     Calendly popup + completed bookings (main site)
+
+     A booking link used to open calendly.com in a new tab, so the click was
+     the last thing this site could see. It now opens Calendly's own popup
+     widget over the page, and Calendly's confirmation message becomes
+     callvix_meeting_booked — the same event the campaign page sends from
+     js/lp-booking.js. bookingKey() and the cvx_bookings store are copied
+     from that file on purpose and a test holds the two copies identical:
+     lp-booking.js is frozen, so it cannot be turned into a shared module.
+
+     The links stay ordinary <a href>. Without JavaScript, with a modifier
+     key, or if Calendly's script is blocked or slow, the visitor still
+     reaches the booking page.
+
+     Never on the campaign page: it embeds the calendar inline and
+     lp-booking.js owns its listener. A second one here would count twice.
+
+     Privacy: Calendly's message carries invitee and event URIs. Nothing
+     from it is pushed. The URI is hashed into a storage key so a repeated
+     message or a reload cannot count the booking twice, and that is all.
+  ---------------------------------------------------------------- */
+  var CALENDLY_ORIGIN = 'https://calendly.com';
+  var BOOKING_URL = 'calendly.com/callvixsolutions/callvix-discovery-call';
+  var WIDGET_JS = 'https://assets.calendly.com/assets/external/widget.js';
+  var WIDGET_CSS = 'https://assets.calendly.com/assets/external/widget.css';
+  var WIDGET_WAIT_MS = 3000;
+
+  var widgetState = 'idle';      // idle -> loading -> ready | failed
+  var opener = null;             // the link that opened the popup; focus goes back to it
+  var openerCta = null;          // its cta_location, reported with the booking
+
+  function isCampaignPage() { return !!document.querySelector('.calendly-inline-widget'); }
+  function isBookingLink(a) { return !!a && (a.href || '').indexOf(BOOKING_URL) !== -1; }
+
+  function loadWidget(done) {
+    if (widgetState === 'ready') { done(true); return; }
+    if (widgetState === 'failed') { done(false); return; }
+    var finished = false;
+    var finish = function (ok) {
+      if (finished) return;
+      finished = true;
+      widgetState = ok ? 'ready' : 'failed';
+      done(ok);
+    };
+    widgetState = 'loading';
+    var css = document.createElement('link');
+    css.rel = 'stylesheet'; css.href = WIDGET_CSS;
+    document.head.appendChild(css);
+    var js = document.createElement('script');
+    js.src = WIDGET_JS; js.async = true;
+    js.onload = function () { finish(!!(window.Calendly && window.Calendly.initPopupWidget)); };
+    js.onerror = function () { finish(false); };
+    document.head.appendChild(js);
+    setTimeout(function () { finish(false); }, WIDGET_WAIT_MS);
+  }
+
+  function closePopup() {
+    try { if (window.Calendly && window.Calendly.closePopupWidget) window.Calendly.closePopupWidget(); } catch (e) {}
+  }
+
+  // Calendly builds the overlay; this makes it a dialog a keyboard can use.
+  // Its close control is a bare <div>, and it has no Escape handling.
+  function dressPopup() {
+    var overlay = document.querySelector('.calendly-overlay');
+    if (!overlay) return;
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', 'Book a discovery call');
+    var frame = overlay.querySelector('iframe');
+    if (frame && !frame.getAttribute('title')) frame.setAttribute('title', 'Calendly booking calendar');
+    var close = overlay.querySelector('.calendly-popup-close');
+    if (close) {
+      close.setAttribute('role', 'button');
+      close.setAttribute('tabindex', '0');
+      close.setAttribute('aria-label', 'Close booking window');
+      close.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); closePopup(); }
+      });
+      close.focus();
+    } else if (frame) {
+      frame.setAttribute('tabindex', '0'); frame.focus();
+    }
+    // Calendly removes the overlay itself on close, by whichever route.
+    if (window.MutationObserver) {
+      var watch = new MutationObserver(function () {
+        if (document.querySelector('.calendly-overlay')) return;
+        watch.disconnect();
+        if (opener && opener.focus) opener.focus();
+      });
+      watch.observe(document.body, { childList: true });
+    }
+  }
+
+  function openBooking(a) {
+    // Read now, not at page load: GTM adds the campaign and cta_location
+    // parameters to this href after the page has rendered.
+    var url = a.href;
+    opener = a;
+    openerCta = ctaLocation(a, linkLocation(a));
+    a.setAttribute('aria-busy', 'true');
+    loadWidget(function (ok) {
+      a.removeAttribute('aria-busy');
+      if (!ok) { window.location.href = url; return; }   // blocked or slow: book the ordinary way
+      try {
+        window.Calendly.initPopupWidget({ url: url });
+        dressPopup();
+      } catch (e) { window.location.href = url; }
+    });
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && document.querySelector('.calendly-overlay')) closePopup();
+  });
+
+  // A short, stable, non-reversible id for one booking. Used only to stop a
+  // repeated postMessage counting twice; never sent anywhere.
+  function bookingKey(payload) {
+    var uri = '';
+    try {
+      uri = (payload && payload.invitee && payload.invitee.uri) ||
+            (payload && payload.event && payload.event.uri) || '';
+    } catch (e) { uri = ''; }
+    if (!uri) return 'nokey';
+    var h = 5381;
+    for (var i = 0; i < uri.length; i++) { h = ((h << 5) + h + uri.charCodeAt(i)) | 0; }
+    return 'b' + Math.abs(h).toString(36);
+  }
+
+  var seen = {};
+  function alreadyCounted(key) {
+    if (seen[key]) return true;
+    seen[key] = 1;
+    // survives an accidental reload of the confirmation state within the session
+    try {
+      var store = JSON.parse(sessionStorage.getItem('cvx_bookings') || '{}');
+      if (store[key]) return true;
+      store[key] = 1;
+      sessionStorage.setItem('cvx_bookings', JSON.stringify(store));
+    } catch (e) { /* private mode: in-memory dedupe above still applies */ }
+    return false;
+  }
+
+  window.addEventListener('message', function (e) {
+    if (e.origin !== CALENDLY_ORIGIN) return;
+    var d = e.data;
+    if (!d || typeof d !== 'object' || d.event !== 'calendly.event_scheduled') return;
+    if (isCampaignPage()) return;           // lp-booking.js counts that page's bookings
+    if (alreadyCounted(bookingKey(d.payload))) return;
+    pushEvent('callvix_meeting_booked', { cta_location: openerCta || 'unknown', booking_method: 'calendly_popup' });
+  }, false);
+
+  // One delegated listener. tel: and mailto: are only reported, never
+  // intercepted. A booking link is reported exactly as before and then, on a
+  // plain click, opened in the popup instead of a new tab.
   document.addEventListener('click', function (e) {
     var a = (e.target && e.target.closest) ? e.target.closest('a[href]') : null;
     if (!a) return;
@@ -209,6 +362,11 @@ document.addEventListener('DOMContentLoaded', function () {
       pushEvent('email_click', { link_location: where });
     } else if (href.indexOf('calendly.com') !== -1) {
       pushEvent('calendly_click', { link_location: where, cta_location: ctaLocation(a, where) });
+      // Ctrl/Cmd/Shift/Alt or a non-primary button means "open it my way".
+      if (!isBookingLink(a) || isCampaignPage() || e.defaultPrevented) return;
+      if (e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      if (widgetState !== 'loading') openBooking(a);
     }
   }, true);
 
