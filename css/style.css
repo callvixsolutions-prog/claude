@@ -543,7 +543,9 @@ strong { color: var(--ink-900); font-weight: 700; }
 /* Each item stays whole. Below 600px the dots go and the items wrap as complete
    phrases, instead of four columns squeezed into one word per line. */
 .article-meta > span:not(.sep) { white-space: nowrap; }
-@media (max-width: 599px) { .article-meta { gap: 2px 14px; margin-bottom: var(--space-sm); } .article-meta .sep { display: none; } }
+@media (max-width: 599px) { .article-meta { gap: 2px 14px; margin-bottom: var(--space-sm); } .article-meta .sep { display: none; }
+  /* Each date on its own line: the row is three lines with either font, so the web font arriving cannot re-wrap it (measured CLS 0.15 on the call-script guide). */
+  .article-meta > span:nth-child(n+5):not(.sep) { flex-basis: 100%; } }
 .article-meta .sep { width: 4px; height: 4px; border-radius: 50%; background: var(--line-2); }
 /* 18px from 600px up, 17px below. The 760px column is 68ch at 18px Inter. */
 .article-body { font-size: 17px; line-height: 1.7; color: var(--ink-700); }
@@ -1321,3 +1323,73 @@ p.config-title {
 .price-example .price-example-total th, .price-example .price-example-total td { font-weight: 700; color: var(--navy-900); border-bottom: 2px solid var(--navy-900); }
 .price-example-note { margin: 12px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--ink-500); }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* Round 20b — Works With pages. A short scope line, a three-stage example
+   record (issue → rule/access check → outcome) and the full example
+   conversation behind a native <details>, so the hero stays compact. */
+.crm-lead { font-size: clamp(17px, 0.4vw + 15.5px, 19px); }
+.crm-scope { display: flex; flex-wrap: wrap; gap: 6px 0; margin: var(--space-sm) 0 0; padding: 0; font-size: 14px; font-weight: 600; color: var(--navy-900); }
+.crm-scope span { white-space: nowrap; }
+.crm-scope span + span::before { content: "\00b7"; margin: 0 8px; color: var(--teal-600); font-weight: 700; }
+@media (max-width: 599px) {
+  .crm-scope { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; }
+  .crm-scope span { white-space: normal; }
+  .crm-scope span::before, .crm-scope span + span::before { content: ""; display: inline-block; width: 6px; height: 6px; margin: 0 8px 2px 0; border-radius: 50%; background: var(--teal-600); }
+}
+.crm-record { margin: 0; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-md); overflow: hidden; }
+.crm-record-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px var(--space-sm); background: var(--navy-900); color: #fff; font-family: var(--font-heading); font-weight: 700; font-size: 14.5px; }
+.crm-record-tag { font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--teal-300); background: rgba(38,168,182,0.18); padding: 4px 10px; border-radius: 999px; }
+.crm-record ol { list-style: none; margin: 0; padding: var(--space-xs) var(--space-sm) 0; counter-reset: crm; }
+.crm-record li { position: relative; padding: 10px 0 12px 36px; border-bottom: 1px solid var(--line); counter-increment: crm; }
+.crm-record li::before { content: counter(crm); content: counter(crm) / ""; position: absolute; left: 0; top: 10px; width: 24px; height: 24px; border-radius: 50%; background: var(--teal-50); border: 1px solid var(--teal-100); color: var(--teal-600); font: 700 12.5px/22px var(--font-heading); text-align: center; }
+.crm-record-k { display: block; font-family: var(--font-heading); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--teal-600); margin-bottom: 2px; }
+.crm-record li p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink-700); }
+.crm-record li.crm-record-out { border-bottom: 0; }
+.crm-record li.crm-record-out p { font-family: var(--font-heading); font-weight: 700; color: var(--navy-900); }
+.crm-record li.crm-record-out::before { background: var(--navy-900); border-color: var(--navy-900); color: #fff; }
+.crm-convo { border-top: 1px solid var(--line); }
+.crm-convo summary { cursor: pointer; padding: 12px var(--space-sm); min-height: 44px; font-family: var(--font-heading); font-weight: 700; font-size: 14.5px; color: var(--teal-600); list-style-position: inside; }
+.crm-convo summary:hover { color: var(--navy-900); }
+.crm-convo summary:focus-visible { outline: 3px solid var(--teal-600); outline-offset: -3px; }
+.crm-convo .call-card-body { padding: 0 var(--space-sm) var(--space-xs); }
+.crm-work { display: grid; gap: var(--space-md); align-items: start; }
+.crm-decides { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: var(--space-sm) var(--space-md); }
+.crm-decides h3 { font-size: 18px; margin: 0 0 var(--space-2xs); }
+.crm-decides ul { margin: 0; padding-left: 1.1em; list-style: disc; }
+.crm-decides li { margin-bottom: 6px; font-size: 15px; color: var(--ink-700); }
+.crm-decides p { margin: var(--space-2xs) 0 0; font-size: 14px; color: var(--ink-500); }
+@media (min-width: 960px) {
+  .crm-work { grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr); gap: var(--space-lg); }
+  .crm-decides { position: sticky; top: 96px; }
+}
+.crm-handoff { margin: 0; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-md); padding: var(--space-sm) var(--space-md); }
+.crm-handoff ol { list-style: none; margin: 0; padding: 0; counter-reset: hand; }
+.crm-handoff li { position: relative; padding: 10px 0 18px 46px; counter-increment: hand; }
+.crm-handoff li::before { content: counter(hand); content: counter(hand) / ""; position: absolute; left: 0; top: 8px; width: 32px; height: 32px; border-radius: 50%; background: var(--teal-50); border: 1px solid var(--teal-100); color: var(--teal-600); font: 700 14px/30px var(--font-heading); text-align: center; }
+.crm-handoff li:not(:last-child)::after { content: ""; position: absolute; left: 15px; top: 44px; bottom: 0; border-left: 2px dashed var(--teal-300); }
+.crm-handoff li:last-child::before { background: var(--navy-900); border-color: var(--navy-900); color: #fff; }
+.crm-handoff b { display: block; font-family: var(--font-heading); font-size: 16px; color: var(--navy-900); }
+.crm-handoff span { display: block; font-size: 14.5px; line-height: 1.5; color: var(--ink-700); }
+.crm-handoff figcaption { margin-top: 4px; padding-top: var(--space-xs); border-top: 1px solid var(--line); font-size: 13.5px; color: var(--ink-500); }
+.crm-convo--hub { margin-top: var(--space-md); background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); max-width: 640px; }
+/* Round 20b — About: principles as a compact list, process as an editorial split. */
+.about-principles { list-style: none; margin: 0 auto; padding: 0; display: grid; gap: var(--space-sm) var(--space-lg); max-width: 980px; }
+.about-principles li { border-left: 3px solid var(--teal-500); padding: 2px 0 2px var(--space-sm); }
+.about-principles h3 { font-size: 18px; margin: 0 0 4px; }
+.about-principles p { margin: 0; color: var(--ink-700); }
+@media (min-width: 760px) { .about-principles { grid-template-columns: 1fr 1fr; } }
+.about-process { display: grid; gap: var(--space-lg); align-items: start; }
+.about-process-intro p { max-width: 58ch; }
+.about-steps { list-style: none; margin: 0; padding: 0; counter-reset: ab; }
+.about-steps li { position: relative; counter-increment: ab; padding: 0 0 var(--space-md) 64px; }
+.about-steps li::before { content: counter(ab); content: counter(ab) / ""; position: absolute; left: 0; top: 0; width: 44px; height: 44px; border-radius: 50%; background: var(--teal-500); color: var(--navy-900); font: 700 18px/44px var(--font-heading); text-align: center; }
+.about-steps li:not(:last-child)::after { content: ""; position: absolute; left: 21px; top: 52px; bottom: 8px; border-left: 2px solid rgba(131, 214, 223, 0.35); }
+.about-steps h3 { font-size: 19px; margin: 6px 0 6px; }
+.about-steps p { margin: 0; }
+@media (min-width: 900px) { .about-process { grid-template-columns: 1fr 1fr; gap: var(--space-xl); } }
+/* Round 20b — article header: the date row sits closer to the opening text. */
+.page-hero--article { padding-bottom: 0; }
+.page-hero--article .article-meta { margin-bottom: 0; }
+.page-hero.page-hero--article + .section { padding-top: 28px; }
+@media (min-width: 600px) { .page-hero.page-hero--article + .section { padding-top: 36px; } }
+@media (min-width: 1024px) { .page-hero.page-hero--article + .section { padding-top: 44px; } }

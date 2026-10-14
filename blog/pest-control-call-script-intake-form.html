@@ -36,7 +36,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"></noscript>
-<link rel="stylesheet" href="/css/style.css?v=fd4d171b21">
+<link rel="stylesheet" href="/css/style.css?v=aa392d8300">
 <style>
 /* ===== Call-script & intake-form resource: scoped visual + print styles ===== */
 .article-disclosure { font-size: 14px; color: var(--ink-500); font-style: italic; margin: 0 0 var(--space-md); line-height: 1.55; }
@@ -81,12 +81,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 .fc-group { margin-bottom: var(--space-sm); }
 .fc-group h4, .fc-group h3 { font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--teal-600); margin: 0 0 var(--space-2xs); padding-bottom: 6px; border-bottom: 1px solid var(--line); }
 .fc-field { display: flex; align-items: baseline; gap: var(--space-2xs); margin-bottom: var(--space-xs); font-size: 14px; color: var(--ink-700); }
-.fc-field .lab { flex: 0 0 auto; font-weight: 600; color: var(--navy-900); }
-.fc-field .rule { flex: 1 1 auto; border-bottom: 1px dotted var(--line-2); min-height: 17px; }
+.fc-field .lab { flex: 0 1 auto; min-width: 0; font-weight: 600; color: var(--navy-900); }
+.fc-field .rule { flex: 1 1 auto; min-width: 48px; border-bottom: 1px dotted var(--line-2); min-height: 17px; }
 .fc-list { list-style: none; margin: 0; padding: 0; }
 .fc-list li { display: flex; gap: var(--space-2xs); align-items: flex-start; font-size: 14px; color: var(--ink-700); margin-bottom: var(--space-2xs); line-height: 1.5; }
 .fc-box { flex: 0 0 auto; width: 14px; height: 14px; border: 1.5px solid var(--navy-900); border-radius: 3px; margin-top: 3px; }
 .fc-safety { background: #fdeceb; border: 1px solid #f2c4c1; border-radius: 10px; padding: var(--space-xs) var(--space-sm); font-size: 13.5px; color: #6d2a24; line-height: 1.55; }
+.fc-note { font-size: 13px; color: var(--ink-700); margin: 0 0 var(--space-xs); }
+.fc-outcome { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; margin-bottom: var(--space-xs); font-size: 14px; color: var(--ink-700); }
+.fc-outcome > span { display: inline-flex; align-items: center; gap: 6px; }
+.fc-outcome .lab { font-weight: 600; color: var(--navy-900); }
+.fc-outcome .fc-box { margin-top: 0; }
 .fc-foot { font-size: 12.5px; color: var(--ink-500); font-style: italic; margin: 16px 0 0; }
 
 @media (max-width: 620px) { .form-card { padding: var(--space-sm) var(--space-sm); } }
@@ -108,8 +113,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   #printable-form .fc-title { font-size: 17px; }
   .safety-first { break-inside: avoid; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   #printable-form .safety-first { font-size: 11.5px; line-height: 1.4; padding: 6px 10px; margin: 0 0 8px; }
-  .fc-group { margin-bottom: var(--space-xs); break-inside: avoid; }
-  .fc-list li, .fc-field { break-inside: avoid; margin-bottom: 7px; }
+  /* Groups may split between rows so a page is never left half empty; a heading
+     stays with its first row and no single row, outcome line or box is split. */
+  .fc-group { margin-bottom: var(--space-xs); }
+  .fc-group h3, .fc-note { break-after: avoid; }
+  .fc-list li, .fc-field, .fc-outcome, .fc-safety { break-inside: avoid; margin-bottom: 7px; }
   @page { margin: 12mm; }
 }
 </style>
@@ -158,7 +166,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     { "@type": "Question", "name": "Should a call handler ever identify the pest for the caller?", "acceptedAnswer": { "@type": "Answer", "text": "No. Record the problem in the caller's own words and leave identification to the company's authorized pest professional. A phone identification can be wrong, can set the wrong expectation, and can lead to the wrong service being booked." } },
     { "@type": "Question", "name": "What should the script do if a caller describes a pesticide exposure or a medical emergency?", "acceptedAnswer": { "@type": "Answer", "text": "Stop the booking flow and direct the caller to the right authority: 911 for anything life-threatening, or the national Poison Help line at 1-800-222-1222 (poison.org) for a suspected pesticide exposure that is not immediately life-threatening. Do not give medical, chemical or treatment advice. Document the routing." } },
     { "@type": "Question", "name": "Should the script quote a price?", "acceptedAnswer": { "@type": "Answer", "text": "Only inside limits you set in writing. A workable limit is to let a handler give a published starting range for standard residential work and escalate anything outside it — square-footage outliers, commercial accounts, termite or wildlife work, and any warranty question." } },
-    { "@type": "Question", "name": "How long should a pest control intake call take?", "acceptedAnswer": { "@type": "Answer", "text": "There is no universal target, and a good call is not the same as a fast call. Use the required-fields list as the standard instead: a call is complete when the callback number, address and ZIP, service-area confirmation, problem description, property type, urgency and the promise made are all captured." } },
+    { "@type": "Question", "name": "How long should a pest control intake call take?", "acceptedAnswer": { "@type": "Answer", "text": "There is no universal target, and a good call is not the same as a fast call. Use the required-fields list as the standard instead: an ordinary eligible call is complete when the callback number, address and ZIP, service-area confirmation, problem description, property type, urgency and the promise made are captured where possible. Never delay safety routing to finish intake. For a safety-routed, declined or disconnected call, record only the information available and the action taken." } },
     { "@type": "Question", "name": "Can we use this script with an answering service or an AI receptionist?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The script is written to be executed by whoever answers — an in-house CSR, an answering service, or an automated system. The rules that matter are the same in all three cases: service-area check before booking, no diagnosis, defined pricing limits, and a named escalation path." } }
   ]
 }
@@ -196,7 +204,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
 
 <main id="main">
 
-<section class="page-hero">
+<section class="page-hero page-hero--article">
   <div class="container article">
     <div class="breadcrumbs"><a href="/">Home</a> / <a href="/blog/">Resources</a> / Call operations</div>
     <div class="eyebrow">Call operations</div>
@@ -216,7 +224,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <nav class="toc" aria-label="On this page">
         <p class="toc-title">On this page</p>
         <p class="toc-lead"><a href="#printable-form">Jump to the printable intake form &darr;</a></p>
-        <ol><li><a href="#how-to-use">How to use this script</a></li><li><a href="#before-the-phone-rings">Fill these in before the phone rings</a></li><li><a href="#call-script">The call script, step by step</a></li><li><a href="#note-template">After-call CRM note template</a></li><li><a href="#qa-checklist">Quality-assurance checklist</a></li><li><a href="#test-calls">Five test calls to pressure-test the script</a></li><li><a href="#print-form">Print your intake form</a></li></ol>
+        <ol><li><a href="#how-to-use">How to use this script</a></li><li><a href="#before-the-phone-rings">Fill these in before the phone rings</a></li><li><a href="#call-script">The call script, step by step</a></li><li><a href="#note-template">After-call note and handoff template</a></li><li><a href="#qa-checklist">Quality-assurance checklist</a></li><li><a href="#test-calls">Five test calls to pressure-test the script</a></li><li><a href="#print-form">Print your intake form</a></li></ol>
       </nav>
 
       <h2 id="how-to-use">How to use this script</h2>
@@ -255,7 +263,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <h3>3. New caller or existing customer?</h3>
         <div class="say"><span class="lbl">Ask</span>&ldquo;Have we been out to your property before, or is this your first time calling us?&rdquo;</div>
         <p class="why">This single question routes the whole call. An existing account may be covered by a re-service policy and should never be booked as a new one-time job by mistake. If you have authorized account access, check the existing record before making account-specific promises. If you do not, record the caller&rsquo;s stated status and hand off any re-service, warranty or billing question for verification.</p>
-        <ul class="capture"><li>New lead</li><li>Existing customer</li><li>Account found in system</li></ul>
+        <ul class="capture"><li>New lead</li><li>Existing customer</li><li>Record checked with authorized access / caller-stated status only</li></ul>
       </div>
 
       <div class="script-step">
@@ -275,7 +283,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <div class="boundary">
         <h3>Hard rule: no diagnosis, no treatment advice</h3>
         <p>Whoever answers the phone <strong>must not</strong> identify the pest, recommend a pesticide or treatment, estimate how severe an infestation is, or give medical advice &mdash; even when the caller pushes for an answer. In this intake workflow, record observations and leave identification or treatment recommendations to the company&rsquo;s authorized pest professional.</p>
-        <p>A safe deflection: <em>&ldquo;I don&rsquo;t want to guess at that over the phone &mdash; the technician will identify it properly when they&rsquo;re on site and explain the options then.&rdquo;</em></p>
+        <p>A safe deflection: <em>&ldquo;I don&rsquo;t want to guess at that. I&rsquo;ll record what you&rsquo;ve seen and follow our process for an authorized pest professional to review it.&rdquo;</em></p>
       </div>
 
       <div class="script-step">
@@ -332,8 +340,8 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <p class="why">Reschedule only if the handler has authority, current availability and the account information needed to check technician, territory, duration and recurring-service restrictions. Otherwise capture the requested change and send it to the authorized team without changing or promising a slot. Handle cancellations the way your written policy says: if it routes them to an owner or manager, capture the reason in the caller&rsquo;s words, tell the caller who will follow up, and pass it on the same day. Don&rsquo;t refuse or delay a cancellation your policy allows the handler to process. If the handler completes it, confirm the outcome before ending the call. Only promise a callback time your team has approved and can meet. A recorded reason is retention data worth having, and it is easy to lose if nobody writes it down.</p>
       </div>
 
-      <h2 id="note-template">After-call CRM note template</h2>
-      <p>A consistent note format is what makes the morning review possible. Paste this into your CRM&rsquo;s appointment or account note and fill it in on every call, whichever system you run &mdash; see <a href="/integrations/">how we work inside the system your office already uses</a>.</p>
+      <h2 id="note-template">After-call note and handoff template</h2>
+      <p>A consistent record is what makes the handoff reviewable. Use it as the agreed call record or handoff for each call; enter it in your CRM only where the handler has authorized access (see <a href="/integrations/">how account work is set up</a>). Keep the appointment date and window separate from the outcome, so a request is never read as a confirmed booking.</p>
       <div class="crm-note"><span class="k">CALLER:</span> [name]  |  <span class="k">CALLBACK:</span> [number, read back]
 <span class="k">TYPE:</span> new lead / existing customer      <span class="k">PROPERTY:</span> residential / commercial
 <span class="k">ADDRESS:</span> [street, ZIP]                  <span class="k">AREA CHECK:</span> in / out / borderline
@@ -341,32 +349,35 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
 <span class="k">DURATION / LOCATION:</span> [how long, where on property]
 <span class="k">URGENCY:</span> routine / priority / safety-routed
 <span class="k">ACCESS:</span> [gate code, pets, parking]
-<span class="k">OUTCOME:</span> booked (reserved) / requested (pending) / callback / escalated / declined
+<span class="k">APPOINTMENT:</span> [date + window, if any]
+<span class="k">OUTCOME:</span> booked/rescheduled (confirmed) / appointment or change requested (pending) /
+         cancellation completed (authorized) / callback / escalated / declined
+<span class="k">NEXT:</span> [next owner, action, approved due time]
 <span class="k">PROMISED:</span> [exact commitment made to the caller]
 <span class="k">ESCALATED TO:</span> [name, method, time]  <span class="k">HANDLER:</span> [initials, time]</div>
       <p style="font-size:14px;color:var(--ink-500);">The line that matters most is <strong>PROMISED</strong>. Most morning friction comes from a commitment made on the phone that nobody else could see.</p>
 
       <h2 id="qa-checklist">Quality-assurance checklist</h2>
-      <p>Score a handful of calls a week against the same list. Fix whichever line fails most often before adding anything new to the script.</p>
+      <p>Score a handful of calls a week against the same list, marking items that don&rsquo;t apply to a call as not applicable. Never delay safety routing to finish intake. For a safety-routed, declined or disconnected call, record only the information available and the action taken. Fix whichever line fails most often before adding anything new to the script.</p>
       <ul class="bul">
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span>Answered in the company&rsquo;s name, with a first name given.</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span>Callback number captured early and read back.</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span>Service area checked before any time was offered.</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span>Problem recorded in the caller&rsquo;s own words, with no pest identified by the handler.</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span>New versus existing customer established and the record checked.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span>New versus existing customer established; the record checked where authorized account access is available, otherwise the caller&rsquo;s stated status noted.</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span>Residential or commercial captured and routed correctly.</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span>No price quoted outside the written boundary; no prohibited promise made.</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span>Safety questions asked; any safety call routed to 911 or Poison Help and documented.</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span>Appointment day, window and address repeated back; access notes captured.</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span>CRM note completed, including the exact promise made.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span>Any confirmed or requested day, window and address repeated back with its status stated; access notes captured.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg><span>Call record or handoff completed: truthful confirmed or pending status, the relevant details, the next owner and the exact promise made.</span></li>
       </ul>
 
       <h2 id="test-calls">Five test calls to pressure-test the script</h2>
       <span class="illus-label">Illustrative examples</span>
       <p>These scenarios are hypothetical and written for training &mdash; they are not real Callvix calls, clients or results. Run them as authorized internal tests to your own line, using fictional details, and follow any applicable call-recording and consent rules in your state.</p>
       <div class="scen">
-        <div class="scen-item"><span class="tag">Test 1 &middot; Straightforward new lead</span><h3>&ldquo;I&rsquo;ve got ants in the kitchen, can someone come out?&rdquo;</h3><p>In-area residential caller, standard service. <strong>Watch for:</strong> callback number read back, ZIP captured, area checked before a slot is offered, and the problem written verbatim rather than labelled.</p></div>
-        <div class="scen-item"><span class="tag">Test 2 &middot; Priority, not an emergency</span><h3>&ldquo;There&rsquo;s a wasp nest right over my front door.&rdquo;</h3><p>Time-sensitive but not a safety event. <strong>Watch for:</strong> earliest approved slot offered and a clear dispatch note &mdash; without inflating it into an emergency or waking a technician.</p></div>
+        <div class="scen-item"><span class="tag">Test 1 &middot; Straightforward new lead</span><h3>&ldquo;I&rsquo;ve got ants in the kitchen, can someone come out?&rdquo;</h3><p>In-area residential caller, standard service. <strong>Watch for:</strong> callback number read back, ZIP captured, area checked before a slot is offered, the problem written verbatim rather than labelled, and the outcome stated truthfully: confirmed only after an authorized reservation, otherwise a clearly pending request.</p></div>
+        <div class="scen-item"><span class="tag">Test 2 &middot; Priority, not an emergency</span><h3>&ldquo;There&rsquo;s a wasp nest right over my front door.&rdquo;</h3><p>Time-sensitive but not a safety event. <strong>Watch for:</strong> the earliest authorized slot offered (or, if none can be reserved, a clearly pending request or callback) and a clear dispatch note &mdash; without inflating it into an emergency or waking a technician.</p></div>
         <div class="scen-item"><span class="tag">Test 3 &middot; Outside the service area</span><h3>&ldquo;We&rsquo;re just the other side of the county line.&rdquo;</h3><p>Nearby but excluded ZIP. <strong>Watch for:</strong> the area check happening <em>before</em> a time is offered, and the decline or referral policy followed accurately and politely.</p></div>
         <div class="scen-item"><span class="tag">Test 4 &middot; Pricing pressure</span><h3>&ldquo;Just give me a number &mdash; how much for the whole house?&rdquo;</h3><p>Caller pushes for a firm quote. <strong>Watch for:</strong> the handler staying inside the written pricing boundary and escalating rather than inventing a figure.</p></div>
         <div class="scen-item"><span class="tag">Test 5 &middot; Safety / off-script</span><h3>&ldquo;My little one got into the bait station under the sink.&rdquo;</h3><p>Suspected exposure. <strong>Watch for:</strong> booking stops immediately, the caller is routed to 911 or Poison Help 1-800-222-1222, no advice is given, and the call is documented and reported the same day.</p></div>
@@ -398,12 +409,13 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
             <li><span class="fc-box" aria-hidden="true"></span><span>Residential or commercial? Route commercial per policy.</span></li>
             <li><span class="fc-box" aria-hidden="true"></span><span>Urgency + safety question.</span></li>
             <li><span class="fc-box" aria-hidden="true"></span><span>Book only if authorized and the slot is reserved; otherwise record a request, not a confirmation. Or escalate. Repeat day/window/address.</span></li>
-            <li><span class="fc-box" aria-hidden="true"></span><span>Complete the CRM note, including the exact promise made.</span></li>
+            <li><span class="fc-box" aria-hidden="true"></span><span>Complete the call record: confirmed or pending status, next owner and the exact promise made.</span></li>
           </ul>
         </div>
 
         <div class="fc-group">
-          <h3>B. Capture on every call</h3>
+          <h3>B. Ordinary eligible calls: capture where possible</h3>
+          <p class="fc-note">Never delay safety routing to finish intake. For a safety-routed, declined or disconnected call, record only the information available and the action taken. Mark fields that don&rsquo;t apply N/A.</p>
           <div class="fc-field"><span class="lab">Caller name</span><span class="rule"></span></div>
           <div class="fc-field"><span class="lab">Callback number (read back)</span><span class="rule"></span></div>
           <div class="fc-field"><span class="lab">Service address</span><span class="rule"></span></div>
@@ -411,11 +423,13 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           <div class="fc-field"><span class="lab">Problem (caller&rsquo;s words)</span><span class="rule"></span></div>
           <div class="fc-field"><span class="lab">How long / where</span><span class="rule"></span></div>
           <div class="fc-field"><span class="lab">Residential / Commercial</span><span class="rule"></span></div>
-          <div class="fc-field"><span class="lab">New lead / Existing</span><span class="rule"></span></div>
+          <div class="fc-field"><span class="lab">New / Existing (record checked or caller-stated)</span><span class="rule"></span></div>
           <div class="fc-field"><span class="lab">Urgency</span><span class="rule"></span></div>
           <div class="fc-field"><span class="lab">Access notes / pets / gate</span><span class="rule"></span></div>
-          <div class="fc-field"><span class="lab">Booked / Requested &mdash; day + window</span><span class="rule"></span></div>
+          <div class="fc-field"><span class="lab">Appointment date + window (if any)</span><span class="rule"></span></div>
+          <div class="fc-outcome"><span class="lab">Outcome</span><span><span class="fc-box" aria-hidden="true"></span>Booked/rescheduled (confirmed)</span><span><span class="fc-box" aria-hidden="true"></span>Appointment/change requested (pending)</span><span><span class="fc-box" aria-hidden="true"></span>Cancellation completed (authorized)</span><span><span class="fc-box" aria-hidden="true"></span>Callback</span><span><span class="fc-box" aria-hidden="true"></span>Escalated</span><span><span class="fc-box" aria-hidden="true"></span>Declined</span></div>
           <div class="fc-field"><span class="lab">Promised</span><span class="rule"></span></div>
+          <div class="fc-field"><span class="lab">Next owner / action / approved due time</span><span class="rule"></span></div>
           <div class="fc-field"><span class="lab">Escalated to / time</span><span class="rule"></span></div>
           <div class="fc-field"><span class="lab">Handler + time</span><span class="rule"></span></div>
         </div>
@@ -446,7 +460,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <h3>Should the script quote a price?</h3>
       <p>Only inside limits you set in writing. A workable limit is to let a handler give a published starting range for standard residential work and escalate anything outside it &mdash; square-footage outliers, commercial accounts, termite or wildlife work, and any warranty question.</p>
       <h3>How long should a pest control intake call take?</h3>
-      <p>There is no universal target, and a good call is not the same as a fast call. Use the required-fields list as the standard instead: a call is complete when the callback number, address and ZIP, service-area confirmation, problem description, property type, urgency and the promise made are all captured.</p>
+      <p>There is no universal target, and a good call is not the same as a fast call. Use the required-fields list as the standard instead: an ordinary eligible call is complete when the callback number, address and ZIP, service-area confirmation, problem description, property type, urgency and the promise made are captured where possible. Never delay safety routing to finish intake. For a safety-routed, declined or disconnected call, record only the information available and the action taken.</p>
       <h3>Can we use this script with an answering service or an AI receptionist?</h3>
       <p>Yes. The script is written to be executed by whoever answers &mdash; an in-house CSR, an answering service, or an automated system. The rules that matter are the same in all three cases: service-area check before booking, no diagnosis, defined pricing limits, and a named escalation path. Our <a href="/blog/ai-vs-human-answering-service-pest-control">comparison of AI and human answering</a> covers where automated handling needs stricter testing.</p>
 
@@ -533,6 +547,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     </div>
   </div>
 </footer>
-<script src="/js/main.js?v=20261014a"></script>
+<script src="/js/main.js?v=20261014b"></script>
 </body>
 </html>

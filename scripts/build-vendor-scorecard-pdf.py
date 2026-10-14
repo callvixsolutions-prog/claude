@@ -29,6 +29,15 @@ ARTICLE_URL = 'https://callvixsolutions.com/blog/pest-control-answering-service-
 PAGE_URL = 'https://callvixsolutions.com/resources/pest-control-answering-service-vendor-scorecard'
 
 # Rubric copied from the article's "A simple vendor scorecard" table.
+# Which questions feed each category; the scorecard page shows the same map.
+MAP = {'Pest-control readiness': 'Parts 1&ndash;2 &middot; Q1&ndash;8', 'Booking control': 'Part 3 &middot; Q9&ndash;13',
+       'Escalation': 'Part 4 &middot; Q14&ndash;17', 'Visibility': 'Parts 5&ndash;6 &middot; Q18&ndash;24',
+       'Pricing clarity': 'Part 7 &middot; Q25'}
+# Conditions no total can outweigh; the scorecard page and checklist article use the same four.
+GATES = ['No clear control over who can access your systems, or how that access is revoked',
+         'Agents allowed to make unsafe promises, or to promise outcomes and prices outside your rules',
+         'Urgent calls with no named owner for the escalation',
+         'No clear total price for a realistic busy-season month']
 RUBRIC = [
     ('Pest-control readiness', 'Generic or unclear', 'Some relevant experience', 'Documented pest-specific workflow'),
     ('Booking control', 'Takes messages only', 'Limited booking', 'Books by your written rules'),
@@ -81,7 +90,8 @@ def build_html(parts):
             '<th scope="col" class="a">Answer</th><th scope="col">Notes and evidence</th></tr></thead>'
             '<tbody>%s<tr class="tally"><td colspan="4">Part %d tally &nbsp; Clear ____ &nbsp; Partial ____ &nbsp; Unclear ____</td></tr></tbody></table>'
             % (num, title, body, num))
-    rubric = ''.join('<tr><th scope="row">%s</th><td>%s</td><td>%s</td><td>%s</td><td class="score"><span class="circle">0</span><span class="circle">1</span><span class="circle">2</span></td></tr>' % r for r in RUBRIC)
+    rubric = ''.join('<tr><th scope="row">%s<span class="map">%s</span></th><td>%s</td><td>%s</td><td>%s</td><td class="score"><span class="circle">0</span><span class="circle">1</span><span class="circle">2</span></td></tr>' % ((r[0], MAP[r[0]]) + r[1:]) for r in RUBRIC)
+    gates = ''.join('<li><span class="box" aria-hidden="true"></span>%s</li>' % g for g in GATES)
     lines = '<div class="line"></div>' * 3
     return '''<!doctype html>
 <html lang="en-US"><head><meta charset="utf-8">
@@ -125,7 +135,12 @@ table.rb { break-inside: avoid; }
 .rb th, .rb td { border: 0.8pt solid #9aa0ae; padding: 4pt 6pt; text-align: left; vertical-align: top; font-size: 8.8pt; }
 .rb caption { font: 400 9pt Helvetica, Arial, sans-serif; color: #1c2033; padding: 0 0 5pt; }
 .rb thead th { background: #e3f5f7; font: 700 8pt Helvetica, Arial, sans-serif; color: #101c4c; }
-.rb tbody th { font-weight: 700; color: #101c4c; width: 1.35in; }
+.rb tbody th { font-weight: 700; color: #101c4c; width: 1.5in; }
+.rb .map { display: block; font-weight: 400; font-size: 7.8pt; color: #3a3f52; margin-top: 1pt; }
+.gates { border: 1.5pt solid #101c4c; border-radius: 4pt; padding: 6pt 9pt; margin: 0 0 8pt; font-size: 8.8pt; break-inside: avoid; }
+.gates p { margin: 0 0 3pt; }
+.gates ul { list-style: none; margin: 0; padding: 0; }
+.gates li { margin: 0 0 2pt; }
 .rb td.score { width: 1.05in; white-space: nowrap; }
 .circle { display: inline-block; width: 15pt; height: 15pt; border: 0.9pt solid #1c2033; border-radius: 50%; text-align: center; line-height: 13.5pt; font-size: 8pt; margin-right: 3pt; }
 .total { display: flex; gap: 14pt; align-items: center; margin: 9pt 0 0; }
@@ -146,17 +161,17 @@ table.rb { break-inside: avoid; }
 <main>
 <h1>Pest Control Answering Service Vendor Scorecard</h1>
 <p class="purpose">Use this sheet to ask every answering-service provider the same 25 questions, record the evidence behind each answer and score them the same way.</p>
-<p class="disclosure">Created by Callvix Solutions. It can be used to evaluate Callvix or any other provider.</p>
+<p class="disclosure">Created by Callvix Solutions. It can be used to evaluate Callvix or any other provider. Designed for operators evaluating booking-capable call support; it compares providers against your own needs and is not a certification of any answering service.</p>
 <section aria-label="Vendor details"><div class="fields">
 <div class="field">Vendor name</div><div class="field">Reviewer</div>
 <div class="field">Date</div><div class="field">Proposed plan / price</div>
 </div></section>
 <h2>How to use this scorecard</h2>
 <ol class="steps">
-<li>Use one copy per provider.</li>
+<li>Use one copy per provider, and the same intended call types and coverage needs for every provider.</li>
 <li>Ask all 25 questions. Ask for a direct answer, an example and, where possible, a live demonstration.</li>
 <li>Tick Clear, Partial or Unclear for each answer and note the evidence you were shown.</li>
-<li>Score the five categories on the last page from 0 to 2, add them up and compare providers.</li>
+<li>Check the four &ldquo;Do not proceed until resolved&rdquo; conditions, then score the five categories from 0 to 2 and compare totals.</li>
 </ol>
 <p class="key"><strong>Answer key.</strong> Clear: a direct answer backed by an example, document or demonstration. Partial: answered, but vague or not yet verified. Unclear: no answer, or the provider could not explain it.</p>
 <h2>The 25 questions</h2>
@@ -166,7 +181,8 @@ table.rb { break-inside: avoid; }
 
 <section class="keep">
 <h2>Score the five categories</h2>
-<table class="rb"><caption>Using your notes, circle a score from 0 to 2 for each category.</caption>
+<div class="gates"><p><strong>Do not proceed until resolved,</strong> whatever the total. Tick any that apply:</p><ul>''' + gates + '''</ul></div>
+<table class="rb"><caption>Using your notes on the questions listed under each category, circle a score from 0 to 2.</caption>
 <thead><tr><th scope="col">Category</th><th scope="col">0 points</th><th scope="col">1 point</th><th scope="col">2 points</th><th scope="col">Score</th></tr></thead>
 <tbody>''' + rubric + '''</tbody></table>
 <div class="total"><span class="t">Total ____ / 10</span>
@@ -174,7 +190,7 @@ table.rb { break-inside: avoid; }
 <p class="note"><strong>The total is a comparison aid, not a guarantee of service quality.</strong> The score is a screening tool, not a substitute for a pilot. A provider should still prove it can follow your actual rules on real or simulated calls.</p>
 
 </section>
-<section>
+<section class="keep">
 <h2>Decision summary</h2>
 <div class="decide">
 <div class="b"><h3>Strengths</h3>''' + lines + '''</div>

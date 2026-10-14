@@ -37,7 +37,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"></noscript>
-<link rel="stylesheet" href="/css/style.css?v=fd4d171b21">
+<link rel="stylesheet" href="/css/style.css?v=aa392d8300">
 <style>
 /* Integrations hub — hero + CRM card polish */
 .hero h1{max-width:none}
@@ -166,34 +166,22 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <div class="breadcrumbs"><a href="/">Home</a> / Works With</div>
       <div class="eyebrow">Fits how you already work</div>
       <h1>Pest control answering that fits your office software</h1>
-      <p class="hero-subhead">A useful call handoff includes the caller&rsquo;s details, the appointment or next action, and the notes your team needs.</p>
-      <p class="lede">With the optional $99/month CRM Management add-on, Callvix representatives enter call and booking details in your approved software account. We confirm the access and workflow before coverage starts; there is no native integration or automatic data sync. The core service &mdash; answering, qualification and booking by your rules &mdash; is <a href="/pricing">$399/month plus per-call usage</a>.</p>
+      <p class="lede crm-lead">With the optional $99/month CRM Management add-on, Callvix representatives enter call and booking details in your approved software account. We confirm the access and workflow before coverage starts.</p>
+      <p class="crm-scope"><span>Manual CRM entry</span><span>optional $99/month</span><span>access you grant</span><span>no automatic sync</span></p>
       <div class="hero-cta" style="margin-top:26px;">
         <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Book a Discovery Call</a>
         <a href="/pricing" class="btn btn-outline">See pricing</a>
       </div>
     </div>
     <div class="hero-visual">
-      <div class="call-card">
-        <div class="call-card-top">
-          <div class="who">
-            <div><strong>Callvix representative</strong><span>Answering as &ldquo;Example Pest Control Co.&rdquo;</span></div>
-          </div>
-          <span class="live-tag"><span class="dot"></span> EXAMPLE</span>
-        </div>
-        <div class="call-card-body">
-          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;There&rsquo;s a wasp nest right by our front door &mdash; can someone come out?&rdquo;</div>
-          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Let&rsquo;s get that looked at. Can I take the service address so I can check you&rsquo;re in the coverage area?&rdquo;</div>
-          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;It&rsquo;s 14 Oak Lane.&rdquo;</div>
-          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;That&rsquo;s covered. There&rsquo;s a slot tomorrow between 10am and 12pm &mdash; does that work?&rdquo;</div>
-          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;Yes, that&rsquo;s fine.&rdquo;</div>
-          <div class="call-result">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
-            <span>Job booked &middot; entered in your CRM with the add-on</span>
-          </div>
-        </div>
-      </div>
-      <p class="card-disclaimer">Illustrative sample call &mdash; not a customer testimonial or performance claim.</p>
+      <figure class="crm-handoff">
+        <ol>
+          <li><b>Approved call details</b><span>Caller, issue, address and outcome, captured under your rules</span></li>
+          <li><b>Callvix representative</b><span>Enters the agreed details by hand</span></li>
+          <li><b>Your software account</b><span>Using a login you grant and can revoke</span></li>
+        </ol>
+        <figcaption>How CRM Management works: a person doing manual entry, not a native integration or automatic sync.</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -201,7 +189,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
 <section class="section">
   <div class="container">
     <div class="section-head">
-      <p class="lede">Without the add-on, booking and call details reach your team by the method agreed during setup. With it, a representative works in your own account the way an in-house CSR would: you grant the access you are comfortable with, we agree the booking rules in writing, and you can revoke access at any time. Pick your system to see what that looks like.</p>
+      <p class="lede">The answering service itself &mdash; answering, qualification and booking by your rules &mdash; is <a href="/pricing">$399/month plus per-call usage</a>. Without the add-on, booking and call details reach your team by the method agreed during setup. With it, a representative works in your own account the way an in-house CSR would: you grant the access you are comfortable with, we agree the booking rules in writing, and you can revoke access at any time. Pick your system to see what that looks like.</p>
     </div>
     <div class="grid grid-3 crm-grid">
       <a class="card" href="/integrations/fieldroutes">
@@ -241,6 +229,17 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <span class="crm-more">See how it works <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
       </a>
     </div>
+    <details class="crm-convo crm-convo--hub">
+      <summary>Read an example conversation</summary>
+      <div class="call-card-body">
+          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;There&rsquo;s a wasp nest right by our front door &mdash; can someone come out?&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;Let&rsquo;s get that looked at. Can I take the service address so I can check you&rsquo;re in the coverage area?&rdquo;</div>
+          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;It&rsquo;s 14 Oak Lane.&rdquo;</div>
+          <div class="bubble us"><span class="lbl">Callvix</span>&ldquo;That&rsquo;s covered. There&rsquo;s a slot tomorrow between 10am and 12pm &mdash; does that work?&rdquo;</div>
+          <div class="bubble them"><span class="lbl">Caller</span>&ldquo;Yes, that&rsquo;s fine.&rdquo;</div>
+        <p class="card-disclaimer">Illustrative sample call, not a recording or customer record. Entering the booking in your software requires the CRM Management add-on.</p>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -284,6 +283,18 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
   </div>
 </section>
 
+<section class="section section--tight">
+  <div class="container container-narrow">
+    <h2 style="font-size:22px;">Related reading</h2>
+    <div class="checklist" style="margin-top:16px;">
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/services">How our pest control call handling works, end to end</a></p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/pricing">Pricing, usage and optional add-ons</a></p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/pest-control-call-script-intake-form">Pest control call script and customer intake form (free template)</a></p></div>
+      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/faq">Pest control answering service FAQs</a></p></div>
+    </div>
+  </div>
+</section>
+
 <section class="section section--alt">
   <div class="container">
     <div class="cta-band">
@@ -294,17 +305,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Book a Free Discovery Call</a>
         <a href="/contact" class="btn btn-ghost">Contact us</a>
       </div>
-    </div>
-  </div>
-</section>
-<section class="section section--tight">
-  <div class="container container-narrow">
-    <h2 style="font-size:22px;">Related reading</h2>
-    <div class="checklist" style="margin-top:16px;">
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/services">How our pest control call handling works, end to end</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/pricing">Pricing, usage and optional add-ons</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/blog/pest-control-call-script-intake-form">Pest control call script and customer intake form (free template)</a></p></div>
-      <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p><a href="/faq">Pest control answering service FAQs</a></p></div>
     </div>
   </div>
 </section>
@@ -380,6 +380,6 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     </div>
   </div>
 </footer>
-<script src="/js/main.js?v=20261014a"></script>
+<script src="/js/main.js?v=20261014b"></script>
 </body>
 </html>

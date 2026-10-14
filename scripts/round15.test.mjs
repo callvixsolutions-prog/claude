@@ -176,7 +176,9 @@ test('the homepage photographs are sized, described and within budget', () => {
 
 test('the homepage structured data is byte-identical to before the rebuild', () => {
   const blocks = (home.match(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g) || []).join('');
-  assert.equal(createHash('sha256').update(blocks).digest('hex'), 'f8196557dd1970209b5b52407451246921c0026f8dc432ebbab63ccc13e0b268',
+  /* Round 20b changed one sentence on purpose: the CRM Management offer now says
+     representatives "manually enter agreed call notes", matching the visible copy. */
+  assert.equal(createHash('sha256').update(blocks).digest('hex'), 'b76fcba194c8ef2f8b5578090a3ed4fe11a764100bcdb08562f29b4d870e1c15',
     'Round 15 changed markup and CSS only. If the JSON-LD is meant to change, that is its own decision: update this hash with it.');
   assert.ok(!/"@type"\s*:\s*"FAQPage"/.test(blocks), 'the homepage has no FAQPage');
   assert.equal(count(main, '<h1'), 1);

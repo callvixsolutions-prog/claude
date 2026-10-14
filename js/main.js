@@ -68,22 +68,28 @@ document.addEventListener('DOMContentLoaded', function () {
     var submitBtn = form.querySelector('[type="submit"]');
     var originalLabel = submitBtn ? submitBtn.textContent : '';
 
+    // The error status is added to, and later removed from, a field's
+    // aria-describedby token list; any helper text it already points at stays.
+    function describedBy(el, add) {
+      if (!status || !status.id) return;
+      var ids = (el.getAttribute('aria-describedby') || '').split(/\s+/).filter(function (t) { return t && t !== status.id; });
+      if (add) ids.push(status.id);
+      if (ids.length) el.setAttribute('aria-describedby', ids.join(' '));
+      else el.removeAttribute('aria-describedby');
+    }
+    function unmark(el) { el.removeAttribute('aria-invalid'); describedBy(el, false); }
     // Entered values are never cleared on failure; only the error marking is.
     function clearInvalid() {
-      form.querySelectorAll('[aria-invalid="true"]').forEach(function (el) {
-        el.removeAttribute('aria-invalid'); el.removeAttribute('aria-describedby');
-      });
+      form.querySelectorAll('[aria-invalid="true"]').forEach(unmark);
     }
     function markInvalid(name) {
       var el = form.elements[name];
       if (!el || !el.setAttribute) return;
       el.setAttribute('aria-invalid', 'true');
-      if (status && status.id) el.setAttribute('aria-describedby', status.id);
+      describedBy(el, true);
     }
     form.addEventListener('input', function (e) {
-      if (e.target && e.target.getAttribute && e.target.getAttribute('aria-invalid') === 'true') {
-        e.target.removeAttribute('aria-invalid'); e.target.removeAttribute('aria-describedby');
-      }
+      if (e.target && e.target.getAttribute && e.target.getAttribute('aria-invalid') === 'true') unmark(e.target);
     });
 
     form.addEventListener('submit', function (e) {
@@ -188,6 +194,15 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!a) return;
     var href = a.getAttribute('href') || '';
     var where = linkLocation(a);
+    // Scorecard PDF links (scorecard page and /tools/) carry their own markers.
+    if (a.hasAttribute('data-scorecard-download')) {
+      pushEvent('vendor_scorecard_download', {
+        link_location: a.getAttribute('data-link-location') || where,
+        cta_location: a.getAttribute('data-cta-location') || where,
+        file_name: 'pest-control-answering-service-vendor-scorecard.pdf'
+      });
+      return;
+    }
     if (href.indexOf('tel:') === 0) {
       pushEvent('phone_click', { link_location: where });
     } else if (href.indexOf('mailto:') === 0) {
