@@ -421,3 +421,8 @@
 @media (max-width: 599px) {
   .home-main .h18-cover .cov-row-label b { font-size: 12.5px; white-space: nowrap; }
 }
+
+/* A quiet way on from the example call to the fuller examples on /services. */
+.home-main .h19-more { margin: 6px 0 0; font-size: 15px; }
+.home-main .h19-more a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; color: var(--teal-600); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.home-main .h19-more a:hover { text-decoration-thickness: 2px; }
