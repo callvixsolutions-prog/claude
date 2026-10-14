@@ -266,7 +266,8 @@
 /* ---------- 1. Hero: headline first, the illustration as the one image ---------- */
 /* em, not ch: ch is measured in the font in use, so the headline re-wrapped
    and pushed the picture down when the web font arrived. */
-.home-main .h18-hero h1 { max-width: 8.5em; }
+.home-main .h18-hero h1 { max-width: 11em; }
+.home-main .h19-tagline { margin: 10px 0 0; font-family: var(--font-heading); font-weight: 600; font-size: clamp(19px, 0.6vw + 16px, 23px); line-height: 1.3; color: var(--teal-600); }
 .home-main .h18-hero .lede { max-width: 31em; }
 .home-main .h18-hero .h15-facts { order: 3; margin-top: var(--space-md); padding-top: var(--space-sm); border-top: 1px solid var(--line-2); font-size: 14px; color: var(--ink-500); overflow: visible; margin-left: 0; display: block; }
 .home-main .h18-hero .h15-facts span { padding: 0; border: 0; margin: 0; white-space: normal; }
@@ -280,7 +281,7 @@
   .home-main .h18-hero .h15-hero-cta { margin-top: 28px; }
   .home-main .h18-hero .h15-facts { order: 3; }
 }
-@media (min-width: 1280px) { .home-main .h18-hero h1 { font-size: 56px; line-height: 1.06; } }
+@media (min-width: 1280px) { .home-main .h18-hero h1 { font-size: 50px; line-height: 1.08; } }
 
 /* ---------- 2. Who it is for: heading left, three short cases right ---------- */
 .home-main .h18-who-grid { display: grid; gap: var(--space-base); }

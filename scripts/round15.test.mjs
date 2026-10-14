@@ -39,6 +39,7 @@ test('the homepage shows one call and one handoff sheet', () => {
     assert.equal(count(text, once), 1, `"${once}" should appear once, found ${count(text, once)}`);
   }
   /* Restored in Round 17 and not to be merged away again without a decision. */
+  assert.equal((main.match(/<h1[^>]*>([^<]*)<\/h1>/g) || []).join(), '<h1>Your pest control calls, answered by trained people</h1>', 'the homepage H1 is the keyword heading');
   for (const back of ['Keep working. We’ll take the next call.', 'Human call answering for U.S. pest control companies', 'For the calls your team can’t get to', 'In pest control, a missed call can mean a missed booking', 'See what happens to one call',
     'A clear handoff after each call we take', 'From first call to booked job', 'Your rules stay in charge', 'When a call isn’t a booking',
     'The week it covers', 'Works with the tools your office already runs on', 'Which CRM or scheduling systems do you work with?']) {
