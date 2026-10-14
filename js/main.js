@@ -359,7 +359,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var href = a.getAttribute('href') || '';
     var where = linkLocation(a);
     // Scorecard PDF links (scorecard page and /tools/) carry their own markers.
-    if (a.hasAttribute('data-scorecard-download')) {
+    if (a.getAttribute('data-scorecard-download') !== null) {
       pushEvent('vendor_scorecard_download', {
         link_location: a.getAttribute('data-link-location') || where,
         cta_location: a.getAttribute('data-cta-location') || where,

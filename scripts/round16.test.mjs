@@ -160,5 +160,5 @@ test('every main-site page loads the current main.js', () => {
     }
   }(ROOT));
   assert.equal(versions.size, 26);
-  assert.deepEqual([...new Set(versions.values())], ['20261014a'], 'main.js changed in round 16; every page must ask for the new copy');
+  assert.deepEqual([...new Set(versions.values())], ['20261014c'], 'main.js changed in round 16; every page must ask for the new copy');
 });
