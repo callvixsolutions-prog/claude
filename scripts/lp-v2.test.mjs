@@ -52,7 +52,7 @@ test('banned words and claims are absent from the page, its script and its style
 test('the only statistics are the two approved figures, with no source line', () => {
   const pct = [...visible.matchAll(/\d+(?:\.\d+)?\s?%/g)].map((m) => m[0]);
   assert.deepEqual(pct, ['58%', '78%']);
-  assert.ok(visible.includes('58% of callers won’t leave a voicemail. And 78% say they’ve stopped using a business after a call went unanswered.'));
+  assert.ok(visible.includes('58% of callers don’t leave a voicemail. And 78% say they’ve stopped using a business after a call went unanswered.'));
   assert.ok(!/source:/i.test(visible), 'no "Source:" line');
 });
 
@@ -158,4 +158,18 @@ test('testimonials stay off, and only this page loads the v2 files', () => {
   assert.deepEqual(others, []);
   assert.ok(!HTML.includes('fonts.googleapis.com'), 'fonts are self-hosted on this page');
   assert.ok(!/\bmain\.js|style\.css|lp-booking\.js/.test(HTML), 'v2 loads none of the shared site files');
+});
+
+test('the Calendly embed shows the whole month, time zone and slots without scrolling inside it', () => {
+  /* Measured live (calqa.mjs, Oct 2026): Calendly needs 798px when the box is 1200px wide (slots beside the month),
+     700px at 600-1000px and 602px on phones before a date is picked, then 955-1001px once slots stack below.
+     Reserved heights cover the first state; the page_height handler grows the box for the second. */
+  assert.ok(JS.includes("'?hide_event_type_details=1&hide_landing_page_details=1&hide_gdpr_banner=1"), 'details panels hidden');
+  assert.ok(/case 'calendly\.page_height':[\s\S]{0,200}cbox\.style\.height = \(hpx \+ 2\) \+ 'px'/.test(JS), 'box follows Calendly page_height');
+  const h = (re) => +(CSS.match(re) || [, 0])[1];
+  assert.ok(h(/\.lp \.cal\{position:relative;height:(\d+)px/) >= 604, 'base reserved height');
+  assert.ok(h(/@media \(min-width:640px\)\{\.lp \.cal\{height:(\d+)px\}\}/) >= 700, '640px+ reserved height');
+  assert.ok(h(/@media \(min-width:1280px\)\{\.lp \.cal\{height:(\d+)px\}\}/) >= 800, '1280px+ reserved height');
+  assert.ok(h(/@media \(max-width:639px\)\{[\s\S]*?\.lp \.cal\{height:(\d+)px\}/) >= 604, 'phone reserved height');
+  assert.ok(/@media \(min-width:1024px\)\{\.lp \.book-l\{display:grid/.test(CSS) && !/minmax\(0,35fr\) minmax\(0,65fr\)/.test(CSS), 'desktop calendar uses the full container width');
 });

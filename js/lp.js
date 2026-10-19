@@ -485,7 +485,7 @@
     return p;
   }
   function calendlyUrl() {
-    return CALENDLY_URL + '?hide_gdpr_banner=1&primary_color=087480&text_color=1c2033';
+    return CALENDLY_URL + '?hide_event_type_details=1&hide_landing_page_details=1&hide_gdpr_banner=1&primary_color=087480&text_color=1c2033';
   }
   function initCalendly() {
     var box = $('#cal'); if (!box || !window.Calendly || !window.Calendly.initInlineWidget) return;
@@ -555,6 +555,10 @@
     var d = e.data;
     if (!d || typeof d !== 'object' || typeof d.event !== 'string' || d.event.indexOf('calendly.') !== 0) return;
     switch (d.event) {
+      case 'calendly.page_height':
+        var hpx = parseInt(d.payload && d.payload.height, 10), cbox = $('#cal');
+        if (cbox && hpx >= 400 && hpx <= 2400) cbox.style.height = (hpx + 2) + 'px';
+        break;
       case 'calendly.event_type_viewed':
         var box = $('#cal'); if (box) box.classList.add('is-ready');
         if (!stepsSent.view) { stepsSent.view = 1; push('callvix_booking_step', { booking_step: 'calendar_viewed' }); push('calendly_view'); }
