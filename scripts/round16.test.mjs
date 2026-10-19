@@ -147,7 +147,7 @@ test('if Calendly is blocked or slow the visitor is sent to the link instead', (
 });
 
 test('every main-site page loads the current main.js', () => {
-  const SKIP = new Set(['preview', 'pest-control-call-demo', 'docs', 'node_modules', '.git']);
+  const SKIP = new Set(['preview', 'pest-control-call-demo', 'pest-control-call-demo-v1', 'docs', 'node_modules', '.git']);
   /* /thank-you is frozen for this round; it keeps its link and so its cached copy. */
   const FROZEN = new Set(['thank-you.html']);
   const versions = new Map();

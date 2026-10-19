@@ -1,5 +1,5 @@
 {
- "_comment": "Values frozen at the round 11 baseline (origin/main at 066f078). Regenerate only by deliberate decision; see scripts/round11.test.mjs. campaignSha256 was updated deliberately in round 13 (one footer sentence removed at the owner's instruction).",
+ "_comment": "Values frozen at the round 11 baseline (origin/main at 066f078). Regenerate only by deliberate decision; see scripts/round11.test.mjs. campaignSha256 was updated deliberately in round 13 (one footer sentence removed at the owner's instruction) and again for landing page v2 (lp-v2, owner-approved rebuild); campaignV1Sha256 pins the v1 rollback copy.",
  "services": {
   "title": "Human Pest Control Answering Service | Callvix Solutions",
   "description": "Trained people answer in your company name, qualify the pest issue and book the job. $399/month plus $2.99 per inbound call, Monday to Friday.",
@@ -115,5 +115,6 @@
    "robots": "index, follow, max-image-preview:large"
   }
  },
- "campaignSha256": "7f9f25928f81de6c4957f043870a7a0dabe5d50e88b9a333cca2cf3c9ec28cb6"
+ "campaignSha256": "3cad3df96844a07f9a20c9aa655779993c302d538dd5f19caad96be6a36c87b0",
+ "campaignV1Sha256": "058828d719474aebc3bde2d4f0764e3afaa7a15a154f3017776eed06666a9717"
 }

@@ -34,7 +34,7 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 /* The ceiling. Raise it only by deliberate decision, never to make a run pass. */
 const MAX_OPT_OUTS = 0;
 
-const EXCLUDED = new Set(['pest-control-call-demo', 'docs', 'preview', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
+const EXCLUDED = new Set(['pest-control-call-demo', 'pest-control-call-demo-v1', 'docs', 'preview', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
 const OPENING = new Set(['hero', 'page-hero']);
 /* Density and behaviour modifiers, not surfaces. */
 const NOT_A_SURFACE = new Set(['section--tight', 'section--roomy', 'section--continues']);

@@ -19,7 +19,7 @@ import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
-const EXCLUDED_DIRS = new Set(['pest-control-call-demo', 'docs', 'preview', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
+const EXCLUDED_DIRS = new Set(['pest-control-call-demo', 'pest-control-call-demo-v1', 'docs', 'preview', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
 
 function htmlFiles(dir = ROOT, out = []) {
   for (const entry of readdirSync(dir)) {
@@ -225,6 +225,10 @@ test('the campaign page is byte-identical to the baseline, and /thank-you is sti
     'pest-control-call-demo/index.html has changed. It is the Google Ads landing page and is outside every main-site round. '
     + 'If the change is intended, update campaignSha256 in scripts/round11-frozen.json in the same commit.');
   assert.match(read('thank-you.html'), /<meta\s+name="robots"[^>]*content="[^"]*noindex/i, '/thank-you must stay noindex');
+  /* The v1 copy kept for rollback/A-B (lp-v2): the old page with only its canonical and og:url pointing at itself. */
+  const v1 = createHash('sha256').update(readFileSync(join(ROOT, 'pest-control-call-demo-v1/index.html'))).digest('hex');
+  assert.equal(v1, FROZEN.campaignV1Sha256, 'pest-control-call-demo-v1/index.html has changed; it is the frozen rollback copy of the v1 landing page.');
+  assert.match(read('pest-control-call-demo-v1/index.html'), /<meta\s+name="robots"[^>]*content="[^"]*noindex/i, 'the v1 copy must stay noindex');
 });
 
 /* ------------------------------------------------------- 8. banned strings */
