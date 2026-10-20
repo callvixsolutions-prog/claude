@@ -51,6 +51,9 @@ test('every editable GTM page loads the container on callvixsolutions.com only',
   for (const rel of gated) {
     const code = snippetOf(readFileSync(join(ROOT, rel), 'utf8'));
     if (!code) { wrong.push(rel + ': snippet not found'); continue; }
+    /* Hostinger's preview proxy rewrites every literal copy of the domain in served HTML, which turned the gate into a pass on the preview host (20 Oct 2026). */
+    if (code.includes('callvixsolutions.com')) wrong.push(rel + ': the domain appears literally in the snippet, so the preview proxy can rewrite it');
+    if (run(code.split('callvixsolutions.com').join('beige-cassowary-782482.hostingersite.com'), 'beige-cassowary-782482.hostingersite.com').length) wrong.push(rel + ': loads on the preview host after its proxy rewrite');
     const prod = run(code, 'callvixsolutions.com');
     if (prod.length !== 1 || !prod[0].startsWith('https://www.googletagmanager.com/gtm.js?id=GTM-PJFS7HV5')) wrong.push(rel + ': production did not load gtm.js once');
     for (const host of ['localhost', '127.0.0.1', 'beige-cassowary-782482.hostingersite.com', 'www.callvixsolutions.com', 'callvixsolutions.com.evil.test']) {

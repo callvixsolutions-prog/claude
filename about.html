@@ -10,8 +10,9 @@
      in dataLayer and are sent when it arrives. The campaign page and /thank-you keep the
      standard snippet. -->
 <!-- Production host only: local copies and the Hostinger preview domain never load the
-     container, so their visits stay out of GA4 and Clarity. -->
-<script>if(location.hostname==='callvixsolutions.com')(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+     container, so their visits stay out of GA4 and Clarity. The hostname is split in two
+     because the preview proxy rewrites every literal copy of it in the HTML it serves. -->
+<script>if(location.hostname==='callvixsolutions'+'.com')(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var done=false;function load(){if(done)return;done=true;
 var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;
 j.src='https://www.googletagmanager.com/gtm.js?id='+i;f.parentNode.insertBefore(j,f);}
