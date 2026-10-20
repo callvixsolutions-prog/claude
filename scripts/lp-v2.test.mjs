@@ -151,6 +151,8 @@ test('click IDs reach the form and Calendly; the phone number is swappable text'
 });
 
 test('testimonials stay off, and only this page loads the v2 files', () => {
+  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: v=2. */
+  assert.ok(HTML.includes('/css/lp.css?v=2') && HTML.includes('/js/lp.js?v=2'), 'asset versions bumped');
   assert.ok(JS.includes('var SHOW_TESTIMONIALS = false;'));
   assert.ok(HTML.includes('<template id="tplProof">'), 'the testimonials section is a template, not rendered markup');
   assert.ok(JS.includes("var CALLBACK_PROMISE = 'shortly during U.S. business hours';"));
