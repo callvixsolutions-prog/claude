@@ -30,20 +30,17 @@ const everything = HTML + '\n' + JS + '\n' + CSS;
 
 test('every price matches the approved facts to the cent', () => {
   for (const s of ['$399/month + $2.99 per answered call', 'Outbound follow-ups: $0.99 per call, only when used.', '+$199/mo', '+$149/mo', '+$99/mo',
-    'Quiet month: 60 answered calls → $399 + $179.40 = $578.40', 'Busy month: 150 answered calls → $399 + $448.50 = $847.50',
-    'Your bill follows your call volume. At 150 calls, that’s about $5.65 per answered call, all in. A full-time CSR costs about $3,700/month in wages alone.',
+    'Your bill follows your call volume, so quieter months cost less.',
     'Mon–Fri, 9am–6pm, your time zone', 'No setup fee', 'Cancel with 30 days’ notice.']) {
     assert.ok(visible.includes(s), `missing: "${s}"`);
   }
   const amounts = new Set([...visible.matchAll(/\$\s?\d{1,3}(?:,\d{3})*(?:\.\d{2})?/g)].map((m) => m[0].replace(/\s/g, '')));
-  const allowed = new Set(['$399', '$2.99', '$0.99', '$199', '$149', '$99', '$179.40', '$578.40', '$448.50', '$847.50', '$5.65', '$3,700', '$3,000', '$']);
+  const allowed = new Set(['$399', '$2.99', '$0.99', '$199', '$149', '$99', '$3,000', '$']);
   const extra = [...amounts].filter((a) => !allowed.has(a));
   assert.deepEqual(extra, [], `unexpected money amounts on the page: ${extra.join(', ')}`);
-  const cents = (n) => Math.round(n * 100);
-  assert.equal(cents(60 * 2.99), 17940); assert.equal(cents(399 + 60 * 2.99), 57840, 'quiet month adds up');
-  assert.equal(cents(150 * 2.99), 44850); assert.equal(cents(399 + 150 * 2.99), 84750, 'busy month adds up');
-  assert.equal((847.5 / 150).toFixed(2), '5.65', 'per-call all-in figure');
-  assert.ok(!/\$757\.80|\$358\.80/.test(visible), 'the old 120-call example is gone');
+  for (const gone of ['$578.40', '$847.50', '$5.65', '$3,700', '$179.40', '$448.50', '$757.80', '$358.80', 'Quiet month', 'Busy month', 'CSR costs', 'wages alone', 'Example bill']) {
+    assert.ok(!HTML.includes(gone) && !JS.includes(gone), `"${gone}" must not appear anywhere on the page`);
+  }
 });
 
 test('banned words and claims are absent from the page, its script and its styles', () => {
@@ -81,9 +78,9 @@ test('the calculator shows only what missed calls cost; no Callvix pricing in it
   assert.ok(calc.includes('Estimates use the numbers you enter. Your real results depend on your calls.'), 'disclaimer kept');
   assert.ok(!/o-cost-|o-math-|PRICE\./.test(JS), 'no cost code left in the script');
   assert.ok(JS.includes("return 'Calls/month: ' + num0.format(calcState.calls) + ' · Miss rate: ' + calcState.miss + '%';"), 'Calendly a1 summary unchanged');
-  /* Pricing keeps the published rates, the two bills and the CSR line. */
+  /* Pricing keeps the published rates, the add-ons, the not-billed list and the billing link. */
   const pricing = HTML.slice(HTML.indexOf('id="pricing"'), HTML.indexOf('id="terms"'));
-  for (const s of ['$578.40', '$847.50', 'A full-time CSR costs about $3,700/month in wages alone.', '$2.99']) assert.ok(pricing.includes(s), s);
+  for (const s of ['$399', '$2.99', '$0.99', 'Your bill follows your call volume, so quieter months cost less.', 'Full billing detail', 'hang-ups before we answer', '+$199/mo', '+$149/mo', '+$99/mo']) assert.ok(pricing.replace(/&nbsp;/g, ' ').includes(s), s);
 });
 
 test('?h= only ever picks from the whitelist; anything else falls back to the default', () => {
@@ -160,8 +157,8 @@ test('click IDs reach the form and Calendly; the phone number is swappable text'
 });
 
 test('testimonials stay off, and only this page loads the v2 files', () => {
-  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: v=3. */
-  assert.ok(HTML.includes('/css/lp.css?v=3') && HTML.includes('/js/lp.js?v=3'), 'asset versions bumped');
+  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: lp.css v=4, lp.js v=3. */
+  assert.ok(HTML.includes('/css/lp.css?v=4') && HTML.includes('/js/lp.js?v=3'), 'asset versions bumped');
   assert.ok(JS.includes('var SHOW_TESTIMONIALS = false;'));
   assert.ok(HTML.includes('<template id="tplProof">'), 'the testimonials section is a template, not rendered markup');
   assert.ok(JS.includes("var CALLBACK_PROMISE = 'shortly during U.S. business hours';"));
