@@ -9,7 +9,9 @@
      ~300 KB of tags never competes with the page itself. Events pushed before then wait
      in dataLayer and are sent when it arrives. The campaign page and /thank-you keep the
      standard snippet. -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+<!-- Production host only: local copies and the Hostinger preview domain never load the
+     container, so their visits stay out of GA4 and Clarity. -->
+<script>if(location.hostname==='callvixsolutions.com')(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var done=false;function load(){if(done)return;done=true;
 var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;
 j.src='https://www.googletagmanager.com/gtm.js?id='+i;f.parentNode.insertBefore(j,f);}
@@ -622,6 +624,18 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="section-head section-head--center">
       <div class="eyebrow">Questions</div>
       <h2>Straight answers for pest control owners</h2>
+    </div>
+    <div class="card" style="max-width: 760px; margin: 0 auto var(--space-md);">
+      <h3>Callvix at a glance</h3>
+      <div class="checklist">
+        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>Answered by trained people, not an AI voice bot.</p></div>
+        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>Calls answered in your company&rsquo;s name, with jobs booked by your rules.</p></div>
+        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>$399/month + $2.99 per inbound call.</p></div>
+        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>Monday&ndash;Friday, 9am&ndash;6pm in your company&rsquo;s local time. After-Hours and Weekend add-ons; overnight coverage is not offered.</p></div>
+        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>CRM Management add-on: a representative enters call notes and booking details in your FieldRoutes, PestPac, GorillaDesk, Briostack, ServiceTitan or Housecall Pro account, using access you grant. Manual entry, with no native integration or automatic sync.</p></div>
+        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>No setup fee. Month-to-month, with no long-term contract.</p></div>
+      </div>
+      <p style="margin-top: var(--space-sm);">Weighing up providers? Our guide helps you <a href="/blog/best-pest-control-answering-services">compare pest control answering services</a> on price, billing and hours.</p>
     </div>
     <div class="svc-faq">
   <details><summary>Is Callvix a real human service or an AI bot?</summary><div class="a"><p>Real people. Trained representatives answer in your company&rsquo;s name. Callvix is not an AI service and does not use a voice bot.</p></div></details>

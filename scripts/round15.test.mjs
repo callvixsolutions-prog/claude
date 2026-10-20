@@ -72,7 +72,9 @@ test('the facts search and AI tools read are plain HTML text on the homepage', (
     assert.ok(!banned.test(text), `banned claim on the homepage: ${banned}`);
   }
   /* "overnight" and "native integration" are allowed only as denials. */
-  assert.equal(count(text.toLowerCase(), 'overnight'), 1);
+  /* Twice since 20 Oct 2026: the pricing panel and the at-a-glance list. */
+  assert.equal(count(text.toLowerCase(), 'overnight'), 2);
+  assert.equal(count(text.toLowerCase(), 'overnight coverage is not offered'), 2, 'overnight only ever denied');
   for (const m of text.matchAll(/native integration/gi)) assert.match(text.slice(m.index - 12, m.index), /no $/i, 'native integration only ever denied');
 });
 

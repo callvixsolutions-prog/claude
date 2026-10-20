@@ -9,7 +9,9 @@
      ~300 KB of tags never competes with the page itself. Events pushed before then wait
      in dataLayer and are sent when it arrives. The campaign page and /thank-you keep the
      standard snippet. -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+<!-- Production host only: local copies and the Hostinger preview domain never load the
+     container, so their visits stay out of GA4 and Clarity. -->
+<script>if(location.hostname==='callvixsolutions.com')(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var done=false;function load(){if(done)return;done=true;
 var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;
 j.src='https://www.googletagmanager.com/gtm.js?id='+i;f.parentNode.insertBefore(j,f);}
@@ -44,6 +46,12 @@ if(d.readyState==='complete'){setTimeout(load,1500);}else{w.addEventListener('lo
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"></noscript>
 <link rel="stylesheet" href="/css/style.css?v=e699313a63">
+<style>
+.month-costs { display: grid; grid-template-columns: 1fr 1.1fr; gap: var(--space-lg); align-items: center; margin-bottom: var(--space-xl); }
+.month-costs h2 { margin-bottom: 12px; }
+.month-costs .rate-row dt span { display: block; font-weight: 400; font-size: 14.5px; color: var(--ink-500); font-variant-numeric: tabular-nums; }
+@media (max-width: 860px) { .month-costs { grid-template-columns: 1fr; gap: var(--space-base); } }
+</style>
 <script type="application/ld+json">
 { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
   { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://callvixsolutions.com/" },
@@ -118,6 +126,20 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
 
 <section class="section">
   <div class="container">
+    <div class="month-costs">
+      <div>
+        <h2>What a month costs</h2>
+        <p>Worked examples at our published prices: the $399 base subscription plus $2.99 for each inbound call we answer.</p>
+      </div>
+      <div class="rate-panel" role="group" aria-label="Monthly cost examples">
+        <dl class="rate-list">
+          <div class="rate-row"><dt>50 inbound calls<span>$399 + 50 &times; $2.99</span></dt><dd>$548.50<span>/month</span></dd></div>
+          <div class="rate-row"><dt>100 inbound calls<span>$399 + 100 &times; $2.99</span></dt><dd>$698<span>/month</span></dd></div>
+          <div class="rate-row"><dt>200 inbound calls<span>$399 + 200 &times; $2.99</span></dt><dd>$997<span>/month</span></dd></div>
+        </dl>
+        <p class="rate-foot">Outbound follow-ups are $0.99 each. Optional add-ons (After-Hours Coverage $199/month, Weekend Coverage $149/month, CRM Management $99/month) are extra. No setup fee.</p>
+      </div>
+    </div>
     <div class="base-band">
       <div>
         <h2 class="base-band-title">What your base subscription covers</h2>

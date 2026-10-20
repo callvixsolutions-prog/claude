@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Google Tag Manager (container GTM-PJFS7HV5 — carried over from the previous site so
      Google Analytics 4 and Search Console keep reporting without reconfiguration) -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+<!-- Production host only: local copies and the Hostinger preview domain never load the
+     container, so their visits stay out of GA4 and Clarity. -->
+<script>if(location.hostname==='callvixsolutions.com')(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
