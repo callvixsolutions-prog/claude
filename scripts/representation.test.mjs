@@ -116,6 +116,7 @@ const ALLOWED_IMAGES = {
   'blog-checklist.jpg': 'branded cover, title and subtitle on navy, no people',
   'blog-pricing.jpg': 'photograph: calculator, banknotes and a notepad. Objects only',
   'blog-receptionist-vs-service.svg': 'three-column diagram, vector text and shapes, no embedded raster',
+  'blog-best-answering-services.svg': 'three-column comparison diagram (Human, AI, Hybrid), vector text and placeholder bars, no people, no logos, no embedded raster',
   'vendor-scorecard.jpg': 'branded cover with an illustrated checklist, no people',
 
   /* Open Graph images, 1200x630. */
