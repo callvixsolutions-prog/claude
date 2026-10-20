@@ -400,6 +400,8 @@
       $('#o-risk').textContent = money0.format(r.risk);
       $('#o-cost-miss').textContent = money2.format(r.costMiss) + '/mo';
       $('#o-cost-all').textContent = money2.format(r.costAll) + '/mo';
+      $('#o-math-miss').textContent = '$399 + ' + num1.format(r.missed) + ' calls × $2.99';
+      $('#o-math-all').textContent = '$399 + ' + num0.format(calcState.calls) + ' calls × $2.99';
     }
     Object.keys(fields).forEach(function (k) {
       var range = $('#c-' + k), box = $('#c-' + k + '-n'); if (!range || !box) return;
@@ -501,8 +503,9 @@
     } catch (e) { calendlyFailed(); }
   }
   function calendlyFailed() {
-    var st = $('#calStatus'); if (st) st.textContent = 'The calendar didn’t load here. Use the link below to open it in a new tab.';
-    var sk = $('#calSkel'); if (sk) sk.style.display = 'none';
+    var st = $('#calStatus'), tx = $('#calStatusText'), sp = $('#calSpin');
+    if (tx) tx.textContent = 'The calendar didn’t load here. Use the link below to open it in a new tab.';
+    if (sp) sp.style.display = 'none'; if (st) st.classList.add('is-error');
   }
   function loadCalendly() {
     if (calendlyLoaded || calendlyLoading) return;
@@ -511,7 +514,7 @@
     s.onload = function () { calendlyLoading = false; initCalendly(); };
     s.onerror = function () { calendlyLoading = false; calendlyFailed(); };
     doc.head.appendChild(s);
-    setTimeout(function () { if (!calendlyLoaded) calendlyFailed(); }, 9000);
+    setTimeout(function () { if (!calendlyLoaded) calendlyFailed(); }, 15000);
   }
   onReady(function () {
     var book = $('#book'); if (!book) return;
@@ -519,6 +522,16 @@
       var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); loadCalendly(); } }, { rootMargin: '1200px 0px 1200px 0px' });
       io.observe(book);
     } else loadCalendly();
+    /* Warm the calendar early, off the critical path: first scroll, browser idle time after
+       the load event, or 3 s after load, whichever comes first. A CTA click then shows it at once. */
+    var warmed = false;
+    var warm = function () { if (warmed) return; warmed = true; window.removeEventListener('scroll', warm); loadCalendly(); };
+    window.addEventListener('scroll', warm, { passive: true });
+    var afterLoad = function () {
+      setTimeout(warm, 3000);
+      if ('requestIdleCallback' in window) window.requestIdleCallback(warm, { timeout: 3000 });
+    };
+    if (doc.readyState === 'complete') afterLoad(); else window.addEventListener('load', afterLoad);
   });
 
   /* Calendly postMessage events. Same dedupe as js/lp-booking.js (v1) and js/main.js. */
