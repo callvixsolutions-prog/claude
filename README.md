@@ -258,3 +258,64 @@ match the host · **429** rate-limited.
 
 `scripts/`, `package.json` and `.github/` are blocked from the public web by
 `.htaccess`.
+
+---
+
+## 9. Landing page (`/pest-control-call-demo/`)
+
+The paid-traffic page (Google Ads and Facebook/Instagram). It is `noindex` and not in
+`sitemap.xml`. Its files are its own: `pest-control-call-demo/index.html`, `css/lp.css`,
+`js/lp.js` and `assets/fonts/*.woff2`. No other page loads them, and it does not load the
+main site's `css/style.css` or `js/main.js`. Tests: `scripts/lp-v2.test.mjs` (part of `npm test`).
+
+`/pest-control-call-demo-v1/` is the previous version, kept live for rollback or an A/B
+test. It stays `noindex` and out of the sitemap, and its file is hash-pinned in
+`scripts/round11-frozen.json` (`campaignV1Sha256`) so it can't change by accident.
+
+### Switches (current values)
+
+| Switch | Current value | Lives in | What it does / how to change it |
+|---|---|---|---|
+| `LP_VIDEO` | `false` | `pest-control-call-demo/index.html`, the first `<script>` in `<head>` (`var LP_VIDEO = false;`) | Shows the video. Turn on only after the five video files are uploaded (steps below). It sits in the head so the page lays out correctly before it paints. |
+| `SAMPLE_CALL_AUDIO` | `false` | `js/lp.js`, top of the file | Plays a recorded sample call in sync with the transcript. Add `assets/audio/sample-call.mp3` and `assets/audio/sample-call.vtt` (one caption cue per transcript line, same order as on the page), then set to `true`. |
+| `SHOW_TESTIMONIALS` | `false` | `js/lp.js`, top of the file | Shows the testimonials section above the FAQ. Add approved quotes to the `TESTIMONIALS` list just below it (`{ quote, name, company, place, photo?, result? }`), then set to `true`. Never add a quote a client hasn't approved. |
+| `CALLBACK_PROMISE` | `"shortly during U.S. business hours"` | `js/lp.js`, top of the file | The end of the callback-form thank-you line: "Thanks, Pat. We'll call you …". Change the text between the quotes. |
+
+**After changing `css/lp.css` or `js/lp.js`, raise the `?v=` number** on its `<link>`/`<script>`
+in `pest-control-call-demo/index.html` (currently `?v=3`), and update the matching check in
+`scripts/lp-v2.test.mjs`. Browsers keep these files for up to a year (CSS) or a week (JS), so a
+returning visitor would otherwise get the old file. Any edit to the page's HTML also needs
+`campaignSha256` in `scripts/round11-frozen.json` updated (the test failure tells you the new value).
+
+### Going live with the video
+
+1. Put exactly these five files in `assets/video/`:
+   - `callvix-lp-video.mp4` (H.264, 16:9, ideally ≤ 10 MB)
+   - `callvix-lp-video.webm` (same video, WebM)
+   - `callvix-lp-video.vtt` (captions; shown by default)
+   - `callvix-lp-poster.webp` and `callvix-lp-poster.jpg` (the still shown before play, 16:9, e.g. 1280×720)
+2. In `pest-control-call-demo/index.html`, change `var LP_VIDEO = false;` to `var LP_VIDEO = true;`.
+3. Update `campaignSha256` (run `npm test`; the failure prints the new value), then commit and push to
+   `main`. Hostinger deploys in about a minute.
+
+What visitors then see: search and other traffic get a "See how it works in about a minute"
+section after the problem section. Facebook/Instagram traffic (`?src=fb`, or
+`utm_source=facebook|instagram|fb|ig`) gets the video in place of the hero call card (on phones,
+directly under the subhead), and the "See a sample call" link becomes "Watch how it works".
+Nothing loads until the visitor presses play. When the video ends, an overlay offers "Book a
+20-minute demo" (scrolls to the calendar) and "Replay".
+
+### Headline variants for ads
+
+`?h=` picks the H1 from a fixed list; anything else shows the default. Use these final URLs:
+
+| Variant | URL |
+|---|---|
+| default | `https://callvixsolutions.com/pest-control-call-demo/` |
+| answering | `https://callvixsolutions.com/pest-control-call-demo/?h=answering` |
+| call-center | `https://callvixsolutions.com/pest-control-call-demo/?h=call-center` |
+| receptionist | `https://callvixsolutions.com/pest-control-call-demo/?h=receptionist` |
+| after-hours | `https://callvixsolutions.com/pest-control-call-demo/?h=after-hours` |
+| missed | `https://callvixsolutions.com/pest-control-call-demo/?h=missed` |
+| human | `https://callvixsolutions.com/pest-control-call-demo/?h=human` |
+| Facebook/Instagram | `https://callvixsolutions.com/pest-control-call-demo/?src=fb` |

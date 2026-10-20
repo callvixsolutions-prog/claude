@@ -18,14 +18,13 @@
 
   /* ------------------------------------------------------------ config -- */
   var SAMPLE_CALL_AUDIO = false;   // true once /assets/audio/sample-call.mp3 (+ .vtt) exist
-  var LP_VIDEO = false;            // true once the landing-page video files exist
+  var LP_VIDEO = !!window.__LP_VIDEO; // the flag itself lives in the page's head script (pest-control-call-demo/index.html)
   var SHOW_TESTIMONIALS = false;   // true once real, approved quotes are added below
   var CALLBACK_PROMISE = 'shortly during U.S. business hours';
   var TESTIMONIALS = [];           // { quote, name, company, place, photo?, result? }
   var CALENDLY_URL = 'https://calendly.com/callvixsolutions/callvix-discovery-call';
   var CALENDLY_ORIGIN = 'https://calendly.com';
   var FORMSPREE = 'https://formspree.io/f/maqrpwqw';
-  var PRICE = { base: 399, inbound: 2.99 };
 
   var doc = document, root = doc.documentElement;
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -297,8 +296,9 @@
     $$('[data-play-sample]').forEach(function (a) {
       a.addEventListener('click', function (e) {
         e.preventDefault();
+        /* Social traffic with the video on: this link plays the hero video instead. */
+        if (LP_VIDEO && root.classList.contains('is-social')) { var hv = $$('.hero-video').filter(function (el) { return el.offsetParent !== null; })[0]; var vb = hv && $('.vid-btn', hv); if (vb) vb.click(); return; }
         var sec = $('#sample-call'); if (sec) sec.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-        if (LP_VIDEO && root.classList.contains('is-social')) return;
         setTimeout(function () { if (!playing) play(); btn.focus({ preventScroll: true }); }, reduceMotion ? 0 : 600);
       });
     });
@@ -308,21 +308,31 @@
   });
 
   /* -------------------------------------------------------------- video -- */
+  /* Poster + play-button facade; nothing loads until the click. Social traffic gets the
+     video in the hero (CSS shows the right slot from first paint); everyone else gets the
+     section after the problem block. When it ends, an overlay offers the demo or a replay. */
+  var VID = '/assets/video/callvix-lp-video';
   onReady(function () {
-    var sec = $('#video'); if (!sec || !LP_VIDEO) return;
-    var img = $('img[data-src]', sec); if (img) img.src = img.getAttribute('data-src');
-    sec.hidden = false;
-    var facade = $('#vidFacade');
-    if (root.classList.contains('is-social')) {
-      var vis = $('#heroVis'); if (vis && facade) { vis.innerHTML = ''; vis.appendChild(facade); sec.hidden = true; }
-      var lbl = $('#heroSecondaryLabel'); if (lbl) lbl.textContent = 'Watch how it works';
-    }
-    var b = $('#vidPlay'); if (!b) return;
-    b.addEventListener('click', function () {
+    if (!LP_VIDEO) return;
+    var social = root.classList.contains('is-social');
+    var slot = (social ? $$('.hero-video') : [$('#video')]).filter(function (el) { return el && el.offsetParent !== null; })[0];
+    if (!slot) return;
+    var box = $('[data-vid]', slot), btn = $('.vid-btn', slot); if (!box || !btn) return;
+    $$('source[data-srcset]', box).forEach(function (s) { s.srcset = s.getAttribute('data-srcset'); });
+    $$('img[data-src]', box).forEach(function (i) { i.src = i.getAttribute('data-src'); });
+    if (social) { var lbl = $('#heroSecondaryLabel'); if (lbl) lbl.textContent = 'Watch how it works'; }
+    btn.addEventListener('click', function () {
       var v = doc.createElement('video');
-      v.controls = true; v.playsInline = true; v.setAttribute('playsinline', ''); v.preload = 'auto';
-      v.innerHTML = '<source src="/assets/video/lp-video.webm" type="video/webm"><source src="/assets/video/lp-video.mp4" type="video/mp4"><track kind="captions" src="/assets/video/lp-video.vtt" srclang="en" label="English" default>';
-      facade.innerHTML = ''; facade.appendChild(v);
+      v.controls = true; v.playsInline = true; v.setAttribute('playsinline', ''); v.preload = 'none';
+      v.poster = VID.replace('callvix-lp-video', 'callvix-lp-poster') + '.jpg';
+      v.innerHTML = '<source src="' + VID + '.webm" type="video/webm"><source src="' + VID + '.mp4" type="video/mp4"><track kind="captions" src="' + VID + '.vtt" srclang="en" label="English" default>';
+      var end = doc.createElement('div'); end.className = 'vid-end'; end.hidden = true;
+      end.innerHTML = '<p>Want to see it with your own calls?</p><a class="btn btn--cta" href="#book">Book a 20-minute demo <span class="arr" aria-hidden="true">→</span></a><button type="button" class="vid-replay">↻ Replay</button>';
+      box.innerHTML = ''; box.appendChild(v); box.appendChild(end);
+      $('a', end).addEventListener('click', function (e) { e.preventDefault(); loadCalendly(); goToCalendar(); });
+      $('.vid-replay', end).addEventListener('click', function () { end.hidden = true; v.currentTime = 0; v.play(); v.focus(); });
+      v.addEventListener('ended', function () { end.hidden = false; try { $('a', end).focus({ preventScroll: true }); } catch (e) {} });
+      v.addEventListener('play', function () { end.hidden = true; });
       var sent = {};
       v.addEventListener('play', function () { if (!sent.play) { sent.play = 1; push('video_play'); } });
       v.addEventListener('timeupdate', function () {
@@ -376,7 +386,6 @@
   /* --------------------------------------------------------- calculator -- */
   var calcState = { touched: false, calls: 200, miss: 20, newp: 50, book: 50, val: 300 };
   var money0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
-  var money2 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
   var num0 = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
   var num1 = new Intl.NumberFormat('en-US', { maximumFractionDigits: 1 });
   /* Exposed for the test suite: the same maths the page shows. */
@@ -384,9 +393,7 @@
     var missed = s.calls * s.miss / 100;
     var jobs = missed * (s.newp / 100) * (s.book / 100);
     var risk = Math.round(jobs * s.val);
-    var costMiss = Math.round((PRICE.base + missed * PRICE.inbound) * 100) / 100;
-    var costAll = Math.round((PRICE.base + s.calls * PRICE.inbound) * 100) / 100;
-    return { missed: missed, jobs: jobs, risk: risk, costMiss: costMiss, costAll: costAll };
+    return { missed: missed, jobs: jobs, risk: risk };
   }
   window.__lpCalc = calcMath;
   onReady(function () {
@@ -398,10 +405,6 @@
       $('#o-missed').textContent = num1.format(r.missed);
       $('#o-jobs').textContent = num1.format(r.jobs);
       $('#o-risk').textContent = money0.format(r.risk);
-      $('#o-cost-miss').textContent = money2.format(r.costMiss) + '/mo';
-      $('#o-cost-all').textContent = money2.format(r.costAll) + '/mo';
-      $('#o-math-miss').textContent = '$399 + ' + num1.format(r.missed) + ' calls × $2.99';
-      $('#o-math-all').textContent = '$399 + ' + num0.format(calcState.calls) + ' calls × $2.99';
     }
     Object.keys(fields).forEach(function (k) {
       var range = $('#c-' + k), box = $('#c-' + k + '-n'); if (!range || !box) return;

@@ -36,7 +36,7 @@ test('every price matches the approved facts to the cent', () => {
     assert.ok(visible.includes(s), `missing: "${s}"`);
   }
   const amounts = new Set([...visible.matchAll(/\$\s?\d{1,3}(?:,\d{3})*(?:\.\d{2})?/g)].map((m) => m[0].replace(/\s/g, '')));
-  const allowed = new Set(['$399', '$2.99', '$0.99', '$199', '$149', '$99', '$179.40', '$578.40', '$448.50', '$847.50', '$5.65', '$3,700', '$3,000', '$518.60', '$997.00', '$']);
+  const allowed = new Set(['$399', '$2.99', '$0.99', '$199', '$149', '$99', '$179.40', '$578.40', '$448.50', '$847.50', '$5.65', '$3,700', '$3,000', '$']);
   const extra = [...amounts].filter((a) => !allowed.has(a));
   assert.deepEqual(extra, [], `unexpected money amounts on the page: ${extra.join(', ')}`);
   const cents = (n) => Math.round(n * 100);
@@ -62,19 +62,28 @@ test('the only statistics are the two approved figures, with no source line', ()
   assert.ok(!/source:/i.test(visible), 'no "Source:" line');
 });
 
-test('the calculator defaults produce 40, 10, $3,000, $518.60 and $997.00', () => {
+test('the calculator defaults produce 40 missed calls, 10 jobs and $3,000 at risk', () => {
   const src = JS.slice(JS.indexOf('function calcMath('), JS.indexOf('window.__lpCalc'));
-  const ctx = { PRICE: { base: 399, inbound: 2.99 } }; vm.createContext(ctx);
+  const ctx = {}; vm.createContext(ctx);
   vm.runInContext(src + '; this.calcMath = calcMath;', ctx);
-  const r = ctx.calcMath({ calls: 200, miss: 20, newp: 50, book: 50, val: 300 });
-  assert.deepEqual({ ...r }, { missed: 40, jobs: 10, risk: 3000, costMiss: 518.6, costAll: 997 });
-  assert.ok(JS.includes("var PRICE = { base: 399, inbound: 2.99 };"), 'the calculator uses the published prices');
-  for (const [id, v] of [['o-missed', '40'], ['o-jobs', '10'], ['o-risk', '$3,000'], ['o-cost-miss', '$518.60/mo'], ['o-cost-all', '$997.00/mo'], ['o-math-miss', '$399 + 40 calls × $2.99'], ['o-math-all', '$399 + 200 calls × $2.99']]) {
+  assert.deepEqual({ ...ctx.calcMath({ calls: 200, miss: 20, newp: 50, book: 50, val: 300 }) }, { missed: 40, jobs: 10, risk: 3000 });
+  for (const [id, v] of [['o-missed', '40'], ['o-jobs', '10'], ['o-risk', '$3,000']]) {
     assert.match(HTML, new RegExp(`id="${id}">${v.replace(/[$.+*?()[\]{}|^\\]/g, '\\$&')}<`), `${id} shows ${v} before any script runs`);
   }
-  /* Extreme inputs stay finite and formatted. */
-  const big = ctx.calcMath({ calls: 2000, miss: 80, newp: 100, book: 100, val: 5000 });
-  assert.equal(big.risk, 8000000); assert.equal(big.costAll, 6379);
+  assert.equal(ctx.calcMath({ calls: 2000, miss: 80, newp: 100, book: 100, val: 5000 }).risk, 8000000, 'extreme inputs stay finite');
+});
+
+test('the calculator shows only what missed calls cost; no Callvix pricing in it', () => {
+  const calc = HTML.slice(HTML.indexOf('<section class="sec sec--white" id="calculator"'), HTML.indexOf('<section class="sec sec--navy" id="pricing"'));
+  for (const s of ['$518.60', '$997', 'Cover the calls you miss', 'If we answer all your calls', '$399', '$2.99', 'Your estimate with', '$3,700', 'Add-ons']) assert.ok(!calc.includes(s), `calculator still contains "${s}"`);
+  assert.match(calc, /<h2 id="calc-h">What are missed calls costing&nbsp;you\?<\/h2>/);
+  assert.ok(calc.replace(/<[^>]+>/g, '').includes('See what it would cost you: book a 20-minute demo') && /href="#book" data-cta="calc" id="calcCta"/.test(calc), 'CTA scrolls to the calendar');
+  assert.ok(calc.includes('Estimates use the numbers you enter. Your real results depend on your calls.'), 'disclaimer kept');
+  assert.ok(!/o-cost-|o-math-|PRICE\./.test(JS), 'no cost code left in the script');
+  assert.ok(JS.includes("return 'Calls/month: ' + num0.format(calcState.calls) + ' · Miss rate: ' + calcState.miss + '%';"), 'Calendly a1 summary unchanged');
+  /* Pricing keeps the published rates, the two bills and the CSR line. */
+  const pricing = HTML.slice(HTML.indexOf('id="pricing"'), HTML.indexOf('id="terms"'));
+  for (const s of ['$578.40', '$847.50', 'A full-time CSR costs about $3,700/month in wages alone.', '$2.99']) assert.ok(pricing.includes(s), s);
 });
 
 test('?h= only ever picks from the whitelist; anything else falls back to the default', () => {
@@ -151,8 +160,8 @@ test('click IDs reach the form and Calendly; the phone number is swappable text'
 });
 
 test('testimonials stay off, and only this page loads the v2 files', () => {
-  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: v=2. */
-  assert.ok(HTML.includes('/css/lp.css?v=2') && HTML.includes('/js/lp.js?v=2'), 'asset versions bumped');
+  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: v=3. */
+  assert.ok(HTML.includes('/css/lp.css?v=3') && HTML.includes('/js/lp.js?v=3'), 'asset versions bumped');
   assert.ok(JS.includes('var SHOW_TESTIMONIALS = false;'));
   assert.ok(HTML.includes('<template id="tplProof">'), 'the testimonials section is a template, not rendered markup');
   assert.ok(JS.includes("var CALLBACK_PROMISE = 'shortly during U.S. business hours';"));
@@ -188,7 +197,7 @@ test('"hang-up" never appears without "before we answer" (page, /pricing, /faq)'
     const bare = [...t.matchAll(/hang-ups?\b(?![^.]{0,4}before we answer)/gi)].map((m) => t.slice(Math.max(0, m.index - 40), m.index + 40));
     assert.deepEqual(bare, [], `${f}: bare "hang-up": ${bare.join(' | ')}`);
   }
-  for (const s of ['Spam & wrong numbers aren’t billed', 'Spam & wrong numbers not billed', 'Spam, robocalls, wrong numbers and hang-ups before we answer aren’t billed']) assert.ok(visible.includes(s), s);
+  for (const s of ['Spam & wrong numbers aren’t billed', 'Spam & wrong numbers not billed']) assert.ok(visible.includes(s), s);
 });
 
 test('the brand reads "Callvix Solutions"; short "Callvix" only in tight UI', () => {
@@ -208,15 +217,6 @@ test('the brand reads "Callvix Solutions"; short "Callvix" only in tight UI', ()
   assert.deepEqual(short, [], `short "Callvix" outside tight UI: ${short.join(' | ')}`);
   assert.ok(visible.includes('Callvix Solutions is a pest-control-only answering team.') && visible.includes('How Callvix Solutions compares'));
   assert.ok(visible.includes('Callvix Solutions (callvixsolutions.com) is not affiliated with callvix.com.'), 'non-affiliation line kept');
-});
-
-test('calculator reads as an estimate at published rates, missed-calls first', () => {
-  assert.ok(visible.includes('Your estimate with Callvix Solutions ($399/mo + $2.99 per answered call)'));
-  assert.ok(HTML.indexOf('Cover the calls you miss') < HTML.indexOf('If we answer all your calls'), 'missed-calls result comes first');
-  assert.match(HTML, /<div class="co-main"><span>Cover the calls you miss<\/span>/); assert.match(HTML, /<div class="co-alt"><span>If we answer all your calls<\/span>/);
-  assert.ok(visible.includes('For comparison, one full-time office CSR costs about $3,700/month in wages alone.'));
-  assert.ok(visible.includes('Estimates use the numbers you enter. Your real results depend on your calls.'));
-  assert.ok(JS.includes("$('#o-math-miss').textContent = '$399 + ' + num1.format(r.missed) + ' calls × $2.99';"));
 });
 
 test('the calendar has a visible loading state and warms up early, off the critical path', () => {

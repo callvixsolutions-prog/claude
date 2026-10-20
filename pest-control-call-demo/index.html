@@ -38,8 +38,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 /* Runs before first paint. Picks the headline variant from a fixed whitelist
    (never from raw URL text) and marks social traffic, so nothing flashes. */
 (function () {
+  /* LP_VIDEO: set to true once the five files are in /assets/video/ (see README, "Landing page"). */
+  var LP_VIDEO = false;
   var d = document.documentElement, v = 'default', q;
-  d.className += ' js';
+  d.className += ' js' + (LP_VIDEO ? ' has-video' : '');
+  window.__LP_VIDEO = LP_VIDEO;
   var H = { 'default': 1, 'answering': 1, 'call-center': 1, 'receptionist': 1, 'after-hours': 1, 'missed': 1, 'human': 1 };
   try { q = new URLSearchParams(location.search); } catch (e) { q = null; }
   var want = q ? (q.get('h') || '') : '';
@@ -146,14 +149,22 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 .lp .callcard.done .st{opacity:1;transform:none;animation:none}
 @keyframes lp-in{to{opacity:1;transform:none}}
 @keyframes lp-pulse{0%{box-shadow:0 0 0 0 rgba(31,157,107,.5)}70%{box-shadow:0 0 0 10px rgba(31,157,107,0)}100%{box-shadow:0 0 0 0 rgba(31,157,107,0)}}
+.lp .hero-video{display:none}
+.lp .hero-video .vid{position:relative;aspect-ratio:16/9;border-radius:20px;overflow:hidden;background:var(--navy-900);box-shadow:var(--shadow-lg)}
+.lp .hv-m{margin-top:20px}
+@media (max-width:1023px){.has-video.is-social .lp .hv-m{display:block}}
+@media (min-width:1024px){.has-video.is-social .lp .hv-d{display:block}}
+.has-video.is-social .lp .callcard{display:none}
+.lp #video{display:none}
+.has-video:not(.is-social) .lp #video{display:block}
 @media (prefers-reduced-motion:reduce){.js .lp .callcard .st{opacity:1;transform:none}.lp .callcard.play .st{animation:none}.lp .cc-dot{animation:none}}
 @media (max-width:1023px){.lp .callcard{min-height:420px}}
 @media (max-width:639px){.lp .hero-ctas .btn{width:100%}.lp .callcard .bub--c,.lp .callcard .bub--a+.bub--c+.bub--a{display:none}.lp .hero h1{font-size:2.125rem;line-height:1.08}.lp .hero-sub{margin-top:14px}.lp .hero-ctas{margin-top:20px;gap:8px 20px}.lp .trust{margin-top:20px;gap:8px 16px;font-size:14px}.lp .hero-micro{font-size:13.5px;margin-top:12px}.lp .hero-sub{font-size:1rem;line-height:1.55}.lp .eyebrow{margin-bottom:8px}.lp .callcard{padding:14px 14px 12px}.lp .cc-body{gap:8px;margin-top:10px}.lp .cc-sms{margin-top:10px}.lp .hero{padding:40px 0 48px}.lp .hero .wrap{gap:32px}.lp .callcard{min-height:0}}
 @media (max-width:420px){.lp .bub{font-size:14px}}
 </style>
-<link rel="stylesheet" href="/css/lp.css?v=2" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="/css/lp.css?v=2"></noscript>
-<script src="/js/lp.js?v=2" defer></script>
+<link rel="stylesheet" href="/css/lp.css?v=3" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="/css/lp.css?v=3"></noscript>
+<script src="/js/lp.js?v=3" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -180,7 +191,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
   "mainEntity": [
     {"@type": "Question", "name": "Is Callvix Solutions a real person or an AI bot?", "acceptedAnswer": {"@type": "Answer", "text": "Real people. Trained representatives answer in your company’s name. Callvix Solutions does not use an AI voice bot on client calls."}},
     {"@type": "Question", "name": "Will callers know they’ve reached an answering service?", "acceptedAnswer": {"@type": "Answer", "text": "We answer with the greeting you approve, in your company’s name, and follow your scripts and rules."}},
-    {"@type": "Question", "name": "What hours do you cover?", "acceptedAnswer": {"@type": "Answer", "text": "The base plan covers Monday–Friday, 9am–6pm in your time zone. Evening coverage is +$199/month and weekend coverage is +$149/month, in windows agreed before you start. Need different hours? Ask us on the demo."}},
+    {"@type": "Question", "name": "What hours do you cover?", "acceptedAnswer": {"@type": "Answer", "text": "The base plan covers Monday–Friday, 9am–6pm in your time zone. Evening coverage is +$199/month and weekend coverage is +$149/month, in windows agreed before you start. Need different hours? Tell us on the demo."}},
     {"@type": "Question", "name": "What counts as a billable call?", "acceptedAnswer": {"@type": "Answer", "text": "Every inbound call we answer is $2.99, whatever its length. We don’t bill spam or robocalls, wrong numbers, missed calls, or hang-ups before we answer. Outbound follow-ups are $0.99, billed only when someone answers or we leave a voicemail."}},
     {"@type": "Question", "name": "Can you book into FieldRoutes, PestPac, ServiceTitan or our system?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, with the Direct CRM entry add-on ($99/month): our team works in your system with a login you grant and can revoke. Without it, bookings and call details reach you by text or email."}},
     {"@type": "Question", "name": "Can we only send you the calls we miss?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. You choose during setup whether to forward every call or only the ones your office doesn’t answer."}},
@@ -236,7 +247,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
     </nav>
     <div class="hdr-r">
       <a class="hdr-phone hdr-phone-m" href="tel:+15513736777" data-phone="header" aria-label="Call (551) 373-6777"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><span class="num"><span class="tracking-phone">(551) 373-6777</span></span></a>
-      <a class="btn btn--cta btn--sm" href="#book" data-cta="header"><span class="full">Book a 20-minute demo</span><span class="short">Book demo</span></a>
+      <a class="btn btn--cta btn--sm" href="#book" data-cta="header"><span class="full">Book a 20-minute demo</span><span class="short">Book a demo</span></a>
     </div>
   </div>
 </header>
@@ -246,28 +257,29 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 <section class="hero" id="hero" aria-labelledby="lp-h1">
   <div class="wrap">
     <div class="hero-copy">
-      <p class="eyebrow" id="lp-eyebrow">Pest control answering service · U.S. companies only</p>
-      <h1 id="lp-h1">Your phones answered. Your jobs booked. Your techs stay on the job.</h1>
+      <p class="eyebrow" id="lp-eyebrow">Pest control answering service · U.S. companies&nbsp;only</p>
+      <h1 id="lp-h1">Your phones answered. Your jobs booked. Your techs stay on the&nbsp;job.</h1>
       <p class="hero-sub" id="lp-sub">Callvix Solutions is a pest-control-only answering team. Real, trained people, not an AI bot, pick up in your company’s name, check the address against your service area and book the job by your rules.</p>
       <script>
       (function () {
         var v = window.__lpVariant; if (!v || v === 'default') return;
         var H = {
-          'answering': 'A pest control answering service with real people, booking jobs in your name.',
-          'call-center': 'A pest control call center that books jobs in your company’s name.',
-          'receptionist': 'A trained pest control receptionist, without hiring one.',
-          'after-hours': 'Evening and weekend call coverage for pest control companies.',
-          'missed': 'Stop losing pest control jobs to missed calls.',
-          'human': 'Real people, not an AI bot, answering your pest control calls.'
+          'answering': 'A pest control answering service with real people, booking jobs in your\u00a0name.',
+          'call-center': 'A pest control call center that books jobs in your company’s\u00a0name.',
+          'receptionist': 'A trained pest control receptionist, without hiring\u00a0one.',
+          'after-hours': 'Evening and weekend call coverage for pest control\u00a0companies.',
+          'missed': 'Stop losing pest control jobs to missed\u00a0calls.',
+          'human': 'Real people, not an AI bot, answering your pest control\u00a0calls.'
         };
         var h = document.getElementById('lp-h1'); if (h && H[v]) h.textContent = H[v];
         if (v === 'after-hours') {
-          var e = document.getElementById('lp-eyebrow'); if (e) e.textContent = 'Evening & weekend coverage add-ons';
+          var e = document.getElementById('lp-eyebrow'); if (e) e.textContent = 'Evening & weekend coverage\u00a0add-ons';
           var s = document.getElementById('lp-sub');
           if (s) s.textContent = 'Real, trained people, not an AI bot, answer in your company’s name and book by your rules. Base coverage is Monday–Friday, 9am–6pm in your time zone. Add evening coverage (+$199/month) or weekend coverage (+$149/month).';
         }
       })();
       </script>
+      <div class="hero-video hv-m"><div class="vid" data-vid><button type="button" class="vid-btn" aria-label="Play the video: how Callvix Solutions works, about a minute"><picture><source type="image/webp" data-srcset="/assets/video/callvix-lp-poster.webp"><img data-src="/assets/video/callvix-lp-poster.jpg" alt="" width="1280" height="720" decoding="async"></picture><span class="vid-pl" aria-hidden="true"><svg><use href="#i-play"/></svg></span></button></div></div>
       <p class="hero-price"><strong>$399/month + $2.99 per answered call</strong> · No setup fee · Month-to-month</p>
       <div class="hero-ctas">
         <a class="btn btn--cta" href="#book" data-cta="hero" id="heroCta">Book a 20-minute demo <span class="arr" aria-hidden="true">→</span></a>
@@ -282,6 +294,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
       </ul>
     </div>
     <div class="hero-vis" id="heroVis">
+      <div class="hero-video hv-d"><div class="vid" data-vid><button type="button" class="vid-btn" aria-label="Play the video: how Callvix Solutions works, about a minute"><picture><source type="image/webp" data-srcset="/assets/video/callvix-lp-poster.webp"><img data-src="/assets/video/callvix-lp-poster.jpg" alt="" width="1280" height="720" decoding="async"></picture><span class="vid-pl" aria-hidden="true"><svg><use href="#i-play"/></svg></span></button></div></div>
       <div class="callcard" id="callcard" role="img" aria-label="Sample call: an agent answers for Oak Valley Pest Control, confirms the address is inside the service area, books Tuesday 10am to 12pm and sends the booking to the office.">
         <span class="tag">Sample call</span>
         <div class="cc-top"><span class="cc-dot" aria-hidden="true"></span><span>Incoming call</span><span class="cc-timer" id="ccTimer">00:00</span></div>
@@ -302,8 +315,8 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 <section class="sec sec--cream" id="problem" aria-labelledby="problem-h">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">The cost of a ringing phone</p>
-      <h2 id="problem-h">When nobody picks up, the caller doesn’t wait. They call the next company.</h2>
+      <p class="eyebrow">The cost of a ringing&nbsp;phone</p>
+      <h2 id="problem-h">When nobody picks up, the caller doesn’t wait. They call the next&nbsp;company.</h2>
       <p class="lede">Pest problems feel urgent: wasps by the front door, mice in the walls, ants across the counter. Meanwhile your techs are in a crawlspace, your office is already on another line, and in peak season the phone never stops. It’s not a failure of effort. It’s what happens when the people who do the work are also expected to answer.</p>
     </div>
     <div class="prob-grid">
@@ -311,32 +324,27 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
         <blockquote><p><strong>58%</strong> of callers don’t leave a voicemail. And <strong>78%</strong> say they’ve stopped using a business after a call went unanswered.</p></blockquote>
       </figure>
       <ul class="scen">
-        <li class="scen-card" tabindex="0"><span class="scen-ic"><svg class="ic" aria-hidden="true"><use href="#i-wrench"/></svg></span><div><h3>In the field.</h3><p>Mid-treatment or under a house, nobody can grab the phone.</p></div><span class="badge"><span class="b-miss">Missed</span><span class="b-ok">Answered</span></span></li>
-        <li class="scen-card" tabindex="0"><span class="scen-ic"><svg class="ic" aria-hidden="true"><use href="#i-lines"/></svg></span><div><h3>On another line.</h3><p>Your office is helping one customer while two more ring through.</p></div><span class="badge"><span class="b-miss">Missed</span><span class="b-ok">Answered</span></span></li>
-        <li class="scen-card" tabindex="0"><span class="scen-ic"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></span><div><h3>Peak season.</h3><p>Spring swarms and summer stingers bring more calls than your team can take.</p></div><span class="badge"><span class="b-miss">Missed</span><span class="b-ok">Answered</span></span></li>
+        <li class="scen-card" tabindex="0"><span class="scen-ic"><svg class="ic" aria-hidden="true"><use href="#i-wrench"/></svg></span><div><h3>In the&nbsp;field.</h3><p>Mid-treatment or under a house, nobody can grab the phone.</p></div><span class="badge"><span class="b-miss">Missed</span><span class="b-ok">Answered</span></span></li>
+        <li class="scen-card" tabindex="0"><span class="scen-ic"><svg class="ic" aria-hidden="true"><use href="#i-lines"/></svg></span><div><h3>On another&nbsp;line.</h3><p>Your office is helping one customer while two more ring through.</p></div><span class="badge"><span class="b-miss">Missed</span><span class="b-ok">Answered</span></span></li>
+        <li class="scen-card" tabindex="0"><span class="scen-ic"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></span><div><h3>Peak&nbsp;season.</h3><p>Spring swarms and summer stingers bring more calls than your team can take.</p></div><span class="badge"><span class="b-miss">Missed</span><span class="b-ok">Answered</span></span></li>
       </ul>
     </div>
     <p class="inline-link">What are missed calls costing you? <a href="#calculator" data-cta-soft="problem_calc">Run your numbers <span aria-hidden="true">→</span></a></p>
   </div>
 </section>
 
-<section class="sec sec--white" id="video" aria-labelledby="video-h" hidden>
+<section class="sec sec--white" id="video" aria-labelledby="video-h">
   <div class="wrap">
-    <div class="sec-head sec-head--c"><h2 id="video-h">See Callvix Solutions in 75 seconds</h2></div>
-    <div class="vid" id="vidFacade">
-      <button type="button" class="vid-btn" id="vidPlay" aria-label="Play the 75-second video">
-        <img data-src="/assets/video/lp-poster.webp" alt="" width="1280" height="720" decoding="async">
-        <span class="vid-pl" aria-hidden="true"><svg><use href="#i-play"/></svg></span>
-      </button>
-    </div>
+    <div class="sec-head sec-head--c"><h2 id="video-h">See how it works in about a&nbsp;minute</h2></div>
+    <div class="vid-sec-wrap"><div class="vid" data-vid><button type="button" class="vid-btn" aria-label="Play the video: how Callvix Solutions works, about a minute"><picture><source type="image/webp" data-srcset="/assets/video/callvix-lp-poster.webp"><img data-src="/assets/video/callvix-lp-poster.jpg" alt="" width="1280" height="720" decoding="async"></picture><span class="vid-pl" aria-hidden="true"><svg><use href="#i-play"/></svg></span></button></div></div>
   </div>
 </section>
 
 <section class="sec sec--white" id="sample-call" aria-labelledby="sample-h">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">Sample call</p>
-      <h2 id="sample-h">Here’s exactly how we handle a call.</h2>
+      <p class="eyebrow">Sample&nbsp;call</p>
+      <h2 id="sample-h">Here’s exactly how we handle a&nbsp;call.</h2>
       <p class="lede">Every step follows rules you set during setup.</p>
     </div>
     <div class="sc-grid">
@@ -367,7 +375,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
       </div>
       <aside class="handoff" aria-labelledby="handoff-h">
         <div class="ho-card" id="hoCard">
-          <div class="ho-top"><h3 id="handoff-h">Job booked → sent to your office</h3><span class="ho-ts">Today, 2:14 pm</span></div>
+          <div class="ho-top"><h3 id="handoff-h">Job booked → sent to your&nbsp;office</h3><span class="ho-ts">Today, 2:14pm</span></div>
           <dl class="ho-fields">
             <div data-field="urgency"><dt>Issue</dt><dd>Wasp nest, front door eave</dd></div>
             <div data-field="urgency"><dt>Urgency</dt><dd>High, by entryway</dd></div>
@@ -381,7 +389,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
       </aside>
     </div>
     <div class="notbook">
-      <h3 class="notbook-h">When a call isn’t a booking</h3>
+      <h3 class="notbook-h">When a call isn’t a&nbsp;booking</h3>
       <ul>
         <li><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg><span><strong>Urgent or needs your approval</strong> → goes to your named contact, the way you choose</span></li>
         <li><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span><strong>Outside your service area</strong> → logged and sent back to you, never booked</span></li>
@@ -398,15 +406,15 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 <section class="sec sec--sand" id="how-it-works" aria-labelledby="how-h">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">How it works</p>
-      <h2 id="how-h">Live in about a week. You stay in control.</h2>
+      <p class="eyebrow">How it&nbsp;works</p>
+      <h2 id="how-h">Live in about a week. You stay in&nbsp;control.</h2>
     </div>
     <div class="how-grid">
       <div>
         <ol class="steps">
-          <li><span class="num" aria-hidden="true">1</span><div><h3>20-minute demo.</h3><p>We map your calls, services, service area and booking rules, and give you a cost estimate.</p></div></li>
-          <li><span class="num" aria-hidden="true">2</span><div><h3>Setup and test calls.</h3><p>You fill in one setup questionnaire. We build your call guide, you approve the greeting and call flow, and we run test calls together.</p></div></li>
-          <li><span class="num" aria-hidden="true">3</span><div><h3>Go live.</h3><p>Forward your existing number: all calls, or only the ones you don’t pick up. Bookings and handoffs reach you by text, email or directly in your CRM.</p></div></li>
+          <li><span class="num" aria-hidden="true">1</span><div><h3>20-minute&nbsp;demo.</h3><p>We map your calls, services, service area and booking rules, and give you a cost estimate.</p></div></li>
+          <li><span class="num" aria-hidden="true">2</span><div><h3>Setup and test&nbsp;calls.</h3><p>You fill in one setup questionnaire. We build your call guide, you approve the greeting and call flow, and we run test calls together.</p></div></li>
+          <li><span class="num" aria-hidden="true">3</span><div><h3>Go&nbsp;live.</h3><p>Forward your existing number: all calls, or only the ones you don’t pick up. Bookings and handoffs reach you by text, email or directly in your CRM.</p></div></li>
         </ol>
         <p class="how-note"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>Typically live 7–10 days after we receive your details.</p>
       </div>
@@ -434,22 +442,22 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 <section class="sec sec--white" id="what-we-handle" aria-labelledby="handle-h">
   <div class="wrap">
     <div class="sec-head">
-      <h2 id="handle-h">Trained on pest control. Trained on <em>your</em> business.</h2>
+      <h2 id="handle-h">Trained on pest control. Trained on <em>your</em>&nbsp;business.</h2>
     </div>
     <ul class="cards6">
-      <li><span class="c-ic"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg></span><h3>New service requests.</h3><p>Identify the pest, check your area, book from your approved slots.</p></li>
-      <li><span class="c-ic"><svg class="ic" aria-hidden="true"><use href="#i-dollar"/></svg></span><h3>Price questions.</h3><p>Quote only the services and prices you allow. Everything else goes to you.</p></li>
-      <li><span class="c-ic"><svg class="ic" aria-hidden="true"><use href="#i-refresh"/></svg></span><h3>Scheduling changes.</h3><p>Reschedule or note requests by your rules.</p></li>
-      <li><span class="c-ic"><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg></span><h3>Urgent calls.</h3><p>Stinging insects at an entry, rodents inside: flagged and sent to your named contact, the way you choose.</p></li>
-      <li><span class="c-ic"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg></span><h3>Existing customers.</h3><p>Take the request and pass it on with the details your team needs.</p></li>
-      <li><span class="c-ic"><svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></span><h3>Outbound follow-ups.</h3><p>Call back missed leads or confirm details when you want us to. $0.99 per call.</p></li>
+      <li><span class="c-ic"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg></span><h3>New service&nbsp;requests.</h3><p>Identify the pest, check your area, book from your approved slots.</p></li>
+      <li><span class="c-ic"><svg class="ic" aria-hidden="true"><use href="#i-dollar"/></svg></span><h3>Price&nbsp;questions.</h3><p>Quote only the services and prices you allow. Everything else goes to you.</p></li>
+      <li><span class="c-ic"><svg class="ic" aria-hidden="true"><use href="#i-refresh"/></svg></span><h3>Scheduling&nbsp;changes.</h3><p>Reschedule or note requests by your rules.</p></li>
+      <li><span class="c-ic"><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg></span><h3>Urgent&nbsp;calls.</h3><p>Stinging insects at an entry, rodents inside: flagged and sent to your named contact, the way you choose.</p></li>
+      <li><span class="c-ic"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg></span><h3>Existing&nbsp;customers.</h3><p>Take the request and pass it on with the details your team needs.</p></li>
+      <li><span class="c-ic"><svg class="ic" aria-hidden="true"><use href="#i-out"/></svg></span><h3>Outbound&nbsp;follow-ups.</h3><p>Call back missed leads or confirm details when you want us to. $0.99 per call.</p></li>
     </ul>
     <div class="vocab">
       <p class="vocab-l" id="vocab-l">We speak the trade:</p>
       <ul tabindex="0" aria-labelledby="vocab-l"><li>ants vs carpenter ants</li><li>termite swarmers</li><li>bed bugs</li><li>rodents</li><li>wasps &amp; hornets</li><li>mosquitoes</li><li>wildlife</li><li>one-time vs quarterly</li></ul>
     </div>
     <div class="never">
-      <p class="never-h">What we never do by default</p>
+      <p class="never-h">What we never do by&nbsp;default</p>
       <ul><li><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg>Take payments</li><li><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg>Quote account balances</li><li><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg>Process cancellations</li><li><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg>Promise warranty outcomes</li><li><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg>Book outside your area</li></ul>
       <p class="never-cap">Unless you tell us to.</p>
     </div>
@@ -459,7 +467,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 <section class="sec sec--cream" id="compare" aria-labelledby="compare-h">
   <div class="wrap">
     <div class="sec-head">
-      <h2 id="compare-h">How Callvix Solutions compares</h2>
+      <h2 id="compare-h">How Callvix Solutions&nbsp;compares</h2>
     </div>
     <div class="seg seg--cmp" role="group" aria-label="Compare Callvix Solutions with">
       <button type="button" aria-pressed="false" data-col="vm">vs Voicemail</button>
@@ -489,8 +497,8 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 <section class="sec sec--white" id="calculator" aria-labelledby="calc-h">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">Run your numbers</p>
-      <h2 id="calc-h">What are missed calls costing you, and what would Callvix Solutions cost?</h2>
+      <p class="eyebrow">Run your&nbsp;numbers</p>
+      <h2 id="calc-h">What are missed calls costing&nbsp;you?</h2>
     </div>
     <div class="calc" id="calc">
       <form class="calc-in" id="calcForm" novalidate onsubmit="return false">
@@ -516,16 +524,15 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
         </div>
       </form>
       <div class="calc-out" aria-live="polite" id="calcOut">
-        <div class="co-row"><span>Missed calls per month</span><strong id="o-missed">40</strong></div>
-        <div class="co-row"><span>Jobs you may be missing</span><strong id="o-jobs">10</strong></div>
         <div class="co-risk"><span>Revenue at risk per month</span><strong id="o-risk">$3,000</strong></div>
-        <p class="co-h">Your estimate with Callvix Solutions <span class="co-h-r">($399/mo + $2.99 per answered call)</span></p>
-        <div class="co-main"><span>Cover the calls you miss</span><strong id="o-cost-miss">$518.60/mo</strong><small id="o-math-miss">$399 + 40 calls × $2.99</small></div>
-        <div class="co-alt"><span>If we answer all your calls</span><strong id="o-cost-all">$997.00/mo</strong><small id="o-math-all">$399 + 200 calls × $2.99</small></div>
-        <p class="co-csr">For comparison, one full-time office CSR costs about $3,700/month in wages alone.</p>
-        <p class="co-note">Add-ons (evenings +$199, weekends +$149, CRM entry +$99) not included. Spam, robocalls, wrong numbers and hang-ups before we answer aren’t billed, so real call charges are often lower.</p>
-        <a class="btn btn--cta co-cta" href="#book" data-cta="calc" id="calcCta">Get an exact quote on the demo <span class="arr" aria-hidden="true">→</span></a>
-        <p class="co-disc">Estimates use the numbers you enter. Your real results depend on your calls.</p>
+        <div class="co-stats">
+          <div class="co-stat"><strong id="o-missed">40</strong><span>Missed calls per month</span></div>
+          <div class="co-stat"><strong id="o-jobs">10</strong><span>Jobs you may be missing</span></div>
+        </div>
+        <div class="co-foot">
+          <a class="btn btn--cta co-cta" href="#book" data-cta="calc" id="calcCta"><span>See what it would cost you: <span class="nw">book a 20-minute demo</span></span> <span class="arr" aria-hidden="true">→</span></a>
+          <p class="co-disc">Estimates use the numbers you enter. Your real results depend on your calls.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -547,15 +554,15 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
       <div class="pr-det">
         <div class="pr-block">
           <h3>Included</h3>
-          <ul class="ticks"><li>Answering in your company name</li><li>Pest issue &amp; urgency qualification</li><li>Service-area check</li><li>Booking from your approved slots</li><li>Escalation by your instructions</li><li>Bookings &amp; handoffs by text or email</li><li>Weekly activity summary</li></ul>
+          <ul class="ticks"><li>Answering in your company’s name</li><li>Pest issue &amp; urgency qualification</li><li>Service-area check</li><li>Booking from your approved slots</li><li>Escalation by your instructions</li><li>Bookings &amp; handoffs by text or email</li><li>Weekly activity summary</li></ul>
         </div>
         <div class="pr-block">
-          <h3>Optional add-ons</h3>
+          <h3>Optional&nbsp;add-ons</h3>
           <ul class="addons"><li><span>Evening coverage</span><strong>+$199/mo</strong></li><li><span>Weekend coverage</span><strong>+$149/mo</strong></li><li><span>Direct CRM entry</span><strong>+$99/mo</strong></li></ul>
           <p class="pr-small">Need different hours? Tell us on the demo.</p>
         </div>
         <div class="pr-block">
-          <h3>You’re never billed for</h3>
+          <h3>You’re never billed&nbsp;for</h3>
           <ul class="nots"><li>spam &amp; robocalls</li><li>wrong numbers</li><li>missed calls</li><li>hang-ups before we answer</li></ul>
         </div>
         <div class="pr-bill">
@@ -574,7 +581,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 
 <section class="sec sec--teal" id="terms" aria-labelledby="terms-h">
   <div class="wrap">
-    <h2 class="terms-h" id="terms-h">Low risk, plain terms.</h2>
+    <h2 class="terms-h" id="terms-h">Low risk, plain&nbsp;terms.</h2>
     <ul class="terms">
       <li><svg class="ic" aria-hidden="true"><use href="#i-tag"/></svg><span><strong>No setup fee</strong></span></li>
       <li><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg><span><strong>Month-to-month.</strong> Cancel with 30 days’ notice.</span></li>
@@ -589,8 +596,8 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 <section class="sec sec--white" id="systems" aria-labelledby="systems-h">
   <div class="wrap sys">
     <div>
-      <h2 id="systems-h">Bookings go where your office already works.</h2>
-      <p class="lede">With the CRM add-on ($99/mo), our team enters bookings and call details in your own system using a login you grant and can revoke. It’s a person working in your account, not an automatic sync. Without it, every booking and handoff reaches you by text or email.</p>
+      <h2 id="systems-h">Bookings go where your office already&nbsp;works.</h2>
+      <p class="lede">With the Direct CRM entry add-on ($99/month), our team enters bookings and call details in your own system using a login you grant and can revoke. It’s a person working in your account, not an automatic sync. Without it, every booking and handoff reaches you by text or email.</p>
     </div>
     <ul class="sys-chips"><li>FieldRoutes</li><li>PestPac</li><li>ServiceTitan</li><li>GorillaDesk</li><li>Briostack</li><li>Housecall Pro</li><li>Your calendar</li></ul>
   </div>
@@ -598,12 +605,12 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 
 <section class="sec sec--sand" id="team" aria-labelledby="team-h">
   <div class="wrap">
-    <div class="sec-head"><h2 id="team-h">Real people. Pest control only.</h2></div>
+    <div class="sec-head"><h2 id="team-h">Real people. Pest control&nbsp;only.</h2></div>
     <ul class="team">
-      <li><h3>People, not a bot.</h3><p>Callvix Solutions doesn’t use an AI voice bot on client calls.</p></li>
-      <li><h3>Pest control is all we do.</h3><p>Our team only handles pest control calls, so they learn how callers describe problems.</p></li>
-      <li><h3>Trained on your business.</h3><p>Your services, service area, approved prices, booking and escalation rules.</p></li>
-      <li><h3>Your name on every call.</h3><p>Callers hear your company’s greeting.</p></li>
+      <li><h3>People, not a&nbsp;bot.</h3><p>Callvix Solutions doesn’t use an AI voice bot on client calls.</p></li>
+      <li><h3>Pest control is all we&nbsp;do.</h3><p>Our team only handles pest control calls, so they learn how callers describe problems.</p></li>
+      <li><h3>Trained on your&nbsp;business.</h3><p>Your services, service area, approved prices, booking and escalation rules.</p></li>
+      <li><h3>Your name on every&nbsp;call.</h3><p>Callers hear your company’s greeting.</p></li>
     </ul>
   </div>
 </section>
@@ -611,7 +618,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 <template id="tplProof">
 <section class="sec sec--white" id="proof" aria-labelledby="proof-h">
   <div class="wrap">
-    <div class="sec-head"><h2 id="proof-h">What pest control owners say</h2></div>
+    <div class="sec-head"><h2 id="proof-h">What pest control owners&nbsp;say</h2></div>
     <div class="proof" id="proofList"></div>
   </div>
 </section>
@@ -619,18 +626,18 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 
 <section class="sec sec--white" id="faq" aria-labelledby="faq-h">
   <div class="wrap faq-wrap">
-    <div class="sec-head"><h2 id="faq-h">Questions before you book</h2></div>
+    <div class="sec-head"><h2 id="faq-h">Questions before you&nbsp;book</h2></div>
     <div class="faq" id="faqList">
-      <div class="fq"><h3><button type="button" aria-expanded="true" aria-controls="fa1" id="fq1" data-q="real_person">Is Callvix Solutions a real person or an AI bot?</button></h3><div class="fa" id="fa1" role="region" aria-labelledby="fq1"><p>Real people. Trained representatives answer in your company’s name. Callvix Solutions does not use an AI voice bot on client calls.</p></div></div>
-      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa2" id="fq2" data-q="callers_know">Will callers know they’ve reached an answering service?</button></h3><div class="fa" id="fa2" role="region" aria-labelledby="fq2"><p>We answer with the greeting you approve, in your company’s name, and follow your scripts and rules.</p></div></div>
-      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa3" id="fq3" data-q="hours">What hours do you cover?</button></h3><div class="fa" id="fa3" role="region" aria-labelledby="fq3"><p>The base plan covers Monday–Friday, 9am–6pm in your time zone. Evening coverage is +$199/month and weekend coverage is +$149/month, in windows agreed before you start. Need different hours? Ask us on the demo.</p></div></div>
-      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa4" id="fq4" data-q="billable">What counts as a billable call?</button></h3><div class="fa" id="fa4" role="region" aria-labelledby="fq4"><p>Every inbound call we answer is $2.99, whatever its length. We don’t bill spam or robocalls, wrong numbers, missed calls, or hang-ups before we answer. Outbound follow-ups are $0.99, billed only when someone answers or we leave a voicemail.</p></div></div>
-      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa5" id="fq5" data-q="crm">Can you book into FieldRoutes, PestPac, ServiceTitan or our system?</button></h3><div class="fa" id="fa5" role="region" aria-labelledby="fq5"><p>Yes, with the Direct CRM entry add-on ($99/month): our team works in your system with a login you grant and can revoke. Without it, bookings and call details reach you by text or email.</p></div></div>
-      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa6" id="fq6" data-q="missed_only">Can we only send you the calls we miss?</button></h3><div class="fa" id="fa6" role="region" aria-labelledby="fq6"><p>Yes. You choose during setup whether to forward every call or only the ones your office doesn’t answer.</p></div></div>
-      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa7" id="fq7" data-q="urgent">What happens with urgent calls or calls that need my approval?</button></h3><div class="fa" id="fa7" role="region" aria-labelledby="fq7"><p>They’re recorded with the reason and sent to the contact you name, the way you choose. By default we don’t take payments, quote balances, process cancellations or make warranty promises unless you tell us to.</p></div></div>
-      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa8" id="fq8" data-q="start">How fast can we start?</button></h3><div class="fa" id="fa8" role="region" aria-labelledby="fq8"><p>Typically 7–10 days after we receive your details. You fill in a setup questionnaire, we review it with you, run test calls together, then go live.</p></div></div>
-      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa9" id="fq9" data-q="contract">Is there a contract or setup fee?</button></h3><div class="fa" id="fa9" role="region" aria-labelledby="fq9"><p>No setup fee and no long-term contract. It’s month-to-month; cancel with 30 days’ notice. If you cancel before onboarding starts, your first payment is refunded in full.</p></div></div>
-      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa10" id="fq10" data-q="number">Do we keep our phone number?</button></h3><div class="fa" id="fa10" role="region" aria-labelledby="fq10"><p>Yes. You forward your existing number to us, and you can stop forwarding any time.</p></div></div>
+      <div class="fq"><h3><button type="button" aria-expanded="true" aria-controls="fa1" id="fq1" data-q="real_person">Is Callvix Solutions a real person or an AI&nbsp;bot?</button></h3><div class="fa" id="fa1" role="region" aria-labelledby="fq1"><p>Real people. Trained representatives answer in your company’s name. Callvix Solutions does not use an AI voice bot on client calls.</p></div></div>
+      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa2" id="fq2" data-q="callers_know">Will callers know they’ve reached an answering&nbsp;service?</button></h3><div class="fa" id="fa2" role="region" aria-labelledby="fq2"><p>We answer with the greeting you approve, in your company’s name, and follow your scripts and rules.</p></div></div>
+      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa3" id="fq3" data-q="hours">What hours do you&nbsp;cover?</button></h3><div class="fa" id="fa3" role="region" aria-labelledby="fq3"><p>The base plan covers Monday–Friday, 9am–6pm in your time zone. Evening coverage is +$199/month and weekend coverage is +$149/month, in windows agreed before you start. Need different hours? Tell us on the demo.</p></div></div>
+      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa4" id="fq4" data-q="billable">What counts as a billable&nbsp;call?</button></h3><div class="fa" id="fa4" role="region" aria-labelledby="fq4"><p>Every inbound call we answer is $2.99, whatever its length. We don’t bill spam or robocalls, wrong numbers, missed calls, or hang-ups before we answer. Outbound follow-ups are $0.99, billed only when someone answers or we leave a voicemail.</p></div></div>
+      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa5" id="fq5" data-q="crm">Can you book into FieldRoutes, PestPac, ServiceTitan or our&nbsp;system?</button></h3><div class="fa" id="fa5" role="region" aria-labelledby="fq5"><p>Yes, with the Direct CRM entry add-on ($99/month): our team works in your system with a login you grant and can revoke. Without it, bookings and call details reach you by text or email.</p></div></div>
+      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa6" id="fq6" data-q="missed_only">Can we only send you the calls we&nbsp;miss?</button></h3><div class="fa" id="fa6" role="region" aria-labelledby="fq6"><p>Yes. You choose during setup whether to forward every call or only the ones your office doesn’t answer.</p></div></div>
+      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa7" id="fq7" data-q="urgent">What happens with urgent calls or calls that need my&nbsp;approval?</button></h3><div class="fa" id="fa7" role="region" aria-labelledby="fq7"><p>They’re recorded with the reason and sent to the contact you name, the way you choose. By default we don’t take payments, quote balances, process cancellations or make warranty promises unless you tell us to.</p></div></div>
+      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa8" id="fq8" data-q="start">How fast can we&nbsp;start?</button></h3><div class="fa" id="fa8" role="region" aria-labelledby="fq8"><p>Typically 7–10 days after we receive your details. You fill in a setup questionnaire, we review it with you, run test calls together, then go live.</p></div></div>
+      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa9" id="fq9" data-q="contract">Is there a contract or setup&nbsp;fee?</button></h3><div class="fa" id="fa9" role="region" aria-labelledby="fq9"><p>No setup fee and no long-term contract. It’s month-to-month; cancel with 30 days’ notice. If you cancel before onboarding starts, your first payment is refunded in full.</p></div></div>
+      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa10" id="fq10" data-q="number">Do we keep our phone&nbsp;number?</button></h3><div class="fa" id="fa10" role="region" aria-labelledby="fq10"><p>Yes. You forward your existing number to us, and you can stop forwarding any time.</p></div></div>
     </div>
     <p class="faq-more">Still have a question? Call <a href="tel:+15513736777" data-phone="faq"><strong><span class="tracking-phone">(551) 373-6777</span></strong></a> or <a href="#book" data-cta="faq">book a demo below</a>.</p>
   </div>
@@ -639,12 +646,12 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 <section class="sec sec--cream" id="book" aria-labelledby="book-h">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">Let’s make it specific to your business</p>
-      <h2 id="book-h">Pick a time. We’ll map your call flow in 20 minutes.</h2>
+      <p class="eyebrow">Let’s make it specific to your&nbsp;business</p>
+      <h2 id="book-h">Pick a time. We’ll map your call flow in 20&nbsp;minutes.</h2>
     </div>
     <div class="book-grid">
       <div class="book-l">
-        <p class="book-lead">On the demo you’ll:</p>
+        <p class="book-lead">On the demo&nbsp;you’ll:</p>
         <ul class="ticks ticks--lg"><li>See how we’d handle your most common calls</li><li>Agree what we book, what we escalate and what we never touch</li><li>Get a cost estimate for your call volume</li></ul>
         <p class="book-who">You’ll speak with the person who will set up your account.</p>
         <ul class="mini-trust"><li>No setup fee</li><li>Month-to-month</li><li>Live in ~7–10 days</li></ul>
@@ -663,7 +670,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
         <p class="cal-fb"><a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" data-cta="book_fallback">Calendar not loading? Open it in a new tab <span aria-hidden="true">↗</span></a></p>
 
         <div class="cb" id="cbWrap">
-          <h3 class="cb-h" id="cb-h">Prefer a callback?</h3>
+          <h3 class="cb-h" id="cb-h">Prefer a&nbsp;callback?</h3>
           <form class="cb-form" id="cbForm" action="https://formspree.io/f/maqrpwqw" method="POST" novalidate aria-labelledby="cb-h">
             <p class="cb-prog" id="cbProg" aria-live="polite">Step 1 of 2</p>
             <fieldset class="cb-step" id="cbStep1">
