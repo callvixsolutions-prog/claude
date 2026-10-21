@@ -19,11 +19,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta property="og:title" content="Pest Control Answering Service | Real People, Booked Jobs | Callvix Solutions">
 <meta property="og:description" content="Real, trained people answer your pest control calls in your company's name and book jobs by your rules. $399/mo + $2.99 per answered call. No setup fee.">
 <meta property="og:url" content="https://callvixsolutions.com/pest-control-call-demo/">
-<meta property="og:image" content="https://callvixsolutions.com/assets/og-default.jpg">
+<meta property="og:image" content="https://callvixsolutions.com/assets/og-pest-control-call-demo.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Pest Control Answering Service | Real People, Booked Jobs | Callvix Solutions">
+<meta name="twitter:image" content="https://callvixsolutions.com/assets/og-pest-control-call-demo.jpg">
 <meta name="twitter:description" content="Real, trained people answer your pest control calls in your company's name and book jobs by your rules. $399/mo + $2.99 per answered call. No setup fee.">
 <meta name="theme-color" content="#0a1235">
 <link rel="icon" href="/assets/favicon.ico?v=2" sizes="any">
@@ -94,8 +95,13 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 .lp .hdr{position:sticky;top:0;z-index:50;background:#fff;height:var(--hdr);transition:box-shadow .2s}
 .lp .hdr.is-scrolled{box-shadow:0 1px 0 var(--line),0 4px 12px rgba(16,28,76,.06)}
 .lp .hdr .wrap{display:flex;align-items:center;gap:16px;height:100%}
-.lp .logo{display:flex;align-items:center;flex:none}
+.lp .logo{position:relative;display:flex;align-items:center;flex:none;text-decoration:none}
 .lp .logo img{height:36px;width:auto}
+/* "Solutions" is live text, so it stays sharp at any pixel density. Phones have no spare header width,
+   so it sits under CALLVIX there and beside it from 768px. */
+.lp .logo-sub{position:absolute;left:32px;top:26.5px;font-family:var(--font-h);font-weight:600;font-size:9.5px;line-height:1;letter-spacing:.149em;text-transform:uppercase;color:var(--navy-900);white-space:nowrap}
+.lp .ftr .logo-sub{color:#fff}
+@media (min-width:768px){.lp .logo-sub{position:static;margin:2px 0 0 5px;font-size:13.5px;letter-spacing:.08em}}
 .lp .hdr-nav{display:none;gap:28px;margin-left:24px}
 .lp .hdr-nav a{color:var(--ink-700);text-decoration:none;font-weight:500;font-size:15px}
 .lp .hdr-nav a:hover{color:var(--navy-900)}
@@ -109,9 +115,9 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 .lp .hero{position:relative;background:var(--navy-950);color:#fff;overflow:hidden;padding:56px 0 64px}
 .lp .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 70% at 78% 30%,rgba(38,168,182,.22),transparent 70%),linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:auto,40px 40px,40px 40px;pointer-events:none}
 .lp .hero .wrap{position:relative;display:grid;gap:40px;grid-template-columns:minmax(0,1fr)}
-@media (min-width:1024px){.lp .hero{padding:88px 0 96px}.lp .hero .wrap{grid-template-columns:minmax(0,55fr) minmax(0,45fr);align-items:center;gap:56px}}
+@media (min-width:1024px){.lp .hero{padding:48px 0 56px}.lp .hero .wrap{grid-template-columns:minmax(0,55fr) minmax(0,45fr);align-items:center;gap:56px}}
 .lp .hero .eyebrow{color:var(--teal-300)}
-.lp .hero h1{font-size:clamp(2.25rem,4.6vw + .5rem,3.75rem);line-height:1.05;letter-spacing:-.02em;font-weight:700;min-height:3.15em;max-width:16ch}
+.lp .hero h1{font-size:clamp(2.25rem,4.6vw + .5rem,3.25rem);line-height:1.05;letter-spacing:-.02em;font-weight:700;min-height:3.15em;max-width:16ch}
 @media (min-width:1024px){.lp .hero h1{min-height:3.15em}}
 .lp .hero-sub{margin-top:20px;font-size:1.0625rem;line-height:1.6;color:rgba(255,255,255,.86);max-width:60ch}
 @media (min-width:768px){.lp .hero-sub{font-size:1.1875rem}}
@@ -129,8 +135,8 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 .lp .trust .ic{width:18px;height:18px;color:var(--teal-400);margin-top:3px}
 /* hero visual: live call card. Height reserved so the animation never shifts layout. */
 .lp .callcard{position:relative;width:100%;max-width:440px;margin:0 auto;background:#fff;color:var(--ink-900);border-radius:24px;box-shadow:var(--shadow-lg);padding:18px 18px 16px;min-height:430px}
-.lp .callcard .tag{position:absolute;top:14px;right:16px;font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-500);background:var(--sand);border-radius:999px;padding:3px 9px}
-.lp .cc-top{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;color:var(--success);padding-right:104px;min-height:24px}
+.lp .callcard .tag{position:absolute;top:14px;right:16px;font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-500);background:var(--sand);border-radius:999px;padding:3px 9px}
+.lp .cc-top{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;color:#15805a;padding-right:104px;min-height:24px}
 .lp .cc-co{margin-top:2px;font-family:var(--font-h);font-weight:600;font-size:16px;color:var(--navy-900)}
 .lp .cc-dot{width:10px;height:10px;border-radius:50%;background:var(--success);box-shadow:0 0 0 0 rgba(31,157,107,.5);animation:lp-pulse 1.8s infinite;flex:none}
 .lp .cc-timer{font-variant-numeric:tabular-nums;color:var(--ink-500);font-weight:500}
@@ -138,12 +144,12 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 .lp .bub{max-width:88%;padding:10px 14px;border-radius:16px;font-size:14.5px;line-height:1.45}
 .lp .bub--a{background:var(--teal-100);color:var(--ink-900);border-top-left-radius:6px}
 .lp .bub--c{background:var(--sand);align-self:flex-end;border-top-right-radius:6px}
-.lp .bub b{display:block;font-size:11.5px;font-weight:600;color:var(--ink-500);margin-bottom:2px;letter-spacing:.02em}
+.lp .bub b{display:block;font-size:12.5px;font-weight:600;color:var(--ink-500);margin-bottom:2px;letter-spacing:.02em}
 .lp .chip{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;font-size:13.5px;font-weight:600;border-radius:999px;padding:6px 12px;background:#e8f6ef;color:#136b48}
 .lp .chip .ic{width:16px;height:16px;stroke-width:2.25}
 .lp .cc-sms{margin-top:14px;display:flex;gap:10px;align-items:center;background:var(--navy-900);color:#fff;border-radius:14px;padding:10px 12px;font-size:13.5px}
 .lp .cc-sms .ic{color:var(--teal-300)}
-.lp .cc-sms small{display:block;color:rgba(255,255,255,.65);font-size:12px}
+.lp .cc-sms small{display:block;color:rgba(255,255,255,.65);font-size:12.5px}
 .js .lp .callcard .st{opacity:0;transform:translateY(8px)}
 .lp .callcard.play .st{animation:lp-in .45s ease forwards;animation-delay:var(--d,0s)}
 .lp .callcard.done .st{opacity:1;transform:none;animation:none}
@@ -159,12 +165,12 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 .has-video:not(.is-social) .lp #video{display:block}
 @media (prefers-reduced-motion:reduce){.js .lp .callcard .st{opacity:1;transform:none}.lp .callcard.play .st{animation:none}.lp .cc-dot{animation:none}}
 @media (max-width:1023px){.lp .callcard{min-height:420px}}
-@media (max-width:639px){.lp .hero-ctas .btn{width:100%}.lp .callcard .bub--c,.lp .callcard .bub--a+.bub--c+.bub--a{display:none}.lp .hero h1{font-size:2.125rem;line-height:1.08}.lp .hero-sub{margin-top:14px}.lp .hero-ctas{margin-top:20px;gap:8px 20px}.lp .trust{margin-top:20px;gap:8px 16px;font-size:14px}.lp .hero-micro{font-size:13.5px;margin-top:12px}.lp .hero-sub{font-size:1rem;line-height:1.55}.lp .eyebrow{margin-bottom:8px}.lp .callcard{padding:14px 14px 12px}.lp .cc-body{gap:8px;margin-top:10px}.lp .cc-sms{margin-top:10px}.lp .hero{padding:40px 0 48px}.lp .hero .wrap{gap:32px}.lp .callcard{min-height:0}}
+@media (max-width:639px){.lp .hero-ctas .btn{width:100%}.lp .callcard .bub--c,.lp .callcard .bub--a+.bub--c+.bub--a{display:none}.lp .hero h1{font-size:2.125rem;line-height:1.08}.lp .hero-sub{margin-top:14px}.lp .hero-ctas{margin-top:20px;gap:8px 20px}.lp .trust{margin-top:20px;gap:8px 16px;font-size:14px}.lp .hero-micro{font-size:13.5px;margin-top:12px}.lp .hero-sub{font-size:1rem;line-height:1.55}.lp .eyebrow{margin-bottom:8px}.lp .callcard{padding:14px 14px 12px}.lp .cc-body{gap:8px;margin-top:10px}.lp .cc-sms{margin-top:10px}.lp .hero{padding:40px 0 48px}.lp .hero .wrap{gap:32px}.lp .callcard{min-height:0}.js .lp .callcard .st{opacity:1;transform:none}.lp .callcard.play .st{animation:none}.lp .cc-dot{animation:none}}
 @media (max-width:420px){.lp .bub{font-size:14px}}
 </style>
-<link rel="stylesheet" href="/css/lp.css?v=4" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="/css/lp.css?v=4"></noscript>
-<script src="/js/lp.js?v=3" defer></script>
+<link rel="stylesheet" href="/css/lp.css?v=5" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="/css/lp.css?v=5"></noscript>
+<script src="/js/lp.js?v=4" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -239,7 +245,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 
 <header class="hdr" id="top">
   <div class="wrap">
-    <a href="#top" class="logo" aria-label="Callvix Solutions, back to top" data-top><picture><source srcset="/assets/logo.webp" type="image/webp"><img src="/assets/logo.png" alt="Callvix Solutions" width="106" height="36"></picture></a>
+    <a href="#top" class="logo" aria-label="Callvix Solutions, back to top" data-top><picture><source srcset="/assets/logo.webp" type="image/webp"><img src="/assets/logo.png" alt="Callvix Solutions" width="106" height="36"></picture><span class="logo-sub" aria-hidden="true">Solutions</span></a>
     <nav class="hdr-nav" aria-label="On this page">
       <a href="#how-it-works">How it works</a>
       <a href="#pricing">Pricing</a>
@@ -257,7 +263,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 <section class="hero" id="hero" aria-labelledby="lp-h1">
   <div class="wrap">
     <div class="hero-copy">
-      <p class="eyebrow" id="lp-eyebrow">Pest control answering service · U.S. companies&nbsp;only</p>
+      <p class="eyebrow" id="lp-eyebrow">Pest control answering service · U.S.&nbsp;companies&nbsp;only</p>
       <h1 id="lp-h1">Your phones answered. Your jobs booked. Your techs stay on the&nbsp;job.</h1>
       <p class="hero-sub" id="lp-sub">Callvix Solutions is a pest-control-only answering team. Real, trained people, not an AI bot, pick up in your company’s name, check the address against your service area and book the job by your rules.</p>
       <script>
@@ -280,7 +286,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
       })();
       </script>
       <div class="hero-video hv-m"><div class="vid" data-vid><button type="button" class="vid-btn" aria-label="Play the video: how Callvix Solutions works, about a minute"><picture><source type="image/webp" data-srcset="/assets/video/callvix-lp-poster.webp"><img data-src="/assets/video/callvix-lp-poster.jpg" alt="" width="1280" height="720" decoding="async"></picture><span class="vid-pl" aria-hidden="true"><svg><use href="#i-play"/></svg></span></button></div></div>
-      <p class="hero-price"><strong>$399/month + $2.99 per answered call</strong> · No setup fee · Month-to-month</p>
+      <p class="hero-price"><strong>$399/month + $2.99 per answered call</strong> · No&nbsp;setup&nbsp;fee · Month-to-month</p>
       <div class="hero-ctas">
         <a class="btn btn--cta" href="#book" data-cta="hero" id="heroCta">Book a 20-minute demo <span class="arr" aria-hidden="true">→</span></a>
         <a class="play-link" href="#sample-call" data-play-sample><span class="pl" aria-hidden="true"><svg><use href="#i-play"/></svg></span><span id="heroSecondaryLabel">See a sample call</span></a>
@@ -586,25 +592,13 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
   </div>
 </section>
 
-<section class="sec sec--white" id="systems" aria-labelledby="systems-h">
+<section class="sec sec--sand" id="systems" aria-labelledby="systems-h">
   <div class="wrap sys">
     <div>
       <h2 id="systems-h">Bookings go where your office already&nbsp;works.</h2>
       <p class="lede">With the Direct CRM entry add-on ($99/month), our team enters bookings and call details in your own system using a login you grant and can revoke. It’s a person working in your account, not an automatic sync. Without it, every booking and handoff reaches you by text or email.</p>
     </div>
     <ul class="sys-chips"><li>FieldRoutes</li><li>PestPac</li><li>ServiceTitan</li><li>GorillaDesk</li><li>Briostack</li><li>Housecall Pro</li><li>Your calendar</li></ul>
-  </div>
-</section>
-
-<section class="sec sec--sand" id="team" aria-labelledby="team-h">
-  <div class="wrap">
-    <div class="sec-head"><h2 id="team-h">Real people. Pest control&nbsp;only.</h2></div>
-    <ul class="team">
-      <li><h3>People, not a&nbsp;bot.</h3><p>Callvix Solutions doesn’t use an AI voice bot on client calls.</p></li>
-      <li><h3>Pest control is all we&nbsp;do.</h3><p>Our team only handles pest control calls, so they learn how callers describe problems.</p></li>
-      <li><h3>Trained on your&nbsp;business.</h3><p>Your services, service area, approved prices, booking and escalation rules.</p></li>
-      <li><h3>Your name on every&nbsp;call.</h3><p>Callers hear your company’s greeting.</p></li>
-    </ul>
   </div>
 </section>
 
@@ -751,7 +745,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 <footer class="ftr">
   <div class="wrap">
     <div class="ftr-top">
-      <a href="#top" class="logo" aria-label="Callvix Solutions, back to top" data-top><picture><source srcset="/assets/logo-white.webp" type="image/webp"><img src="/assets/logo-white.png" alt="Callvix Solutions" width="106" height="36" loading="lazy" decoding="async"></picture></a>
+      <a href="#top" class="logo" aria-label="Callvix Solutions, back to top" data-top><picture><source srcset="/assets/logo-white.webp" type="image/webp"><img src="/assets/logo-white.png" alt="Callvix Solutions" width="106" height="36" loading="lazy" decoding="async"></picture><span class="logo-sub" aria-hidden="true">Solutions</span></a>
       <p>Live answering and job booking for U.S. pest control companies.</p>
     </div>
     <div class="ftr-info">

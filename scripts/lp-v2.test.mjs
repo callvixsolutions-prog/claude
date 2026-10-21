@@ -157,8 +157,8 @@ test('click IDs reach the form and Calendly; the phone number is swappable text'
 });
 
 test('testimonials stay off, and only this page loads the v2 files', () => {
-  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: lp.css v=4, lp.js v=3. */
-  assert.ok(HTML.includes('/css/lp.css?v=4') && HTML.includes('/js/lp.js?v=3'), 'asset versions bumped');
+  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: lp.css v=5, lp.js v=4. */
+  assert.ok(HTML.includes('/css/lp.css?v=5') && HTML.includes('/js/lp.js?v=4') && !/lp\.css\?v=4|lp\.js\?v=3/.test(HTML), 'asset versions bumped');
   assert.ok(JS.includes('var SHOW_TESTIMONIALS = false;'));
   assert.ok(HTML.includes('<template id="tplProof">'), 'the testimonials section is a template, not rendered markup');
   assert.ok(JS.includes("var CALLBACK_PROMISE = 'shortly during U.S. business hours';"));
@@ -221,4 +221,38 @@ test('the calendar has a visible loading state and warms up early, off the criti
   assert.ok(HTML.indexOf('class="cal-fb"') > HTML.indexOf('id="cal"'), 'new-tab link stays under the calendar');
   assert.ok(/window\.addEventListener\('scroll', warm, \{ passive: true \}\)/.test(JS) && JS.includes("requestIdleCallback(warm, { timeout: 3000 })") && JS.includes('setTimeout(warm, 3000)'), 'scroll / idle / 3 s triggers');
   assert.ok(!/<script[^>]+widget\.js/.test(HTML), 'Calendly script is not in the HTML (injected later)');
+});
+
+/* Conversion polish, 22 Oct 2026. */
+test('polish: #team is gone, the hero H1 caps at 52px, and phones get the finished call card', () => {
+  assert.ok(!/id="team"|href="#team"|team-h/.test(HTML) && !/\.team\b/.test(CSS) && !/#team\b/.test(JS), '#team section, links and styles removed');
+  assert.ok(HTML.includes('.lp .hero h1{font-size:clamp(2.25rem,4.6vw + .5rem,3.25rem);'), 'H1 max 3.25rem (52px)');
+  assert.ok(HTML.includes('@media (min-width:1024px){.lp .hero{padding:48px 0 56px}'), 'tighter desktop hero padding');
+  const phone = HTML.match(/@media \(max-width:639px\)\{([^\n]*)\}\n/)[1];
+  assert.ok(phone.includes('.js .lp .callcard .st{opacity:1;transform:none}') && phone.includes('.lp .callcard.play .st{animation:none}'), 'phone CSS shows the final card before JS runs');
+  assert.ok(JS.includes("window.matchMedia('(max-width: 639px)').matches") && /if \(reduceMotion \|\| phone \|\| /.test(JS), 'JS skips the type-in under 640px');
+});
+
+test('polish: brand lockup, non-breaking phrases, label sizes and contrast', () => {
+  const sub = '<span class="logo-sub" aria-hidden="true">Solutions</span></a>';
+  assert.equal(HTML.split(sub).length - 1, 2, '"Solutions" wordmark in header and footer');
+  assert.ok(HTML.includes('U.S.&nbsp;companies&nbsp;only</p>') && HTML.includes('· No&nbsp;setup&nbsp;fee ·'), 'eyebrow and price phrases kept together');
+  /* The phone wordmark is the one exception: it is the logo's aria-hidden descriptor, sized to CALLVIX's width, not a label. */
+  const small = [];
+  for (const [name, src] of [['inline', HTML.match(/<style>([\s\S]*?)<\/style>/)[1]], ['lp.css', CSS]]) {
+    for (const m of src.matchAll(/([^{}]*)\{[^{}]*font-size:([\d.]+)(px|rem)/g)) { const px = +m[2] * (m[3] === 'rem' ? 16 : 1); if (px < 12.5 && !m[1].trim().endsWith('.lp .logo-sub')) small.push(`${name} ${m[1].trim()} ${px}px`); }
+  }
+  assert.deepEqual(small, [], 'no label under 12.5px');
+  const lum = (h) => { const c = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16) / 255).map((x) => (x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4)); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+  const green = HTML.match(/\.lp \.cc-top\{[^}]*color:#([0-9a-f]{6});/i)[1];
+  assert.ok(1.05 / (lum(green) + 0.05) >= 4.5, `"Incoming call" #${green} must reach 4.5:1 on white`);
+});
+
+test('polish: the page has its own 1200x630 share image', () => {
+  const url = 'https://callvixsolutions.com/assets/og-pest-control-call-demo.jpg';
+  assert.ok(HTML.includes(`<meta property="og:image" content="${url}">`) && HTML.includes(`<meta name="twitter:image" content="${url}">`));
+  const jpg = readFileSync(join(ROOT, 'assets/og-pest-control-call-demo.jpg'));
+  let i = 2, size = null;
+  while (i < jpg.length) { const marker = jpg[i + 1]; const len = jpg.readUInt16BE(i + 2); if (marker >= 0xc0 && marker <= 0xc2) { size = [jpg.readUInt16BE(i + 7), jpg.readUInt16BE(i + 5)]; break; } i += 2 + len; }
+  assert.deepEqual(size, [1200, 630]);
 });

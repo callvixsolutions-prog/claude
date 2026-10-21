@@ -158,7 +158,9 @@
   /* ------------------------------------------------ hero live call card -- */
   onReady(function () {
     var card = $('#callcard'), timer = $('#ccTimer'); if (!card) return;
-    if (reduceMotion || !('IntersectionObserver' in window)) { card.classList.add('done'); if (timer) timer.textContent = '00:06'; return; }
+    /* Phones get the finished card at once (CSS already shows it); the type-in plays from 640px up. */
+    var phone = window.matchMedia && window.matchMedia('(max-width: 639px)').matches;
+    if (reduceMotion || phone || !('IntersectionObserver' in window)) { card.classList.add('done'); if (timer) timer.textContent = '00:06'; return; }
     var io = new IntersectionObserver(function (es) {
       if (!es[0].isIntersecting) return; io.disconnect();
       card.classList.add('play');
