@@ -94,6 +94,7 @@ export function duplicatesIn(html) {
 /* Deliberate repeats. Keyed by page and by the start of the text; one line of reason each. */
 const DUPLICATE_ALLOW = [
   ['blog/pest-control-call-script-intake-form.html', 'Before you start: safety overrides everything.', 'the safety notice is shown before step 1 and again at the top of the printable form, which is printed on its own'],
+  ['index.html', 'Sample call. Names and details are made up.', 'owner-approved 22 Oct 2026: the same label captions both sample-call figures (the call walkthrough and the handoff details)'],
 ];
 
 test('the duplicate detector sees a planted duplicate, a nested copy and a short repeat correctly', () => {
@@ -188,4 +189,24 @@ test('strings retired in round 12 have not come back', () => {
   const stale = RETIRED_PENDING.filter((_, i) => !used.has(i)).map(([f, t, c]) => `${f}: "${t}" (${c})`);
   assert.deepEqual(hits, [], `retired strings:\n  ${hits.join('\n  ')}`);
   assert.deepEqual(stale, [], `PENDING entries whose string is gone — delete them:\n  ${stale.join('\n  ')}`);
+});
+
+/* 22 Oct 2026, owner-approved: example call content on the homepage and the integration pages is labelled
+   "Sample call" ("Names and details are made up"), never "illustrative", and out-of-area calls are not
+   described as "never booked" (the client's rules can allow it). */
+test('homepage and integration pages: sample-call labels, no "illustrative" or "never booked"', () => {
+  const pages = ['index.html', 'integrations/index.html', ...['fieldroutes', 'pestpac', 'servicetitan', 'gorilladesk', 'briostack', 'housecall-pro'].map((n) => `integrations/${n}.html`)];
+  const hits = [];
+  for (const rel of pages) {
+    const html = readFileSync(join(ROOT, rel), 'utf8');
+    for (const old of [/llustrative/, /not a recording/, /customer record/, /never booked/]) if (old.test(html)) hits.push(`${rel}: ${old}`);
+    if (rel.startsWith('integrations/') && rel !== 'integrations/index.html') {
+      assert.ok(html.includes('Sample call record</') && html.includes('Sample call record. Names and details are made up. Entry in ') && html.includes('Sample scenarios &mdash; your own booking'), rel);
+    }
+  }
+  assert.deepEqual(hits, []);
+  const home = readFileSync(join(ROOT, 'index.html'), 'utf8');
+  assert.equal(home.split('Sample call. Names and details are made up.').length - 1, 2);
+  assert.ok(home.includes('Logged and sent to you unless your rules allow us to book it') && home.includes('Sample call. Callvix Solutions answers and books; your own technicians do the work.') && home.includes('The same steps on one sample call.'));
+  assert.ok(readFileSync(join(ROOT, 'integrations/index.html'), 'utf8').includes('Sample call. Names and details are made up. Entering the booking in your software requires the CRM Management add-on.'));
 });

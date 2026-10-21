@@ -282,7 +282,7 @@ test. It stays `noindex` and out of the sitemap, and its file is hash-pinned in
 | `CALLBACK_PROMISE` | `"shortly during U.S. business hours"` | `js/lp.js`, top of the file | The end of the callback-form thank-you line: "Thanks, Pat. We'll call you …". Change the text between the quotes. |
 
 **After changing `css/lp.css` or `js/lp.js`, raise the `?v=` number** on its `<link>`/`<script>`
-in `pest-control-call-demo/index.html` (currently `lp.css?v=5`, `lp.js?v=4`), and update the matching check in
+in `pest-control-call-demo/index.html` (currently `lp.css?v=7`, `lp.js?v=5`), and update the matching check in
 `scripts/lp-v2.test.mjs`. Browsers keep these files for up to a year (CSS) or a week (JS), so a
 returning visitor would otherwise get the old file. Any edit to the page's HTML also needs
 `campaignSha256` in `scripts/round11-frozen.json` updated (the test failure tells you the new value).
