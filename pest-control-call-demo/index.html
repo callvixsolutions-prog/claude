@@ -139,7 +139,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 .lp .callcard .tag{position:absolute;top:14px;right:16px;font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-500);background:var(--sand);border-radius:999px;padding:3px 9px}
 .lp .cc-top{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;color:#15805a;padding-right:104px;min-height:24px}
 .lp .cc-co{margin-top:2px;font-family:var(--font-h);font-weight:600;font-size:16px;color:var(--navy-900)}
-.lp .cc-dot{width:10px;height:10px;border-radius:50%;background:var(--success);box-shadow:0 0 0 0 rgba(31,157,107,.5);animation:lp-pulse 1.8s infinite;flex:none}
+.lp .cc-dot{width:10px;height:10px;border-radius:50%;background:var(--success);box-shadow:0 0 0 0 rgba(31,157,107,.5);animation:lp-pulse 1.8s 2;flex:none}
 .lp .cc-timer{font-variant-numeric:tabular-nums;color:var(--ink-500);font-weight:500}
 .lp .cc-body{margin-top:12px;display:flex;flex-direction:column;gap:10px}
 .lp .bub{max-width:88%;padding:10px 14px;border-radius:16px;font-size:14.5px;line-height:1.45}
@@ -169,9 +169,9 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 @media (max-width:639px){.lp .hero-ctas .btn{width:100%}.lp .callcard .bub--c,.lp .callcard .bub--a+.bub--c+.bub--a{display:none}.lp .hero h1{font-size:2.125rem;line-height:1.08}.lp .hero-sub{margin-top:14px}.lp .hero-ctas{margin-top:20px;gap:8px 20px}.lp .trust{margin-top:20px;gap:8px 16px;font-size:14px}.lp .hero-micro{font-size:13.5px;margin-top:12px}.lp .hero-sub{font-size:1rem;line-height:1.55}.lp .eyebrow{margin-bottom:8px}.lp .callcard{padding:14px 14px 12px}.lp .cc-body{gap:8px;margin-top:10px}.lp .cc-sms{margin-top:10px}.lp .hero{padding:40px 0 48px}.lp .hero .wrap{gap:32px}.lp .callcard{min-height:0}.js .lp .callcard .st{opacity:1;transform:none}.lp .callcard.play .st{animation:none}.lp .cc-dot{animation:none}}
 @media (max-width:420px){.lp .bub{font-size:14px}}
 </style>
-<link rel="stylesheet" href="/css/lp.css?v=5" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="/css/lp.css?v=5"></noscript>
-<script src="/js/lp.js?v=4" defer></script>
+<link rel="stylesheet" href="/css/lp.css?v=6" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="/css/lp.css?v=6"></noscript>
+<script src="/js/lp.js?v=5" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -203,7 +203,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
     {"@type": "Question", "name": "Can you book into FieldRoutes, PestPac, ServiceTitan or our system?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, with the Direct CRM entry add-on ($99/month): our team works in your system with a login you grant and can revoke. Without it, bookings and call details reach you by text or email."}},
     {"@type": "Question", "name": "Can we only send you the calls we miss?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. You choose during setup whether to forward every call or only the ones your office doesn’t answer."}},
     {"@type": "Question", "name": "What happens with urgent calls or calls that need my approval?", "acceptedAnswer": {"@type": "Answer", "text": "They’re recorded with the reason and sent to the contact you name, the way you choose. By default we don’t take payments, quote balances, process cancellations or make warranty promises unless you tell us to."}},
-    {"@type": "Question", "name": "How fast can we start?", "acceptedAnswer": {"@type": "Answer", "text": "Typically 7–10 days after we receive your details. You fill in a setup questionnaire, we review it with you, run test calls together, then go live."}},
+    {"@type": "Question", "name": "How fast can we start?", "acceptedAnswer": {"@type": "Answer", "text": "Typically 7–10 business days after we receive your details. You fill in a setup questionnaire, we review it with you, run test calls together, then go live."}},
     {"@type": "Question", "name": "Is there a contract or setup fee?", "acceptedAnswer": {"@type": "Answer", "text": "No setup fee and no long-term contract. It’s month-to-month; cancel with 30 days’ notice. If you cancel before onboarding starts, your first payment is refunded in full."}},
     {"@type": "Question", "name": "Do we keep our phone number?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. You forward your existing number to us, and you can stop forwarding any time."}}
   ]
@@ -323,12 +323,12 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow">The cost of a ringing&nbsp;phone</p>
-      <h2 id="problem-h">When nobody picks up, the caller doesn’t wait. They call the next&nbsp;company.</h2>
+      <h2 id="problem-h">When nobody picks up, many callers move on to the next&nbsp;company.</h2>
       <p class="lede">Pest problems feel urgent: wasps by the front door, mice in the walls, ants across the counter. Meanwhile your techs are in a crawlspace, your office is already on another line, and in peak season the phone never stops. It’s not a failure of effort. It’s what happens when the people who do the work are also expected to answer.</p>
     </div>
     <div class="prob-grid">
       <figure class="stat">
-        <blockquote><p><strong>58%</strong> of callers don’t leave a voicemail. And <strong>78%</strong> say they’ve stopped using a business after a call went unanswered.</p></blockquote>
+        <blockquote><p><strong>78%</strong> of surveyed U.S. consumers said an unanswered call had led them to take their business elsewhere.</p></blockquote>
       </figure>
       <ul class="scen">
         <li class="scen-card" tabindex="0"><span class="scen-ic"><svg class="ic" aria-hidden="true"><use href="#i-wrench"/></svg></span><div><h3>In the&nbsp;field.</h3><p>Mid-treatment or under a house, nobody can grab the phone.</p></div><span class="badge"><span class="b-miss">Missed</span><span class="b-ok">Answered</span></span></li>
@@ -351,13 +351,14 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow">Sample&nbsp;call</p>
-      <h2 id="sample-h">Here’s exactly how we handle a&nbsp;call.</h2>
+      <h2 id="sample-h">See how a sample call is&nbsp;handled.</h2>
       <p class="lede">Every step follows rules you set during setup.</p>
+      <p class="sc-note" id="scNote">Sample call shown as text. Names and details are made up.</p>
     </div>
     <div class="sc-grid">
       <div class="sc-player" id="scPlayer">
         <div class="sc-ctrl">
-          <button type="button" class="sc-play" id="scPlay" aria-label="Play sample call"><svg class="i-pl" aria-hidden="true"><use href="#i-play"/></svg><svg class="i-pa" aria-hidden="true"><use href="#i-pause"/></svg><span class="sc-play-t">Play sample call</span></button>
+          <button type="button" class="sc-play" id="scPlay" aria-label="Start text walkthrough"><svg class="i-pl" aria-hidden="true"><use href="#i-play"/></svg><svg class="i-pa" aria-hidden="true"><use href="#i-pause"/></svg><span class="sc-play-t">Start text walkthrough</span></button>
           <div class="sc-prog"><div class="sc-bar" id="scBar" role="progressbar" aria-label="Sample call progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="scFill"></span></div><span class="sc-time" id="scTime">0:00</span></div>
           <div class="sc-opts">
             <div class="seg" role="group" aria-label="Playback speed"><button type="button" aria-pressed="true" data-speed="1">1×</button><button type="button" aria-pressed="false" data-speed="1.5">1.5×</button></div>
@@ -391,7 +392,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
             <div data-field="access"><dt>Access</dt><dd>Caller home</dd></div>
             <div data-field="access"><dt>Pets</dt><dd>Dog in rear yard</dd></div>
           </dl>
-          <p class="ho-foot"><svg class="ic" aria-hidden="true"><use href="#i-msg"/></svg>By text, email, or directly in your CRM.</p>
+          <p class="ho-foot"><svg class="ic" aria-hidden="true"><use href="#i-msg"/></svg>By text or email, or entered in your CRM with the $99/month add-on.</p>
         </div>
       </aside>
     </div>
@@ -399,8 +400,8 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
       <h3 class="notbook-h">When a call isn’t a&nbsp;booking</h3>
       <ul>
         <li><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg><span><strong>Urgent or needs your approval</strong> → goes to your named contact, the way you choose</span></li>
-        <li><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span><strong>Outside your service area</strong> → logged and sent back to you, never booked</span></li>
-        <li><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg><span><strong>Warranty, billing or a judgment call</strong> → escalated. We don’t make promises on your behalf.</span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span><strong>Outside your service area</strong> → logged and sent to you unless your rules allow us to book it.</span></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg><span><strong>Warranty, billing or a judgment call</strong> → handled within your instructions; anything outside them goes to you.</span></li>
       </ul>
     </div>
     <div class="cta-row">
@@ -414,16 +415,16 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow">How it&nbsp;works</p>
-      <h2 id="how-h">Live in about a week. You stay in&nbsp;control.</h2>
+      <h2 id="how-h">Typically live in 7–10 business&nbsp;days.</h2>
     </div>
     <div class="how-grid">
       <div>
         <ol class="steps">
           <li><span class="num" aria-hidden="true">1</span><div><h3>20-minute&nbsp;demo.</h3><p>We map your calls, services, service area and booking rules, and give you a cost estimate.</p></div></li>
           <li><span class="num" aria-hidden="true">2</span><div><h3>Setup and test&nbsp;calls.</h3><p>You fill in one setup questionnaire. We build your call guide, you approve the greeting and call flow, and we run test calls together.</p></div></li>
-          <li><span class="num" aria-hidden="true">3</span><div><h3>Go&nbsp;live.</h3><p>Forward your existing number: all calls, or only the ones you don’t pick up. Bookings and handoffs reach you by text, email or directly in your CRM.</p></div></li>
+          <li><span class="num" aria-hidden="true">3</span><div><h3>Go&nbsp;live.</h3><p>Forward your existing number: all calls, or only the ones you don’t pick up. Bookings and handoffs reach you by text or email, or are entered in your CRM with the $99/month add-on.</p></div></li>
         </ol>
-        <p class="how-note"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>Typically live 7–10 days after we receive your details.</p>
+        <p class="how-note"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>Typically live 7–10 business days after we receive your details.</p>
       </div>
       <div class="fwd" id="fwd" data-mode="all">
         <p class="fwd-label" id="fwd-l">What we answer</p>
@@ -478,26 +479,26 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
     </div>
     <div class="seg seg--cmp" role="group" aria-label="Compare Callvix Solutions with">
       <button type="button" aria-pressed="false" data-col="vm">vs Voicemail</button>
-      <button type="button" aria-pressed="false" data-col="as">vs Answering service</button>
+      <button type="button" aria-pressed="false" data-col="as">vs Other services</button>
       <button type="button" aria-pressed="true" data-col="ai">vs AI bot</button>
       <button type="button" aria-pressed="false" data-col="csr">vs Hiring</button>
     </div>
     <div class="cmp-wrap">
       <table class="cmp" id="cmp" data-show="ai">
-        <caption class="sr">Callvix Solutions compared with voicemail, a typical answering service, an AI voice bot and hiring another CSR</caption>
-        <thead><tr><th scope="col"><span class="sr">Feature</span></th><th scope="col" class="c-cvx">Callvix</th><th scope="col" class="c-vm">Voicemail</th><th scope="col" class="c-as">Typical answering service</th><th scope="col" class="c-ai">AI voice bot</th><th scope="col" class="c-csr">Hiring another CSR</th></tr></thead>
+        <caption class="sr">Callvix Solutions compared with voicemail, other answering services, an AI voice bot and hiring another CSR</caption>
+        <thead><tr><th scope="col"><span class="sr">Feature</span></th><th scope="col" class="c-cvx">Callvix Solutions</th><th scope="col" class="c-vm">Voicemail</th><th scope="col" class="c-as">Other answering services</th><th scope="col" class="c-ai">AI voice bot</th><th scope="col" class="c-csr">Hiring another CSR</th></tr></thead>
         <tbody>
           <tr><th scope="row">A real person answers</th><td class="c-cvx"><svg class="ic y" aria-hidden="true"><use href="#i-check"/></svg><span class="sr">Yes</span></td><td class="c-vm"><svg class="ic n" aria-hidden="true"><use href="#i-x"/></svg><span class="sr">No</span></td><td class="c-as"><svg class="ic y" aria-hidden="true"><use href="#i-check"/></svg><span class="sr">Yes</span></td><td class="c-ai"><svg class="ic n" aria-hidden="true"><use href="#i-x"/></svg><span class="sr">No</span></td><td class="c-csr"><svg class="ic y" aria-hidden="true"><use href="#i-check"/></svg><span class="sr">Yes</span></td></tr>
-          <tr><th scope="row">Pest-control-only training</th><td class="c-cvx"><svg class="ic y" aria-hidden="true"><use href="#i-check"/></svg><span class="sr">Yes</span></td><td class="c-vm"><svg class="ic d" aria-hidden="true"><use href="#i-dash"/></svg><span class="sr">Not applicable</span></td><td class="c-as">Rarely</td><td class="c-ai">Depends on setup</td><td class="c-csr">After you train them</td></tr>
-          <tr><th scope="row">Books jobs by your rules</th><td class="c-cvx"><svg class="ic y" aria-hidden="true"><use href="#i-check"/></svg><span class="sr">Yes</span></td><td class="c-vm"><svg class="ic n" aria-hidden="true"><use href="#i-x"/></svg><span class="sr">No</span></td><td class="c-as">Often takes messages</td><td class="c-ai">Varies</td><td class="c-csr"><svg class="ic y" aria-hidden="true"><use href="#i-check"/></svg><span class="sr">Yes</span></td></tr>
-          <tr><th scope="row">Priced per call, not per minute</th><td class="c-cvx"><svg class="ic y" aria-hidden="true"><use href="#i-check"/></svg><span class="sr">Yes</span></td><td class="c-vm"><svg class="ic d" aria-hidden="true"><use href="#i-dash"/></svg><span class="sr">Not applicable</span></td><td class="c-as">Often per minute</td><td class="c-ai">Varies</td><td class="c-csr">Salary + overhead</td></tr>
+          <tr><th scope="row">Pest-control-only training</th><td class="c-cvx"><svg class="ic y" aria-hidden="true"><use href="#i-check"/></svg><span class="sr">Yes</span></td><td class="c-vm"><svg class="ic d" aria-hidden="true"><use href="#i-dash"/></svg><span class="sr">Not applicable</span></td><td class="c-as">Varies by provider</td><td class="c-ai">Depends on setup</td><td class="c-csr">After you train them</td></tr>
+          <tr><th scope="row">Books jobs by your rules</th><td class="c-cvx"><svg class="ic y" aria-hidden="true"><use href="#i-check"/></svg><span class="sr">Yes</span></td><td class="c-vm"><svg class="ic n" aria-hidden="true"><use href="#i-x"/></svg><span class="sr">No</span></td><td class="c-as">Varies by plan</td><td class="c-ai">Varies</td><td class="c-csr"><svg class="ic y" aria-hidden="true"><use href="#i-check"/></svg><span class="sr">Yes</span></td></tr>
+          <tr><th scope="row">Priced per call, not per minute</th><td class="c-cvx"><svg class="ic y" aria-hidden="true"><use href="#i-check"/></svg><span class="sr">Yes</span></td><td class="c-vm"><svg class="ic d" aria-hidden="true"><use href="#i-dash"/></svg><span class="sr">Not applicable</span></td><td class="c-as">Varies by plan</td><td class="c-ai">Varies</td><td class="c-csr">Salary + overhead</td></tr>
           <tr><th scope="row">Spam &amp; wrong numbers not billed</th><td class="c-cvx"><svg class="ic y" aria-hidden="true"><use href="#i-check"/></svg><span class="sr">Yes</span></td><td class="c-vm"><svg class="ic d" aria-hidden="true"><use href="#i-dash"/></svg><span class="sr">Not applicable</span></td><td class="c-as">Varies</td><td class="c-ai">Varies</td><td class="c-csr"><svg class="ic d" aria-hidden="true"><use href="#i-dash"/></svg><span class="sr">Not applicable</span></td></tr>
-          <tr><th scope="row">Covers sick days &amp; vacations</th><td class="c-cvx"><svg class="ic y" aria-hidden="true"><use href="#i-check"/></svg><span class="sr">Yes</span></td><td class="c-vm"><svg class="ic d" aria-hidden="true"><use href="#i-dash"/></svg><span class="sr">Not applicable</span></td><td class="c-as"><svg class="ic y" aria-hidden="true"><use href="#i-check"/></svg><span class="sr">Yes</span></td><td class="c-ai"><svg class="ic y" aria-hidden="true"><use href="#i-check"/></svg><span class="sr">Yes</span></td><td class="c-csr"><svg class="ic n" aria-hidden="true"><use href="#i-x"/></svg><span class="sr">No</span></td></tr>
+          <tr><th scope="row">Coverage while your staff are away</th><td class="c-cvx">During agreed hours</td><td class="c-vm"><svg class="ic d" aria-hidden="true"><use href="#i-dash"/></svg><span class="sr">Not applicable</span></td><td class="c-as">Depends on coverage</td><td class="c-ai">Depends on setup</td><td class="c-csr">Backup still needed</td></tr>
           <tr><th scope="row">Commitment</th><td class="c-cvx"><strong>Month-to-month</strong></td><td class="c-vm"><svg class="ic d" aria-hidden="true"><use href="#i-dash"/></svg><span class="sr">Not applicable</span></td><td class="c-as">Varies</td><td class="c-ai">Varies</td><td class="c-csr">Employment</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="foot-note">Comparison reflects common industry practice; individual providers differ.</p>
+    <p class="foot-note">Features, coverage and pricing vary by provider and plan.</p>
   </div>
 </section>
 
@@ -526,19 +527,19 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
           <input type="range" id="c-book" min="0" max="100" step="1" value="50" aria-valuetext="50 percent">
         </div>
         <div class="cf" data-k="val">
-          <div class="cf-top"><label for="c-val">Average value of a new customer</label><span class="cf-nw"><span aria-hidden="true">$</span><input type="number" id="c-val-n" class="cf-n" min="50" max="5000" step="10" value="300" aria-label="Average value of a new customer, dollars"></span></div>
+          <div class="cf-top"><label for="c-val">Average first-job revenue</label><span class="cf-nw"><span aria-hidden="true">$</span><input type="number" id="c-val-n" class="cf-n" min="50" max="5000" step="10" value="300" aria-label="Average first-job revenue, dollars"></span></div>
           <input type="range" id="c-val" min="50" max="5000" step="10" value="300" aria-valuetext="300 dollars">
         </div>
       </form>
       <div class="calc-out" aria-live="polite" id="calcOut">
-        <div class="co-risk"><span>Revenue at risk per month</span><strong id="o-risk">$3,000</strong></div>
+        <div class="co-risk"><span>Potential first-job revenue from missed calls</span><strong id="o-risk">$3,000</strong></div>
         <div class="co-stats">
           <div class="co-stat"><strong id="o-missed">40</strong><span>Missed calls per month</span></div>
-          <div class="co-stat"><strong id="o-jobs">10</strong><span>Jobs you may be missing</span></div>
+          <div class="co-stat"><strong id="o-jobs">10</strong><span>Potential bookings per month</span></div>
         </div>
         <div class="co-foot">
           <a class="btn btn--cta co-cta" href="#book" data-cta="calc" id="calcCta"><span>See what it would cost you: <span class="nw">book a 20-minute demo</span></span> <span class="arr" aria-hidden="true">→</span></a>
-          <p class="co-disc">Estimates use the numbers you enter. Your real results depend on your calls.</p>
+          <p class="co-disc">A monthly scenario based on your numbers, not a forecast. Some callers may call back or book another way, and revenue isn’t profit.</p>
         </div>
       </div>
     </div>
@@ -554,7 +555,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
         <p class="pr-amt"><span class="pr-row"><span class="pr-big">$399</span><span class="pr-unit">/month</span></span> <span class="pr-row"><span class="pr-plus">+</span> <span class="pr-big">$2.99</span><span class="pr-unit">per answered call</span></span></p>
         <p class="pr-line">Per call, not per minute. A 6-minute booking call costs the same $2.99 as a 1-minute question.</p>
         <p class="pr-line">Outbound follow-ups: $0.99 per call, only when used.</p>
-        <p class="pr-line">Your bill follows your call volume, so quieter months cost&nbsp;less.</p>
+        <p class="pr-line">The $399 monthly base stays fixed. Usage charges vary with your call&nbsp;volume.</p>
         <p class="pr-hours"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg><span>Base coverage: <strong>Mon–Fri, 9am–6pm, your time zone</strong></span></p>
         <a class="btn btn--cta pr-btn" href="#book" data-cta="pricing">Book a 20-minute demo <span class="arr" aria-hidden="true">→</span></a>
         <p class="pr-under">No setup fee · Month-to-month</p>
@@ -623,7 +624,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
       <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa5" id="fq5" data-q="crm">Can you book into FieldRoutes, PestPac, ServiceTitan or our&nbsp;system?</button></h3><div class="fa" id="fa5" role="region" aria-labelledby="fq5"><p>Yes, with the Direct CRM entry add-on ($99/month): our team works in your system with a login you grant and can revoke. Without it, bookings and call details reach you by text or email.</p></div></div>
       <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa6" id="fq6" data-q="missed_only">Can we only send you the calls we&nbsp;miss?</button></h3><div class="fa" id="fa6" role="region" aria-labelledby="fq6"><p>Yes. You choose during setup whether to forward every call or only the ones your office doesn’t answer.</p></div></div>
       <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa7" id="fq7" data-q="urgent">What happens with urgent calls or calls that need my&nbsp;approval?</button></h3><div class="fa" id="fa7" role="region" aria-labelledby="fq7"><p>They’re recorded with the reason and sent to the contact you name, the way you choose. By default we don’t take payments, quote balances, process cancellations or make warranty promises unless you tell us to.</p></div></div>
-      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa8" id="fq8" data-q="start">How fast can we&nbsp;start?</button></h3><div class="fa" id="fa8" role="region" aria-labelledby="fq8"><p>Typically 7–10 days after we receive your details. You fill in a setup questionnaire, we review it with you, run test calls together, then go live.</p></div></div>
+      <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa8" id="fq8" data-q="start">How fast can we&nbsp;start?</button></h3><div class="fa" id="fa8" role="region" aria-labelledby="fq8"><p>Typically 7–10 business days after we receive your details. You fill in a setup questionnaire, we review it with you, run test calls together, then go live.</p></div></div>
       <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa9" id="fq9" data-q="contract">Is there a contract or setup&nbsp;fee?</button></h3><div class="fa" id="fa9" role="region" aria-labelledby="fq9"><p>No setup fee and no long-term contract. It’s month-to-month; cancel with 30 days’ notice. If you cancel before onboarding starts, your first payment is refunded in full.</p></div></div>
       <div class="fq"><h3><button type="button" aria-expanded="false" aria-controls="fa10" id="fq10" data-q="number">Do we keep our phone&nbsp;number?</button></h3><div class="fa" id="fa10" role="region" aria-labelledby="fq10"><p>Yes. You forward your existing number to us, and you can stop forwarding any time.</p></div></div>
     </div>
@@ -641,8 +642,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
       <div class="book-l">
         <p class="book-lead">On the demo&nbsp;you’ll:</p>
         <ul class="ticks ticks--lg"><li>See how we’d handle your most common calls</li><li>Agree what we book, what we escalate and what we never touch</li><li>Get a cost estimate for your call volume</li></ul>
-        <p class="book-who">You’ll speak with the person who will set up your account.</p>
-        <ul class="mini-trust"><li>No setup fee</li><li>Month-to-month</li><li>Live in ~7–10 days</li></ul>
+        <ul class="mini-trust"><li>No setup fee</li><li>Month-to-month</li><li>Typical setup: 7–10 business days</li></ul>
         <p class="book-call">Rather talk now? <a href="tel:+15513736777" data-phone="book"><span class="tracking-phone">(551) 373-6777</span></a></p>
       </div>
       <div class="book-r">
@@ -672,9 +672,10 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
                 <legend>Calls per month</legend>
                 <div class="chip-row">
                   <label><input type="radio" name="calls_per_month" value="Under 100" required><span>Under 100</span></label>
-                  <label><input type="radio" name="calls_per_month" value="100–300"><span>100–300</span></label>
-                  <label><input type="radio" name="calls_per_month" value="300–600"><span>300–600</span></label>
+                  <label><input type="radio" name="calls_per_month" value="100–299"><span>100–299</span></label>
+                  <label><input type="radio" name="calls_per_month" value="300–599"><span>300–599</span></label>
                   <label><input type="radio" name="calls_per_month" value="600+"><span>600+</span></label>
+                  <label><input type="radio" name="calls_per_month" value="not_sure"><span>Not sure</span></label>
                 </div>
                 <p class="err" id="err-calls" hidden></p>
               </fieldset>
@@ -700,7 +701,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
                 <p class="err" id="err-email" hidden></p>
               </div>
               <fieldset class="fld chips">
-                <legend>Best time to call</legend>
+                <legend>Best time to call (your local time)</legend>
                 <div class="chip-row">
                   <label><input type="radio" name="best_time" value="Morning"><span>Morning</span></label>
                   <label><input type="radio" name="best_time" value="Afternoon"><span>Afternoon</span></label>
@@ -728,6 +729,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
             <input type="hidden" name="utm_content" data-attr="utm_content" value="">
             <input type="hidden" name="lp_variant" data-attr="h" value="">
             <input type="hidden" name="first_landing_time" data-attr="ts" value="">
+            <input type="hidden" name="visitor_tz" id="cb_tz" value="">
             <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
           </form>
           <div class="cb-done" id="cbDone" hidden tabindex="-1">

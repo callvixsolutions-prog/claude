@@ -30,7 +30,7 @@ const everything = HTML + '\n' + JS + '\n' + CSS;
 
 test('every price matches the approved facts to the cent', () => {
   for (const s of ['$399/month + $2.99 per answered call', 'Outbound follow-ups: $0.99 per call, only when used.', '+$199/mo', '+$149/mo', '+$99/mo',
-    'Your bill follows your call volume, so quieter months cost less.',
+    'The $399 monthly base stays fixed. Usage charges vary with your call volume.',
     'Mon–Fri, 9am–6pm, your time zone', 'No setup fee', 'Cancel with 30 days’ notice.']) {
     assert.ok(visible.includes(s), `missing: "${s}"`);
   }
@@ -52,10 +52,10 @@ test('banned words and claims are absent from the page, its script and its style
   assert.ok(!/★|☆|star rating/i.test(visible), 'no star ratings');
 });
 
-test('the only statistics are the two approved figures, with no source line', () => {
+test('the only statistic is the approved 78% figure, with no source line', () => {
   const pct = [...visible.matchAll(/\d+(?:\.\d+)?\s?%/g)].map((m) => m[0]);
-  assert.deepEqual(pct, ['58%', '78%']);
-  assert.ok(visible.includes('58% of callers don’t leave a voicemail. And 78% say they’ve stopped using a business after a call went unanswered.'));
+  assert.deepEqual(pct, ['78%']);
+  assert.ok(visible.includes('78% of surveyed U.S. consumers said an unanswered call had led them to take their business elsewhere.'));
   assert.ok(!/source:/i.test(visible), 'no "Source:" line');
 });
 
@@ -75,12 +75,12 @@ test('the calculator shows only what missed calls cost; no Callvix pricing in it
   for (const s of ['$518.60', '$997', 'Cover the calls you miss', 'If we answer all your calls', '$399', '$2.99', 'Your estimate with', '$3,700', 'Add-ons']) assert.ok(!calc.includes(s), `calculator still contains "${s}"`);
   assert.match(calc, /<h2 id="calc-h">What are missed calls costing&nbsp;you\?<\/h2>/);
   assert.ok(calc.replace(/<[^>]+>/g, '').includes('See what it would cost you: book a 20-minute demo') && /href="#book" data-cta="calc" id="calcCta"/.test(calc), 'CTA scrolls to the calendar');
-  assert.ok(calc.includes('Estimates use the numbers you enter. Your real results depend on your calls.'), 'disclaimer kept');
+  assert.ok(calc.includes('A monthly scenario based on your numbers, not a forecast. Some callers may call back or book another way, and revenue isn’t profit.'), 'scenario caption');
   assert.ok(!/o-cost-|o-math-|PRICE\./.test(JS), 'no cost code left in the script');
   assert.ok(JS.includes("return 'Calls/month: ' + num0.format(calcState.calls) + ' · Miss rate: ' + calcState.miss + '%';"), 'Calendly a1 summary unchanged');
   /* Pricing keeps the published rates, the add-ons, the not-billed list and the billing link. */
   const pricing = HTML.slice(HTML.indexOf('id="pricing"'), HTML.indexOf('id="terms"'));
-  for (const s of ['$399', '$2.99', '$0.99', 'Your bill follows your call volume, so quieter months cost less.', 'Full billing detail', 'hang-ups before we answer', '+$199/mo', '+$149/mo', '+$99/mo']) assert.ok(pricing.replace(/&nbsp;/g, ' ').includes(s), s);
+  for (const s of ['$399', '$2.99', '$0.99', 'The $399 monthly base stays fixed. Usage charges vary with your call volume.', 'Full billing detail', 'hang-ups before we answer', '+$199/mo', '+$149/mo', '+$99/mo']) assert.ok(pricing.replace(/&nbsp;/g, ' ').includes(s), s);
 });
 
 test('?h= only ever picks from the whitelist; anything else falls back to the default', () => {
@@ -157,8 +157,8 @@ test('click IDs reach the form and Calendly; the phone number is swappable text'
 });
 
 test('testimonials stay off, and only this page loads the v2 files', () => {
-  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: lp.css v=5, lp.js v=4. */
-  assert.ok(HTML.includes('/css/lp.css?v=5') && HTML.includes('/js/lp.js?v=4') && !/lp\.css\?v=4|lp\.js\?v=3/.test(HTML), 'asset versions bumped');
+  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: lp.css v=6, lp.js v=5. */
+  assert.ok(HTML.includes('/css/lp.css?v=6') && HTML.includes('/js/lp.js?v=5') && !/lp\.css\?v=5|lp\.js\?v=4/.test(HTML), 'asset versions bumped');
   assert.ok(JS.includes('var SHOW_TESTIMONIALS = false;'));
   assert.ok(HTML.includes('<template id="tplProof">'), 'the testimonials section is a template, not rendered markup');
   assert.ok(JS.includes("var CALLBACK_PROMISE = 'shortly during U.S. business hours';"));
@@ -276,4 +276,88 @@ test('header CTA: "Book demo" under 360px, "Book a demo" from 360px, full label 
   assert.ok(HTML.includes('.lp .hdr .btn--cta .full,.lp .hdr .btn--cta .xs{display:none}'));
   assert.ok(HTML.includes('@media (max-width:359px){.lp .hdr .btn--cta .short{display:none}.lp .hdr .btn--cta .xs{display:inline;white-space:nowrap}.lp .hdr .wrap{gap:8px}.lp .hdr-r{gap:8px}.lp .hdr .btn--sm{padding:8px 12px}}'), 'under 360px: short label, kept on one line, with room made for it');
   assert.ok(HTML.includes('.lp .hdr .btn--cta .full{display:inline}.lp .hdr .btn--cta .short{display:none}}'), 'desktop shows only the full label');
+});
+
+/* Accuracy pass, owner-approved 22 Oct 2026. */
+test('accuracy pass: retired wording is gone from the page, its script and the three site pages', () => {
+  const SITE = ['services.html', 'pricing.html', 'faq.html'].map(read).join('\n');
+  for (const old of ['58%', 'about a week', '~7–10', 'charged only when one is placed', 'Revenue at risk', 'Rarely', 'Often takes messages', 'Often per minute',
+    'never booked', 'we catch the rest', 'person who will set up', 'Average value of a new customer', 'Covers sick days', 'Typical answering service',
+    'Here’s exactly how we handle', 'Jobs you may be missing', 'quieter months']) {
+    assert.ok(!(HTML + JS + SITE).includes(old), `still present: "${old}"`);
+  }
+  /* "Illustrative" is barred from this page only; /services keeps its own disclaimer (out of this pass's scope). */
+  assert.ok(!/illustrative/i.test(HTML + JS + CSS), 'no "illustrative" on the landing page');
+  assert.ok(!/7(?:–|&ndash;)10 days/.test(HTML + SITE), '"7–10 days" without "business"');
+});
+
+test('accuracy pass: timing, CRM qualifier, problem, scope and booking copy', () => {
+  for (const t of ['Typically live in 7–10 business days.', 'Typically live 7–10 business days after we receive your details.', 'Typical setup: 7–10 business days',
+    'Typically 7–10 business days after we receive your details. You fill in a setup questionnaire',
+    'By text or email, or entered in your CRM with the $99/month add-on.', 'reach you by text or email, or are entered in your CRM with the $99/month add-on.',
+    'When nobody picks up, many callers move on to the next company.', 'logged and sent to you unless your rules allow us to book it.',
+    'handled within your instructions; anything outside them goes to you.', 'Unless you tell us to.', 'Bookings go where your office already works']) {
+    assert.ok(visible.includes(t), `missing: "${t}"`);
+  }
+  const ld = [...HTML.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));
+  const start = ld.find((n) => n['@type'] === 'FAQPage').mainEntity.find((q) => q.name === 'How fast can we start?');
+  assert.ok(start.acceptedAnswer.text.startsWith('Typically 7–10 business days after we receive your details.'));
+  assert.ok(JS.includes("missed: 'Your office answers first; we handle overflow during your agreed coverage hours.'"));
+  assert.ok(!HTML.includes('class="book-who"'), 'booking line removed, nothing added');
+  const OUT = 'Outbound follow-ups are $0.99 per call, billed only when someone answers or we leave a voicemail.';
+  assert.equal(read('services.html').split(OUT).length - 1, 2, '/services: visible FAQ and JSON-LD');
+  assert.ok(read('pricing.html').includes('Typically live 7&ndash;10 business days after we receive your details.'));
+  assert.equal(read('faq.html').split('Typically, you’re live 7–10 business days after').length - 1, 2, '/faq: visible and JSON-LD');
+});
+
+test('accuracy pass: comparison table, one implementation for desktop and the mobile tabs', () => {
+  const t = HTML.slice(HTML.indexOf('<table class="cmp"'), HTML.indexOf('</table>'));
+  assert.equal((HTML.match(/<table class="cmp"/g) || []).length, 1);
+  assert.ok(t.includes('<th scope="col" class="c-cvx">Callvix Solutions</th>') && t.includes('<th scope="col" class="c-as">Other answering services</th>'));
+  const row = (h) => (t.match(new RegExp('<tr><th scope="row">' + h + '</th>(.*?)</tr>')) || [])[1] || '';
+  assert.ok(row('Pest-control-only training').includes('<td class="c-as">Varies by provider</td>'));
+  assert.ok(row('Books jobs by your rules').includes('<td class="c-as">Varies by plan</td>') && row('Priced per call, not per minute').includes('<td class="c-as">Varies by plan</td>'));
+  assert.equal(row('Coverage while your staff are away'), '<td class="c-cvx">During agreed hours</td><td class="c-vm"><svg class="ic d" aria-hidden="true"><use href="#i-dash"/></svg><span class="sr">Not applicable</span></td><td class="c-as">Depends on coverage</td><td class="c-ai">Depends on setup</td><td class="c-csr">Backup still needed</td>');
+  for (const r of ['A real person answers', 'Pest-control-only training', 'Books jobs by your rules', 'Priced per call, not per minute', 'Spam &amp; wrong numbers not billed']) {
+    assert.ok(row(r).startsWith('<td class="c-cvx"><svg class="ic y"'), `Callvix Solutions keeps "Yes" on: ${r}`);
+  }
+  assert.ok(HTML.includes('<p class="foot-note">Features, coverage and pricing vary by provider and plan.</p>') && !/a typical answering service/i.test(HTML));
+  assert.ok(HTML.includes('data-col="as">vs Other services</button>'), 'mobile tab matches the column and stays on one line at 320');
+  assert.ok(CSS.includes('@media (max-width:359px){.lp .cmp th,.lp .cmp td{padding:10px 6px}}'), 'narrow phones: the longer heading still fits the clipped card');
+});
+
+test('accuracy pass: calculator wording only; maths, inputs and defaults unchanged', () => {
+  assert.ok(HTML.includes('<label for="c-val">Average first-job revenue</label>') && HTML.includes('aria-label="Average first-job revenue, dollars"'));
+  assert.ok(visible.includes('Potential first-job revenue from missed calls') && visible.includes('Potential bookings per month'));
+  for (const d of ['id="c-calls" min="20" max="2000" step="10" value="200"', 'id="c-miss" min="0" max="80" step="1" value="20"', 'id="c-newp" min="0" max="100" step="1" value="50"', 'id="c-book" min="0" max="100" step="1" value="50"', 'id="c-val" min="50" max="5000" step="10" value="300"']) assert.ok(HTML.includes(d), d);
+  assert.ok(JS.includes('var jobs = missed * (s.newp / 100) * (s.book / 100);') && JS.includes('var risk = Math.round(jobs * s.val);'));
+});
+
+test('accuracy pass: sample call names a text walkthrough; audio mode keeps its labels', () => {
+  assert.ok(visible.includes('See how a sample call is handled.') && HTML.includes('<p class="sc-note" id="scNote">Sample call shown as text. Names and details are made up.</p>'));
+  assert.ok(HTML.includes('id="scPlay" aria-label="Start text walkthrough">') && HTML.includes('<span class="sc-play-t">Start text walkthrough</span>'));
+  assert.ok(JS.includes("var TEXT_LABELS = { start: 'Start text walkthrough', playing: 'Pause walkthrough', paused: 'Resume walkthrough', done: 'Replay walkthrough' };"));
+  assert.ok(JS.includes("btn.setAttribute('aria-label', on ? 'Pause sample call' : 'Play sample call');") && JS.includes("if (mode === 'audio') $('.sc-play-t', btn).textContent = 'Play again';"), 'audio labels unchanged');
+  assert.ok(CSS.includes('.lp .sc-player:not(.is-audio) .sc-time,.lp .sc-player:not(.is-audio) .seg{display:none}') && JS.includes("mode = 'audio'; player.classList.add('is-audio');"));
+  assert.ok(JS.includes('var SAMPLE_CALL_AUDIO = false;'));
+});
+
+test('accuracy pass: phone service cards show their descriptions; the hero pulse runs twice', () => {
+  assert.ok(!/\.cards6 p\{display:none\}/.test(CSS), 'descriptions no longer hidden on phones');
+  for (const q of ['book from your approved slots.', 'Reschedule or note requests by your rules.', 'Quote only the services and prices you allow.']) assert.ok(visible.includes(q), q);
+  assert.ok(HTML.includes('animation:lp-pulse 1.8s 2;') && !/lp-pulse[^;]*infinite/.test(HTML + CSS), 'pulse: 2 cycles, then static');
+  assert.ok(HTML.includes('.lp .cc-dot{animation:none}}'), 'reduced motion still stops it');
+  assert.ok(/sc-typing|lp-dot/.test(CSS) && /lp-dot[^;]*infinite/.test(CSS), 'typing indicator untouched');
+});
+
+test('accuracy pass: callback form options, local-time label and visitor_tz', () => {
+  const vals = [...HTML.matchAll(/name="calls_per_month" value="([^"]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(vals, ['Under 100', '100–299', '300–599', '600+', 'not_sure']);
+  assert.ok(HTML.includes('value="not_sure"><span>Not sure</span>') && HTML.includes('<legend>Best time to call (your local time)</legend>'));
+  assert.ok(CSS.includes('.lp #cbStep1 .chip-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}') && !/#cbStep1 \.chip-row\{flex-wrap:nowrap\}/.test(CSS), 'phones: five options wrap as a grid instead of overflowing one row');
+  for (const b of ['Morning', 'Afternoon', 'Anytime']) assert.ok(HTML.includes(`name="best_time" value="${b}"`));
+  assert.ok(HTML.includes('<input type="hidden" name="visitor_tz" id="cb_tz" value="">'));
+  assert.ok(/try \{ tz\.value = Intl\.DateTimeFormat\(\)\.resolvedOptions\(\)\.timeZone \|\| ''; \} catch \(e\) \{ tz\.value = ''; \}/.test(JS));
+  assert.ok(!/push\([^)]*(?:visitor_tz|timeZone)/.test(JS) && !/dataLayer[^\n]*tz/.test(JS), 'time zone never reaches dataLayer');
+  assert.ok(JS.includes("var CALLBACK_PROMISE = 'shortly during U.S. business hours';"));
 });

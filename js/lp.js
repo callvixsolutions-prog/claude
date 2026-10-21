@@ -206,14 +206,21 @@
       typing.innerHTML = '<span class="sc-typing"><i></i><i></i><i></i></span>';
       li.parentNode.insertBefore(typing, li);
     }
+    /* Text mode (the default, until audio files exist) names the walkthrough; audio mode keeps its labels. */
+    var TEXT_LABELS = { start: 'Start text walkthrough', playing: 'Pause walkthrough', paused: 'Resume walkthrough', done: 'Replay walkthrough' };
     function setPlaying(on) {
       playing = on; btn.classList.toggle('is-playing', on);
+      if (mode !== 'audio') {
+        var t = TEXT_LABELS[on ? 'playing' : (completed ? 'done' : (idx > 0 ? 'paused' : 'start'))];
+        btn.setAttribute('aria-label', t); $('.sc-play-t', btn).textContent = t;
+        return;
+      }
       btn.setAttribute('aria-label', on ? 'Pause sample call' : 'Play sample call');
       $('.sc-play-t', btn).textContent = on ? 'Pause' : (completed ? 'Play again' : (idx > 0 ? 'Resume' : 'Play sample call'));
     }
     function finish(mode) {
-      stopTyping(); setPlaying(false); completed = true;
-      $('.sc-play-t', btn).textContent = 'Play again';
+      stopTyping(); completed = true; setPlaying(false);
+      if (mode === 'audio') $('.sc-play-t', btn).textContent = 'Play again';
       push('sample_call_complete', { mode: mode });
     }
     /* ---- text mode ---- */
@@ -267,7 +274,9 @@
     setupAudio(function (hasAudio) {
       ready = true;
       if (hasAudio) {
-        mode = 'audio';
+        mode = 'audio'; player.classList.add('is-audio');
+        var note = $('#scNote'); if (note) note.hidden = true;
+        if (!playing) setPlaying(false);
         audio.addEventListener('timeupdate', syncAudio);
         audio.addEventListener('ended', function () { while (idx < lines.length) { reveal(idx); idx++; } finish('audio'); });
       }
@@ -363,7 +372,7 @@
   onReady(function () {
     var box = $('#fwd'); if (!box) return;
     var cap = $('#fwdCap');
-    var CAPS = { all: 'We act as your front desk during your coverage hours.', missed: 'Your office answers first; we catch the rest.' };
+    var CAPS = { all: 'We act as your front desk during your coverage hours.', missed: 'Your office answers first; we handle overflow during your agreed coverage hours.' };
     $$('[data-fwd]', box).forEach(function (b) {
       b.addEventListener('click', function () {
         var m = b.getAttribute('data-fwd'); box.setAttribute('data-mode', m);
@@ -618,6 +627,8 @@
 
     /* hidden context */
     var lp = $('#cb_landing'); if (lp) lp.value = location.pathname;
+    /* The visitor's time zone, so "best time to call" can be read in their local time. Not sent to dataLayer. */
+    var tz = $('#cb_tz'); if (tz) { try { tz.value = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) { tz.value = ''; } }
     var cp = $('#cb_campaign');
     if (cp) cp.value = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid'].map(function (k) { var v = attr(k); return v ? k + '=' + v.slice(0, 120) : ''; }).filter(Boolean).join('&').slice(0, 600);
     $$('input[data-attr]', form).forEach(function (inp) {
@@ -659,8 +670,10 @@
     $('#cbNext').addEventListener('click', function () {
       var ok = V.company() & V.calls();
       if (!ok) { var bad = $('[aria-invalid="true"]', $('#cbStep1')) || $('input[name="calls_per_month"]', form); if (bad) bad.focus(); return; }
-      var bucket = ($('input[name="calls_per_month"]:checked', form) || {}).value || '';
-      formInfo.company = $('#cb-company').value.trim().slice(0, 80); formInfo.calls = bucket;
+      var picked = $('input[name="calls_per_month"]:checked', form), bucket = (picked || {}).value || '';
+      /* The Calendly note uses the visible label ("Not sure", not "not_sure"). */
+      var pickedLabel = picked && picked.nextElementSibling ? picked.nextElementSibling.textContent : bucket;
+      formInfo.company = $('#cb-company').value.trim().slice(0, 80); formInfo.calls = pickedLabel;
       push('form_step', { calls_bucket: bucket });
       goStep(2);
     });

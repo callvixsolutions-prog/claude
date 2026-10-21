@@ -80,6 +80,10 @@
 .lp .sc-bar{flex:1;height:6px;border-radius:999px;background:var(--line);overflow:hidden}
 .lp .sc-bar span{display:block;height:100%;width:0;background:var(--teal-600)}
 .lp .sc-time{font-variant-numeric:tabular-nums;font-size:14px;color:var(--ink-500);min-width:36px}
+/* Text mode (no audio files): no elapsed time or speed toggle. JS adds .is-audio once the audio loads. */
+.lp .sc-player:not(.is-audio) .sc-time,.lp .sc-player:not(.is-audio) .seg{display:none}
+.lp .sc-note{margin-top:10px;font-size:14px;color:var(--ink-500)}
+.lp .sc-note[hidden]{display:none}
 .lp .sc-opts{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .lp .seg{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
 .lp .seg button{min-height:40px;min-width:44px;padding:6px 12px;border:0;border-radius:8px;background:transparent;font:600 14px var(--font-b);color:var(--ink-700);cursor:pointer}
@@ -439,7 +443,8 @@ body.lp.has-mbar{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
   .lp .cta-row{margin-top:20px}
   .lp .cf input[type=range]{height:24px}
   .lp .chip-row span{padding:6px 8px}
-  .lp .cb-step1-calls .chip-row,.lp #cbStep1 .chip-row{flex-wrap:nowrap}
+  /* Five volume options: an even 3 + 2 grid on phones (one nowrap row only held four). */
+  .lp .cb-step1-calls .chip-row,.lp #cbStep1 .chip-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
   .lp #cbStep1 .chip-row label{flex:1 1 auto;min-width:0}
   .lp #cbStep1 .chip-row span{width:100%;justify-content:center;padding:6px 4px;white-space:nowrap}
   .lp .ftr{padding:32px 0 24px}
@@ -501,11 +506,12 @@ body.lp.has-mbar{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
   .lp .fwd-cap{margin-top:12px;min-height:0}
   /* what we handle: 2-column tiles, icon + title */
   .lp .cards6{grid-template-columns:minmax(0,1fr);gap:3px}
-  .lp .cards6 li{display:flex;align-items:center;gap:10px;padding:4px 10px;border-radius:12px}
+  .lp .cards6 li{display:grid;grid-template-columns:28px minmax(0,1fr);column-gap:10px;align-items:start;padding:8px 10px;border-radius:12px}
   .lp .cards6 .c-ic{width:28px;height:28px;margin:0;border-radius:8px;flex:none}
   .lp .cards6 .c-ic .ic{width:16px;height:16px}
   .lp .cards6 h3{font-size:.9375rem;line-height:1.25}
-  .lp .cards6 p{display:none}
+  .lp .cards6 .c-ic{grid-row:span 2}
+  .lp .cards6 p{grid-column:2;margin-top:2px;font-size:14.5px;line-height:1.45}
   .lp .vocab{margin-top:12px;flex-wrap:nowrap;flex-direction:column;align-items:flex-start;gap:8px}
   .lp .vocab ul{flex-wrap:nowrap;overflow-x:auto;width:calc(100% + var(--gut));margin-right:calc(-1 * var(--gut));padding:2px var(--gut) 6px 0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .lp .vocab ul::-webkit-scrollbar{display:none}
@@ -567,3 +573,6 @@ body.lp.has-mbar{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
 
 /* video section (shown only when LP_VIDEO is on; see the head script) */
 .lp .vid-sec-wrap .vid{max-width:960px}
+/* Under 360px the "Callvix Solutions" heading plus the widest comparison column ("Hiring another CSR")
+   needed 2px more than the card; tighter cell padding keeps every tab inside it (the wrapper clips). */
+@media (max-width:359px){.lp .cmp th,.lp .cmp td{padding:10px 6px}}
