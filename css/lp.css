@@ -217,7 +217,7 @@
 .lp .cf input[type=range]{width:100%;margin-top:10px;height:28px;accent-color:var(--teal-600);cursor:pointer}
 .lp .calc-out{padding:24px;background:var(--navy-950);color:#fff;display:flex;flex-direction:column;gap:20px}
 @media (min-width:768px){.lp .calc-out{padding:32px}}
-/* Revenue at risk is the hero; on desktop it grows to fill the panel beside the inputs. */
+/* The missed-call revenue figure is the hero; on desktop it grows to fill the panel beside the inputs. */
 .lp .co-risk{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px;border-radius:18px;background:rgba(72,188,200,.12);border:1px solid rgba(72,188,200,.45)}
 .lp .co-risk span{display:block;font-size:15px;font-weight:600;color:var(--teal-300);text-transform:uppercase;letter-spacing:.08em}
 .lp .co-risk strong{display:block;margin-top:6px;font:700 clamp(3rem,5.2vw + .5rem,4.5rem) var(--font-h);line-height:1.05;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:-.02em}

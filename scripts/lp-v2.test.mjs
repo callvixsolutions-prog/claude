@@ -157,8 +157,8 @@ test('click IDs reach the form and Calendly; the phone number is swappable text'
 });
 
 test('testimonials stay off, and only this page loads the v2 files', () => {
-  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: lp.css v=6, lp.js v=5. */
-  assert.ok(HTML.includes('/css/lp.css?v=6') && HTML.includes('/js/lp.js?v=5') && !/lp\.css\?v=5|lp\.js\?v=4/.test(HTML), 'asset versions bumped');
+  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: lp.css v=7, lp.js v=5. */
+  assert.ok(HTML.includes('/css/lp.css?v=7') && HTML.includes('/js/lp.js?v=5') && !/lp\.css\?v=[56]\b|lp\.js\?v=4/.test(HTML), 'asset versions bumped');
   assert.ok(JS.includes('var SHOW_TESTIMONIALS = false;'));
   assert.ok(HTML.includes('<template id="tplProof">'), 'the testimonials section is a template, not rendered markup');
   assert.ok(JS.includes("var CALLBACK_PROMISE = 'shortly during U.S. business hours';"));
@@ -284,7 +284,7 @@ test('accuracy pass: retired wording is gone from the page, its script and the t
   for (const old of ['58%', 'about a week', '~7–10', 'charged only when one is placed', 'Revenue at risk', 'Rarely', 'Often takes messages', 'Often per minute',
     'never booked', 'we catch the rest', 'person who will set up', 'Average value of a new customer', 'Covers sick days', 'Typical answering service',
     'Here’s exactly how we handle', 'Jobs you may be missing', 'quieter months']) {
-    assert.ok(!(HTML + JS + SITE).includes(old), `still present: "${old}"`);
+    assert.ok(!(HTML + JS + CSS + SITE).includes(old), `still present: "${old}"`);
   }
   /* "Illustrative" is barred from this page only; /services keeps its own disclaimer (out of this pass's scope). */
   assert.ok(!/illustrative/i.test(HTML + JS + CSS), 'no "illustrative" on the landing page');
