@@ -309,13 +309,13 @@ Nothing loads until the visitor presses play. When the video ends, an overlay of
 
 `?h=` picks the H1 from a fixed list; anything else shows the default. Use these final URLs:
 
-| Variant | URL |
-|---|---|
-| default | `https://callvixsolutions.com/pest-control-call-demo/` |
-| answering | `https://callvixsolutions.com/pest-control-call-demo/?h=answering` |
-| call-center | `https://callvixsolutions.com/pest-control-call-demo/?h=call-center` |
-| receptionist | `https://callvixsolutions.com/pest-control-call-demo/?h=receptionist` |
-| after-hours | `https://callvixsolutions.com/pest-control-call-demo/?h=after-hours` |
-| missed | `https://callvixsolutions.com/pest-control-call-demo/?h=missed` |
-| human | `https://callvixsolutions.com/pest-control-call-demo/?h=human` |
-| Facebook/Instagram | `https://callvixsolutions.com/pest-control-call-demo/?src=fb` |
+| Variant | URL | H1 |
+|---|---|---|
+| default | `https://callvixsolutions.com/pest-control-call-demo/` | Your phones answered. Your jobs booked. Your techs stay on the job. |
+| answering | `https://callvixsolutions.com/pest-control-call-demo/?h=answering` | Pest control answering service. Real people. Jobs booked. |
+| call-center | `https://callvixsolutions.com/pest-control-call-demo/?h=call-center` | A pest control call center that books the job. |
+| receptionist | `https://callvixsolutions.com/pest-control-call-demo/?h=receptionist` | A trained pest control receptionist, without hiring one. |
+| after-hours | `https://callvixsolutions.com/pest-control-call-demo/?h=after-hours` | Evening and weekend call coverage for pest control companies. |
+| missed | `https://callvixsolutions.com/pest-control-call-demo/?h=missed` | Stop losing pest control jobs to missed calls. |
+| human | `https://callvixsolutions.com/pest-control-call-demo/?h=human` | Real people, not an AI bot, answering your pest control calls. |
+| Facebook/Instagram | `https://callvixsolutions.com/pest-control-call-demo/?src=fb` | Default H1; video replaces the call card once LP_VIDEO is on |

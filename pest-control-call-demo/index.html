@@ -109,7 +109,8 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
 .lp .hdr-phone{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:44px;min-height:44px;color:var(--navy-900);text-decoration:none;font-weight:600;font-size:15px;border-radius:10px}
 .lp .hdr-phone .num{display:none}
 .lp .hdr-phone-m{border:1.5px solid var(--line)}
-.lp .hdr .btn--cta .full{display:none}
+.lp .hdr .btn--cta .full,.lp .hdr .btn--cta .xs{display:none}
+@media (max-width:359px){.lp .hdr .btn--cta .short{display:none}.lp .hdr .btn--cta .xs{display:inline;white-space:nowrap}.lp .hdr .wrap{gap:8px}.lp .hdr-r{gap:8px}.lp .hdr .btn--sm{padding:8px 12px}}
 @media (min-width:1024px){.lp .hdr-nav{display:flex}.lp .hdr-phone .num{display:inline}.lp .hdr-phone-m{border:0}.lp .hdr .btn--cta .full{display:inline}.lp .hdr .btn--cta .short{display:none}}
 /* hero */
 .lp .hero{position:relative;background:var(--navy-950);color:#fff;overflow:hidden;padding:56px 0 64px}
@@ -253,7 +254,7 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
     </nav>
     <div class="hdr-r">
       <a class="hdr-phone hdr-phone-m" href="tel:+15513736777" data-phone="header" aria-label="Call (551) 373-6777"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg><span class="num"><span class="tracking-phone">(551) 373-6777</span></span></a>
-      <a class="btn btn--cta btn--sm" href="#book" data-cta="header"><span class="full">Book a 20-minute demo</span><span class="short">Book a demo</span></a>
+      <a class="btn btn--cta btn--sm" href="#book" data-cta="header"><span class="full">Book a 20-minute demo</span><span class="short">Book a demo</span><span class="xs">Book demo</span></a>
     </div>
   </div>
 </header>
@@ -270,8 +271,8 @@ body.lp{margin:0;font-family:var(--font-b);font-size:16px;line-height:1.6;color:
       (function () {
         var v = window.__lpVariant; if (!v || v === 'default') return;
         var H = {
-          'answering': 'A pest control answering service with real people, booking jobs in your\u00a0name.',
-          'call-center': 'A pest control call center that books jobs in your company’s\u00a0name.',
+          'answering': 'Pest control answering service. Real people. Jobs\u00a0booked.',
+          'call-center': 'A pest control call center that books the\u00a0job.',
           'receptionist': 'A trained pest control receptionist, without hiring\u00a0one.',
           'after-hours': 'Evening and weekend call coverage for pest control\u00a0companies.',
           'missed': 'Stop losing pest control jobs to missed\u00a0calls.',

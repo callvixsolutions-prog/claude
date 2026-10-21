@@ -256,3 +256,24 @@ test('polish: the page has its own 1200x630 share image', () => {
   while (i < jpg.length) { const marker = jpg[i + 1]; const len = jpg.readUInt16BE(i + 2); if (marker >= 0xc0 && marker <= 0xc2) { size = [jpg.readUInt16BE(i + 7), jpg.readUInt16BE(i + 5)]; break; } i += 2 + len; }
   assert.deepEqual(size, [1200, 630]);
 });
+
+test('variant H1s are the approved short versions, and the README ad table matches the page', () => {
+  const swap = HTML.match(/var v = window\.__lpVariant;[\s\S]*?\}\)\(\);/)[0];
+  const map = Object.fromEntries([...swap.matchAll(/'([a-z-]+)': '([^']+)'/g)].map((m) => [m[1], m[2].replace(/\\u00a0/g, ' ')]));
+  assert.equal(map.answering, 'Pest control answering service. Real people. Jobs booked.');
+  assert.equal(map['call-center'], 'A pest control call center that books the job.');
+  assert.ok(!/booking jobs in your|books jobs in your company/.test(HTML), 'the old long variants are gone');
+  map.default = decode(HTML.match(/<h1 id="lp-h1">(.*?)<\/h1>/)[1]);
+  const README = read('README.md');
+  for (const [k, h1] of Object.entries(map)) {
+    const row = README.match(new RegExp('\\| ' + k + ' \\| `https://callvixsolutions\\.com/pest-control-call-demo/' + (k === 'default' ? '' : '\\?h=' + k) + '` \\| (.*?) \\|'));
+    assert.ok(row, `README ad table row for ${k}`); assert.equal(row[1], h1, `README H1 for ${k}`);
+  }
+});
+
+test('header CTA: "Book demo" under 360px, "Book a demo" from 360px, full label from 1024px', () => {
+  assert.ok(HTML.includes('<span class="full">Book a 20-minute demo</span><span class="short">Book a demo</span><span class="xs">Book demo</span></a>'));
+  assert.ok(HTML.includes('.lp .hdr .btn--cta .full,.lp .hdr .btn--cta .xs{display:none}'));
+  assert.ok(HTML.includes('@media (max-width:359px){.lp .hdr .btn--cta .short{display:none}.lp .hdr .btn--cta .xs{display:inline;white-space:nowrap}.lp .hdr .wrap{gap:8px}.lp .hdr-r{gap:8px}.lp .hdr .btn--sm{padding:8px 12px}}'), 'under 360px: short label, kept on one line, with room made for it');
+  assert.ok(HTML.includes('.lp .hdr .btn--cta .full{display:inline}.lp .hdr .btn--cta .short{display:none}}'), 'desktop shows only the full label');
+});
