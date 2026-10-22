@@ -19,9 +19,18 @@
   /* ------------------------------------------------------------ config -- */
   var SAMPLE_CALL_AUDIO = false;   // true once /assets/audio/sample-call.mp3 (+ .vtt) exist
   var LP_VIDEO = !!window.__LP_VIDEO; // the flag itself lives in the page's head script (pest-control-call-demo/index.html)
-  var SHOW_TESTIMONIALS = false;   // true once real, approved quotes are added below
+  var SHOW_TESTIMONIALS = true;    // only real, approved quotes below (first one approved 22 Oct 2026)
   var CALLBACK_PROMISE = 'shortly during U.S. business hours';
-  var TESTIMONIALS = [];           // { quote, name, company, place, photo?, result? }
+  /* { quote, excerpt?, name, title?, company, place, label?, photo?, result? }. Wording exactly as approved: no edits, stars or results. */
+  var TESTIMONIALS = [{
+    quote: 'Callvix Solutions took the time to understand how we run our business. Their team answers our calls professionally, follows our booking rules, and enters customer details and appointments accurately in FieldRoutes. Setup was straightforward, and they’ve been easy to work with.',
+    excerpt: 'Their team answers our calls professionally, follows our booking rules, and enters appointments accurately in FieldRoutes.',
+    name: 'Omar Abouhussein',
+    title: 'Owner',
+    company: 'PestMaster of Naperville & Wheaton',
+    place: 'IL',
+    label: 'Founding client'
+  }];
   var CALENDLY_URL = 'https://calendly.com/callvixsolutions/callvix-discovery-call';
   var CALENDLY_ORIGIN = 'https://calendly.com';
   var FORMSPREE = 'https://formspree.io/f/maqrpwqw';
@@ -460,20 +469,38 @@
   });
 
   /* ------------------------------------------------------- testimonials -- */
+  function place(t) { return t.company + (t.place ? ', ' + t.place : ''); }
   onReady(function () {
     if (!SHOW_TESTIMONIALS || !TESTIMONIALS.length) return;
-    var tpl = $('#tplProof'), faq = $('#faq'); if (!tpl || !faq) return;
-    var frag = tpl.content.cloneNode(true), list = $('#proofList', frag);
-    TESTIMONIALS.forEach(function (t) {
-      var f = doc.createElement('figure');
-      var bq = doc.createElement('blockquote'); bq.textContent = '“' + t.quote + '”'; f.appendChild(bq);
-      if (t.result) { var r = doc.createElement('p'); r.className = 'res'; r.textContent = t.result; f.appendChild(r); }
-      var cap = doc.createElement('figcaption');
-      if (t.photo) { var im = doc.createElement('img'); im.src = t.photo; im.alt = ''; im.width = 44; im.height = 44; im.loading = 'lazy'; cap.appendChild(im); }
-      var who = doc.createElement('span'); who.textContent = t.name + ', ' + t.company + ' · ' + t.place; cap.appendChild(who);
-      f.appendChild(cap); list.appendChild(f);
-    });
-    faq.parentNode.insertBefore(frag, faq);
+    /* Main quote(s): just above pricing. One quote gets a single centred card; 2+ use the grid. */
+    var tpl = $('#tplProof'), pricing = $('#pricing');
+    if (tpl && pricing) {
+      var frag = tpl.content.cloneNode(true), list = $('#proofList', frag);
+      if (TESTIMONIALS.length === 1) list.classList.add('proof--one');
+      TESTIMONIALS.forEach(function (t) {
+        var f = doc.createElement('figure');
+        var bq = doc.createElement('blockquote'); bq.textContent = '“' + t.quote + '”'; f.appendChild(bq);
+        if (t.result) { var r = doc.createElement('p'); r.className = 'res'; r.textContent = t.result; f.appendChild(r); }
+        var cap = doc.createElement('figcaption');
+        if (t.photo) { var im = doc.createElement('img'); im.src = t.photo; im.alt = ''; im.width = 44; im.height = 44; im.loading = 'lazy'; cap.appendChild(im); }
+        var txt = doc.createElement('span'); txt.className = 'pf-txt';
+        var who = doc.createElement('span'); who.className = 'pf-who'; who.textContent = t.name + (t.title ? ', ' + t.title : ''); txt.appendChild(who);
+        var co = doc.createElement('span'); co.className = 'pf-co'; co.textContent = place(t); txt.appendChild(co);
+        cap.appendChild(txt);
+        if (t.label) { var lb = doc.createElement('span'); lb.className = 'pf-label'; lb.textContent = t.label; cap.appendChild(lb); }
+        f.appendChild(cap); list.appendChild(f);
+      });
+      pricing.parentNode.insertBefore(frag, pricing);
+    }
+    /* Short excerpt in the booking section, from the same data, after the trust chips. */
+    var ex = TESTIMONIALS.filter(function (t) { return t.excerpt; })[0], mini = $('#book .mini-trust');
+    if (ex && mini) {
+      var q = doc.createElement('figure'); q.className = 'book-quote';
+      var qb = doc.createElement('blockquote'); qb.textContent = '“' + ex.excerpt + '”'; q.appendChild(qb);
+      /* Non-breaking spaces keep the state and the label together when the caption wraps. */
+      var qc = doc.createElement('figcaption'); qc.textContent = '— ' + place(ex) + (ex.label ? '\u00a0·\u00a0' + ex.label.replace(/ /g, '\u00a0') : ''); q.appendChild(qc);
+      mini.parentNode.insertBefore(q, mini.nextSibling); mini.parentNode.classList.add('has-quote');
+    }
   });
 
   /* ----------------------------------------------------------- Calendly -- */

@@ -285,6 +285,22 @@
 .lp .proof figcaption{margin-top:14px;display:flex;gap:10px;align-items:center;font-size:14.5px;color:var(--ink-700)}
 .lp .proof figcaption img{width:44px;height:44px;border-radius:50%;object-fit:cover}
 .lp .proof .res{margin-top:8px;font-weight:600;color:var(--teal-600)}
+.lp .proof figcaption{flex-wrap:wrap}
+.lp .proof .pf-txt{display:flex;flex-direction:column;line-height:1.45}
+.lp .proof .pf-who{font-weight:600;color:var(--navy-900)}
+.lp .proof .pf-label{display:inline-block;padding:3px 10px;border-radius:999px;background:var(--teal-100);color:var(--teal-600);font-size:12.5px;font-weight:600;letter-spacing:.02em;white-space:nowrap}
+/* A single quote: one centred card with a teal rule, not a narrow card in the 3-column grid. */
+.lp #proof .sec-head{max-width:760px;margin-left:auto;margin-right:auto}
+.lp .proof.proof--one{grid-template-columns:minmax(0,1fr);max-width:760px;margin:0 auto}
+.lp .proof--one figure{padding:28px 32px;border-left:4px solid var(--teal-500)}
+.lp .proof--one blockquote{font-size:19px;line-height:1.55}
+.lp .proof--one figcaption{margin-top:18px;gap:10px 16px}
+@media (max-width:639px){.lp .proof--one figure{padding:20px 18px 20px 20px}.lp .proof--one blockquote{font-size:17px}}
+/* The short excerpt in the booking section. */
+.lp .book-quote{margin:16px 0 0;padding:2px 0 2px 14px;border-left:3px solid var(--teal-500)}
+.lp .book-quote blockquote{margin:0;font-size:15.5px;line-height:1.5;color:var(--ink-900)}
+.lp .book-quote figcaption{margin-top:6px;font-size:13.5px;color:var(--ink-500)}
+@media (min-width:1024px){.lp .book-l.has-quote>.mini-trust{grid-row:1}.lp .book-l.has-quote>.book-quote{grid-column:2;grid-row:2;margin-top:0}}
 
 /* ---------- FAQ ---------- */
 .lp .faq-wrap{max-width:880px}

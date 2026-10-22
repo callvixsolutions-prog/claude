@@ -44,7 +44,8 @@ test('every price matches the approved facts to the cent', () => {
 });
 
 test('banned words and claims are absent from the page, its script and its styles', () => {
-  const lower = everything.toLowerCase();
+  /* "Founding client" is the one approved use of "founding" (testimonial label, 22 Oct 2026); everything else stays banned. */
+  const lower = everything.replace(/label: 'Founding client'/g, '').toLowerCase();
   const BANNED = ['egypt', 'cairo', 'founder', 'u.s.-based', 'us-based', 'trial', 'founding', 'zenova', 'illustrative', 'ai-generated', 'eligible',
     '24/7', 'overnight', 'callrail', 'trustpilot', 'g2.com', 'clutch.co', 'not a real customer record', 'registration pending'];
   const hits = BANNED.filter((w) => lower.includes(w));
@@ -156,10 +157,10 @@ test('click IDs reach the form and Calendly; the phone number is swappable text'
   }
 });
 
-test('testimonials stay off, and only this page loads the v2 files', () => {
-  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: lp.css v=7, lp.js v=5. */
-  assert.ok(HTML.includes('/css/lp.css?v=7') && HTML.includes('/js/lp.js?v=5') && !/lp\.css\?v=[56]\b|lp\.js\?v=4/.test(HTML), 'asset versions bumped');
-  assert.ok(JS.includes('var SHOW_TESTIMONIALS = false;'));
+test('testimonials come only from the approved data, and only this page loads the v2 files', () => {
+  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: lp.css v=8, lp.js v=6. */
+  assert.ok(HTML.includes('/css/lp.css?v=8') && HTML.includes('/js/lp.js?v=6') && !/lp\.css\?v=[5-7]\b|lp\.js\?v=[45]\b/.test(HTML), 'asset versions bumped');
+  assert.ok(JS.includes('var SHOW_TESTIMONIALS = true;'));
   assert.ok(HTML.includes('<template id="tplProof">'), 'the testimonials section is a template, not rendered markup');
   assert.ok(JS.includes("var CALLBACK_PROMISE = 'shortly during U.S. business hours';"));
   const others = [];
@@ -360,4 +361,33 @@ test('accuracy pass: callback form options, local-time label and visitor_tz', ()
   assert.ok(/try \{ tz\.value = Intl\.DateTimeFormat\(\)\.resolvedOptions\(\)\.timeZone \|\| ''; \} catch \(e\) \{ tz\.value = ''; \}/.test(JS));
   assert.ok(!/push\([^)]*(?:visitor_tz|timeZone)/.test(JS) && !/dataLayer[^\n]*tz/.test(JS), 'time zone never reaches dataLayer');
   assert.ok(JS.includes("var CALLBACK_PROMISE = 'shortly during U.S. business hours';"));
+});
+
+/* First client testimonial, owner-approved 22 Oct 2026 (Omar Abouhussein approved the wording and the use of his name, title and company). */
+test('testimonial: exact approved wording, label, and placement just above pricing', () => {
+  const T = JS.slice(JS.indexOf('var TESTIMONIALS = ['), JS.indexOf('}];', JS.indexOf('var TESTIMONIALS = [')) + 3);
+  const field = (k) => (T.match(new RegExp(k + ": '([^']*)'")) || [])[1];
+  assert.equal(field('quote'), 'Callvix Solutions took the time to understand how we run our business. Their team answers our calls professionally, follows our booking rules, and enters customer details and appointments accurately in FieldRoutes. Setup was straightforward, and they’ve been easy to work with.');
+  assert.equal(field('excerpt'), 'Their team answers our calls professionally, follows our booking rules, and enters appointments accurately in FieldRoutes.');
+  assert.equal(field('name'), 'Omar Abouhussein'); assert.equal(field('title'), 'Owner');
+  assert.equal(field('company'), 'PestMaster of Naperville & Wheaton'); assert.equal(field('place'), 'IL');
+  assert.equal(field('label'), 'Founding client', '"Founding client" label present');
+  assert.ok(!/result:|photo:/.test(T), 'no photo or result supplied');
+  assert.ok(JS.includes('pricing.parentNode.insertBefore(frag, pricing);') && !/faq\.parentNode\.insertBefore\(frag/.test(JS), 'the proof section renders before #pricing, no longer before #faq');
+  assert.ok(HTML.indexOf('id="calculator"') < HTML.indexOf('id="pricing"'), 'so it lands after the calculator, right before the price decision');
+  assert.ok(HTML.includes('<section class="sec sec--sand" id="proof" aria-labelledby="proof-h">') && HTML.includes('<h2 id="proof-h">From a pest control company we answer&nbsp;for</h2>'));
+  assert.ok(JS.includes("var f = doc.createElement('figure');") && JS.includes("doc.createElement('blockquote')") && JS.includes("doc.createElement('figcaption')"), 'figure > blockquote + figcaption');
+  assert.ok(JS.includes("if (t.label) {") && JS.includes("(t.title ? ', ' + t.title : '')"), 'label and title render only when present');
+  assert.ok(JS.includes("q.className = 'book-quote'") && JS.includes("var ex = TESTIMONIALS.filter(function (t) { return t.excerpt; })[0], mini = $('#book .mini-trust');") && JS.includes('mini.parentNode.insertBefore(q, mini.nextSibling);'), 'excerpt after the trust chips, from the same data');
+  assert.ok(!/\.textContent = [^;]*\binnerHTML|\.innerHTML = [^;]*\b(t|ex)\./.test(JS), 'testimonial text is set with textContent');
+});
+
+test('testimonial: no review or rating schema, stars, "trusted by" or client counts', () => {
+  for (const m of HTML.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    assert.ok(!/"Review"|AggregateRating|ratingValue|reviewRating|"review"/.test(m[1]), 'no Review/AggregateRating JSON-LD');
+  }
+  assert.ok(!/★|☆|itemprop="rating|aggregateRating/i.test(HTML + JS + CSS), 'no star markup');
+  assert.ok(!/trusted by|\d+\+? (?:pest control )?(?:clients|companies) (?:use|trust)/i.test(HTML + JS), 'no "Trusted by" or client counts');
+  const hero = HTML.slice(HTML.indexOf('<section class="hero"'), HTML.indexOf('</section>', HTML.indexOf('<section class="hero"')));
+  assert.ok(!/Omar|PestMaster|Founding client/.test(hero + HTML.slice(0, HTML.indexOf('<main'))), 'not in the hero or header');
 });
