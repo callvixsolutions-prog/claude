@@ -44,8 +44,7 @@ test('every price matches the approved facts to the cent', () => {
 });
 
 test('banned words and claims are absent from the page, its script and its styles', () => {
-  /* "Founding client" is the one approved use of "founding" (testimonial label, 22 Oct 2026); everything else stays banned. */
-  const lower = everything.replace(/label: 'Founding client'/g, '').toLowerCase();
+  const lower = everything.toLowerCase();
   const BANNED = ['egypt', 'cairo', 'founder', 'u.s.-based', 'us-based', 'trial', 'founding', 'zenova', 'illustrative', 'ai-generated', 'eligible',
     '24/7', 'overnight', 'callrail', 'trustpilot', 'g2.com', 'clutch.co', 'not a real customer record', 'registration pending'];
   const hits = BANNED.filter((w) => lower.includes(w));
@@ -158,8 +157,8 @@ test('click IDs reach the form and Calendly; the phone number is swappable text'
 });
 
 test('testimonials come only from the approved data, and only this page loads the v2 files', () => {
-  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: lp.css v=8, lp.js v=6. */
-  assert.ok(HTML.includes('/css/lp.css?v=8') && HTML.includes('/js/lp.js?v=6') && !/lp\.css\?v=[5-7]\b|lp\.js\?v=[45]\b/.test(HTML), 'asset versions bumped');
+  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: lp.css v=9, lp.js v=7. */
+  assert.ok(HTML.includes('/css/lp.css?v=9') && HTML.includes('/js/lp.js?v=7') && !/lp\.css\?v=[5-8]\b|lp\.js\?v=[4-6]\b/.test(HTML), 'asset versions bumped');
   assert.ok(JS.includes('var SHOW_TESTIMONIALS = true;'));
   assert.ok(HTML.includes('<template id="tplProof">'), 'the testimonials section is a template, not rendered markup');
   assert.ok(JS.includes("var CALLBACK_PROMISE = 'shortly during U.S. business hours';"));
@@ -364,20 +363,20 @@ test('accuracy pass: callback form options, local-time label and visitor_tz', ()
 });
 
 /* First client testimonial, owner-approved 22 Oct 2026 (Omar Abouhussein approved the wording and the use of his name, title and company). */
-test('testimonial: exact approved wording, label, and placement just above pricing', () => {
+test('testimonial: exact approved wording, no label, and placement just above pricing', () => {
   const T = JS.slice(JS.indexOf('var TESTIMONIALS = ['), JS.indexOf('}];', JS.indexOf('var TESTIMONIALS = [')) + 3);
   const field = (k) => (T.match(new RegExp(k + ": '([^']*)'")) || [])[1];
   assert.equal(field('quote'), 'Callvix Solutions took the time to understand how we run our business. Their team answers our calls professionally, follows our booking rules, and enters customer details and appointments accurately in FieldRoutes. Setup was straightforward, and they’ve been easy to work with.');
   assert.equal(field('excerpt'), 'Their team answers our calls professionally, follows our booking rules, and enters appointments accurately in FieldRoutes.');
   assert.equal(field('name'), 'Omar Abouhussein'); assert.equal(field('title'), 'Owner');
   assert.equal(field('company'), 'PestMaster of Naperville & Wheaton'); assert.equal(field('place'), 'IL');
-  assert.equal(field('label'), 'Founding client', '"Founding client" label present');
+  assert.ok(!/label:/.test(T) && !/Founding client/i.test(JS + HTML), 'label removed (owner decision, 22 Oct 2026); the code still renders one if a future entry has it');
   assert.ok(!/result:|photo:/.test(T), 'no photo or result supplied');
   assert.ok(JS.includes('pricing.parentNode.insertBefore(frag, pricing);') && !/faq\.parentNode\.insertBefore\(frag/.test(JS), 'the proof section renders before #pricing, no longer before #faq');
   assert.ok(HTML.indexOf('id="calculator"') < HTML.indexOf('id="pricing"'), 'so it lands after the calculator, right before the price decision');
   assert.ok(HTML.includes('<section class="sec sec--sand" id="proof" aria-labelledby="proof-h">') && HTML.includes('<h2 id="proof-h">From a pest control company we answer&nbsp;for</h2>'));
   assert.ok(JS.includes("var f = doc.createElement('figure');") && JS.includes("doc.createElement('blockquote')") && JS.includes("doc.createElement('figcaption')"), 'figure > blockquote + figcaption');
-  assert.ok(JS.includes("if (t.label) {") && JS.includes("(t.title ? ', ' + t.title : '')"), 'label and title render only when present');
+  assert.ok(JS.includes("if (t.label) {") && JS.includes("(t.title ? t.title + ', ' : '')") && JS.includes("(ex.label ? ' · ' + ex.label : '')"), 'label and title render only when present');
   assert.ok(JS.includes("q.className = 'book-quote'") && JS.includes("var ex = TESTIMONIALS.filter(function (t) { return t.excerpt; })[0], mini = $('#book .mini-trust');") && JS.includes('mini.parentNode.insertBefore(q, mini.nextSibling);'), 'excerpt after the trust chips, from the same data');
   assert.ok(!/\.textContent = [^;]*\binnerHTML|\.innerHTML = [^;]*\b(t|ex)\./.test(JS), 'testimonial text is set with textContent');
 });
@@ -390,4 +389,27 @@ test('testimonial: no review or rating schema, stars, "trusted by" or client cou
   assert.ok(!/trusted by|\d+\+? (?:pest control )?(?:clients|companies) (?:use|trust)/i.test(HTML + JS), 'no "Trusted by" or client counts');
   const hero = HTML.slice(HTML.indexOf('<section class="hero"'), HTML.indexOf('</section>', HTML.indexOf('<section class="hero"')));
   assert.ok(!/Omar|PestMaster|Founding client/.test(hero + HTML.slice(0, HTML.indexOf('<main'))), 'not in the hero or header');
+});
+
+/* Testimonial design, owner-approved 22 Oct 2026: a review card above pricing, a smaller card in the booking section. */
+test('testimonial design: review card, initials avatar, excerpt card and attribution', () => {
+  const box = { document: { createElementNS() {}, createElement() {} } };
+  vm.runInNewContext(JS.match(/function initials\(name\) \{[^\n]*\}/)[0] + '; this.out = [initials("Omar Abouhussein"), initials("Cher"), initials("  ana maria lopez ")];', box);
+  assert.deepEqual([...box.out], ['OA', 'C', 'AL'], 'initials come from the first and last name'); // copied out of the vm realm
+  assert.ok(JS.includes("av.className = 'pf-avatar'; av.setAttribute('aria-hidden', 'true'); av.textContent = initials(t.name);"), 'initials avatar, hidden from screen readers');
+  assert.ok(JS.includes("svg.setAttribute('aria-hidden', 'true');") && JS.includes("f.appendChild(quoteMark('pf-mark', 40));") && JS.includes("q.appendChild(quoteMark('bq-mark', 24));"), '40px and 24px decorative quote marks');
+  assert.ok(JS.includes("who.textContent = t.name;") && JS.includes("co.textContent = (t.title ? t.title + ', ' : '') + place(t);"), 'name, then "Owner, company, state"');
+  const ex = { name: 'Omar Abouhussein', title: 'Owner', company: 'PestMaster of Naperville & Wheaton', place: 'IL' };
+  const cap = vm.runInNewContext(JS.match(/function place\(t\) \{[^\n]*\}/)[0] + ' ' + JS.match(/qc\.textContent = ([^;]*);/)[1], { ex });
+  assert.equal(cap.replace(/\u00a0/g, ' '), '— Omar Abouhussein, Owner · PestMaster of Naperville & Wheaton, IL');
+  /* The selector must start a rule (after a newline or "}"), so "a,.lp .x{" never matches ".lp .x". */
+  const rule = (sel) => (CSS.match(new RegExp('(?:^|[\\n}])' + sel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\{([^}]*)\\}')) || [])[1] || '';
+  const card = rule('.lp .proof figure');
+  assert.ok(/background:#fff/.test(card) && card.includes('box-shadow:var(--shadow-md)') && card.includes('border-radius:16px') && card.includes('padding:32px'), 'white card, --shadow-md, 16px radius, 32px padding');
+  assert.ok(CSS.includes('@media (max-width:639px){.lp .proof figure{padding:22px}.lp .proof blockquote{font-size:17px}'), '22px padding and 17px quote on phones');
+  assert.ok(rule('.lp .proof blockquote').includes('font-size:19px;line-height:1.6;color:var(--ink-900)'));
+  assert.ok(rule('.lp .proof figcaption').includes('border-top:1px solid var(--line)') && rule('.lp .proof .pf-avatar').includes('background:var(--teal-100);color:var(--teal-600)'));
+  const bq = rule('.lp .book-quote');
+  assert.ok(/background:#fff/.test(bq) && bq.includes('box-shadow:var(--shadow-sm)') && bq.includes('border-radius:12px') && !/border-left/.test(bq), 'excerpt: small white card, no left rule');
+  assert.ok(!/\.proof[^{]*\{[^}]*border-left/.test(CSS), 'main card has no teal left rule');
 });

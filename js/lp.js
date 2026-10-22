@@ -28,8 +28,7 @@
     name: 'Omar Abouhussein',
     title: 'Owner',
     company: 'PestMaster of Naperville & Wheaton',
-    place: 'IL',
-    label: 'Founding client'
+    place: 'IL'
   }];
   var CALENDLY_URL = 'https://calendly.com/callvixsolutions/callvix-discovery-call';
   var CALENDLY_ORIGIN = 'https://calendly.com';
@@ -469,25 +468,37 @@
   });
 
   /* ------------------------------------------------------- testimonials -- */
-  function place(t) { return t.company + (t.place ? ', ' + t.place : ''); }
+  /* A non-breaking space before "&" stops a wrapped line from starting with it. */
+  function place(t) { return t.company.replace(/ & /g, '\u00a0& ') + (t.place ? ', ' + t.place : ''); }
+  function initials(name) { var p = String(name || '').trim().split(/\s+/); return ((p[0] || '').charAt(0) + (p.length > 1 ? p[p.length - 1].charAt(0) : '')).toUpperCase(); }
+  /* Decorative opening quote mark (the quote text keeps its own quote marks). */
+  function quoteMark(cls, size) {
+    var NS = 'http://www.w3.org/2000/svg', svg = doc.createElementNS(NS, 'svg'), path = doc.createElementNS(NS, 'path');
+    svg.setAttribute('class', cls); svg.setAttribute('viewBox', '0 0 40 32'); svg.setAttribute('width', size); svg.setAttribute('height', Math.round(size * 0.8));
+    svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('focusable', 'false');
+    path.setAttribute('d', 'M0 32V20C0 9.5 6 2.3 17 0l2 4.2C12.5 6.3 9.4 10 9 16h8v16H0zm22 0V20C22 9.5 28 2.3 39 0l1 4.2C33.5 6.3 30.4 10 30 16h8v16H22z');
+    path.setAttribute('fill', 'currentColor'); svg.appendChild(path); return svg;
+  }
   onReady(function () {
     if (!SHOW_TESTIMONIALS || !TESTIMONIALS.length) return;
-    /* Main quote(s): just above pricing. One quote gets a single centred card; 2+ use the grid. */
+    /* Main quote(s): review cards just above pricing. One quote gets a single centred card; 2+ use the grid. */
     var tpl = $('#tplProof'), pricing = $('#pricing');
     if (tpl && pricing) {
       var frag = tpl.content.cloneNode(true), list = $('#proofList', frag);
       if (TESTIMONIALS.length === 1) list.classList.add('proof--one');
       TESTIMONIALS.forEach(function (t) {
         var f = doc.createElement('figure');
+        f.appendChild(quoteMark('pf-mark', 40));
         var bq = doc.createElement('blockquote'); bq.textContent = '“' + t.quote + '”'; f.appendChild(bq);
         if (t.result) { var r = doc.createElement('p'); r.className = 'res'; r.textContent = t.result; f.appendChild(r); }
         var cap = doc.createElement('figcaption');
-        if (t.photo) { var im = doc.createElement('img'); im.src = t.photo; im.alt = ''; im.width = 44; im.height = 44; im.loading = 'lazy'; cap.appendChild(im); }
+        if (t.photo) { var im = doc.createElement('img'); im.src = t.photo; im.alt = ''; im.width = 48; im.height = 48; im.loading = 'lazy'; cap.appendChild(im); }
+        else { var av = doc.createElement('span'); av.className = 'pf-avatar'; av.setAttribute('aria-hidden', 'true'); av.textContent = initials(t.name); cap.appendChild(av); }
         var txt = doc.createElement('span'); txt.className = 'pf-txt';
-        var who = doc.createElement('span'); who.className = 'pf-who'; who.textContent = t.name + (t.title ? ', ' + t.title : ''); txt.appendChild(who);
-        var co = doc.createElement('span'); co.className = 'pf-co'; co.textContent = place(t); txt.appendChild(co);
+        var who = doc.createElement('span'); who.className = 'pf-who'; who.textContent = t.name; txt.appendChild(who);
+        var co = doc.createElement('span'); co.className = 'pf-co'; co.textContent = (t.title ? t.title + ', ' : '') + place(t); txt.appendChild(co);
+        if (t.label) { var lb = doc.createElement('span'); lb.className = 'pf-label'; lb.textContent = t.label; txt.appendChild(lb); }
         cap.appendChild(txt);
-        if (t.label) { var lb = doc.createElement('span'); lb.className = 'pf-label'; lb.textContent = t.label; cap.appendChild(lb); }
         f.appendChild(cap); list.appendChild(f);
       });
       pricing.parentNode.insertBefore(frag, pricing);
@@ -496,9 +507,11 @@
     var ex = TESTIMONIALS.filter(function (t) { return t.excerpt; })[0], mini = $('#book .mini-trust');
     if (ex && mini) {
       var q = doc.createElement('figure'); q.className = 'book-quote';
+      q.appendChild(quoteMark('bq-mark', 24));
       var qb = doc.createElement('blockquote'); qb.textContent = '“' + ex.excerpt + '”'; q.appendChild(qb);
-      /* Non-breaking spaces keep the state and the label together when the caption wraps. */
-      var qc = doc.createElement('figcaption'); qc.textContent = '— ' + place(ex) + (ex.label ? '\u00a0·\u00a0' + ex.label.replace(/ /g, '\u00a0') : ''); q.appendChild(qc);
+      var qc = doc.createElement('figcaption');
+      qc.textContent = '— ' + ex.name + (ex.title ? ', ' + ex.title : '') + ' · ' + place(ex) + (ex.label ? ' · ' + ex.label : '');
+      q.appendChild(qc);
       mini.parentNode.insertBefore(q, mini.nextSibling); mini.parentNode.classList.add('has-quote');
     }
   });

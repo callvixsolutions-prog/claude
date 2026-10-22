@@ -280,26 +280,28 @@
 /* ---------- testimonials (only rendered when enabled) ---------- */
 .lp .proof{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
 @media (min-width:1024px){.lp .proof{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.lp .proof figure{margin:0;background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:22px}
-.lp .proof blockquote{margin:0;font-size:16.5px;color:var(--ink-900)}
-.lp .proof figcaption{margin-top:14px;display:flex;gap:10px;align-items:center;font-size:14.5px;color:var(--ink-700)}
-.lp .proof figcaption img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.lp .proof figure{position:relative;margin:0;background:#fff;border-radius:16px;box-shadow:var(--shadow-md);padding:32px;display:flex;flex-direction:column}
+.lp .proof .pf-mark{display:block;width:40px;height:32px;color:var(--teal-500);margin-bottom:14px;flex:none}
+.lp .proof blockquote{margin:0;font-size:19px;line-height:1.6;color:var(--ink-900);flex:1 0 auto}
 .lp .proof .res{margin-top:8px;font-weight:600;color:var(--teal-600)}
-.lp .proof figcaption{flex-wrap:wrap}
-.lp .proof .pf-txt{display:flex;flex-direction:column;line-height:1.45}
-.lp .proof .pf-who{font-weight:600;color:var(--navy-900)}
-.lp .proof .pf-label{display:inline-block;padding:3px 10px;border-radius:999px;background:var(--teal-100);color:var(--teal-600);font-size:12.5px;font-weight:600;letter-spacing:.02em;white-space:nowrap}
-/* A single quote: one centred card with a teal rule, not a narrow card in the 3-column grid. */
+.lp .proof figcaption{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);display:flex;align-items:center;gap:14px}
+.lp .proof figcaption img,.lp .proof .pf-avatar{width:48px;height:48px;border-radius:50%;flex:none}
+.lp .proof figcaption img{object-fit:cover}
+.lp .proof .pf-avatar{display:grid;place-items:center;background:var(--teal-100);color:var(--teal-600);font:600 17px/1 var(--font-h);letter-spacing:.02em}
+.lp .proof .pf-txt{display:flex;flex-direction:column;min-width:0;line-height:1.4}
+.lp .proof .pf-who{font-weight:700;color:var(--ink-900);font-size:16px}
+.lp .proof .pf-co{font-size:14.5px;color:var(--ink-500)}
+.lp .proof .pf-label{align-self:flex-start;margin-top:6px;padding:3px 10px;border-radius:999px;background:var(--teal-100);color:var(--teal-600);font-size:12.5px;font-weight:600;letter-spacing:.02em;white-space:nowrap}
+/* A single quote: one centred review card, not a narrow card in the 3-column grid. */
 .lp #proof .sec-head{max-width:760px;margin-left:auto;margin-right:auto}
 .lp .proof.proof--one{grid-template-columns:minmax(0,1fr);max-width:760px;margin:0 auto}
-.lp .proof--one figure{padding:28px 32px;border-left:4px solid var(--teal-500)}
-.lp .proof--one blockquote{font-size:19px;line-height:1.55}
-.lp .proof--one figcaption{margin-top:18px;gap:10px 16px}
-@media (max-width:639px){.lp .proof--one figure{padding:20px 18px 20px 20px}.lp .proof--one blockquote{font-size:17px}}
-/* The short excerpt in the booking section. */
-.lp .book-quote{margin:16px 0 0;padding:2px 0 2px 14px;border-left:3px solid var(--teal-500)}
+@media (max-width:639px){.lp .proof figure{padding:22px}.lp .proof blockquote{font-size:17px}.lp .proof .pf-mark{width:34px;height:27px;margin-bottom:10px}.lp .proof figcaption{margin-top:18px;padding-top:14px}}
+/* The short excerpt in the booking section: the same language, smaller. The mark sits in the left padding,
+   beside the text, so the card adds as little height as possible above the calendar. */
+.lp .book-quote{position:relative;margin:16px 0 0;background:#fff;border-radius:12px;box-shadow:var(--shadow-sm);padding:16px 18px 16px 52px}
+.lp .book-quote .bq-mark{position:absolute;left:18px;top:18px;width:24px;height:19px;color:var(--teal-500)}
 .lp .book-quote blockquote{margin:0;font-size:15.5px;line-height:1.5;color:var(--ink-900)}
-.lp .book-quote figcaption{margin-top:6px;font-size:13.5px;color:var(--ink-500)}
+.lp .book-quote figcaption{margin-top:6px;font-size:13.5px;line-height:1.45;color:var(--ink-500)}
 @media (min-width:1024px){.lp .book-l.has-quote>.mini-trust{grid-row:1}.lp .book-l.has-quote>.book-quote{grid-column:2;grid-row:2;margin-top:0}}
 
 /* ---------- FAQ ---------- */
