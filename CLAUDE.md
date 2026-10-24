@@ -55,7 +55,8 @@ Other standing accuracy rules:
 - Base coverage is **Mon–Fri 9am–6pm client local time**. It is not 24/7. After-Hours ($199/mo) and Weekend
   ($149/mo) are paid add-ons; CRM Management is $99/mo.
 - Pricing is $399/mo base + $2.99 per inbound call + $0.99 per outbound follow-up. Flat per call, never per minute.
-- The homepage revenue maths is labelled as illustrative. Keep that label until real data replaces it.
+- Never use "illustrative", "illustration" or "illustrate" (owner decision, 24 Oct 2026). Assumed figures are labelled as
+  example figures the reader replaces with their own, never presented as facts or statistics.
 - Callvix is human-answered. Never describe it as AI, automated, or a voice bot.
 
 ## IndexNow

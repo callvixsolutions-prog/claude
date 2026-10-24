@@ -236,9 +236,11 @@ const BANNED = [
   [/Chris Taylor/gi, 'no person is named on the site'],
   [/\bEgypt(?:ian)?\b|\bCairo\b/gi, 'location is not stated (owner decision)'],
   [/weekly activity summary/gi, 'reporting frequency and format are not committed'],
+  [/illustrat\w*/gi, 'owner decision, 24 Oct 2026: no "illustrative" wording; label assumed figures as example figures the reader replaces'],
   [/billed monthly|in advance|billed weekly|following Monday|no penalty|pause, or cancel|add, remove, or cancel/gi, 'Callvix billing mechanics are not published'],
 ];
 const BANNED_ALLOW = [
+  ['services.html', 'Illustrative', '/services is outside the 24 Oct 2026 "illustrative" removal by owner instruction (it must not be touched)'],
   ['blog/ai-vs-human-answering-service-pest-control.html', 'in advance', 'article prose — "decide in advance which calls go where" — about call routing, not a billing term'],
   ['blog/pest-control-receptionist-vs-answering-service.html', 'in advance', 'comparison table — "books under rules you set in advance" — about booking rules, not a billing term'],
 ];

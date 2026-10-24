@@ -68,6 +68,6 @@
 - [Housecall Pro](https://callvixsolutions.com/integrations/housecall-pro): Pest-service rules applied to job types, estimates, recurring service and access notes; estimates handed to your team.
 
 ## Notes
-- Figures used in marketing material, such as missed-call cost estimates, are illustrative arithmetic, not performance claims or guarantees.
-- Sample calls shown on the site are illustrative examples, not recordings or customer testimonials.
+- Figures used in marketing material, such as missed-call cost estimates, are example arithmetic, not performance claims or guarantees.
+- Sample calls shown on the site are examples, not recordings or customer testimonials.
 - Software names and trademarks referenced on the site belong to their respective owners.
