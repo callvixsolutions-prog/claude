@@ -48,17 +48,45 @@ if(d.readyState==='complete'){setTimeout(load,1500);}else{w.addEventListener('lo
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"></noscript>
 <link rel="stylesheet" href="/css/style.css?v=e699313a63">
 <style>
-/* Static data tables (24 Oct 2026). Page-level so css/style.css, and with it every page's stylesheet hash, stays unchanged. */
-.data-table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.55; background: var(--white); }
-.data-table caption { text-align: left; font-weight: 600; color: var(--navy-900); margin-bottom: 10px; }
-.data-table th, .data-table td { padding: 12px 14px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
-.data-table thead th { background: var(--warm-50); font-family: var(--font-heading); color: var(--navy-900); }
-.data-table tbody th { font-weight: 600; color: var(--navy-900); }
-.data-table-wrap { margin: 20px 0 8px; }
-.month-costs { display: grid; grid-template-columns: 1fr 1.1fr; gap: var(--space-lg); align-items: center; margin-bottom: var(--space-xl); }
-.month-costs h2 { margin-bottom: 12px; }
-.month-costs .rate-row dt span { display: block; font-weight: 400; font-size: 14.5px; color: var(--ink-500); font-variant-numeric: tabular-nums; }
-@media (max-width: 860px) { .month-costs { grid-template-columns: 1fr; gap: var(--space-base); } }
+/* /pricing (24 Oct 2026 redesign). Page-level, so css/style.css and every page's stylesheet hash stay unchanged. */
+.pp-card { padding: 26px 28px 22px; }
+.pp-card-label { margin: 0; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--teal-600); }
+.pp-base { margin: 6px 0 14px; font-family: var(--font-heading); color: var(--navy-900); line-height: 1; }
+.pp-amt { font-size: clamp(48px, 4vw + 28px, 64px); font-weight: 700; letter-spacing: -0.03em; }
+.pp-unit { font-family: var(--font-body); font-size: 17px; font-weight: 600; color: var(--ink-500); margin-left: 4px; }
+.pp-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.pp-rows li { display: flex; align-items: baseline; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--line); color: var(--ink-700); font-size: 15.5px; line-height: 1.4; }
+.pp-rows li:last-child { border-bottom: 0; }
+.pp-rows strong { font-family: var(--font-heading); font-size: 22px; color: var(--navy-900); font-variant-numeric: tabular-nums; min-width: 66px; }
+.pp-chips { list-style: none; margin: 8px 0 0; padding: 14px 0 0; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 8px; }
+.pp-chips li { background: var(--teal-50); color: var(--navy-900); border: 1px solid var(--teal-100); border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 600; line-height: 1.3; }
+.pricing-hero .lede { max-width: 46ch; }
+/* Add-on cards: equal height, footer pinned to the bottom */
+.addon-grid { align-items: stretch; }
+.addon-grid .price-card { display: flex; flex-direction: column; }
+.addon-grid .price-card ul { margin-bottom: var(--space-sm); }
+.addon-foot { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); font-size: 14px; color: var(--ink-500); }
+.addon-foot p { margin: 0 0 8px; }
+.addon-foot p:last-child { margin-bottom: 0; }
+.addon-foot .tm { font-size: 12.5px; }
+.addon-foot strong { color: var(--navy-900); font-weight: 600; }
+/* How billing works: four tiles, 2x2 on phones */
+.bill-tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-sm); }
+.bill-tile { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 20px; }
+.bill-tile svg { width: 26px; height: 26px; color: var(--teal-600); display: block; margin-bottom: 12px; }
+.bill-tile h3 { font-size: 16.5px; margin: 0 0 6px; line-height: 1.3; }
+.bill-tile p { margin: 0; font-size: 14.5px; color: var(--ink-500); line-height: 1.5; }
+@media (max-width: 900px) { .bill-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 380px) { .bill-tile { padding: 16px 14px; } .bill-tile h3 { font-size: 15.5px; } }
+/* Billing questions */
+.pricing-faq h3 { font-size: 18px; margin: 26px 0 6px; }
+.pricing-faq h3:first-child { margin-top: 0; }
+.pricing-faq p { margin: 0; }
+.pricing-tools { margin: 28px 0 0; padding-top: 18px; border-top: 1px solid var(--line); font-size: 15px; }
+.section--navy .bill-tile { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.16); }
+.section--navy .bill-tile svg { color: var(--teal-300); }
+.section--navy .bill-tile p { color: #cdd3e6; }
+.cta-band .cta-phone { color: #fff; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; padding: 10px 2px; }
 </style>
 <script type="application/ld+json">
 { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
@@ -206,7 +234,7 @@ if(d.readyState==='complete'){setTimeout(load,1500);}else{w.addEventListener('lo
    "name": "What counts as a billable call?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "Answered inbound calls are billed at $2.99 each, whatever their length, including wrong numbers and repeat calls. Spam and robocalls aren’t billed, and neither are missed calls or callers who hang up before we answer."
+    "text": "Answered inbound calls, whatever their length, including wrong numbers and repeat calls. Spam and robocalls aren’t billed, and neither are missed calls or callers who hang up before we answer. Each invoice comes with an itemized record of billed calls."
    }
   },
   {
@@ -214,7 +242,7 @@ if(d.readyState==='complete'){setTimeout(load,1500);}else{w.addEventListener('lo
    "name": "Are outbound follow-up calls billed?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "Yes, at $0.99 each, and only when someone answers or we leave a voicemail."
+    "text": "Yes, but only when someone answers or we leave a voicemail."
    }
   },
   {
@@ -222,7 +250,7 @@ if(d.readyState==='complete'){setTimeout(load,1500);}else{w.addEventListener('lo
    "name": "Is there a long-term contract?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "No. Callvix is month-to-month, with no long-term contract. You can cancel any time by email; service continues to the end of that billing month, and part months aren’t refunded."
+    "text": "No. Callvix is month-to-month. You can cancel any time by email; service continues to the end of that billing month, and part months aren’t refunded."
    }
   },
   {
@@ -230,7 +258,7 @@ if(d.readyState==='complete'){setTimeout(load,1500);}else{w.addEventListener('lo
    "name": "Is there a setup fee?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "No. There is no setup fee. Your configuration and billing details are confirmed in writing before coverage begins."
+    "text": "No. Your configuration and billing details are confirmed in writing before coverage begins, and you’re typically live 7–10 business days after we receive your details."
    }
   }
  ]
@@ -279,58 +307,44 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <div class="breadcrumbs"><a href="/">Home</a> / Pricing</div>
       <div class="eyebrow">Pricing</div>
       <h1>Pest control answering service pricing</h1>
-      <p class="lede">Real people answer in your company name, qualify callers and book eligible appointments by your rules.</p>
-      <p class="pricing-coverage">Base coverage: Monday&ndash;Friday, 9am&ndash;6pm in your company&rsquo;s local time.</p>
+      <p class="lede">One base subscription plus a flat rate for the calls we handle, with optional coverage and CRM add-ons.</p>
     </div>
-    <div class="rate-panel" role="group" aria-label="Callvix pricing">
-      <dl class="rate-list">
-        <div class="rate-row rate-row--base"><dt>Base subscription</dt><dd>$399<span>/month</span></dd></div>
-      </dl>
-      <p class="rate-group">Plus call usage</p>
-      <dl class="rate-list">
-        <div class="rate-row"><dt>Inbound calls we answer</dt><dd>$2.99<span>/call</span></dd></div>
-        <div class="rate-row"><dt>Outbound follow-ups, when used</dt><dd>$0.99<span>/call</span></dd></div>
-      </dl>
-      <p class="rate-foot">Outbound follow-ups are billed only when someone answers or we leave a voicemail. Optional add-ons are extra.</p>
+    <div class="rate-panel pp-card" role="group" aria-label="Callvix pricing">
+      <p class="pp-card-label">Base subscription</p>
+      <p class="pp-base"><span class="pp-amt">$399</span><span class="pp-unit">/month</span></p>
+      <ul class="pp-rows">
+        <li><strong>$2.99</strong><span>per answered inbound call</span></li>
+        <li><strong>$0.99</strong><span>per outbound follow-up, when used</span></li>
+      </ul>
+      <ul class="pp-chips" aria-label="Plan basics">
+        <li>Month-to-month</li>
+        <li>No setup fee</li>
+        <li>Mon&ndash;Fri, 9am&ndash;6pm your local time</li>
+      </ul>
     </div>
     <div class="pricing-hero-actions">
       <div class="hero-cta">
-        <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta-location="pricing_hero">Book a Discovery Call</a>
+        <a href="/contact" class="btn btn-primary btn-lg" data-cta-location="pricing_hero">Book a Discovery Call</a>
         <a href="/services" class="pricing-text-link">See how our human pest control answering service works</a>
       </div>
-      <p class="svc-cta-note">A 20-minute call to work out which coverage you need.</p>
     </div>
   </div>
 </section>
 
 <section class="section">
   <div class="container">
-    <div class="month-costs">
-      <div>
-        <h2>What a month costs</h2>
-        <p>Worked examples at our published prices: the $399 base subscription plus $2.99 for each inbound call we answer.</p>
-      </div>
-      <div class="rate-panel" role="group" aria-label="Monthly cost examples">
-        <dl class="rate-list">
-          <div class="rate-row"><dt>50 inbound calls<span>$399 + 50 &times; $2.99</span></dt><dd>$548.50<span>/month</span></dd></div>
-          <div class="rate-row"><dt>100 inbound calls<span>$399 + 100 &times; $2.99</span></dt><dd>$698<span>/month</span></dd></div>
-          <div class="rate-row"><dt>200 inbound calls<span>$399 + 200 &times; $2.99</span></dt><dd>$997<span>/month</span></dd></div>
-        </dl>
-        <p class="rate-foot">Outbound follow-ups are $0.99 each. Optional add-ons (After-Hours Coverage $199/month, Weekend Coverage $149/month, CRM Management $99/month) are extra. No setup fee.</p>
-      </div>
-    </div>
     <div class="base-band">
       <div>
-        <h2 class="base-band-title">What your base subscription covers</h2>
-        <p>Call usage is charged at the rates above. Direct entry of call notes and booking details into your CRM is the optional CRM Management add-on.</p>
+        <h2 class="base-band-title">Included in every plan</h2>
+        <p>Everything here comes with the base subscription, and usage is charged only for the calls we handle.</p>
       </div>
       <div class="checklist">
-        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Business-hours coverage: Monday&ndash;Friday, 9am&ndash;6pm in your company&rsquo;s local time</p></div>
-        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Calls answered in your company name by trained people</p></div>
-        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Lead qualification and appointment booking by your rules</p></div>
-        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Urgent-call triage and escalation during covered hours</p></div>
-        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Calls recorded, with reporting on the calls handled</p></div>
-          <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg><p>Bookings and handoffs sent to you by text or email</p></div>
+        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>Business-hours coverage: Monday&ndash;Friday, 9am&ndash;6pm in your company&rsquo;s local time</p></div>
+        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>Calls answered in your company name by trained people</p></div>
+        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>Lead qualification and appointment booking by your rules</p></div>
+        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>Urgent-call triage and escalation during covered hours</p></div>
+        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>Calls recorded, with reporting on the calls handled</p></div>
+        <div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><p>Bookings and handoffs sent to you by text or email</p></div>
       </div>
     </div>
   </div>
@@ -341,7 +355,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="section-head section-head--center">
       <div class="eyebrow">Optional add-ons</div>
       <h2>Add the coverage and CRM support you need</h2>
-      <p class="lede">Evening and weekend windows are agreed before service starts. Overnight coverage is not offered.</p>
+      <p class="lede">Add only what your office needs. Evening and weekend windows are agreed before service starts.</p>
     </div>
     <div class="grid grid-3 addon-grid">
       <div class="price-card">
@@ -350,9 +364,10 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <div class="price">$199 <span>/ month</span></div>
         <p class="desc">Live call handling in the evening, after your standard business hours close.</p>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Evening coverage on the window agreed at setup</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Urgent-issue escalation</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Evening coverage on the window agreed at setup</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Urgent-issue escalation</li>
         </ul>
+        <div class="addon-foot"><p>Overnight coverage is not offered.</p></div>
       </div>
       <div class="price-card">
         <span class="tag">Extended coverage</span>
@@ -360,27 +375,46 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <div class="price">$149 <span>/ month</span></div>
         <p class="desc">Saturday and Sunday live answering on your weekend availability.</p>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Saturday &amp; Sunday live answering</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Booking on your weekend availability</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Saturday &amp; Sunday live answering</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Booking on your weekend availability</li>
         </ul>
+        <div class="addon-foot"><p>Weekend windows are agreed before service starts.</p></div>
       </div>
       <div class="price-card">
         <span class="tag">Manual CRM entry</span>
         <h3><a href="/integrations/">CRM Management</a></h3>
         <div class="price">$99 <span>/ month</span></div>
-        <p class="desc">A representative enters call notes and booking details in your CRM or system, using access you grant, for the calls your agreed workflow covers.</p>
+        <p class="desc">Our representative enters call notes and booking details in your own CRM, using a named user you create.</p>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Entered by a person in your own account</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Access you grant and can revoke</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> No native integration or automatic sync</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Entered by a person in your own account</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Access you grant and can revoke</li>
         </ul>
-        <p class="desc crm-systems">See how this works in <a href="/integrations/fieldroutes">FieldRoutes</a>, <a href="/integrations/pestpac">PestPac</a>, <a href="/integrations/gorilladesk">GorillaDesk</a>, <a href="/integrations/briostack">Briostack</a>, <a href="/integrations/servicetitan">ServiceTitan</a> and <a href="/integrations/housecall-pro">Housecall Pro</a>. Software names are trademarks of their respective owners; Callvix Solutions is not affiliated with them.</p>
+        <div class="addon-foot">
+          <p><strong>No native integration or automatic sync.</strong></p>
+          <p>See how it works in <a href="/integrations/fieldroutes">FieldRoutes</a>, <a href="/integrations/pestpac">PestPac</a>, <a href="/integrations/gorilladesk">GorillaDesk</a>, <a href="/integrations/briostack">Briostack</a>, <a href="/integrations/servicetitan">ServiceTitan</a> and <a href="/integrations/housecall-pro">Housecall Pro</a>.</p>
+          <p class="tm">Software names are trademarks of their respective owners; Callvix Solutions is not affiliated with them.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section section--navy">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Billing</div>
+      <h2 id="how-billing-works">How billing works</h2>
+    </div>
+    <ul class="bill-tiles">
+      <li class="bill-tile"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><h3>Per answered call</h3><p>You pay for inbound calls we answer.</p></li>
+      <li class="bill-tile"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 13 11"/><path d="M15 2h7v7"/><path d="M19 15.5v3.5a2 2 0 0 1-2.2 2A18 18 0 0 1 3 7.2 2 2 0 0 1 5 5h3.5"/></svg><h3>Outbound only when connected</h3><p>Billed only when someone answers or we leave a voicemail.</p></li>
+      <li class="bill-tile"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><h3><span style="white-space:nowrap">Month-to-month</span></h3><p>Cancel by email; service runs to the end of that billing month.</p></li>
+      <li class="bill-tile"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></svg><h3>No setup fee</h3><p>Configuration and billing confirmed in writing before coverage begins.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--alt">
   <div class="container container-narrow">
     <div class="section-head">
       <div class="eyebrow">Billing questions</div>
@@ -388,66 +422,27 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     </div>
     <div class="pricing-faq">
       <h3>What counts as a billable call?</h3>
-      <p>Answered inbound calls are billed at $2.99 each, whatever their length, including wrong numbers and repeat calls. Spam and robocalls aren&rsquo;t billed, and neither are missed calls or callers who hang up before we answer.</p>
+      <p>Answered inbound calls, whatever their length, including wrong numbers and repeat calls. Spam and robocalls aren&rsquo;t billed, and neither are missed calls or callers who hang up before we answer. Each invoice comes with an itemized record of billed calls.</p>
       <h3>Are outbound follow-up calls billed?</h3>
-      <p>Yes, at $0.99 each, and only when someone answers or we leave a voicemail.</p>
+      <p>Yes, but only when someone answers or we leave a voicemail.</p>
       <h3>Is there a long-term contract?</h3>
-      <p>No. Callvix is month-to-month, with no long-term contract. You can cancel any time by email; service continues to the end of that billing month, and part months aren&rsquo;t refunded.</p>
+      <p>No. Callvix is month-to-month. You can cancel any time by email; service continues to the end of that billing month, and part months aren&rsquo;t refunded.</p>
       <h3>Is there a setup fee?</h3>
-      <p>No. There is no setup fee. Your configuration and billing details are confirmed in writing before coverage begins.</p>
+      <p>No. Your configuration and billing details are confirmed in writing before coverage begins, and you&rsquo;re typically live 7&ndash;10 business days after we receive your details.</p>
     </div>
+    <p class="pricing-tools">Comparing providers? Use our <a href="/tools/">free vendor scorecard</a> and other free tools.</p>
   </div>
 </section>
 
-<section class="section section--alt">
-  <div class="container container-narrow">
-    <div class="section-head">
-      <div class="eyebrow">Price list</div>
-      <h2 id="all-prices">All Callvix prices</h2>
-      <p class="lede">Every price and term on one list. The add-ons are optional; the base subscription and call usage apply to every account.</p>
-    </div>
-    <p class="table-cue" aria-hidden="true">Swipe or scroll to see all columns.</p>
-    <div class="data-table-wrap table-scroll" role="region" aria-label="All Callvix prices (scrolls sideways on small screens)" tabindex="0">
-      <table class="data-table" style="min-width:560px;">
-        <caption>All Callvix prices, in U.S. dollars</caption>
-        <thead><tr><th scope="col">Item</th><th scope="col">Price</th><th scope="col">What it covers</th></tr></thead>
-        <tbody>
-          <tr><th scope="row">Base subscription</th><td>$399/month</td><td>Calls answered in your company name by trained people, Monday&ndash;Friday, 9am&ndash;6pm in your company&rsquo;s local time. Includes lead qualification and appointment booking by your rules, urgent-call triage and escalation during covered hours, calls recorded with reporting on the calls handled, and bookings and handoffs sent to you by text or email.</td></tr>
-          <tr><th scope="row">Per answered inbound call</th><td>$2.99 per answered inbound call</td><td>Billed per call, not per minute. Answered inbound calls are billed, including wrong numbers and repeat calls. Spam and robocalls, missed calls and callers who hang up before we answer are not billed.</td></tr>
-          <tr><th scope="row">Outbound follow-up</th><td>$0.99 per call</td><td>Billed only when someone answers or we leave a voicemail.</td></tr>
-          <tr><th scope="row">After-Hours Coverage</th><td>$199/month</td><td>Live call handling in the evening, after your standard business hours close, on the window agreed at setup. Overnight coverage is not offered.</td></tr>
-          <tr><th scope="row">Weekend Coverage</th><td>$149/month</td><td>Saturday and Sunday live answering, with booking on your weekend availability.</td></tr>
-          <tr><th scope="row">CRM Management</th><td>$99/month</td><td>A representative enters call notes and booking details in your CRM or system, using access you grant and can revoke. Entered by a person in your own account; no native integration or automatic sync.</td></tr>
-          <tr><th scope="row">Base coverage hours</th><td>Included in the base</td><td>Monday&ndash;Friday, 9am&ndash;6pm in your company&rsquo;s local time. Evening and weekend windows are agreed before service starts.</td></tr>
-          <tr><th scope="row">Contract</th><td>Month-to-month</td><td>No setup fee and no long-term contract. Cancel any time by email; service continues to the end of that billing month.</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<section class="section section--tight">
-  <div class="container">
-    <h2 class="terms-title">Plan terms</h2>
-    <ul class="terms-strip">
-      <li>No setup fee. Month-to-month, with no long-term contract. Cancel any time by email; service continues to the end of that billing month, and part months aren&rsquo;t refunded.</li>
-      <li>Billed per call, not per minute. Answered inbound calls are billed, including wrong numbers and repeat calls. Spam and robocalls, missed calls and hang-ups before we answer aren&rsquo;t billed.</li>
-      <li>Your configuration and billing details are confirmed in writing before coverage begins. Each invoice comes with an itemized record of billed calls.</li>
-    </ul>
-    <p class="terms-more">Typically live 7&ndash;10 business days after we receive your details.</p>
-    <p class="terms-more">Comparing providers? Use our <a href="/blog/pest-control-answering-service-checklist">answering-service checklist</a> to check coverage, booking and billing details, and our <a href="/tools/">free tools for pest control offices</a>, including a printable vendor scorecard.</p>
-  </div>
-</section>
-
-<section class="section section--alt">
+<section class="section">
   <div class="container">
     <div class="cta-band">
       <div class="eyebrow">Find your setup</div>
       <h2>Find the right coverage for your business</h2>
       <p class="lede">We&rsquo;ll talk through your business hours, call patterns and booking rules.</p>
       <div class="btn-row">
-        <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta-location="pricing_closing">Book a Discovery Call</a>
-        <a href="/faq" class="cta-text-link">Read the FAQ</a>
+        <a href="/contact" class="btn btn-primary btn-lg" data-cta-location="pricing_closing">Book a Discovery Call</a>
+        <a href="tel:+15513736777" class="cta-phone" data-cta-location="pricing_closing_phone">Or call (551) 373-6777</a>
       </div>
     </div>
   </div>

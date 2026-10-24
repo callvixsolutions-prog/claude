@@ -336,7 +336,7 @@ test('accuracy pass: timing, CRM qualifier, problem, scope and booking copy', ()
   assert.ok(!HTML.includes('class="book-who"'), 'booking line removed, nothing added');
   const OUT = 'Outbound follow-ups are $0.99 per call, billed only when someone answers or we leave a voicemail.';
   assert.equal(read('services.html').split(OUT).length - 1, 2, '/services: visible FAQ and JSON-LD');
-  assert.ok(read('pricing.html').includes('Typically live 7&ndash;10 business days after we receive your details.'));
+  assert.ok(read('pricing.html').includes('typically live 7&ndash;10 business days after we receive your details.')); // /pricing redesign, 24 Oct 2026: now in the setup-fee answer
   assert.equal(read('faq.html').split('Typically, you’re live 7–10 business days after').length - 1, 2, '/faq: visible and JSON-LD');
 });
 
@@ -530,9 +530,10 @@ test('billing and cancelling read the same on the page, its JSON-LD and /pricing
   assert.ok(bill.startsWith('Answered inbound calls are $2.99 each, whatever their length, including wrong numbers and repeat calls. Spam and robocalls are excluded,'), 'FAQ (and its JSON-LD) names the exception in the broad statement');
   assert.ok(!/every inbound call (?:we|an agent) answer/i.test(decode(HTML)), 'no unqualified "every inbound call we answer"');
   const pricing = squash(decode(read('pricing.html').replace(/<[^>]+>/g, ' '))).replace(/&rsquo;/g, '’').replace(/&ndash;/g, '–');
-  for (const t of ['Cancel any time by email; service continues to the end of that billing month, and part months aren’t refunded.',
-    'Answered inbound calls are billed, including wrong numbers and repeat calls. Spam and robocalls, missed calls and hang-ups before we answer aren’t billed.',
-    'Each invoice comes with an itemized record of billed calls.', 'Typically live 7–10 business days after we receive your details.']) assert.ok(pricing.includes(t), `/pricing: ${t}`);
+  /* /pricing redesign (owner brief, 24 Oct 2026): the "Plan terms" strip became the billing tiles and billing questions; the agreement v2 terms are unchanged. */
+  for (const t of ['You can cancel any time by email; service continues to the end of that billing month, and part months aren’t refunded.',
+    'Answered inbound calls, whatever their length, including wrong numbers and repeat calls. Spam and robocalls aren’t billed, and neither are missed calls or callers who hang up before we answer.',
+    'Each invoice comes with an itemized record of billed calls.', 'typically live 7–10 business days after we receive your details.']) assert.ok(pricing.includes(t), `/pricing: ${t}`);
   assert.ok(!/30 days’ notice|refunded in full|before onboarding starts|wrong numbers, missed calls/.test(pricing), '/pricing: no 30-days notice, pre-onboarding refund or unbilled wrong numbers');
   /* Owner decision, 24 Oct 2026: no weekly summary is promised. "Accurate call reporting" is listed with no frequency, dashboard or extra capability; the itemized billing record (agreement v2 §4) stays in the billing strip. */
   const pr = HTML.slice(HTML.indexOf('id="pricing"'), HTML.indexOf('id="how-it-works"'));

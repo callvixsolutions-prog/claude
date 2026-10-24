@@ -94,6 +94,8 @@ export function duplicatesIn(html) {
 /* Deliberate repeats. Keyed by page and by the start of the text; one line of reason each. */
 const DUPLICATE_ALLOW = [
   ['blog/pest-control-call-script-intake-form.html', 'Before you start: safety overrides everything.', 'the safety notice is shown before step 1 and again at the top of the printable form, which is printed on its own'],
+  ['blog/best-pest-control-answering-services.html', 'Mon–Fri 9am–6pm your local time; evening and weekend add-ons', 'owner brief 24 Oct 2026: Callvix is the first row of both the human and the AI comparison tables, so its hours cell repeats'],
+  ['blog/best-pest-control-answering-services.html', 'FieldRoutes, PestPac, GorillaDesk, Briostack', 'comparison table cells: several services name the same four pest CRMs, so the cell text repeats by design'],
   ['index.html', 'Sample call. Names and details are made up.', 'owner-approved 22 Oct 2026: the same label captions both sample-call figures (the call walkthrough and the handoff details)'],
 ];
 
