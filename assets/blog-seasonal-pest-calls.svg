@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 506" width="900" height="506" role="img" aria-labelledby="t d">
+  <title id="t">Pest control call volume by season and region</title>
+  <desc id="d">Four season labels, spring, summer, fall and winter, over six U.S. region labels.</desc>
+  <rect width="900" height="506" fill="#121c4d"/>
+  <text x="60" y="92" fill="#5fd0d8" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="600" letter-spacing="2">CALL PLANNING</text>
+  <text x="60" y="150" fill="#ffffff" font-family="Sora, Arial, sans-serif" font-size="44" font-weight="700">Pest calls by season</text>
+  <text x="60" y="204" fill="#ffffff" font-family="Sora, Arial, sans-serif" font-size="44" font-weight="700">and region</text>
+  <g font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600" fill="#121c4d">
+    <rect x="60" y="262" width="186" height="64" rx="12" fill="#bfeef0"/><text x="153" y="302" text-anchor="middle">Spring</text>
+    <rect x="258" y="262" width="186" height="64" rx="12" fill="#f4c95d"/><text x="351" y="302" text-anchor="middle">Summer</text>
+    <rect x="456" y="262" width="186" height="64" rx="12" fill="#f0a868"/><text x="549" y="302" text-anchor="middle">Fall</text>
+    <rect x="654" y="262" width="186" height="64" rx="12" fill="#d9deee"/><text x="747" y="302" text-anchor="middle">Winter</text>
+  </g>
+  <g font-family="Inter, Arial, sans-serif" font-size="19" fill="#cdd3e6">
+    <text x="60" y="386">Northeast · Southeast · Midwest</text>
+    <text x="60" y="420">Southwest · West Coast · Gulf Coast</text>
+  </g>
+  <rect x="60" y="452" width="120" height="5" rx="2" fill="#5fd0d8"/>
+</svg>

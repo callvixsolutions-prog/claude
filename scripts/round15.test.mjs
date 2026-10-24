@@ -59,8 +59,8 @@ test('the homepage shows one call and one handoff sheet', () => {
 });
 
 test('the facts search and AI tools read are plain HTML text on the homepage', () => {
-  const FACTS = ['Answered by people, not an AI voice bot', 'answers in your business name', 'Callvix works only with pest control companies', 'Our representatives only handle pest control calls',
-    '$399/month + $2.99 per inbound call', '$399 / month', '$2.99 / inbound call', '$0.99 per outbound follow-up, when used.',
+  const FACTS = ['Answered by trained people, not an AI voice bot', 'Callvix Solutions is a human pest control answering service for U.S. pest control companies.', 'Trained people answer in your company name', 'Callvix works only with pest control companies', 'Our representatives only handle pest control calls',
+    '$399/month + $2.99 per answered inbound call', '$399 / month', '$2.99 / inbound call', '$0.99 per outbound follow-up, when used.',
     'Mon–Fri, 9am–6pm your company’s local time', '9am–6pm, your company’s local time — included', 'Overnight coverage is not offered.',
     'Month-to-month, with no long-term contract.', 'using access you grant and can revoke',
     'It’s manual work by a person — no native integration or automatic sync.'];
@@ -179,8 +179,10 @@ test('the homepage photographs are sized, described and within budget', () => {
 test('the homepage structured data is byte-identical to before the rebuild', () => {
   const blocks = (home.match(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g) || []).join('');
   /* Round 20b changed one sentence on purpose: the CRM Management offer now says
-     representatives "manually enter agreed call notes", matching the visible copy. */
-  assert.equal(createHash('sha256').update(blocks).digest('hex'), 'b76fcba194c8ef2f8b5578090a3ed4fe11a764100bcdb08562f29b4d870e1c15',
+     representatives "manually enter agreed call notes", matching the visible copy.
+     24 Oct 2026 (SEO/AIO audit, owner brief): "per answered inbound call" wording, and a sales
+     contactPoint on the Organization. */
+  assert.equal(createHash('sha256').update(blocks).digest('hex'), '7ad00e62afecd8f5a65ef3a8377c7df8572621a654b2e380c6d9c84b1368406b',
     'Round 15 changed markup and CSS only. If the JSON-LD is meant to change, that is its own decision: update this hash with it.');
   assert.ok(!/"@type"\s*:\s*"FAQPage"/.test(blocks), 'the homepage has no FAQPage');
   assert.equal(count(main, '<h1'), 1);

@@ -159,6 +159,6 @@ test('every main-site page loads the current main.js', () => {
       else if (e.endsWith('.html') && !FROZEN.has(rel)) { const m = readFileSync(abs, 'utf8').match(/\/js\/main\.js\?v=([\w-]+)/); if (m) versions.set(rel, m[1]); }
     }
   }(ROOT));
-  assert.equal(versions.size, 27); // 26 + /blog/best-pest-control-answering-services (20 Oct 2026)
+  assert.equal(versions.size, 28); // 26 + /blog/best-pest-control-answering-services (20 Oct 2026) + /blog/pest-control-call-volume-by-season-and-region (24 Oct 2026)
   assert.deepEqual([...new Set(versions.values())], ['20261014c'], 'main.js changed in round 16; every page must ask for the new copy');
 });

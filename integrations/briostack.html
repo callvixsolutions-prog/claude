@@ -47,6 +47,13 @@ if(d.readyState==='complete'){setTimeout(load,1500);}else{w.addEventListener('lo
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap"></noscript>
 <link rel="stylesheet" href="/css/style.css?v=e699313a63">
 <style>
+/* Static data tables (24 Oct 2026). Page-level so css/style.css, and with it every page's stylesheet hash, stays unchanged. */
+.data-table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.55; background: var(--white); }
+.data-table caption { text-align: left; font-weight: 600; color: var(--navy-900); margin-bottom: 10px; }
+.data-table th, .data-table td { padding: 12px 14px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+.data-table thead th { background: var(--warm-50); font-family: var(--font-heading); color: var(--navy-900); }
+.data-table tbody th { font-weight: 600; color: var(--navy-900); }
+.data-table-wrap { margin: 20px 0 8px; }
 /* Integration page — branded hero override */
 .hero h1{max-width:none}
 </style>
@@ -103,7 +110,7 @@ if(d.readyState==='complete'){setTimeout(load,1500);}else{w.addEventListener('lo
     "seller": {
       "@id": "https://callvixsolutions.com/#organization"
     },
-    "description": "$399/month base plus $2.99 per inbound call and $0.99 per outbound follow-up call when used. No long-term contract. Optional add-ons cost extra. Total charges depend on call volume and selected add-ons.",
+    "description": "$399/month base plus $2.99 per answered inbound call and $0.99 per outbound follow-up call when used. No long-term contract. Optional add-ons cost extra. Total charges depend on call volume and selected add-ons.",
     "priceSpecification": {
       "@type": "CompoundPriceSpecification",
       "priceCurrency": "USD",
@@ -295,7 +302,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="breadcrumbs"><a href="/">Home</a> / <a href="/integrations/">Works With</a> / Briostack</div>
     <div class="eyebrow">Works with Briostack</div>
     <h1>A pest control answering service for Briostack offices</h1>
-    <p class="lede crm-lead">Clear rules for recurring-service and cancellation calls. Trained people answer in your company&rsquo;s name, book conservatively, and record and escalate cancellation requests. The answering service is $399/month plus $2.99 per inbound call; Briostack entry is the optional CRM Management add-on.</p>
+    <p class="lede crm-lead">Clear rules for recurring-service and cancellation calls. Trained people answer in your company&rsquo;s name, book conservatively, and record and escalate cancellation requests. The answering service is $399/month plus $2.99 per answered inbound call; Briostack entry is the optional CRM Management add-on.</p>
     <p class="crm-scope"><span>Manual CRM entry</span><span>optional $99/month</span><span>access you grant</span><span>no automatic sync</span></p>
     <div class="hero-cta" style="margin-top:26px;">
       <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary" data-cta-location="works_with_briostack_hero">Book a Discovery Call</a>
@@ -413,7 +420,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     <div class="price-cards">
       <div class="price-card">
         <span class="tag">Core service</span>
-        <div class="price-amount">$399<small>/month + $2.99 per inbound call</small></div>
+        <div class="price-amount">$399<small>/month + $2.99 per answered inbound call</small></div>
         <h3>Human answering, qualification and booking by your rules</h3>
         <p>Monday&ndash;Friday, 9am&ndash;6pm your company&rsquo;s local time. Booking and call details are shared with your team using the method agreed during setup, plus reporting on the calls we handle.</p>
         <ul><li><span>Per outbound follow-up call</span><span class="amt">$0.99</span></li></ul>
@@ -430,6 +437,39 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       </div>
     </div>
     <p style="margin-top:20px;"><a href="/pricing">See the full pricing breakdown &rarr;</a></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container container-narrow">
+    <div class="section-head">
+      <div class="eyebrow">At a glance</div>
+      <h2>How Callvix works with Briostack</h2>
+      <p class="lede">What the base service covers, what the CRM Management add-on adds, and what we don&rsquo;t do.</p>
+    </div>
+    <p class="table-cue" aria-hidden="true">Swipe or scroll to see all columns.</p>
+    <div class="data-table-wrap table-scroll" role="region" aria-label="How Callvix works with Briostack (scrolls sideways on small screens)" tabindex="0">
+      <table class="data-table" style="min-width:560px;">
+        <thead><tr><th scope="col">Task</th><th scope="col">Included?</th><th scope="col">How</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Answer calls in your company name</th><td>Yes, base service</td><td>Trained people answer in your company&rsquo;s name, with the greeting you approve, during your coverage window.</td></tr>
+          <tr><th scope="row">Qualify the pest issue</th><td>Yes, base service</td><td>Qualification follows the rules agreed in writing during setup. Anything outside them is escalated to the person you name.</td></tr>
+          <tr><th scope="row">Book within your service areas and appointment windows</th><td>Yes, by your rules</td><td>We check the address against your service areas and book against the service type and window you&rsquo;ve authorized. We book conservatively and escalate what doesn&rsquo;t fit.</td></tr>
+          <tr><th scope="row">Enter caller and job details in Briostack</th><td>Optional: CRM Management add-on, $99/month</td><td>Our representative enters the details in your own Briostack account, using a named user you create with the permissions you choose. You can revoke access at any time.</td></tr>
+          <tr><th scope="row">Native API sync with Briostack</th><td>No</td><td>Details are entered by a trained person, not synced automatically. There is no native integration or data sync.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container container-narrow">
+    <div class="section-head">
+      <div class="eyebrow">AI or human</div>
+      <h2>Looking for an AI answering service for Briostack?</h2>
+    </div>
+    <p>An AI answering service can pick up many calls at once and handle repeatable questions and simple intake, but it works within the flows it was built for and may miss urgency or an exception a person would notice. Callvix is human-answered: trained people answer in your company&rsquo;s name and book conservatively, recording and escalating cancellation requests, during the coverage you choose. Our <a href="/blog/ai-vs-human-answering-service-pest-control">AI vs. human answering comparison</a> sets out where each fits, with five test calls to run before you decide.</p>
   </div>
 </section>
 
