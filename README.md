@@ -282,10 +282,10 @@ test. It stays `noindex` and out of the sitemap, and its file is hash-pinned in
   - Answered inbound calls are billed, including wrong numbers and repeat calls; spam and robocalls, missed calls and hang-ups
     before we answer are not.
   - Cancel any time by email; service runs to the end of that billing month; no refunds for part months.
-  - `/pricing` is corrected the same way on this preview branch. Deploying it needs the owner's go-ahead: on 22–23 Oct the owner
-    asked to leave /pricing unchanged for that round.
-- **Weekly activity summary** stays listed under "Included", separate from the itemized billing record (v2 §4). Its removal was
-  delegated ("you decide"), not explicitly approved; the owner still needs to confirm the summary is actually provided.
+  - `/pricing` is corrected the same way; the owner authorized publishing it with this page on 24 Oct 2026.
+- **Reporting:** "Included" lists "Accurate call reporting", with no frequency, dashboard or extra capability promised.
+  The owner decided on 24 Oct 2026 to drop "Weekly activity summary". Billing is monthly; nothing is described as weekly.
+  The itemized billing record (v2 §4) stays in the billing strip.
 - **No pest identification** (agreement v2 §2): the page records what the caller reports; the sample handoff says "Pest unconfirmed".
 - **No survey statistic:** the 78% figure was removed under a delegated decision (the owner's "you decide", 23 Oct 2026); the 24 Oct brief says not to restore it.
 

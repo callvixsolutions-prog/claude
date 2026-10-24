@@ -534,7 +534,8 @@ test('billing and cancelling read the same on the page, its JSON-LD and /pricing
     'Answered inbound calls are billed, including wrong numbers and repeat calls. Spam and robocalls, missed calls and hang-ups before we answer aren’t billed.',
     'Each invoice comes with an itemized record of billed calls.', 'Typically live 7–10 business days after we receive your details.']) assert.ok(pricing.includes(t), `/pricing: ${t}`);
   assert.ok(!/30 days’ notice|refunded in full|before onboarding starts|wrong numbers, missed calls/.test(pricing), '/pricing: no 30-days notice, pre-onboarding refund or unbilled wrong numbers');
-  /* The weekly summary (service reporting) and the itemized billing record (agreement v2 §4) are different things: both are listed, separately. */
+  /* Owner decision, 24 Oct 2026: no weekly summary is promised. "Accurate call reporting" is listed with no frequency, dashboard or extra capability; the itemized billing record (agreement v2 §4) stays in the billing strip. */
   const pr = HTML.slice(HTML.indexOf('id="pricing"'), HTML.indexOf('id="how-it-works"'));
-  assert.ok(/<h3>Included<\/h3>[\s\S]*?<li>Weekly activity summary<\/li>/.test(pr) && /<div class="pr-bill"[\s\S]*Each invoice comes with an itemized record of billed calls\./.test(pr), 'weekly summary under Included; billing record in the billing strip');
+  assert.ok(/<h3>Included<\/h3>[\s\S]*?<li>Accurate call reporting<\/li>/.test(pr) && /<div class="pr-bill"[\s\S]*Each invoice comes with an itemized record of billed calls\./.test(pr), 'accurate call reporting under Included; billing record in the billing strip');
+  assert.ok(!/weekly|dashboard/i.test(decode(HTML)), 'no weekly reporting or billing, and no dashboard promise, anywhere on the page or in its JSON-LD');
 });
