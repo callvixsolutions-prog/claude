@@ -57,6 +57,8 @@ Other standing accuracy rules:
 - Pricing is $399/mo base + $2.99 per inbound call + $0.99 per outbound follow-up. Flat per call, never per minute.
 - Never use "illustrative", "illustration" or "illustrate" (owner decision, 24 Oct 2026). Assumed figures are labelled as
   example figures the reader replaces with their own, never presented as facts or statistics.
+- No "not a real call / customer / Callvix call" disclaimers and no "hypothetical" (owner decision, 24 Oct 2026).
+  Call scenarios and volumes are "examples". /services and the two landing pages are exempt and untouched.
 - Callvix is human-answered. Never describe it as AI, automated, or a voice bot.
 
 ## IndexNow

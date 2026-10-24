@@ -236,6 +236,7 @@ const BANNED = [
   [/Chris Taylor/gi, 'no person is named on the site'],
   [/\bEgypt(?:ian)?\b|\bCairo\b/gi, 'location is not stated (owner decision)'],
   [/weekly activity summary/gi, 'reporting frequency and format are not committed'],
+  [/not (?:a )?real (?:callvix )?(?:calls?|customers?|clients)|not real callvix|hypothetical/gi, 'owner decision, 24 Oct 2026: no "not a real call" style disclaimers and no "hypothetical"; call examples "examples"'],
   [/illustrat\w*/gi, 'owner decision, 24 Oct 2026: no "illustrative" wording; label assumed figures as example figures the reader replaces'],
   [/billed monthly|in advance|billed weekly|following Monday|no penalty|pause, or cancel|add, remove, or cancel/gi, 'Callvix billing mechanics are not published'],
 ];
