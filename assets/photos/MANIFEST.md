@@ -62,3 +62,12 @@ The headset photographs tried in Round 17 were never published and have been rem
 - **Crop:** square — x 720–1620, y 330–1230. **Edits:** crop and resize only.
 - **Shows:** a man on a desk phone behind a monitor. A stock photograph; not a Callvix customer. The page says
   "Stock photographs, not Callvix customers." beside it.
+
+## Landing page `/pest-control-call-demo/` — no photograph (22 Oct 2026)
+
+A redesign preview briefly used the Round 15 technician photograph (`home-hero-*`) as the landing-page hero. The owner
+rejected it: it made the page read like a pest-treatment company. In the second design pass (22 Oct 2026, preview
+only) the hero's right-hand column is the approved client quote card (HTML, no image file). No photograph is used
+anywhere on that page, and `scripts/lp-v2.test.mjs` fails if one is added. Stock photographs of people in
+headsets remain off the table (see e276673 and `scripts/representation.test.mjs`), as does
+`assets/lp-hero-receptionist.webp`, whose source is not recorded here.

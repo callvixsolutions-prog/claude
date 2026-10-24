@@ -29,11 +29,14 @@ const visible = squash(decode(HTML.slice(HTML.indexOf('<body'))
 const everything = HTML + '\n' + JS + '\n' + CSS;
 
 test('every price matches the approved facts to the cent', () => {
-  for (const s of ['$399/month + $2.99 per answered call', 'Outbound follow-ups: $0.99 per call, only when used.', '+$199/mo', '+$149/mo', '+$99/mo',
-    'The $399 monthly base stays fixed. Usage charges vary with your call volume.',
-    'Mon–Fri, 9am–6pm, your time zone', 'No setup fee', 'Cancel with 30 days’ notice.']) {
+  /* Terms follow service agreement v2 (§4 which calls are billed, §6 cancelling), which the owner confirmed on 22 Oct 2026:
+     wrong numbers are billed, cancel any time by email, service runs to the end of the billing month, no part-month refunds. */
+  for (const s of ['$399/month + $2.99 per answered call', 'Outbound, $0.99', 'Only when someone answers or we leave a voicemail.', '+$199/mo', '+$149/mo', '+$99/mo',
+    'The $399 monthly base stays fixed; usage charges vary with your call volume.', 'Answered inbound calls, including wrong numbers and repeat calls. Spam and robocalls are excluded.',
+    'Mon–Fri, 9am–6pm, your time zone', 'No setup fee', 'Month-to-month: cancel any time by email', 'Service runs to the end of that billing month; no refunds for part months']) {
     assert.ok(visible.includes(s), `missing: "${s}"`);
   }
+  assert.ok(!/30 days’ notice|30 days&rsquo; notice|refund(?:ed)? (?:of your first payment|in full)|before onboarding starts/i.test(HTML), 'no 30-days’-notice or pre-onboarding refund wording anywhere on the page (incl. FAQ JSON-LD)');
   const amounts = new Set([...visible.matchAll(/\$\s?\d{1,3}(?:,\d{3})*(?:\.\d{2})?/g)].map((m) => m[0].replace(/\s/g, '')));
   const allowed = new Set(['$399', '$2.99', '$0.99', '$199', '$149', '$99', '$3,000', '$']);
   const extra = [...amounts].filter((a) => !allowed.has(a));
@@ -52,10 +55,10 @@ test('banned words and claims are absent from the page, its script and its style
   assert.ok(!/★|☆|star rating/i.test(visible), 'no star ratings');
 });
 
-test('the only statistic is the approved 78% figure, with no source line', () => {
+test('no survey statistics: the 78% figure stays removed (owner decision, 23 Oct 2026)', () => {
   const pct = [...visible.matchAll(/\d+(?:\.\d+)?\s?%/g)].map((m) => m[0]);
-  assert.deepEqual(pct, ['78%']);
-  assert.ok(visible.includes('78% of surveyed U.S. consumers said an unanswered call had led them to take their business elsewhere.'));
+  assert.deepEqual(pct, [], 'no percentages in the visible copy');
+  assert.ok(!/78%|78&#37;|surveyed U\.S\. consumers|take their business elsewhere/i.test(HTML + JS), 'the 78% line is gone');
   assert.ok(!/source:/i.test(visible), 'no "Source:" line');
 });
 
@@ -71,16 +74,19 @@ test('the calculator defaults produce 40 missed calls, 10 jobs and $3,000 at ris
 });
 
 test('the calculator shows only what missed calls cost; no Callvix pricing in it', () => {
-  const calc = HTML.slice(HTML.indexOf('<section class="sec sec--white" id="calculator"'), HTML.indexOf('<section class="sec sec--navy" id="pricing"'));
+  const calc = HTML.slice(HTML.indexOf('<details id="calculator">'), HTML.indexOf('<details id="compare">'));
+  assert.ok(calc.length > 500, 'calculator found inside its <details>');
   for (const s of ['$518.60', '$997', 'Cover the calls you miss', 'If we answer all your calls', '$399', '$2.99', 'Your estimate with', '$3,700', 'Add-ons']) assert.ok(!calc.includes(s), `calculator still contains "${s}"`);
-  assert.match(calc, /<h2 id="calc-h">What are missed calls costing&nbsp;you\?<\/h2>/);
+  assert.match(calc, /<h3 id="calc-h">What are missed calls costing&nbsp;you\?<\/h3>/);
   assert.ok(calc.replace(/<[^>]+>/g, '').includes('See what it would cost you: book a 20-minute demo') && /href="#book" data-cta="calc" id="calcCta"/.test(calc), 'CTA scrolls to the calendar');
   assert.ok(calc.includes('A monthly scenario based on your numbers, not a forecast. Some callers may call back or book another way, and revenue isn’t profit.'), 'scenario caption');
   assert.ok(!/o-cost-|o-math-|PRICE\./.test(JS), 'no cost code left in the script');
   assert.ok(JS.includes("return 'Calls/month: ' + num0.format(calcState.calls) + ' · Miss rate: ' + calcState.miss + '%';"), 'Calendly a1 summary unchanged');
-  /* Pricing keeps the published rates, the add-ons, the not-billed list and the billing link. */
-  const pricing = HTML.slice(HTML.indexOf('id="pricing"'), HTML.indexOf('id="terms"'));
-  for (const s of ['$399', '$2.99', '$0.99', 'The $399 monthly base stays fixed. Usage charges vary with your call volume.', 'Full billing detail', 'hang-ups before we answer', '+$199/mo', '+$149/mo', '+$99/mo']) assert.ok(pricing.replace(/&nbsp;/g, ' ').includes(s), s);
+  /* Pricing keeps the published rates, the add-ons, the not-billed list, the terms and the billing link. */
+  const pricing = HTML.slice(HTML.indexOf('id="pricing"'), HTML.indexOf('id="how-it-works"'));
+  for (const s of ['$399', '$2.99', '$0.99', 'The $399 monthly base stays fixed; usage charges vary with your call&nbsp;volume.', 'Full billing detail', 'hang-ups before we answer', '+$199/mo', '+$149/mo', '+$99/mo',
+    'Month-to-month: cancel any time by email', 'Service runs to the end of that billing month; no refunds for part months', 'Mon–Fri, 9am–6pm, your time zone',
+    'Each invoice comes with an itemized record of billed calls.']) assert.ok(pricing.includes(s), s);
 });
 
 test('?h= only ever picks from the whitelist; anything else falls back to the default', () => {
@@ -157,10 +163,10 @@ test('click IDs reach the form and Calendly; the phone number is swappable text'
 });
 
 test('testimonials come only from the approved data, and only this page loads the v2 files', () => {
-  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: lp.css v=9, lp.js v=7. */
-  assert.ok(HTML.includes('/css/lp.css?v=9') && HTML.includes('/js/lp.js?v=7') && !/lp\.css\?v=[5-8]\b|lp\.js\?v=[4-6]\b/.test(HTML), 'asset versions bumped');
+  /* lp.css (1 year) and lp.js (7 days) are cached: bump ?v= whenever either file changes. Current: lp.css v=23, lp.js v=13 (above every other preview branch, so no browser mixes cached files). */
+  assert.ok(HTML.includes('/css/lp.css?v=23') && HTML.includes('/js/lp.js?v=13') && !/lp\.css\?v=(?:[5-9]|1\d|2[0-2])\b|lp\.js\?v=(?:[4-9]|1[0-2])\b/.test(HTML), 'asset versions bumped');
   assert.ok(JS.includes('var SHOW_TESTIMONIALS = true;'));
-  assert.ok(HTML.includes('<template id="tplProof">'), 'the testimonials section is a template, not rendered markup');
+  assert.ok(!/<template id="tplProof">/.test(HTML) && (HTML.match(/ data-proof[ >]/g) || []).length === 1, 'the testimonial is static markup in one place (the proof strip), removable by the kill switch');
   assert.ok(JS.includes("var CALLBACK_PROMISE = 'shortly during U.S. business hours';"));
   const others = [];
   const walk = (d) => { for (const n of readdirSync(join(ROOT, d))) {
@@ -175,17 +181,26 @@ test('testimonials come only from the approved data, and only this page loads th
 });
 
 test('the Calendly embed shows the whole month, time zone and slots without scrolling inside it', () => {
-  /* Measured live (calqa.mjs, Oct 2026): Calendly needs 798px when the box is 1200px wide (slots beside the month),
-     700px at 600-1000px and 602px on phones before a date is picked, then 955-1001px once slots stack below.
+  /* Measured live (calqa.mjs, 22 Oct 2026, colour pass): from 1024px the calendar sits in a ≤620px column (604px inside
+     its frame) and Calendly needs 602px before a date is picked, 767px after; 700px at 640-1023px (full width);
+     602px on phones.
      Reserved heights cover the first state; the page_height handler grows the box for the second. */
   assert.ok(JS.includes("'?hide_event_type_details=1&hide_landing_page_details=1&hide_gdpr_banner=1"), 'details panels hidden');
   assert.ok(/case 'calendly\.page_height':[\s\S]{0,200}cbox\.style\.height = \(hpx \+ 2\) \+ 'px'/.test(JS), 'box follows Calendly page_height');
   const h = (re) => +(CSS.match(re) || [, 0])[1];
-  assert.ok(h(/\.lp \.cal\{position:relative;height:(\d+)px/) >= 604, 'base reserved height');
+  assert.ok(h(/\.lp \.cal\{position:relative;(?:box-sizing:content-box;)?height:(\d+)px/) >= 604, 'base reserved height');
   assert.ok(h(/@media \(min-width:640px\)\{\.lp \.cal\{height:(\d+)px\}\}/) >= 700, '640px+ reserved height');
-  assert.ok(h(/@media \(min-width:1280px\)\{\.lp \.cal\{height:(\d+)px\}\}/) >= 800, '1280px+ reserved height');
+  assert.ok(h(/@media \(min-width:1024px\)\{\.lp \.cal\{height:(\d+)px\}\}/) >= 604, '1024px+ reserved height (calendar column ≤620px)');
   assert.ok(h(/@media \(max-width:639px\)\{[\s\S]*?\.lp \.cal\{height:(\d+)px\}/) >= 604, 'phone reserved height');
-  assert.ok(/@media \(min-width:1024px\)\{\.lp \.book-l\{display:grid/.test(CSS) && !/minmax\(0,35fr\) minmax\(0,65fr\)/.test(CSS), 'desktop calendar uses the full container width');
+  assert.ok(CSS.includes('.lp .book-grid{display:grid;gap:24px;grid-template-columns:minmax(0,1fr);grid-template-areas:"intro" "cal" "more"}'), 'phones: intro, then the calendar, then everything else');
+  assert.ok(CSS.includes('@media (min-width:1024px){.lp .book-grid{grid-template-columns:minmax(0,45fr) minmax(0,55fr);grid-template-areas:"intro cal" "more cal";'), 'desktop: intro and secondary material left (45%), calendar right (55%)');
+  assert.ok(CSS.includes('.lp .book-r{width:100%;max-width:620px;justify-self:end}'), 'calendar framed to ≤620px');
+  const book = HTML.slice(HTML.indexOf('id="book"'), HTML.indexOf('</section>', HTML.indexOf('id="book"')));
+  const order = ['class="book-intro"', 'id="book-h"', 'class="book-sub"', 'class="book-r"', 'id="cal"', 'class="cal-fb"', 'class="book-call"', 'class="book-more"', 'class="book-after"', 'class="mini-trust"', 'id="cbWrap"'].map((k) => book.indexOf(k));
+  assert.ok(order.every((v, i) => v > 0 && (i === 0 || v > order[i - 1])), 'reading order: heading + one-sentence agenda, calendar, fallback, phone, then after-demo, terms, callback');
+  assert.ok(!/<figure|<blockquote|book-quote/.test(book), 'no repeated testimonial before (or after) the calendar');
+  const sub = (book.match(/<p class="book-sub">([^<]*)<\/p>/) || [, ''])[1];
+  assert.ok(sub && (sub.match(/\./g) || []).length === 1, 'the agenda is one sentence');
 });
 
 test('"hang-up" never appears without "before we answer" (page, /pricing, /faq)', () => {
@@ -194,7 +209,9 @@ test('"hang-up" never appears without "before we answer" (page, /pricing, /faq)'
     const bare = [...t.matchAll(/hang-ups?\b(?![^.]{0,4}before we answer)/gi)].map((m) => t.slice(Math.max(0, m.index - 40), m.index + 40));
     assert.deepEqual(bare, [], `${f}: bare "hang-up": ${bare.join(' | ')}`);
   }
-  for (const s of ['Spam & wrong numbers aren’t billed', 'Spam & wrong numbers not billed']) assert.ok(visible.includes(s), s);
+  for (const s of ['Spam & robocalls', 'wrong numbers', 'Spam & robocalls not billed']) assert.ok(visible.includes(s), s);
+  /* Agreement v2 §4 bills wrong numbers: the page must never list them as unbilled (visible copy, FAQ or JSON-LD). */
+  assert.ok(!/(?:not billed|never billed|don’t bill|aren’t billed|isn’t billed)[^.]{0,120}wrong numbers|wrong numbers[^.]{0,40}(?:not billed|aren’t billed)/i.test(decode(HTML)), 'wrong numbers are never described as unbilled');
 });
 
 test('the brand reads "Callvix Solutions"; short "Callvix" only in tight UI', () => {
@@ -204,15 +221,12 @@ test('the brand reads "Callvix Solutions"; short "Callvix" only in tight UI', ()
   assert.equal(ld.find((n) => n['@type'] === 'Organization').name, 'Callvix Solutions');
   const faqText = JSON.stringify(ld.find((n) => n['@type'] === 'FAQPage'));
   assert.ok(!/Callvix(?! Solutions)/.test(faqText), 'FAQ schema uses the full name');
-  /* Headings, body copy and FAQ: full name. Allowed short forms: the comparison column header,
-     the hero call card, the forwarding diagram node, buttons and the logo alt text. */
+  /* Headings, body copy and FAQ: full name, everywhere (the logo alt text is the only short-form exception). */
   const body = HTML.slice(HTML.indexOf('<body'))
-    .replace(/<script[\s\S]*?<\/script>/g, '').replace(/<th scope="col" class="c-cvx">Callvix<\/th>/, '')
-    .replace(/<div class="callcard"[\s\S]*?<\/div>\n    <\/div>/, '').replace(/<li class="fwd-n fwd-n--teal">[\s\S]*?<\/li>/, '')
-    .replace(/alt="Callvix Solutions"/g, '').replace(/<[^>]+>/g, ' ');
+    .replace(/<script[\s\S]*?<\/script>/g, '').replace(/alt="Callvix Solutions"/g, '').replace(/<[^>]+>/g, ' ');
   const short = [...body.matchAll(/Callvix(?! Solutions)/g)].map((m) => body.slice(Math.max(0, m.index - 30), m.index + 30).replace(/\s+/g, ' '));
   assert.deepEqual(short, [], `short "Callvix" outside tight UI: ${short.join(' | ')}`);
-  assert.ok(visible.includes('Callvix Solutions is a pest-control-only answering team.') && visible.includes('How Callvix Solutions compares'));
+  assert.ok(visible.includes('We only answer for pest control companies.') && visible.includes('How Callvix Solutions compares'));
   assert.ok(visible.includes('Callvix Solutions (callvixsolutions.com) is not affiliated with callvix.com.'), 'non-affiliation line kept');
 });
 
@@ -224,34 +238,50 @@ test('the calendar has a visible loading state and warms up early, off the criti
 });
 
 /* Conversion polish, 22 Oct 2026. */
-test('polish: #team is gone, the hero H1 caps at 52px, and phones get the finished call card', () => {
-  assert.ok(!/id="team"|href="#team"|team-h/.test(HTML) && !/\.team\b/.test(CSS) && !/#team\b/.test(JS), '#team section, links and styles removed');
-  assert.ok(HTML.includes('.lp .hero h1{font-size:clamp(2.25rem,4.6vw + .5rem,3.25rem);'), 'H1 max 3.25rem (52px)');
-  assert.ok(HTML.includes('@media (min-width:1024px){.lp .hero{padding:48px 0 56px}'), 'tighter desktop hero padding');
-  const phone = HTML.match(/@media \(max-width:639px\)\{([^\n]*)\}\n/)[1];
-  assert.ok(phone.includes('.js .lp .callcard .st{opacity:1;transform:none}') && phone.includes('.lp .callcard.play .st{animation:none}'), 'phone CSS shows the final card before JS runs');
-  assert.ok(JS.includes("window.matchMedia('(max-width: 639px)').matches") && /if \(reduceMotion \|\| phone \|\| /.test(JS), 'JS skips the type-in under 640px');
+/* Second design pass, 22 Oct 2026: light hero, Inter only, Omar's quote as the hero visual. */
+/* Page B revision 2, 24 Oct 2026: the owner-preferred sample call card returns as the hero visual; Omar's quote moves to a strip below. */
+test('hero: solid navy, the restored sample call card (static, labelled), Inter only, one coverage line', () => {
+  assert.ok(!/id="team"|href="#team"|team-h/.test(HTML) && !/\.team\b/.test(CSS) && !/#team\b/.test(JS), '#team stays gone');
+  assert.ok(HTML.includes('.lp .hero{background:var(--navy-900);color:#fff;') && !/gradient\(|radial-|backdrop-filter|filter:blur/.test(HTML + CSS), 'solid navy hero; no grid texture, gradient or glow anywhere');
+  assert.ok(HTML.includes('.lp .hero h1 .h1-b{color:var(--teal-300)}') && HTML.includes('<h1 id="lp-h1"><span class="h1-a">Your pest control calls.</span> <span class="h1-b">Answered by real&nbsp;people.</span></h1>'), 'default H1 unchanged; second sentence in teal-300');
+  const hero = HTML.slice(HTML.indexOf('<section class="hero"'), HTML.indexOf('</section>', HTML.indexOf('<section class="hero"')));
+  assert.ok(/first built in da94fd3,\s*live in production fa1cb78, refined in r2 fec65cb/.test(HTML), 'the card records where it came from');
+  const card = (hero.match(/<figure class="callfig" id="heroIllus">([\s\S]*?)<\/figure>/) || [, ''])[1];
+  assert.ok(card.includes('<span class="tag">Sample call</span>') && card.includes('<figcaption class="callfig-cap">Sample call. Names and details are made up.</figcaption>'), 'visibly labelled as a made-up sample');
+  assert.ok(/<div class="callcard" role="img" aria-label="Sample call: [^"]+">/.test(card), 'one accessible description for the illustration');
+  assert.ok(card.includes('Inside your service area') && card.includes('Booked from your approved slots') && card.includes('Details sent to your office') && card.includes('Pest unconfirmed.'), 'human answer -> approved booking -> office handoff, with caller-reported facts');
+  assert.ok(!/cc-dot|cc-timer|ccTimer|lp-pulse|lp-in\b|class="st"|\bst"|Live call|Incoming call|00:0/.test(HTML + CSS + JS), 'no fake live status, timer, pulse or typing');
+  assert.ok(!/hero-quote|q-mark|hq-label/.test(HTML + CSS), 'the oversized hero quote card is gone');
+  assert.ok(hero.indexOf('id="heroCta"') < hero.indexOf('id="heroIllus"'), 'on phones the CTA comes before the illustration');
+  assert.ok(!/Sora|sora-latin/.test(HTML + CSS) && /--font-h:'Inter'/.test(HTML), 'Inter for headings and body');
+  const fams = new Set([...(HTML + CSS).matchAll(/@font-face\{font-family:'([^']+)'/g)].map((m) => m[1]));
+  assert.deepEqual([...fams].sort(), ['Inter', 'Inter Fallback'], 'only Inter is loaded');
+  assert.ok(HTML.includes('.lp .hero h1{font-size:clamp(2.375rem,2.6vw + 1.6rem,3.75rem);line-height:1.05;letter-spacing:-.025em;font-weight:800;color:#fff}') && HTML.includes('@media (max-width:374px){.lp .hero h1{font-size:36px}}') && HTML.includes('@media (max-width:359px){.lp .hero h1{font-size:30px}}'), 'H1 sizes unchanged');
+  assert.ok(hero.includes('<a class="text-link" href="#sample-call" data-play-sample><span id="heroSecondaryLabel">See how we handle a call</span></a>'), 'secondary link to the sample');
+  assert.ok(!/<ul class="trust"/.test(hero) && /<p class="hero-cover">[\s\S]*?Base coverage Mon–Fri, 9am–6pm your time zone\. Evening and weekend coverage are <span class="nw">add-ons<\/span>\./.test(hero), 'one positive coverage line instead of repeated assurances');
+  assert.equal((decode(hero.replace(/<[^>]+>/g, ' ')).match(/Month-to-month/g) || []).length, 1, '"Month-to-month" once in the hero');
+  assert.ok(hero.includes('On the demo we map your call flow and give you a cost estimate. No obligation.'));
+  assert.ok(HTML.includes('@media (min-width:1280px){.lp .hero .wrap{grid-template-columns:minmax(0,1fr) 432px;gap:40px;align-items:center}}') && HTML.includes('.lp .hero-copy{max-width:728px}'), '432px card column beside a 728px text column (the default H1 holds 2 lines)');
+  assert.ok(!/\.rv\b|classList\.add\('rv'\)/.test(HTML + CSS + JS), 'no reveal-on-scroll');
+  assert.ok(!/id="fwd"|scen-card|id="scPlay"|id="scBar"/.test(HTML + CSS + JS), 'no forwarding animation, scenario toggles or player');
 });
 
-test('polish: brand lockup, non-breaking phrases, label sizes and contrast', () => {
+test('polish: brand lockup, non-breaking phrases and label sizes', () => {
   const sub = '<span class="logo-sub" aria-hidden="true">Solutions</span></a>';
   assert.equal(HTML.split(sub).length - 1, 2, '"Solutions" wordmark in header and footer');
-  assert.ok(HTML.includes('U.S.&nbsp;companies&nbsp;only</p>') && HTML.includes('· No&nbsp;setup&nbsp;fee ·'), 'eyebrow and price phrases kept together');
+  assert.ok(HTML.includes('Answering service for U.S. pest control&nbsp;companies</p>') && HTML.includes('· No&nbsp;setup&nbsp;fee ·'), 'eyebrow and price phrases kept together');
   /* The phone wordmark is the one exception: it is the logo's aria-hidden descriptor, sized to CALLVIX's width, not a label. */
   const small = [];
   for (const [name, src] of [['inline', HTML.match(/<style>([\s\S]*?)<\/style>/)[1]], ['lp.css', CSS]]) {
     for (const m of src.matchAll(/([^{}]*)\{[^{}]*font-size:([\d.]+)(px|rem)/g)) { const px = +m[2] * (m[3] === 'rem' ? 16 : 1); if (px < 12.5 && !m[1].trim().endsWith('.lp .logo-sub')) small.push(`${name} ${m[1].trim()} ${px}px`); }
   }
   assert.deepEqual(small, [], 'no label under 12.5px');
-  const lum = (h) => { const c = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16) / 255).map((x) => (x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4)); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
-  const green = HTML.match(/\.lp \.cc-top\{[^}]*color:#([0-9a-f]{6});/i)[1];
-  assert.ok(1.05 / (lum(green) + 0.05) >= 4.5, `"Incoming call" #${green} must reach 4.5:1 on white`);
 });
 
 test('polish: the page has its own 1200x630 share image', () => {
-  const url = 'https://callvixsolutions.com/assets/og-pest-control-call-demo.jpg';
+  const url = 'https://callvixsolutions.com/assets/og-pest-control-call-demo-v5.jpg'; // v5: navy hero + the restored sample call card (Page B r2, 24 Oct 2026)
   assert.ok(HTML.includes(`<meta property="og:image" content="${url}">`) && HTML.includes(`<meta name="twitter:image" content="${url}">`));
-  const jpg = readFileSync(join(ROOT, 'assets/og-pest-control-call-demo.jpg'));
+  const jpg = readFileSync(join(ROOT, 'assets/og-pest-control-call-demo-v5.jpg'));
   let i = 2, size = null;
   while (i < jpg.length) { const marker = jpg[i + 1]; const len = jpg.readUInt16BE(i + 2); if (marker >= 0xc0 && marker <= 0xc2) { size = [jpg.readUInt16BE(i + 7), jpg.readUInt16BE(i + 5)]; break; } i += 2 + len; }
   assert.deepEqual(size, [1200, 630]);
@@ -263,7 +293,7 @@ test('variant H1s are the approved short versions, and the README ad table match
   assert.equal(map.answering, 'Pest control answering service. Real people. Jobs booked.');
   assert.equal(map['call-center'], 'A pest control call center that books the job.');
   assert.ok(!/booking jobs in your|books jobs in your company/.test(HTML), 'the old long variants are gone');
-  map.default = decode(HTML.match(/<h1 id="lp-h1">(.*?)<\/h1>/)[1]);
+  map.default = decode(HTML.match(/<h1 id="lp-h1">(.*?)<\/h1>/)[1].replace(/<[^>]+>/g, ''));
   const README = read('README.md');
   for (const [k, h1] of Object.entries(map)) {
     const row = README.match(new RegExp('\\| ' + k + ' \\| `https://callvixsolutions\\.com/pest-control-call-demo/' + (k === 'default' ? '' : '\\?h=' + k) + '` \\| (.*?) \\|'));
@@ -292,17 +322,17 @@ test('accuracy pass: retired wording is gone from the page, its script and the t
 });
 
 test('accuracy pass: timing, CRM qualifier, problem, scope and booking copy', () => {
-  for (const t of ['Typically live in 7–10 business days.', 'Typically live 7–10 business days after we receive your details.', 'Typical setup: 7–10 business days',
+  for (const t of ['Typically live in 7–10 business days.', 'After we receive your details. Nothing goes live until you’ve approved it.', 'Typically live 7–10 business days after we receive your setup details. You approve your call guide and we run test calls together before anything goes live.', 
     'Typically 7–10 business days after we receive your details. You fill in a setup questionnaire',
-    'By text or email, or entered in your CRM with the $99/month add-on.', 'reach you by text or email, or are entered in your CRM with the $99/month add-on.',
-    'When nobody picks up, many callers move on to the next company.', 'logged and sent to you unless your rules allow us to book it.',
-    'handled within your instructions; anything outside them goes to you.', 'Unless you tell us to.', 'Bookings go where your office already works']) {
+    'By text or email, or entered in your CRM with the $99/month add-on.', 'Without it, bookings and handoffs reach you by text or email.',
+    'Forward every call during your coverage hours, or only the ones your office doesn’t answer.', 'Logged and sent to you unless your rules allow us to book it.',
+    'Handled within your instructions; anything outside them goes to you.', 'Take payments, quote account balances, process cancellations, promise warranty outcomes or book outside your area.',
+    'It’s not an automatic sync.', 'Bookings in your own system']) {
     assert.ok(visible.includes(t), `missing: "${t}"`);
   }
   const ld = [...HTML.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));
   const start = ld.find((n) => n['@type'] === 'FAQPage').mainEntity.find((q) => q.name === 'How fast can we start?');
   assert.ok(start.acceptedAnswer.text.startsWith('Typically 7–10 business days after we receive your details.'));
-  assert.ok(JS.includes("missed: 'Your office answers first; we handle overflow during your agreed coverage hours.'"));
   assert.ok(!HTML.includes('class="book-who"'), 'booking line removed, nothing added');
   const OUT = 'Outbound follow-ups are $0.99 per call, billed only when someone answers or we leave a voicemail.';
   assert.equal(read('services.html').split(OUT).length - 1, 2, '/services: visible FAQ and JSON-LD');
@@ -318,7 +348,7 @@ test('accuracy pass: comparison table, one implementation for desktop and the mo
   assert.ok(row('Pest-control-only training').includes('<td class="c-as">Varies by provider</td>'));
   assert.ok(row('Books jobs by your rules').includes('<td class="c-as">Varies by plan</td>') && row('Priced per call, not per minute').includes('<td class="c-as">Varies by plan</td>'));
   assert.equal(row('Coverage while your staff are away'), '<td class="c-cvx">During agreed hours</td><td class="c-vm"><svg class="ic d" aria-hidden="true"><use href="#i-dash"/></svg><span class="sr">Not applicable</span></td><td class="c-as">Depends on coverage</td><td class="c-ai">Depends on setup</td><td class="c-csr">Backup still needed</td>');
-  for (const r of ['A real person answers', 'Pest-control-only training', 'Books jobs by your rules', 'Priced per call, not per minute', 'Spam &amp; wrong numbers not billed']) {
+  for (const r of ['A real person answers', 'Pest-control-only training', 'Books jobs by your rules', 'Priced per call, not per minute', 'Spam &amp; robocalls not billed']) {
     assert.ok(row(r).startsWith('<td class="c-cvx"><svg class="ic y"'), `Callvix Solutions keeps "Yes" on: ${r}`);
   }
   assert.ok(HTML.includes('<p class="foot-note">Features, coverage and pricing vary by provider and plan.</p>') && !/a typical answering service/i.test(HTML));
@@ -333,21 +363,55 @@ test('accuracy pass: calculator wording only; maths, inputs and defaults unchang
   assert.ok(JS.includes('var jobs = missed * (s.newp / 100) * (s.book / 100);') && JS.includes('var risk = Math.round(jobs * s.val);'));
 });
 
-test('accuracy pass: sample call names a text walkthrough; audio mode keeps its labels', () => {
-  assert.ok(visible.includes('See how a sample call is handled.') && HTML.includes('<p class="sc-note" id="scNote">Sample call shown as text. Names and details are made up.</p>'));
-  assert.ok(HTML.includes('id="scPlay" aria-label="Start text walkthrough">') && HTML.includes('<span class="sc-play-t">Start text walkthrough</span>'));
-  assert.ok(JS.includes("var TEXT_LABELS = { start: 'Start text walkthrough', playing: 'Pause walkthrough', paused: 'Resume walkthrough', done: 'Replay walkthrough' };"));
-  assert.ok(JS.includes("btn.setAttribute('aria-label', on ? 'Pause sample call' : 'Play sample call');") && JS.includes("if (mode === 'audio') $('.sc-play-t', btn).textContent = 'Play again';"), 'audio labels unchanged');
-  assert.ok(CSS.includes('.lp .sc-player:not(.is-audio) .sc-time,.lp .sc-player:not(.is-audio) .seg{display:none}') && JS.includes("mode = 'audio'; player.classList.add('is-audio');"));
-  assert.ok(JS.includes('var SAMPLE_CALL_AUDIO = false;'));
+test('demonstration: three decisions beside the office handoff, the full transcript on demand; no player; audio only behind the flag', () => {
+  assert.ok(HTML.includes('<p class="sc-note" id="scNote">Sample call. Names and details are made up.</p>'), 'the example is labelled as made up');
+  assert.equal((HTML.match(/<ol class="sc-lines" id="scLines">/g) || []).length, 1, 'exactly one sample transcript');
+  assert.equal((HTML.match(/<ol class="ex-lines"/g) || []).length, 0, 'no visible short excerpt (the hero card already shows the exchange)');
+  assert.equal((HTML.match(/id="sample-call"/g) || []).length, 1);
+  const lines = HTML.slice(HTML.indexOf('<ol class="sc-lines" id="scLines">'), HTML.indexOf('</ol>', HTML.indexOf('id="scLines"')));
+  assert.equal((lines.match(/<li /g) || []).length, 12, 'all 12 lines are in the page, visible without JS or a play button');
+  for (const t of ['Thanks for calling Oak Valley Pest Control, this is Dana. How can I help?', 'We’re hearing scratching in the kitchen wall, and there are droppings under the sink.', 'I have tomorrow between 10am and 12pm. Does that work?', 'Is this the best number to reach you?']) assert.ok(lines.includes(t), t);
+  /* Revision 3: the dialogue is shown once (hero card) and in full on demand; the section explains the decisions instead of replaying it. */
+  const demo0 = HTML.slice(HTML.indexOf('<div class="demo" id="sample-call"'), HTML.indexOf('<h3 class="sits-h">'));
+  const dec = [...demo0.matchAll(/<li><h4>([^<]*)<\/h4><p>([^<]*)<\/p><\/li>/g)].map((m) => [m[1], decode(m[2])]);
+  assert.deepEqual(dec.map((d) => d[0]), ['Capture what the caller reports', 'Check the address and your booking rules', 'Offer an approved slot, or hand it off']);
+  assert.ok(/we don’t name the pest/.test(dec[0][1]) && /inside your service area/.test(dec[1][1]) && /approved slots/.test(dec[2][1]) && /named contact/.test(dec[2][1]), 'report, rules check, slot-or-handoff');
+  const outsideTranscript = demo0.replace(/<details class="sc-full"[\s\S]*?<\/details>/, '');
+  assert.ok(!/class="sc-who"|class="ex-lines"|data-who=/.test(outsideTranscript), 'no replayed dialogue outside the transcript disclosure');
+  assert.ok(demo0.includes('<h2') === false && HTML.includes('<h2 id="handle-h">From the first question to a clear&nbsp;handoff.</h2>'), 'section heading');
+  assert.ok(!/wasps building a nest/.test(HTML), 'one story only: the mice call');
+  assert.ok(/<details class="sc-full" id="scFull">\s*<summary>Read the full sample transcript/.test(HTML) && HTML.indexOf('id="scLines"') > HTML.indexOf('id="scFull"'), 'the full transcript sits behind a native, keyboard-accessible control');
+  const demo = HTML.slice(HTML.indexOf('<div class="demo" id="sample-call"'), HTML.indexOf('<h3 class="sits-h">'));
+  assert.ok(demo.indexOf('id="scPlayer"') > 0 && demo.indexOf('id="scPlayer"') < demo.indexOf('class="demo-to"') && demo.indexOf('class="demo-to"') < demo.indexOf('id="hoCard"'), 'the call, then an arrow, then the handoff: one demonstration');
+  const ho = demo.slice(demo.indexOf('<div class="ho" id="hoCard">'));
+  assert.ok(ho.includes('<h3 class="ho-h" id="handoff-h">What your office receives</h3>'), 'handoff heading');
+  assert.deepEqual([...ho.matchAll(/<dt>([^<]*)<\/dt><dd>([^<]*)<\/dd>/g)].map((m) => m[1] + ': ' + m[2]),
+    ['Caller reports: Scratching in kitchen wall, droppings under sink. Pest unconfirmed.', 'Address: 14 Oak Lane, inside your area', 'Booked: Tomorrow 10am–12pm, from your approved slots', 'Access: Caller home', 'Pets: Dog in rear yard. Asked about treatment safety: for your technician.']);
+  /* Agreement v2 §2: no pest identification. The sample models it: what the caller reports, pest unconfirmed. */
+  assert.ok(!/\bMice\b|We identify the pest|identify the pest/.test(HTML.replace(/<script[\s\S]*?<\/script>/g, '')), 'no definitive pest named for the caller, and no pest-identification claim');
+  assert.ok(!/Start text walkthrough|class="sc-play"|class="sc-prog"|data-speed=/.test(HTML), 'no play button, progress bar or speed toggle');
+  for (const t of ['Logged and sent to you unless your rules allow us to book it.', 'Handled within your instructions; anything outside them goes to you.']) assert.ok(visible.includes(t), t);
+  assert.ok(JS.includes('var SAMPLE_CALL_AUDIO = false;') && JS.includes("push('sample_call_play', { mode: 'audio' })") && JS.includes("push('sample_call_complete', { mode: 'audio' })"), 'audio mode keeps its events, behind the flag');
 });
 
-test('accuracy pass: phone service cards show their descriptions; the hero pulse runs twice', () => {
-  assert.ok(!/\.cards6 p\{display:none\}/.test(CSS), 'descriptions no longer hidden on phones');
-  for (const q of ['book from your approved slots.', 'Reschedule or note requests by your rules.', 'Quote only the services and prices you allow.']) assert.ok(visible.includes(q), q);
-  assert.ok(HTML.includes('animation:lp-pulse 1.8s 2;') && !/lp-pulse[^;]*infinite/.test(HTML + CSS), 'pulse: 2 cycles, then static');
-  assert.ok(HTML.includes('.lp .cc-dot{animation:none}}'), 'reduced motion still stops it');
-  assert.ok(/sc-typing|lp-dot/.test(CSS) && /lp-dot[^;]*infinite/.test(CSS), 'typing indicator untouched');
+test('call handling: three common situations in 35–50 words each, no repeated dialogue; the rules consolidated in one panel', () => {
+  assert.ok(HTML.includes('<h3 class="sits-h">Three common call situations</h3>'));
+  const sits = HTML.slice(HTML.indexOf('<ol class="sits">'), HTML.indexOf('</ol>', HTML.indexOf('<ol class="sits">')));
+  const cards = [...sits.matchAll(/<li class="sit">([\s\S]*?)<\/li>/g)].map((m) => m[1]);
+  assert.equal(cards.length, 3);
+  const words = cards.map((c) => decode(c.replace(/<svg[\s\S]*?<\/svg>/g, ' ').replace(/<[^>]+>/g, ' ')).trim().split(/\s+/).length);
+  assert.ok(words.every((n) => n >= 35 && n <= 50), `35–50 words each: ${words.join(', ')}`);
+  assert.ok(!/class="eg"|[“”]|scratching|droppings/i.test(sits), 'no quoted dialogue, and the scratching example is not repeated a third time');
+  const head = cards.map((c) => decode((c.match(/<h3>([^<]*)<\/h3>/) || [, ''])[1]));
+  assert.deepEqual(head, ['A new customer asks for a visit.', 'An existing customer needs a change.', 'A call needs your judgment.']);
+  assert.ok(/or a handoff when the request falls outside your rules\./.test(cards[0]), 'new booking: the outcome is qualified');
+  assert.ok(/Cancellations and billing questions go to you unless you tell us otherwise\./.test(cards[1]), 'existing customer: cancellations stay with the owner by default');
+  assert.ok(/make no promises on your behalf/.test(cards[2]) && /named contact/.test(cards[2]), 'judgment call: escalation rule');
+  const rules = HTML.slice(HTML.indexOf('<details class="rules" id="rules">'), HTML.indexOf('</details>', HTML.indexOf('id="rules"')));
+  assert.ok(/<summary>What we do, and don’t do, on your calls<\/summary>/.test(rules), 'one optional, keyboard-native panel');
+  for (const t of ['Also part of the job', 'Outside your service area', 'Warranty, billing or a judgment call', 'Only if you tell us to', 'Questions we pass to you', 'Pest identification, treatment, chemical-safety and medical questions']) assert.ok(rules.includes(t), t);
+  assert.ok(visible.includes('Trained on pest control calls: ants and carpenter ants, termite swarmers, bed bugs, rodents, wasps and hornets, mosquitoes, wildlife, one-time vs quarterly service.'));
+  assert.ok(!/notbook|hw-notes|class="rows"|stat-line/.test(HTML + CSS), 'the old operating-manual rows and the repeated non-booking list are gone');
 });
 
 test('accuracy pass: callback form options, local-time label and visitor_tz', () => {
@@ -363,53 +427,114 @@ test('accuracy pass: callback form options, local-time label and visitor_tz', ()
 });
 
 /* First client testimonial, owner-approved 22 Oct 2026 (Omar Abouhussein approved the wording and the use of his name, title and company). */
-test('testimonial: exact approved wording, no label, and placement just above pricing', () => {
+/* First client testimonial, owner-approved 22 Oct 2026 (Omar Abouhussein approved the wording and the use of his name, title and company). */
+/* First client testimonial. Wording approved 22 Oct 2026; the owner confirmed permission to use it on 23 Oct 2026. */
+test('testimonial: shown once, in the proof strip after the hero, byte for byte from the approved record', () => {
   const T = JS.slice(JS.indexOf('var TESTIMONIALS = ['), JS.indexOf('}];', JS.indexOf('var TESTIMONIALS = [')) + 3);
   const field = (k) => (T.match(new RegExp(k + ": '([^']*)'")) || [])[1];
-  assert.equal(field('quote'), 'Callvix Solutions took the time to understand how we run our business. Their team answers our calls professionally, follows our booking rules, and enters customer details and appointments accurately in FieldRoutes. Setup was straightforward, and they’ve been easy to work with.');
-  assert.equal(field('excerpt'), 'Their team answers our calls professionally, follows our booking rules, and enters appointments accurately in FieldRoutes.');
+  const QUOTE = 'Callvix Solutions took the time to understand how we run our business. Their team answers our calls professionally, follows our booking rules, and enters customer details and appointments accurately in FieldRoutes. Setup was straightforward, and they’ve been easy to work with.';
+  assert.equal(field('quote'), QUOTE);
   assert.equal(field('name'), 'Omar Abouhussein'); assert.equal(field('title'), 'Owner');
   assert.equal(field('company'), 'PestMaster of Naperville & Wheaton'); assert.equal(field('place'), 'IL');
-  assert.ok(!/label:/.test(T) && !/Founding client/i.test(JS + HTML), 'label removed (owner decision, 22 Oct 2026); the code still renders one if a future entry has it');
+  const bqs = [...HTML.matchAll(/<blockquote>([^<]*)<\/blockquote>/g)].map((m) => m[1]);
+  assert.deepEqual(bqs, [QUOTE], 'exactly one quote on the page, identical to the record');
+  assert.ok(!HTML.includes(field('excerpt')), 'the booking-section excerpt is gone');
+  const strip = HTML.slice(HTML.indexOf('<section class="proof" id="proof"'), HTML.indexOf('</section>', HTML.indexOf('id="proof"')));
+  assert.ok(HTML.indexOf('id="proof"') > HTML.indexOf('id="hero"') && HTML.indexOf('id="proof"') < HTML.indexOf('id="how-we-handle"'), 'directly after the hero');
+  assert.ok(strip.includes('data-proof') && strip.includes('<span class="pf-who">Omar Abouhussein</span><span class="pf-co">Owner, PestMaster of Naperville&nbsp;&amp; Wheaton, IL</span>'), 'attribution unchanged');
+  assert.ok(!/q-mark|<svg/.test(strip) && !/[“”"]/.test(bqs[0]), 'no oversized decorative quote marks, no typed quotes inside the text');
+  assert.ok(!/label:/.test(T) && !/Founding client|Client since/i.test(JS + HTML), 'no label');
   assert.ok(!/result:|photo:/.test(T), 'no photo or result supplied');
-  assert.ok(JS.includes('pricing.parentNode.insertBefore(frag, pricing);') && !/faq\.parentNode\.insertBefore\(frag/.test(JS), 'the proof section renders before #pricing, no longer before #faq');
-  assert.ok(HTML.indexOf('id="calculator"') < HTML.indexOf('id="pricing"'), 'so it lands after the calculator, right before the price decision');
-  assert.ok(HTML.includes('<section class="sec sec--sand" id="proof" aria-labelledby="proof-h">') && HTML.includes('<h2 id="proof-h">From a pest control company we answer&nbsp;for</h2>'));
-  assert.ok(JS.includes("var f = doc.createElement('figure');") && JS.includes("doc.createElement('blockquote')") && JS.includes("doc.createElement('figcaption')"), 'figure > blockquote + figcaption');
-  assert.ok(JS.includes("if (t.label) {") && JS.includes("(t.title ? t.title + ', ' : '')") && JS.includes("(ex.label ? ' · ' + ex.label : '')"), 'label and title render only when present');
-  assert.ok(JS.includes("q.className = 'book-quote'") && JS.includes("var ex = TESTIMONIALS.filter(function (t) { return t.excerpt; })[0], mini = $('#book .mini-trust');") && JS.includes('mini.parentNode.insertBefore(q, mini.nextSibling);'), 'excerpt after the trust chips, from the same data');
-  assert.ok(!/\.textContent = [^;]*\binnerHTML|\.innerHTML = [^;]*\b(t|ex)\./.test(JS), 'testimonial text is set with textContent');
+  assert.ok(JS.includes("if (!SHOW_TESTIMONIALS) { $$('[data-proof]').forEach(function (n) { n.parentNode.removeChild(n); }); }"), 'kill switch removes the strip');
 });
 
-test('testimonial: no review or rating schema, stars, "trusted by" or client counts', () => {
+test('testimonial: no review or rating schema, stars, "trusted by", counts, discounts or free-call offers', () => {
   for (const m of HTML.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
     assert.ok(!/"Review"|AggregateRating|ratingValue|reviewRating|"review"/.test(m[1]), 'no Review/AggregateRating JSON-LD');
   }
   assert.ok(!/★|☆|itemprop="rating|aggregateRating/i.test(HTML + JS + CSS), 'no star markup');
   assert.ok(!/trusted by|\d+\+? (?:pest control )?(?:clients|companies) (?:use|trust)/i.test(HTML + JS), 'no "Trusted by" or client counts');
-  const hero = HTML.slice(HTML.indexOf('<section class="hero"'), HTML.indexOf('</section>', HTML.indexOf('<section class="hero"')));
-  assert.ok(!/Omar|PestMaster|Founding client/.test(hero + HTML.slice(0, HTML.indexOf('<main'))), 'not in the hero or header');
+  assert.ok(!/Omar|PestMaster/.test(HTML.slice(0, HTML.indexOf('<main'))), 'not in the header');
+  for (const m of HTML.matchAll(/<figure class="proof-q"[\s\S]*?<\/figure>/g)) {
+    const near = decode(m[0].replace(/<[^>]+>/g, ' '));
+    assert.ok(!/client since|discount|% off|free calls?|free month|logo|★|rating/i.test(near), 'nothing beside the quote but the approved wording and attribution');
+    assert.ok(!/<img|<picture/.test(m[0]), 'no portrait or logo');
+  }
 });
 
 /* Testimonial design, owner-approved 22 Oct 2026: a review card above pricing, a smaller card in the booking section. */
-test('testimonial design: review card, initials avatar, excerpt card and attribution', () => {
-  const box = { document: { createElementNS() {}, createElement() {} } };
-  vm.runInNewContext(JS.match(/function initials\(name\) \{[^\n]*\}/)[0] + '; this.out = [initials("Omar Abouhussein"), initials("Cher"), initials("  ana maria lopez ")];', box);
-  assert.deepEqual([...box.out], ['OA', 'C', 'AL'], 'initials come from the first and last name'); // copied out of the vm realm
-  assert.ok(JS.includes("av.className = 'pf-avatar'; av.setAttribute('aria-hidden', 'true'); av.textContent = initials(t.name);"), 'initials avatar, hidden from screen readers');
-  assert.ok(JS.includes("svg.setAttribute('aria-hidden', 'true');") && JS.includes("f.appendChild(quoteMark('pf-mark', 40));") && JS.includes("q.appendChild(quoteMark('bq-mark', 24));"), '40px and 24px decorative quote marks');
-  assert.ok(JS.includes("who.textContent = t.name;") && JS.includes("co.textContent = (t.title ? t.title + ', ' : '') + place(t);"), 'name, then "Owner, company, state"');
-  const ex = { name: 'Omar Abouhussein', title: 'Owner', company: 'PestMaster of Naperville & Wheaton', place: 'IL' };
-  const cap = vm.runInNewContext(JS.match(/function place\(t\) \{[^\n]*\}/)[0] + ' ' + JS.match(/qc\.textContent = ([^;]*);/)[1], { ex });
-  assert.equal(cap.replace(/\u00a0/g, ' '), '— Omar Abouhussein, Owner · PestMaster of Naperville & Wheaton, IL');
-  /* The selector must start a rule (after a newline or "}"), so "a,.lp .x{" never matches ".lp .x". */
-  const rule = (sel) => (CSS.match(new RegExp('(?:^|[\\n}])' + sel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\{([^}]*)\\}')) || [])[1] || '';
-  const card = rule('.lp .proof figure');
-  assert.ok(/background:#fff/.test(card) && card.includes('box-shadow:var(--shadow-md)') && card.includes('border-radius:16px') && card.includes('padding:32px'), 'white card, --shadow-md, 16px radius, 32px padding');
-  assert.ok(CSS.includes('@media (max-width:639px){.lp .proof figure{padding:22px}.lp .proof blockquote{font-size:17px}'), '22px padding and 17px quote on phones');
-  assert.ok(rule('.lp .proof blockquote').includes('font-size:19px;line-height:1.6;color:var(--ink-900)'));
-  assert.ok(rule('.lp .proof figcaption').includes('border-top:1px solid var(--line)') && rule('.lp .proof .pf-avatar').includes('background:var(--teal-100);color:var(--teal-600)'));
-  const bq = rule('.lp .book-quote');
-  assert.ok(/background:#fff/.test(bq) && bq.includes('box-shadow:var(--shadow-sm)') && bq.includes('border-radius:12px') && !/border-left/.test(bq), 'excerpt: small white card, no left rule');
-  assert.ok(!/\.proof[^{]*\{[^}]*border-left/.test(CSS), 'main card has no teal left rule');
+test('visual system: gold only on booking buttons; navy only on hero, pricing, booking and footer', () => {
+  const inline = HTML.match(/<style>([\s\S]*?)<\/style>/)[1];
+  const all = (inline + '\n' + CSS).replace(/\/\*[\s\S]*?\*\//g, '');
+  const ctaUse = [...all.matchAll(/([^{}]*)\{[^{}]*var\(--cta(?:-hover)?\)[^{}]*\}/g)].map((m) => m[1].trim());
+  assert.deepEqual(ctaUse, ['.lp .btn--cta', '.lp .btn--cta:hover'], 'the gold token is used only by the booking button');
+  assert.ok(!/gold|#f5b83d|#e9a41f|#e0a63c/i.test(all.replace(/--cta:#F5B83D;--cta-hover:#E9A41F;/, '')), 'no other gold anywhere');
+  const navyBg = [...all.matchAll(/([^{}]*)\{[^{}]*background:var\(--navy-9[05]0\)[^{}]*\}/g)].map((m) => m[1].trim());
+  assert.deepEqual(navyBg.filter((sel) => /\.(hero|sec|sec--[a-z]+|band|book|pricing|ftr)\b/.test(sel) && !/\.vid|hero-video|cmp/.test(sel)), ['.lp .hero', '.lp .sec--navy', '.lp .ftr'], 'navy bands: hero, .sec--navy, footer');
+  const secs = Object.fromEntries([...HTML.matchAll(/<section class="([^"]+)" id="([^"]+)"/g)].map((m) => [m[2], m[1]]));
+  assert.deepEqual(Object.keys(secs).filter((id) => /sec--navy/.test(secs[id])), ['pricing', 'book'], '.sec--navy only on pricing and booking');
+  assert.deepEqual(Object.keys(secs).filter((id) => /sec--teal/.test(secs[id])), ['how-it-works'], 'setup on teal-100');
+  assert.ok(['how-we-handle', 'video', 'faq'].every((id) => /sec--white/.test(secs[id])), 'the middle and the questions are white');
+  assert.ok(HTML.includes('<section class="proof" id="proof"') && CSS.length && HTML.includes('.lp .proof{background:var(--teal-100);'), 'the proof strip is teal-100');
+  assert.ok(/\.lp \.ftr\{background:var\(--navy-950\);[^}]*border-top:1px solid rgba\(255,255,255,\.08\)\}/.test(CSS), 'footer darker than the booking band, with a hairline');
+  assert.ok(!/class="[^"]*\b(?:pill|chip-cloud|num-c|ic-circle)\b/.test(HTML.replace(/<form[\s\S]*?<\/form>/g, '')), 'no pills, chip clouds or numbered circles outside the callback form');
+  assert.ok(!/@keyframes|animation:/.test(all.replace(/@keyframes lp-spin\{[^{}]*\{[^{}]*\}[^{}]*\}|animation:lp-spin[^;}]*/g, '')), 'no pulses or typing; only the calendar spinner animates');
+  const eyebrows = [...HTML.matchAll(/<p class="eyebrow"[^>]*>/g)].length;
+  assert.equal(eyebrows, 2, 'eyebrows only on the hero and pricing');
+});
+
+/* Colour pass, 22 Oct 2026: every text colour used on navy and on teal-100 clears WCAG AA, computed from the declared tokens. */
+test('colour pass: on-navy and teal-100 text colours pass contrast; focus ring teal-300 on navy', () => {
+  const root = HTML.match(/:root\{([^}]*)\}/)[1]; const tok = Object.fromEntries([...root.matchAll(/--([a-z0-9-]+):(#[0-9a-fA-F]{3,6})/g)].map((m) => [m[1], m[2].toLowerCase()]));
+  assert.equal(tok['on-navy'], '#d6dbea'); assert.equal(tok['on-navy-2'], '#aeb6cf'); assert.equal(tok['navy-900'], '#101c4c'); assert.equal(tok['teal-300'], '#83d6df');
+  assert.ok(!('cream' in tok) && !('teal-400' in tok), 'retired tokens are gone');
+  const lum = (h) => { const c = [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255).map((v) => (v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
+  for (const [fg, bg] of [['#ffffff', 'navy-900'], ['on-navy', 'navy-900'], ['on-navy-2', 'navy-900'], ['teal-300', 'navy-900'], ['ink-900', 'teal-100'], ['ink-700', 'teal-100'], ['navy-900', 'teal-100'], ['teal-600', 'teal-100'], ['teal-600', '#ffffff']]) {
+    const r = ratio(tok[fg] || fg, tok[bg] || bg); assert.ok(r >= 4.5, `${fg} on ${bg} is ${r.toFixed(2)}:1`);
+  }
+  assert.ok(ratio(tok['teal-500'], '#ffffff') < 3 && /\.lp \.pr-plus\{[^}]*color:var\(--teal-600\)/.test(CSS), 'the price "+" uses teal-600 because teal-500 on white fails 3:1');
+  assert.ok(HTML.includes('.lp :focus-visible{outline:3px solid var(--teal-600);outline-offset:2px;border-radius:4px}') && HTML.includes('.lp .hero :focus-visible,.lp .sec--navy :focus-visible,.lp .ftr :focus-visible{outline-color:var(--teal-300)}'), 'focus ring: teal-600 on light, teal-300 on navy');
+  assert.ok(/\.lp \.sec h2::before,\.lp \.sec-head \.eyebrow::before\{content:"";display:block;width:48px;height:4px;border-radius:2px;background:var\(--teal-500\);margin-bottom:16px\}/.test(CSS), '48×4 teal rule above section headings');
+  assert.ok(/box-sizing:content-box;height:610px;padding:8px;background:#fff;border-radius:16px/.test(CSS), 'Calendly sits in an 8px white frame outside the height its handler sets');
+});
+
+/* Redesign, 22 Oct 2026: section order and the optional extras. */
+/* Second pass, 22 Oct 2026: section order; old anchors still land. */
+test('redesign: the page answers one buyer question per section, in decision order', () => {
+  const ids = [...HTML.slice(HTML.indexOf('<main'), HTML.indexOf('</main>')).matchAll(/<section[^>]* id="([^"]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(ids, ['hero', 'proof', 'how-we-handle', 'video', 'pricing', 'how-it-works', 'faq', 'book']);
+  assert.ok(HTML.indexOf('id="faqList"') > HTML.indexOf('id="faq"') && HTML.indexOf('<div class="more" id="details"') > HTML.indexOf('id="faqList"') && HTML.indexOf('id="details"') < HTML.indexOf('class="faq-more"'), 'practical questions first; calculator and comparison after them, within the section');
+  for (const a of ['what-we-handle', 'sample-call', 'how-it-works', 'how-we-handle', 'details', 'rules', 'billing']) assert.equal((HTML.match(new RegExp(`id="${a}"`, 'g')) || []).length, 1, `#${a} still lands`);
+  assert.ok(HTML.indexOf('id="pricing"') < HTML.indexOf('id="calculator"') && HTML.indexOf('id="pricing"') < HTML.indexOf('id="compare"'), 'price before the calculator and the comparison');
+  assert.ok(/<details id="calculator">/.test(HTML) && /<details id="compare">/.test(HTML), 'calculator and comparison are optional, collapsed details');
+  assert.ok(JS.includes("var d = hash && /^#(calculator|compare)$/.test(hash) ? $(hash) : null;") && JS.includes("if (d && d.tagName === 'DETAILS' && !d.open) d.open = true;"), 'links to #calculator / #compare open them');
+  for (const id of ['heroCta', 'calcCta', 'cmp', 'calc', 'faqList', 'cal', 'cbForm', 'mbar', 'scLines', 'hoCard', 'proofQuote', 'heroIllus', 'lp-h1', 'lp-eyebrow', 'lp-sub', 'heroSecondaryLabel']) assert.ok(HTML.includes(`id="${id}"`), `hook kept: #${id}`);
+  for (const c of ['hero', 'sample_call', 'pricing', 'how', 'calc', 'faq', 'header', 'mobile_bar', 'book_fallback', 'callback_success']) assert.ok(HTML.includes(`data-cta="${c}"`), `data-cta="${c}" kept`);
+  const links = [...HTML.matchAll(/<a [^>]*href="#([a-z-]+)"/g)].map((m) => m[1]).filter((h) => h !== 'top');
+  const missing = [...new Set(links)].filter((h) => !HTML.includes(`id="${h}"`)); assert.deepEqual(missing, [], 'every in-page link has a target');
+  assert.ok(!/<img[^>]+assets\/photos\/|<source[^>]+assets\/photos\/|assets\/photos\//.test(HTML + CSS + JS), 'no photographs on the landing page');
+  assert.ok(!/<picture>(?![\s\S]{0,120}(?:\/assets\/logo|\/assets\/video\/callvix-lp-poster))/.test(HTML), 'the only <picture> elements are the logo and the video poster');
+  assert.ok(HTML.includes('<p class="book-after">Typically live <span class="nw">7–10</span> business days after we receive your setup details. You approve your call guide and we run test calls together before anything goes live.</p>'), 'booking: timing starts when the details arrive, not at the demo; 7–10 never splits');
+  assert.ok(HTML.includes('<ul class="mini-trust"><li>No setup fee</li><li>Month-to-month</li></ul>') && !HTML.includes('Typical setup:'), 'booking: the setup time is said once, in the after-demo line');
+  const addons = (CSS.match(/\n\.lp \.addons\{([^}]*)\}/) || [, ''])[1];
+  assert.ok(addons && !/max-width/.test(addons) && /\.lp \.addons li::after\{content:"";order:1;flex:1 1 24px/.test(CSS) && /\.lp \.addons strong\{order:2\}/.test(CSS), 'add-on prices sit on the list\'s right edge after a dotted leader');
+});
+
+/* Revision 3, 24 Oct 2026: the broad billing statement names the spam exception everywhere; /pricing agrees with agreement v2
+   (owner, 22 Oct: "The service agreement v2 is correct: wrong numbers are billed, clients cancel any time by email with service
+   to month-end, and there's no pre-onboarding refund."). */
+test('billing and cancelling read the same on the page, its JSON-LD and /pricing', () => {
+  const ld = [...HTML.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));
+  const bill = ld.find((n) => n['@type'] === 'FAQPage').mainEntity.find((q) => q.name === 'What counts as a billable call?').acceptedAnswer.text;
+  assert.ok(bill.startsWith('Answered inbound calls are $2.99 each, whatever their length, including wrong numbers and repeat calls. Spam and robocalls are excluded,'), 'FAQ (and its JSON-LD) names the exception in the broad statement');
+  assert.ok(!/every inbound call (?:we|an agent) answer/i.test(decode(HTML)), 'no unqualified "every inbound call we answer"');
+  const pricing = squash(decode(read('pricing.html').replace(/<[^>]+>/g, ' '))).replace(/&rsquo;/g, '’').replace(/&ndash;/g, '–');
+  for (const t of ['Cancel any time by email; service continues to the end of that billing month, and part months aren’t refunded.',
+    'Answered inbound calls are billed, including wrong numbers and repeat calls. Spam and robocalls, missed calls and hang-ups before we answer aren’t billed.',
+    'Each invoice comes with an itemized record of billed calls.', 'Typically live 7–10 business days after we receive your details.']) assert.ok(pricing.includes(t), `/pricing: ${t}`);
+  assert.ok(!/30 days’ notice|refunded in full|before onboarding starts|wrong numbers, missed calls/.test(pricing), '/pricing: no 30-days notice, pre-onboarding refund or unbilled wrong numbers');
+  /* The weekly summary (service reporting) and the itemized billing record (agreement v2 §4) are different things: both are listed, separately. */
+  const pr = HTML.slice(HTML.indexOf('id="pricing"'), HTML.indexOf('id="how-it-works"'));
+  assert.ok(/<h3>Included<\/h3>[\s\S]*?<li>Weekly activity summary<\/li>/.test(pr) && /<div class="pr-bill"[\s\S]*Each invoice comes with an itemized record of billed calls\./.test(pr), 'weekly summary under Included; billing record in the billing strip');
 });

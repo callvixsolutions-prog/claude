@@ -272,36 +272,59 @@ main site's `css/style.css` or `js/main.js`. Tests: `scripts/lp-v2.test.mjs` (pa
 test. It stays `noindex` and out of the sitemap, and its file is hash-pinned in
 `scripts/round11-frozen.json` (`campaignV1Sha256`) so it can't change by accident.
 
+### Page B revisions 2–3 (preview, 24 Oct 2026): what the page says and why
+
+- **Hero visual:** the sample call card the owner preferred, first built in `da94fd3`, live in production `fa1cb78`,
+  refined in r2 `fec65cb`. It is static now (no live dot, timer or typing) and labelled "Sample call. Names and details are made up."
+- **Commercial terms** follow service agreement v2 (13 Oct 2026, Part B §4 and §6). The owner confirmed it on 22 Oct 2026:
+  "The service agreement v2 is correct: wrong numbers are billed, clients cancel any time by email with service to month-end,
+  and there's no pre-onboarding refund."
+  - Answered inbound calls are billed, including wrong numbers and repeat calls; spam and robocalls, missed calls and hang-ups
+    before we answer are not.
+  - Cancel any time by email; service runs to the end of that billing month; no refunds for part months.
+  - `/pricing` is corrected the same way on this preview branch. Deploying it needs the owner's go-ahead: on 22–23 Oct the owner
+    asked to leave /pricing unchanged for that round.
+- **Weekly activity summary** stays listed under "Included", separate from the itemized billing record (v2 §4). Its removal was
+  delegated ("you decide"), not explicitly approved; the owner still needs to confirm the summary is actually provided.
+- **No pest identification** (agreement v2 §2): the page records what the caller reports; the sample handoff says "Pest unconfirmed".
+- **No survey statistic:** the 78% figure was removed under a delegated decision (the owner's "you decide", 23 Oct 2026); the 24 Oct brief says not to restore it.
+
 ### Switches (current values)
 
 | Switch | Current value | Lives in | What it does / how to change it |
 |---|---|---|---|
 | `LP_VIDEO` | `false` | `pest-control-call-demo/index.html`, the first `<script>` in `<head>` (`var LP_VIDEO = false;`) | Shows the video. Turn on only after the five video files are uploaded (steps below). It sits in the head so the page lays out correctly before it paints. |
-| `SAMPLE_CALL_AUDIO` | `false` | `js/lp.js`, top of the file | Plays a recorded sample call in sync with the transcript. Add `assets/audio/sample-call.mp3` and `assets/audio/sample-call.vtt` (one caption cue per transcript line, same order as on the page), then set to `true`. |
-| `SHOW_TESTIMONIALS` | `false` | `js/lp.js`, top of the file | Shows the testimonials section above the FAQ. Add approved quotes to the `TESTIMONIALS` list just below it (`{ quote, name, company, place, photo?, result? }`), then set to `true`. Never add a quote a client hasn't approved. |
+| `SAMPLE_CALL_AUDIO` | `false` | `js/lp.js`, top of the file | Adds a player for a recorded sample call to the sample box. Add `assets/audio/sample-call.mp3` and `assets/audio/sample-call.vtt` (one caption cue per transcript line, same order as on the page), then set to `true`. While it is `false` the sample is text only and `sample_call_play` / `sample_call_complete` don't fire. The recording must be a human voice. |
+| `SHOW_TESTIMONIALS` | `true` | `js/lp.js`, top of the file | Kill switch for Omar Abouhussein's approved quote, which is static HTML in one place: the proof strip directly after the hero (`#proof`, `#proofQuote`). `false` removes it. `TESTIMONIALS` just below it is the record of the approved wording; the tests check the page against it byte for byte, so change the record and the page together, and only with the client's written approval. |
 | `CALLBACK_PROMISE` | `"shortly during U.S. business hours"` | `js/lp.js`, top of the file | The end of the callback-form thank-you line: "Thanks, Pat. We'll call you …". Change the text between the quotes. |
 
 **After changing `css/lp.css` or `js/lp.js`, raise the `?v=` number** on its `<link>`/`<script>`
-in `pest-control-call-demo/index.html` (currently `lp.css?v=7`, `lp.js?v=5`), and update the matching check in
+in `pest-control-call-demo/index.html` (currently `lp.css?v=21`, `lp.js?v=13`), and update the matching check in
 `scripts/lp-v2.test.mjs`. Browsers keep these files for up to a year (CSS) or a week (JS), so a
 returning visitor would otherwise get the old file. Any edit to the page's HTML also needs
 `campaignSha256` in `scripts/round11-frozen.json` updated (the test failure tells you the new value).
 
 ### Going live with the video
 
-1. Put exactly these five files in `assets/video/`:
-   - `callvix-lp-video.mp4` (H.264, 16:9, ideally ≤ 10 MB)
+1. Put exactly these five files in `assets/video/` (the voice-over must be a real person, not a synthetic voice):
+   - `callvix-lp-video.mp4` (1920×1080, H.264, ≤ 10 MB)
    - `callvix-lp-video.webm` (same video, WebM)
    - `callvix-lp-video.vtt` (captions; shown by default)
-   - `callvix-lp-poster.webp` and `callvix-lp-poster.jpg` (the still shown before play, 16:9, e.g. 1280×720)
-2. In `pest-control-call-demo/index.html`, change `var LP_VIDEO = false;` to `var LP_VIDEO = true;`.
-3. Update `campaignSha256` (run `npm test`; the failure prints the new value), then commit and push to
-   `main`. Hostinger deploys in about a minute.
+   - `callvix-lp-poster.webp` and `callvix-lp-poster.jpg` (the still shown before play, 1280×720; the v6 posters are approved)
+2. Run `node scripts/check-lp-video.mjs`. It checks all five files exist; the MP4 is 1920×1080 and ≤ 10 MB;
+   both posters are 1280×720; and the captions parse and end within the video. Don't continue until it says OK.
+   It can't hear the voice-over: confirm by ear that it is a real person (the v6 scratch voice must not ship).
+3. In `pest-control-call-demo/index.html`, change `var LP_VIDEO = false;` to `var LP_VIDEO = true;`.
+4. Preview it locally first: default, `?src=fb`, at phone and desktop widths. Check the poster shows and the
+   captions are on.
+5. Update `campaignSha256` (run `npm test`; the failure prints the new value), then commit and push to
+   `main`, only once the owner has approved. Hostinger deploys in about a minute.
 
 What visitors then see: search and other traffic get a "See how it works in about a minute"
-section after the problem section. Facebook/Instagram traffic (`?src=fb`, or
-`utm_source=facebook|instagram|fb|ig`) gets the video in place of the hero call card (on phones,
-directly under the subhead), and the "See a sample call" link becomes "Watch how it works".
+section straight after "We handle the call the way your office would" (`#how-we-handle`); the hero is
+unchanged. Facebook/Instagram traffic (`?src=fb`, or `utm_source=facebook|instagram|fb|ig`) gets the
+video in place of the hero's sample call card (on phones, directly under the subhead); Omar's quote
+stays in its strip directly below the hero, and the "See how we handle a call" link becomes "Watch how it works".
 Nothing loads until the visitor presses play. When the video ends, an overlay offers "Book a
 20-minute demo" (scrolls to the calendar) and "Replay".
 
@@ -311,11 +334,11 @@ Nothing loads until the visitor presses play. When the video ends, an overlay of
 
 | Variant | URL | H1 |
 |---|---|---|
-| default | `https://callvixsolutions.com/pest-control-call-demo/` | Your phones answered. Your jobs booked. Your techs stay on the job. |
+| default | `https://callvixsolutions.com/pest-control-call-demo/` | Your pest control calls. Answered by real people. |
 | answering | `https://callvixsolutions.com/pest-control-call-demo/?h=answering` | Pest control answering service. Real people. Jobs booked. |
 | call-center | `https://callvixsolutions.com/pest-control-call-demo/?h=call-center` | A pest control call center that books the job. |
 | receptionist | `https://callvixsolutions.com/pest-control-call-demo/?h=receptionist` | A trained pest control receptionist, without hiring one. |
 | after-hours | `https://callvixsolutions.com/pest-control-call-demo/?h=after-hours` | Evening and weekend call coverage for pest control companies. |
 | missed | `https://callvixsolutions.com/pest-control-call-demo/?h=missed` | Stop losing pest control jobs to missed calls. |
 | human | `https://callvixsolutions.com/pest-control-call-demo/?h=human` | Real people, not an AI bot, answering your pest control calls. |
-| Facebook/Instagram | `https://callvixsolutions.com/pest-control-call-demo/?src=fb` | Default H1; video replaces the call card once LP_VIDEO is on |
+| Facebook/Instagram | `https://callvixsolutions.com/pest-control-call-demo/?src=fb` | Default H1; once LP_VIDEO is on, the video replaces the hero's sample call card |

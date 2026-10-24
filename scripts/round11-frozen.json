@@ -1,5 +1,5 @@
 {
- "_comment": "Values frozen at the round 11 baseline (origin/main at 066f078). Regenerate only by deliberate decision; see scripts/round11.test.mjs. campaignSha256 was updated deliberately in round 13 (one footer sentence removed at the owner's instruction) again for landing page v2 (lp-v2, owner-approved rebuild) and again on 22 Oct 2026 (owner-approved conversion polish, then two shorter H1 variants and a sub-360px header label, then the owner-approved accuracy pass, then the first approved testimonial and its review-card design); campaignV1Sha256 pins the v1 rollback copy.",
+ "_comment": "Values frozen at the round 11 baseline (origin/main at 066f078). Regenerate only by deliberate decision; see scripts/round11.test.mjs. campaignSha256 was updated deliberately in round 13 (one footer sentence removed at the owner's instruction) again for landing page v2 (lp-v2, owner-approved rebuild) and again on 22 Oct 2026 (owner-approved conversion polish, then two shorter H1 variants and a sub-360px header label, then the owner-approved accuracy pass, then the first approved testimonial and its review-card design, then the photography-led redesign, then the second design pass: light hero, Inter only, quote card, and its owner-requested small fixes, then the owner-approved colour pass and its booking-layout fix, then Page B revision 2 on 24 Oct 2026: restored sample-call hero, proof strip, demonstration, commercial terms aligned with agreement v2; then revision 3: decisions demonstration, shorter situations, FAQ before tools, billing/timing wording); campaignV1Sha256 pins the v1 rollback copy.",
  "services": {
   "title": "Human Pest Control Answering Service | Callvix Solutions",
   "description": "Trained people answer in your company name, qualify the pest issue and book the job. $399/month plus $2.99 per inbound call, Monday to Friday.",
@@ -119,6 +119,6 @@
    "robots": "index, follow, max-image-preview:large"
   }
  },
- "campaignSha256": "6eaa82a9e1ef56facd2fa3a89a370d77045e7f92907e8af182a787601895490b",
+ "campaignSha256": "c246091df2b1c25dacf6effe2fa5f15d626f1dd36cdb21b5409e37fb54144a3f",
  "campaignV1Sha256": "058828d719474aebc3bde2d4f0764e3afaa7a15a154f3017776eed06666a9717"
 }

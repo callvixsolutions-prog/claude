@@ -128,23 +128,12 @@
     if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (e) {} }
   }
 
-  /* ------------------------------------------------- header + reveal -- */
+  /* ------------------------------------------------------------ header -- */
+  /* No entrance animations: every section is visible the moment it scrolls in. */
   onReady(function () {
     var hdr = $('.hdr');
     var onScroll = function () { if (hdr) hdr.classList.toggle('is-scrolled', window.scrollY > 8); };
     window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
-
-    if (!reduceMotion && 'IntersectionObserver' in window) {
-      var targets = $$('.sec-head, .prob-grid, .sc-grid, .how-grid, .cards6, .cmp-wrap, .calc, .pr-grid, .terms, .sys, .team');
-      var io = new IntersectionObserver(function (es) {
-        es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
-      }, { rootMargin: '0px 0px -8% 0px' });
-      targets.forEach(function (el) {
-        var r = el.getBoundingClientRect();
-        if (r.top < window.innerHeight) return; // never hide something already on screen
-        el.classList.add('rv'); io.observe(el);
-      });
-    }
   });
 
   /* ------------------------------------------------- scroll depth + Meta -- */
@@ -163,167 +152,34 @@
     window.addEventListener('scroll', function () { if (!check.t) check.t = setTimeout(function () { check.t = 0; check(); }, 200); }, { passive: true });
   })();
 
-  /* ------------------------------------------------ hero live call card -- */
-  onReady(function () {
-    var card = $('#callcard'), timer = $('#ccTimer'); if (!card) return;
-    /* Phones get the finished card at once (CSS already shows it); the type-in plays from 640px up. */
-    var phone = window.matchMedia && window.matchMedia('(max-width: 639px)').matches;
-    if (reduceMotion || phone || !('IntersectionObserver' in window)) { card.classList.add('done'); if (timer) timer.textContent = '00:06'; return; }
-    var io = new IntersectionObserver(function (es) {
-      if (!es[0].isIntersecting) return; io.disconnect();
-      card.classList.add('play');
-      var start = Date.now();
-      var iv = setInterval(function () {
-        var s = Math.floor((Date.now() - start) / 1000);
-        if (timer) timer.textContent = '00:' + (s < 10 ? '0' : '') + s;
-        if (s >= 6) { clearInterval(iv); card.classList.add('done'); }
-      }, 250);
-    }, { threshold: 0.35 });
-    io.observe(card);
-  });
-
   /* -------------------------------------------------------- sample call -- */
+  /* Text mode (the default) is a plain, fully visible script: no player, progress bar or typing.
+     Audio mode only when SAMPLE_CALL_AUDIO is on and the approved recording loads: a native player
+     above the same transcript, with sample_call_play / sample_call_complete as before. */
   onReady(function () {
     var player = $('#scPlayer'); if (!player) return;
-    var lines = $$('#scLines li'), btn = $('#scPlay'), fill = $('#scFill'), bar = $('#scBar'), time = $('#scTime'), live = $('#scLive'), full = $('#scFull');
-    var ho = $('#hoCard'); if (ho) ho.classList.add('armed');
-    var speed = 1, idx = 0, playing = false, tm = null, elapsed = 0, lastTick = 0, typing = null, completed = false, audio = null, cues = null;
-    /* Text-mode timing: a short pause plus reading time for each line (ms at 1x). */
-    var durs = lines.map(function (li) { var n = (li.textContent || '').length; return 900 + n * 38; });
-    var total = durs.reduce(function (a, b) { return a + b; }, 0);
-    function fmt(ms) { var s = Math.round(ms / 1000); return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
-    function setProg(ms, tot) { var pct = Math.min(100, (ms / tot) * 100); if (fill) fill.style.width = pct + '%'; if (bar) bar.setAttribute('aria-valuenow', Math.round(pct)); if (time) time.textContent = fmt(ms); }
-    function light(li) {
-      var step = li.getAttribute('data-step') || li.getAttribute('data-chip');
-      if (step && ho) {
-        var key = step === 'access2' ? 'access' : step;
-        $$('[data-field="' + key + '"]', ho).forEach(function (f) { f.classList.add('lit'); });
-      }
-    }
-    function reveal(i) {
-      var li = lines[i]; if (!li) return;
-      lines.forEach(function (l) { l.classList.remove('now'); });
-      li.classList.add('shown', 'now'); light(li);
-      if (live) live.textContent = (li.querySelector('p') || li).textContent;
-    }
-    function stopTyping() { if (typing && typing.parentNode) typing.parentNode.removeChild(typing); typing = null; }
-    function showTyping(i) {
-      stopTyping(); if (reduceMotion) return;
-      var li = lines[i]; if (!li) return;
-      typing = doc.createElement('li'); typing.setAttribute('aria-hidden', 'true'); typing.className = 'shown';
-      typing.innerHTML = '<span class="sc-typing"><i></i><i></i><i></i></span>';
-      li.parentNode.insertBefore(typing, li);
-    }
-    /* Text mode (the default, until audio files exist) names the walkthrough; audio mode keeps its labels. */
-    var TEXT_LABELS = { start: 'Start text walkthrough', playing: 'Pause walkthrough', paused: 'Resume walkthrough', done: 'Replay walkthrough' };
-    function setPlaying(on) {
-      playing = on; btn.classList.toggle('is-playing', on);
-      if (mode !== 'audio') {
-        var t = TEXT_LABELS[on ? 'playing' : (completed ? 'done' : (idx > 0 ? 'paused' : 'start'))];
-        btn.setAttribute('aria-label', t); $('.sc-play-t', btn).textContent = t;
-        return;
-      }
-      btn.setAttribute('aria-label', on ? 'Pause sample call' : 'Play sample call');
-      $('.sc-play-t', btn).textContent = on ? 'Pause' : (completed ? 'Play again' : (idx > 0 ? 'Resume' : 'Play sample call'));
-    }
-    function finish(mode) {
-      stopTyping(); completed = true; setPlaying(false);
-      if (mode === 'audio') $('.sc-play-t', btn).textContent = 'Play again';
-      push('sample_call_complete', { mode: mode });
-    }
-    /* ---- text mode ---- */
-    function tick() {
-      var now = Date.now(); elapsed += (now - lastTick) * speed; lastTick = now;
-      var acc = 0, target = 0;
-      for (var i = 0; i < durs.length; i++) { acc += durs[i]; if (elapsed >= acc) target = i + 1; }
-      while (idx < target && idx < lines.length) { stopTyping(); reveal(idx); idx++; }
-      if (idx < lines.length && !typing) showTyping(idx);
-      setProg(elapsed, total);
-      if (idx >= lines.length) { clearInterval(tm); tm = null; setProg(total, total); finish('text'); }
-    }
-    function playText() {
-      if (completed) { reset(); }
-      setPlaying(true); lastTick = Date.now();
-      if (idx === 0 && elapsed === 0) { reveal(0); idx = 1; elapsed = durs[0]; }
-      else if (idx === 1) reveal(0);
-      tm = setInterval(tick, 120);
-    }
-    function pauseText() { clearInterval(tm); tm = null; stopTyping(); setPlaying(false); }
-    function reset() {
-      completed = false; idx = 0; elapsed = 0;
-      lines.forEach(function (l) { l.classList.remove('shown', 'now'); });
-      if (ho) $$('.lit', ho).forEach(function (f) { f.classList.remove('lit'); });
-      setProg(0, total);
-    }
-    /* ---- audio mode (only when the files exist) ---- */
-    function parseVtt(txt) {
-      var out = [], re = /(\d{2}:)?(\d{2}):(\d{2})[.,](\d{3})\s*-->/g, m;
-      while ((m = re.exec(txt))) out.push((m[1] ? parseInt(m[1], 10) * 3600 : 0) + parseInt(m[2], 10) * 60 + parseInt(m[3], 10) + parseInt(m[4], 10) / 1000);
-      return out;
-    }
-    function setupAudio(done) {
-      if (!SAMPLE_CALL_AUDIO) return done(false);
-      var a = new Audio(); a.preload = 'metadata'; a.src = '/assets/audio/sample-call.mp3';
-      var ok = false;
-      a.addEventListener('loadedmetadata', function () { if (ok) return; ok = true; audio = a;
-        fetch('/assets/audio/sample-call.vtt').then(function (r) { return r.ok ? r.text() : ''; }).then(function (t) { cues = parseVtt(t); done(true); }).catch(function () { cues = []; done(true); });
+    var note = $('#scNote');
+    if (SAMPLE_CALL_AUDIO) {
+      var a = doc.createElement('audio'); a.controls = true; a.preload = 'metadata'; a.src = '/assets/audio/sample-call.mp3';
+      a.setAttribute('aria-label', 'Sample call recording');
+      a.addEventListener('loadedmetadata', function () {
+        player.insertBefore(a, player.firstChild); player.classList.add('is-audio');
+        if (note) note.hidden = true;
+        var sent = {};
+        a.addEventListener('play', function () { if (!sent.p) { sent.p = 1; push('sample_call_play', { mode: 'audio' }); } });
+        a.addEventListener('ended', function () { if (!sent.e) { sent.e = 1; push('sample_call_complete', { mode: 'audio' }); } });
       });
-      a.addEventListener('error', function () { if (!ok) { ok = true; done(false); } });
+      a.load();
     }
-    function syncAudio() {
-      if (!audio) return;
-      var t = audio.currentTime, target = 0;
-      if (cues && cues.length) { for (var i = 0; i < cues.length && i < lines.length; i++) if (t >= cues[i]) target = i + 1; }
-      else target = Math.min(lines.length, Math.floor((t / (audio.duration || 1)) * lines.length) + 1);
-      while (idx < target) { reveal(idx); idx++; }
-      setProg(t * 1000, (audio.duration || 1) * 1000);
-    }
-    var mode = 'text', ready = false, first = true;
-    setupAudio(function (hasAudio) {
-      ready = true;
-      if (hasAudio) {
-        mode = 'audio'; player.classList.add('is-audio');
-        var note = $('#scNote'); if (note) note.hidden = true;
-        if (!playing) setPlaying(false);
-        audio.addEventListener('timeupdate', syncAudio);
-        audio.addEventListener('ended', function () { while (idx < lines.length) { reveal(idx); idx++; } finish('audio'); });
-      }
-    });
-    function play() {
-      if (first || completed) { push('sample_call_play', { mode: mode }); first = false; }
-      if (mode === 'audio' && audio) {
-        if (completed) { reset(); audio.currentTime = 0; }
-        audio.playbackRate = speed; audio.play(); setPlaying(true);
-      } else playText();
-    }
-    function pause() { if (mode === 'audio' && audio) { audio.pause(); setPlaying(false); } else pauseText(); }
-    btn.addEventListener('click', function () { playing ? pause() : play(); });
-    $$('[data-speed]', player).forEach(function (b) {
-      b.addEventListener('click', function () {
-        speed = parseFloat(b.getAttribute('data-speed')) || 1;
-        $$('[data-speed]', player).forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
-        if (audio) audio.playbackRate = speed;
+    /* "See how we handle a call" in the hero: the anchor scrolls to the sample. Social traffic with the
+       video on plays the hero video instead. */
+    $$('[data-play-sample]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        if (!(LP_VIDEO && root.classList.contains('is-social'))) return;
+        var hv = $$('.hero-video').filter(function (el) { return el.offsetParent !== null; })[0]; var vb = hv && $('.vid-btn', hv);
+        if (vb) { e.preventDefault(); vb.click(); }
       });
     });
-    full.addEventListener('click', function () {
-      var on = !player.classList.contains('full');
-      player.classList.toggle('full', on); full.setAttribute('aria-pressed', on ? 'true' : 'false');
-      full.textContent = on ? 'Hide full transcript' : 'Show full transcript';
-      if (on && ho) $$('.ho-fields div', ho).forEach(function (f) { f.classList.add('lit'); });
-    });
-    /* "See a sample call" in the hero scrolls here and starts the player. */
-    $$('[data-play-sample]').forEach(function (a) {
-      a.addEventListener('click', function (e) {
-        e.preventDefault();
-        /* Social traffic with the video on: this link plays the hero video instead. */
-        if (LP_VIDEO && root.classList.contains('is-social')) { var hv = $$('.hero-video').filter(function (el) { return el.offsetParent !== null; })[0]; var vb = hv && $('.vid-btn', hv); if (vb) vb.click(); return; }
-        var sec = $('#sample-call'); if (sec) sec.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-        setTimeout(function () { if (!playing) play(); btn.focus({ preventScroll: true }); }, reduceMotion ? 0 : 600);
-      });
-    });
-    /* Start with the greeting on screen so the player never looks empty. */
-    lines[0].classList.add('shown'); idx = 1; elapsed = durs[0];
-    setProg(elapsed, total);
   });
 
   /* -------------------------------------------------------------- video -- */
@@ -364,29 +220,19 @@
     });
   });
 
-  /* ------------------------------------------------- social layout -- */
+  /* ---------------------------------------------------- optional details -- */
+  /* The calculator and the comparison sit in <details>. A link or URL to #calculator / #compare opens
+     the right one, so older links still land on content rather than a closed summary. */
   onReady(function () {
-    if (!root.classList.contains('is-social')) return;
-    var cmp = $('#compare'), pricing = $('#pricing');
-    if (cmp && pricing && pricing.parentNode) pricing.parentNode.insertBefore(cmp, pricing.nextSibling);
-  });
-
-  /* ------------------------------------------------- scenario cards -- */
-  onReady(function () {
-    $$('.scen-card').forEach(function (c) { c.addEventListener('click', function () { c.classList.toggle('on'); }); });
-  });
-
-  /* ----------------------------------------------------- forwarding -- */
-  onReady(function () {
-    var box = $('#fwd'); if (!box) return;
-    var cap = $('#fwdCap');
-    var CAPS = { all: 'We act as your front desk during your coverage hours.', missed: 'Your office answers first; we handle overflow during your agreed coverage hours.' };
-    $$('[data-fwd]', box).forEach(function (b) {
-      b.addEventListener('click', function () {
-        var m = b.getAttribute('data-fwd'); box.setAttribute('data-mode', m);
-        $$('[data-fwd]', box).forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
-        if (cap) cap.textContent = CAPS[m];
-      });
+    function openFor(hash) {
+      var d = hash && /^#(calculator|compare)$/.test(hash) ? $(hash) : null;
+      if (d && d.tagName === 'DETAILS' && !d.open) d.open = true;
+    }
+    openFor(location.hash);
+    window.addEventListener('hashchange', function () { openFor(location.hash); });
+    doc.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href="#calculator"], a[href="#compare"]') : null;
+      if (a) openFor(a.getAttribute('href'));
     });
   });
 
@@ -469,51 +315,11 @@
 
   /* ------------------------------------------------------- testimonials -- */
   /* A non-breaking space before "&" stops a wrapped line from starting with it. */
-  function place(t) { return t.company.replace(/ & /g, '\u00a0& ') + (t.place ? ', ' + t.place : ''); }
-  function initials(name) { var p = String(name || '').trim().split(/\s+/); return ((p[0] || '').charAt(0) + (p.length > 1 ? p[p.length - 1].charAt(0) : '')).toUpperCase(); }
-  /* Decorative opening quote mark (the quote text keeps its own quote marks). */
-  function quoteMark(cls, size) {
-    var NS = 'http://www.w3.org/2000/svg', svg = doc.createElementNS(NS, 'svg'), path = doc.createElementNS(NS, 'path');
-    svg.setAttribute('class', cls); svg.setAttribute('viewBox', '0 0 40 32'); svg.setAttribute('width', size); svg.setAttribute('height', Math.round(size * 0.8));
-    svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('focusable', 'false');
-    path.setAttribute('d', 'M0 32V20C0 9.5 6 2.3 17 0l2 4.2C12.5 6.3 9.4 10 9 16h8v16H0zm22 0V20C22 9.5 28 2.3 39 0l1 4.2C33.5 6.3 30.4 10 30 16h8v16H22z');
-    path.setAttribute('fill', 'currentColor'); svg.appendChild(path); return svg;
-  }
+  /* The approved testimonial is static HTML in one place: the proof strip directly after the hero, so it shows
+     without JS and causes no layout shift. TESTIMONIALS above stays the single record of the approved wording
+     (tests compare the page to it); SHOW_TESTIMONIALS is the kill switch. */
   onReady(function () {
-    if (!SHOW_TESTIMONIALS || !TESTIMONIALS.length) return;
-    /* Main quote(s): review cards just above pricing. One quote gets a single centred card; 2+ use the grid. */
-    var tpl = $('#tplProof'), pricing = $('#pricing');
-    if (tpl && pricing) {
-      var frag = tpl.content.cloneNode(true), list = $('#proofList', frag);
-      if (TESTIMONIALS.length === 1) list.classList.add('proof--one');
-      TESTIMONIALS.forEach(function (t) {
-        var f = doc.createElement('figure');
-        f.appendChild(quoteMark('pf-mark', 40));
-        var bq = doc.createElement('blockquote'); bq.textContent = '“' + t.quote + '”'; f.appendChild(bq);
-        if (t.result) { var r = doc.createElement('p'); r.className = 'res'; r.textContent = t.result; f.appendChild(r); }
-        var cap = doc.createElement('figcaption');
-        if (t.photo) { var im = doc.createElement('img'); im.src = t.photo; im.alt = ''; im.width = 48; im.height = 48; im.loading = 'lazy'; cap.appendChild(im); }
-        else { var av = doc.createElement('span'); av.className = 'pf-avatar'; av.setAttribute('aria-hidden', 'true'); av.textContent = initials(t.name); cap.appendChild(av); }
-        var txt = doc.createElement('span'); txt.className = 'pf-txt';
-        var who = doc.createElement('span'); who.className = 'pf-who'; who.textContent = t.name; txt.appendChild(who);
-        var co = doc.createElement('span'); co.className = 'pf-co'; co.textContent = (t.title ? t.title + ', ' : '') + place(t); txt.appendChild(co);
-        if (t.label) { var lb = doc.createElement('span'); lb.className = 'pf-label'; lb.textContent = t.label; txt.appendChild(lb); }
-        cap.appendChild(txt);
-        f.appendChild(cap); list.appendChild(f);
-      });
-      pricing.parentNode.insertBefore(frag, pricing);
-    }
-    /* Short excerpt in the booking section, from the same data, after the trust chips. */
-    var ex = TESTIMONIALS.filter(function (t) { return t.excerpt; })[0], mini = $('#book .mini-trust');
-    if (ex && mini) {
-      var q = doc.createElement('figure'); q.className = 'book-quote';
-      q.appendChild(quoteMark('bq-mark', 24));
-      var qb = doc.createElement('blockquote'); qb.textContent = '“' + ex.excerpt + '”'; q.appendChild(qb);
-      var qc = doc.createElement('figcaption');
-      qc.textContent = '— ' + ex.name + (ex.title ? ', ' + ex.title : '') + ' · ' + place(ex) + (ex.label ? ' · ' + ex.label : '');
-      q.appendChild(qc);
-      mini.parentNode.insertBefore(q, mini.nextSibling); mini.parentNode.classList.add('has-quote');
-    }
+    if (!SHOW_TESTIMONIALS) { $$('[data-proof]').forEach(function (n) { n.parentNode.removeChild(n); }); }
   });
 
   /* ----------------------------------------------------------- Calendly -- */
