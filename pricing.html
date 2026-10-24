@@ -64,8 +64,16 @@ if(d.readyState==='complete'){setTimeout(load,1500);}else{w.addEventListener('lo
 /* Add-on cards: equal height, footer pinned to the bottom */
 .addon-grid { align-items: stretch; }
 .addon-grid .price-card { display: flex; flex-direction: column; }
-.addon-grid .price-card ul { margin-bottom: var(--space-sm); }
+.addon-grid .price-card ul { margin-top: auto; margin-bottom: var(--space-sm); }
+.addon-grid .price-card .desc { margin-bottom: var(--space-sm); }
 .addon-foot { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); font-size: 14px; color: var(--ink-500); }
+/* Desktop: the CRM card carries the most text, so it gets a slightly wider column and tighter footer type;
+   any height left over is split evenly above the checks and above the footer (two auto margins). */
+@media (min-width: 900px) {
+  .addon-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr); }
+  .addon-grid .addon-foot { font-size: 13.5px; }
+  .addon-grid .addon-foot p { margin-bottom: 6px; }
+}
 .addon-foot p { margin: 0 0 8px; }
 .addon-foot p:last-child { margin-bottom: 0; }
 .addon-foot .tm { font-size: 12.5px; }
@@ -324,7 +332,7 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
     </div>
     <div class="pricing-hero-actions">
       <div class="hero-cta">
-        <a href="/contact" class="btn btn-primary btn-lg" data-cta-location="pricing_hero">Book a Discovery Call</a>
+        <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta-location="pricing_hero">Book a Discovery Call</a>
         <a href="/services" class="pricing-text-link">See how our human pest control answering service works</a>
       </div>
     </div>
@@ -441,8 +449,9 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
       <h2>Find the right coverage for your business</h2>
       <p class="lede">We&rsquo;ll talk through your business hours, call patterns and booking rules.</p>
       <div class="btn-row">
-        <a href="/contact" class="btn btn-primary btn-lg" data-cta-location="pricing_closing">Book a Discovery Call</a>
+        <a href="https://calendly.com/callvixsolutions/callvix-discovery-call" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-cta-location="pricing_closing">Book a Discovery Call</a>
         <a href="tel:+15513736777" class="cta-phone" data-cta-location="pricing_closing_phone">Or call (551) 373-6777</a>
+        <a href="/contact" class="cta-text-link" data-cta-location="pricing_closing_contact">Prefer to send a message?</a>
       </div>
     </div>
   </div>
