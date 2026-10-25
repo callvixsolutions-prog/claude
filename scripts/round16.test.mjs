@@ -93,7 +93,10 @@ test('nothing personal reaches the dataLayer or leaves the hash readable', () =>
   const p = page(); openPopup(p);
   p.message('https://calendly.com', scheduled());
   const [ev] = p.events('callvix_meeting_booked');
-  assert.deepEqual(Object.keys(ev).sort(), ['booking_method', 'cta_location', 'event', 'page_path']);
+  assert.deepEqual(Object.keys(ev).filter((k) => ev[k] !== undefined).sort(), ['booking_method', 'cta_location', 'event', 'page_path']);
+  /* 26 Oct 2026: every event sets all five forwarded parameters (unused ones undefined), so GTM can't carry
+     a value over from the previous event (e.g. a phone click inheriting the hero button's cta_location). */
+  for (const k of ['link_location', 'cta_location', 'file_name', 'booking_step', 'booking_method']) assert.ok(Object.prototype.hasOwnProperty.call(ev, k), `${k} is set (or cleared) on every event`);
   const everything = JSON.stringify(p.win.dataLayer) + JSON.stringify([...p.storage.entries()]);
   for (const leak of ['EVT1', 'INV1', 'api.calendly.com', 'scheduled_events', 'invitee', 'uri', '@']) assert.ok(!everything.includes(leak), `"${leak}" leaked`);
   assert.match([...p.storage.get('cvx_bookings').matchAll(/"([^"]+)":1/g)].map((m) => m[1]).join(), /^b[0-9a-z]+$/, 'the dedupe key is a short hash');
@@ -149,7 +152,8 @@ test('if Calendly is blocked or slow the visitor is sent to the link instead', (
 test('every main-site page loads the current main.js', () => {
   const SKIP = new Set(['preview', 'pest-control-call-demo', 'pest-control-call-demo-v1', 'docs', 'node_modules', '.git']);
   /* /thank-you is frozen for this round; it keeps its link and so its cached copy. */
-  const FROZEN = new Set(['thank-you.html']);
+  /* /services is frozen until 11 Nov 2026: it keeps ?v=20261014c and picks up the new main.js when its 7-day cache expires. */
+  const FROZEN = new Set(['thank-you.html', 'services.html']);
   const versions = new Map();
   (function walk(dir) {
     for (const e of readdirSync(dir)) {
@@ -159,6 +163,6 @@ test('every main-site page loads the current main.js', () => {
       else if (e.endsWith('.html') && !FROZEN.has(rel)) { const m = readFileSync(abs, 'utf8').match(/\/js\/main\.js\?v=([\w-]+)/); if (m) versions.set(rel, m[1]); }
     }
   }(ROOT));
-  assert.equal(versions.size, 28); // 26 + /blog/best-pest-control-answering-services (20 Oct 2026) + /blog/pest-control-call-volume-by-season-and-region (24 Oct 2026)
-  assert.deepEqual([...new Set(versions.values())], ['20261014c'], 'main.js changed in round 16; every page must ask for the new copy');
+  assert.equal(versions.size, 27); // 26 + /blog/best-pest-control-answering-services (20 Oct 2026) + /blog/pest-control-call-volume-by-season-and-region (24 Oct 2026)
+  assert.deepEqual([...new Set(versions.values())], ['20261026a'], 'main.js changed on 26 Oct 2026 (event parameters reset per event); every page must ask for the new copy');
 });

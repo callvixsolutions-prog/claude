@@ -154,7 +154,12 @@ document.addEventListener('DOMContentLoaded', function () {
   function pushEvent(name, params) {
     try {
       window.dataLayer = window.dataLayer || [];
-      var payload = { event: name, page_path: window.location.pathname };
+      /* GTM keeps every data layer key until it is overwritten, so an event that doesn't set a
+         parameter would inherit the previous event's value (a phone click reported with the hero
+         button's cta_location). Every event therefore sets each forwarded parameter, clearing
+         the ones it doesn't use; the GA4 tag drops undefined values. */
+      var payload = { event: name, page_path: window.location.pathname, link_location: undefined,
+        cta_location: undefined, file_name: undefined, booking_step: undefined, booking_method: undefined };
       if (params) {
         for (var k in params) {
           if (Object.prototype.hasOwnProperty.call(params, k) && params[k]) payload[k] = params[k];
