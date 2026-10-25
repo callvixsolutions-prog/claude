@@ -5,8 +5,8 @@
  * against a stubbed window/document, so this fails if the gate is missing, misspelt
  * or blocks production.
  *
- * Not gated: /services and /pest-control-call-demo/ (frozen) and the v1 rollback copy
- * (hash-pinned in round11.test.mjs).
+ * Not gated: /pest-control-call-demo/ (frozen) and the v1 rollback copy (hash-pinned in
+ * round11.test.mjs). /services was gated on 26 Oct 2026.
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -17,7 +17,7 @@ import vm from 'node:vm';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const SKIP = new Set(['preview', 'node_modules', '.git', 'docs', 'scripts']);
-const UNGATED = new Set(['services.html', 'pest-control-call-demo/index.html', 'pest-control-call-demo-v1/index.html']);
+const UNGATED = new Set(['pest-control-call-demo/index.html', 'pest-control-call-demo-v1/index.html']); // /services gated 26 Oct 2026 (owner: only the landing pages stay frozen)
 const pages = [];
 (function walk(dir) { for (const e of readdirSync(dir)) { const abs = join(dir, e); const rel = relative(ROOT, abs);
   if (SKIP.has(rel.split('/')[0])) continue; if (statSync(abs).isDirectory()) walk(abs); else if (e.endsWith('.html')) pages.push(rel); } }(ROOT));

@@ -152,8 +152,7 @@ test('if Calendly is blocked or slow the visitor is sent to the link instead', (
 test('every main-site page loads the current main.js', () => {
   const SKIP = new Set(['preview', 'pest-control-call-demo', 'pest-control-call-demo-v1', 'docs', 'node_modules', '.git']);
   /* /thank-you is frozen for this round; it keeps its link and so its cached copy. */
-  /* /services is frozen until 11 Nov 2026: it keeps ?v=20261014c and picks up the new main.js when its 7-day cache expires. */
-  const FROZEN = new Set(['thank-you.html', 'services.html']);
+  const FROZEN = new Set(['thank-you.html']);
   const versions = new Map();
   (function walk(dir) {
     for (const e of readdirSync(dir)) {
@@ -163,6 +162,6 @@ test('every main-site page loads the current main.js', () => {
       else if (e.endsWith('.html') && !FROZEN.has(rel)) { const m = readFileSync(abs, 'utf8').match(/\/js\/main\.js\?v=([\w-]+)/); if (m) versions.set(rel, m[1]); }
     }
   }(ROOT));
-  assert.equal(versions.size, 27); // 26 + /blog/best-pest-control-answering-services (20 Oct 2026) + /blog/pest-control-call-volume-by-season-and-region (24 Oct 2026)
+  assert.equal(versions.size, 28); // 26 + /blog/best-pest-control-answering-services (20 Oct 2026) + /blog/pest-control-call-volume-by-season-and-region (24 Oct 2026)
   assert.deepEqual([...new Set(versions.values())], ['20261026a'], 'main.js changed on 26 Oct 2026 (event parameters reset per event); every page must ask for the new copy');
 });
