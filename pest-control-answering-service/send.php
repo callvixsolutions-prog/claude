@@ -4,7 +4,7 @@
  *
  * Adapted from the PestMaster landing page's send.php (pmnaperville.com), which runs on the
  * same Hostinger server. The page posts a lead here; this script checks it and emails it to
- * the sales mailbox from this website's own server with PHP mail(). No third-party form
+ * Chris's mailbox from this website's own server with PHP mail(). No third-party form
  * service, nothing stored on the server, no personal data written to any log, and no
  * passwords or keys in this file.
  *
@@ -39,10 +39,11 @@ const CVX_CLOUDFLARE_RANGES = [
     '2a06:98c0::/29', '2c0f:f248::/32',
 ];
 
-// The recipient lives here only, never in the page.
+// The recipient lives here only, never in the page. Owner decision 27 Oct 2026: leads go to Chris
+// (sales@callvixsolutions.com did not receive the first test lead).
 function cvx_recipient(): string
 {
-    return 'sales' . '@' . 'callvixsolutions.com';
+    return 'chris' . '@' . 'callvixsupport.com';
 }
 
 function cvx_wants_json(): bool

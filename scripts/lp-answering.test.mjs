@@ -119,7 +119,7 @@ test('form script: background JSON send to send.php, one retry, generate_lead, s
   assert.match(JS, /record\('generate_lead', \{ cta_location: lastCta \}/);
   assert.match(JS, /location\.assign\(SCHEDULE \+ utmQuery\(\)\)/);
   assert.match(JS, /var UTM = TRACKING\.slice\(0, 5\);/, 'only utm_* parameters are carried to the calendar page');
-  assert.doesNotMatch(JS + SJS, /sales@|callvixsolutions@|noreply@/, 'no email address in page scripts');
+  assert.doesNotMatch(JS + SJS, /chris@|sales@|callvixsolutions@|callvixsupport\.com|noreply@/, 'no email address in page scripts');
   for (const ev of ["record('callvix_cta_click'", "record('callvix_booking_step'", "record('generate_lead'", "record('callvix_video_play')"]) assert.ok(JS.includes(ev), ev);
 });
 
@@ -138,8 +138,9 @@ test('calendar page: greeting, Calendly inline embed with prefill and UTMs, deta
 });
 
 test('send.php: recipient, sender, reply-to, subject, JSON answer, spam limits, server-side checks', () => {
-  assert.match(PHP, /return 'sales' \. '@' \. 'callvixsolutions\.com';/);
-  assert.ok(!PAGE.includes('sales@') && !SCHED.includes('sales@'), 'the recipient is never in a page');
+  assert.match(PHP, /return 'chris' \. '@' \. 'callvixsupport\.com';/);
+  assert.doesNotMatch(PHP, /'sales' \. '@'/, 'the old sales@ recipient is gone');
+  assert.ok(!/chris@|callvixsupport\.com/.test(PAGE + SCHED), 'the recipient is never in a page');
   assert.match(PHP, /const CVX_FROM_ADDRESS = 'noreply@callvixsolutions\.com';/);
   assert.match(PHP, /\$headers\[\] = 'Reply-To: ' \. \$replyTo;/);
   assert.match(PHP, /const CVX_SUBJECT_PREFIX = 'New landing page lead: ';/);

@@ -277,7 +277,8 @@ and clears the flag on a valid visit so a refresh can't count twice. The page sh
 (name and email prefilled, UTMs passed, event details hidden, height from Calendly's size messages).
 
 **Leads.** `send.php` emails each lead from this server with PHP `mail()` (adapted from the PestMaster page's
-endpoint on the same Hostinger server): to sales@callvixsolutions.com (set only inside `send.php`), from
+endpoint on the same Hostinger server): to chris@callvixsupport.com (set only inside `send.php`; changed from
+sales@callvixsolutions.com on 27 Oct 2026, which didn't receive the first test lead), from
 noreply@callvixsolutions.com, Reply-To the lead, subject "New landing page lead: {business}". It checks
 the origin, a honeypot field (`website`), time on page, every field again, and allows 5 requests per visitor
 address per hour. It answers JSON `{"ok": true}`; a plain no-JavaScript post gets a short HTML page.
