@@ -590,3 +590,11 @@
   [data-callvix-v3b] .cv3b-schedule__title { font-size: 26px; }
   [data-callvix-v3b] .cv3b-cal { margin-top: 18px; height: 620px; border-radius: 12px; margin-inline: calc(-1 * var(--cv3b-gutter) + 8px); }
 }
+/* Calendar page from 768px (owner, 27 Oct): Calendly draws its own card, so ours goes; the steps, heading and
+   callback line are centred over it. Phones keep the framed box (Calendly fills it edge to edge there). */
+@media (min-width: 768px) {
+  [data-callvix-v3b] .cv3b-cal { margin-top: 4px; background: transparent; border: 0; border-radius: 0; }
+  [data-callvix-v3b] .cv3b-schedule__inner { text-align: center; }
+  [data-callvix-v3b] .cv3b-next--progress { justify-content: center; }
+  [data-callvix-v3b] .cv3b-schedule__title { margin-inline: auto; }
+}
