@@ -6,20 +6,20 @@
  * first time a page is copied from an older one. Every test below was run once
  * against a deliberately broken tree and seen to fail before it was trusted.
  *
- * The campaign page (/pest-control-call-demo/) and preview/ are outside every
- * rule here except the one that asserts the campaign page has not changed.
+ * The campaign pages (/pest-control-answering-service/ and its /schedule/ page) and
+ * preview/ are outside every rule here; scripts/lp-answering.test.mjs covers them.
  *
  * Run with `npm test`.
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
-const EXCLUDED_DIRS = new Set(['pest-control-call-demo', 'pest-control-call-demo-v1', 'docs', 'preview', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
+const EXCLUDED_DIRS = new Set(['pest-control-answering-service', 'docs', 'preview', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
 
 function htmlFiles(dir = ROOT, out = []) {
   for (const entry of readdirSync(dir)) {
@@ -219,16 +219,11 @@ test('/services title, description and H1, and every canonical and robots tag, m
 });
 
 /* ------------------------------------------------------ 7. campaign page */
-test('the campaign page is byte-identical to the baseline, and /thank-you is still noindex', () => {
-  const sha = createHash('sha256').update(readFileSync(join(ROOT, 'pest-control-call-demo/index.html'))).digest('hex');
-  assert.equal(sha, FROZEN.campaignSha256,
-    'pest-control-call-demo/index.html has changed. It is the Google Ads landing page and is outside every main-site round. '
-    + 'If the change is intended, update campaignSha256 in scripts/round11-frozen.json in the same commit.');
+test('the retired campaign pages stay archived, and /thank-you is still noindex', () => {
+  /* /pest-control-call-demo/ and its v1 copy were retired on 27 Oct 2026 (git tag archive/landing-pages-2026-10-27)
+     and redirect to /pest-control-answering-service/; scripts/lp-answering.test.mjs checks the redirects. */
+  for (const dir of ['pest-control-call-demo', 'pest-control-call-demo-v1']) assert.ok(!existsSync(join(ROOT, dir)), dir + ' is back in the site');
   assert.match(read('thank-you.html'), /<meta\s+name="robots"[^>]*content="[^"]*noindex/i, '/thank-you must stay noindex');
-  /* The v1 copy kept for rollback/A-B (lp-v2): the old page with only its canonical and og:url pointing at itself. */
-  const v1 = createHash('sha256').update(readFileSync(join(ROOT, 'pest-control-call-demo-v1/index.html'))).digest('hex');
-  assert.equal(v1, FROZEN.campaignV1Sha256, 'pest-control-call-demo-v1/index.html has changed; it is the frozen rollback copy of the v1 landing page.');
-  assert.match(read('pest-control-call-demo-v1/index.html'), /<meta\s+name="robots"[^>]*content="[^"]*noindex/i, 'the v1 copy must stay noindex');
 });
 
 /* ------------------------------------------------------- 8. banned strings */

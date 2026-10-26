@@ -18,10 +18,10 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const ORIGIN = 'https://callvixsolutions.com';
 
 /* Directories that are deliberately outside the main site:
-   - pest-control-call-demo is the paid-ads landing page, noindex and
-     intentionally absent from the sitemap
+   - pest-control-answering-service is the paid-ads landing page (and its
+     /schedule/ page), noindex and intentionally absent from the sitemap
    - docs holds measurement handoff files that are gitignored             */
-const EXCLUDED_DIRS = new Set(['pest-control-call-demo', 'pest-control-call-demo-v1', 'docs', 'preview', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
+const EXCLUDED_DIRS = new Set(['pest-control-answering-service', 'docs', 'preview', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
 
 function htmlFiles(dir = ROOT, out = []) {
   for (const entry of readdirSync(dir)) {

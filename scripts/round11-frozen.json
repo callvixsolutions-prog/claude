@@ -122,7 +122,5 @@
    "canonical": "https://callvixsolutions.com/tools/",
    "robots": "index, follow, max-image-preview:large"
   }
- },
- "campaignSha256": "40c28c0d0f4a0a058bf57feed656bcae00ddb0d4ea25c58dbb83dfd126608cdf",
- "campaignV1Sha256": "058828d719474aebc3bde2d4f0764e3afaa7a15a154f3017776eed06666a9717"
+ }
 }

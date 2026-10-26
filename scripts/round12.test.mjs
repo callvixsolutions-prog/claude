@@ -18,7 +18,7 @@ import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
-const EXCLUDED_DIRS = new Set(['pest-control-call-demo', 'pest-control-call-demo-v1', 'docs', 'preview', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
+const EXCLUDED_DIRS = new Set(['pest-control-answering-service', 'docs', 'preview', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
 function htmlFiles(dir = ROOT, out = []) {
   for (const entry of readdirSync(dir)) {
     const abs = join(dir, entry);
@@ -140,7 +140,7 @@ const RETIRED = [
   'office gets every week', 'shows up in your revenue',
   'will follow up with you today', 'books faster', 'single sheet', 'one-page after-hours plan',
 ];
-/* Round 13. These four are also checked on the campaign page (/pest-control-call-demo/),
+/* Round 13. These four are also checked on the campaign page (/pest-control-answering-service/),
    which every other rule in this file leaves alone: the owner removed the parent-company
    line from every public page, that one included. */
 const RETIRED_EVERYWHERE = ['zenova', 'registration is finalized', 'often a lost customer', 'win back on a callback'];
@@ -183,7 +183,7 @@ test('strings retired in round 12 have not come back', () => {
     }
   }
   {
-    const file = 'pest-control-call-demo/index.html'; const text = readable(read(file)); const lower = text.toLowerCase();
+    const file = 'pest-control-answering-service/index.html'; const text = readable(read(file)); const lower = text.toLowerCase();
     for (const s of RETIRED_EVERYWHERE.filter((x) => lower.includes(x))) { const i = lower.indexOf(s); hits.push(`${file}: "${s}" — "…${text.slice(Math.max(0, i - 45), i + s.length + 45)}…"`); }
     const llms = fold(read('llms.txt'));
     for (const s of [...RETIRED_EVERYWHERE, ...RETIRED_R14].filter((x) => llms.includes(x))) hits.push(`llms.txt: "${s}"`);

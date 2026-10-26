@@ -1,0 +1,16 @@
+cv3b-hero-phone-call.jpg (864x1080): a stock photograph, not a Callvix team member. The page says so in visible text.
+Source: https://unsplash.com/photos/WEDDt-u3q3o (photographer: Berkeley Communications), Unsplash License
+(https://unsplash.com/license: free commercial use, no attribution required). Recorded in assets/photos/MANIFEST.md
+("An office at capacity") on the live site, which uses a small crop of the same photograph.
+Made from the 2400x1600 download kept at _callvix-round17-tools/photos/cand/office_WEDDt-u3q3o.jpg
+(SHA-256 6c2952449fab49fb6c84505beca0c949d6d0956cd34c0ff1d55ee3f20ded15fe): crop 1080x1350 at x 660, y 150,
+resized to 864x1080, JPEG quality 82. Crop and resize only. This file's SHA-256: 5089b5d07df1cb2aaa7e056d96e665c97c5c42d196ff93d853f8df2bdd92d2eb.
+Chosen by the owner on 25 Oct 2026 (option 3 of the hero photo comparison).
+
+cv3b-pestmaster-mark.png (112x112, transparent PNG, shown at 52px): the PestMaster "P" brand mark used by
+PestMaster of Naperville & Wheaton, beside Omar Abouhussein's testimonial attribution. Resized only (no recolor,
+crop or redraw) from pestmaster-landing-page/assets-source/originals/pestmaster-brand-icon.png (731x731,
+SHA-256 dbe9b285989be4792c8346aca7426bd5a6e6ea3fc19dd08b4956ff2130daaa36), which that project's ASSETS.md records as
+octanecdn.com/pestmastercom/pestmastercom_516600041.png, linked from https://www.pestmaster.com/naperville-wheaton/,
+downloaded 2026-10-10. Same asset the owner named on 25 Oct 2026. Served from this folder, never hotlinked.
+This file's SHA-256: d91def7e843007e65724c57475fb4338037d999dd69f5e1eced93e170b0f103e.

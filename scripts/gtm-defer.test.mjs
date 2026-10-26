@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const SKIP = new Set(['preview', 'node_modules', '.git', 'docs', 'scripts']);
-const STANDARD = new Set(['pest-control-call-demo/index.html', 'pest-control-call-demo-v1/index.html', 'thank-you.html']);
+const STANDARD = new Set(['pest-control-answering-service/index.html', 'pest-control-answering-service/schedule/index.html', 'thank-you.html']);
 const pages = [];
 (function walk(dir) { for (const e of readdirSync(dir)) { const abs = join(dir, e); const rel = relative(ROOT, abs);
   if (SKIP.has(rel.split('/')[0])) continue; if (statSync(abs).isDirectory()) walk(abs); else if (e.endsWith('.html')) pages.push(rel); } }(ROOT));

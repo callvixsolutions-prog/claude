@@ -5,8 +5,8 @@
  * against a stubbed window/document, so this fails if the gate is missing, misspelt
  * or blocks production.
  *
- * Not gated: /pest-control-call-demo/ (frozen) and the v1 rollback copy (hash-pinned in
- * round11.test.mjs). /services was gated on 26 Oct 2026.
+ * Every GTM page is gated. /services was gated on 26 Oct 2026; the old landing pages were
+ * retired on 27 Oct 2026 and their replacement (/pest-control-answering-service/) is gated.
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -17,7 +17,7 @@ import vm from 'node:vm';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const SKIP = new Set(['preview', 'node_modules', '.git', 'docs', 'scripts']);
-const UNGATED = new Set(['pest-control-call-demo/index.html', 'pest-control-call-demo-v1/index.html']); // /services gated 26 Oct 2026 (owner: only the landing pages stay frozen)
+const UNGATED = new Set(); // none since 27 Oct 2026
 const pages = [];
 (function walk(dir) { for (const e of readdirSync(dir)) { const abs = join(dir, e); const rel = relative(ROOT, abs);
   if (SKIP.has(rel.split('/')[0])) continue; if (statSync(abs).isDirectory()) walk(abs); else if (e.endsWith('.html')) pages.push(rel); } }(ROOT));
@@ -63,10 +63,6 @@ test('every editable GTM page loads the container on callvixsolutions.com only',
   assert.deepEqual(wrong, []);
 });
 
-test('the frozen pages are left ungated, as their hash pins require', () => {
-  for (const rel of UNGATED) {
-    const code = snippetOf(readFileSync(join(ROOT, rel), 'utf8'));
-    assert.ok(code, rel + ': snippet not found');
-    assert.equal(run(code, 'localhost').length, 1, rel + ' changed: it now gates GTM');
-  }
+test('no page is left ungated', () => {
+  assert.equal(UNGATED.size, 0);
 });

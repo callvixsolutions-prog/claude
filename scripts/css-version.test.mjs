@@ -35,7 +35,7 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
    preview/ holds client preview sites that live in this repo but are not this
    site: different stylesheet, different structure, noindex. Scanning them made
    five checks fail on pages none of these rules were written for. */
-const EXCLUDED_DIRS = new Set(['pest-control-call-demo', 'pest-control-call-demo-v1', 'docs', 'preview', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
+const EXCLUDED_DIRS = new Set(['pest-control-answering-service', 'docs', 'preview', '.git', 'node_modules', 'scripts', 'assets', 'css', 'js', '.github', '.claude']);
 
 function htmlFiles(dir = ROOT, out = []) {
   for (const entry of readdirSync(dir)) {

@@ -65,6 +65,14 @@ RedirectMatch 404 ^/scripts(/|$)
   RewriteRule ^wp-admin(/.*)?$  /  [R=301,L]
   RewriteRule ^wp-login\.php$   /  [R=301,L]
 
+  # Retired landing pages (27 Oct 2026) -> the live landing page, in one hop. Any path under
+  # them (index.html, assets) goes too. No "?" in the target and no QSD flag, so the
+  # query string (gclid, utm_*) is passed on unchanged. Archived in git tag
+  # archive/landing-pages-2026-10-27. The v3 review routes were never served; they are
+  # listed so a shared preview link can never 404.
+  RewriteRule ^pest-control-call-demo(?:-v1)?(?:/.*)?$  /pest-control-answering-service/  [R=301,L]
+  RewriteRule ^pest-control-discovery-v3(?:/.*)?$      /pest-control-answering-service/  [R=301,L]
+
   # /index, /index/ and /index.html are duplicates of the homepage. Send all
   # three straight to / in one hop, before rule 4 turns /index.html into /index.
   #
@@ -149,4 +157,7 @@ ErrorDocument 404 /404.html
   AddType image/svg+xml .svg
   AddType application/xml .xml
   AddType text/plain .txt
+  AddType video/mp4 .mp4
+  AddType video/webm .webm
+  AddType text/vtt .vtt
 </IfModule>
