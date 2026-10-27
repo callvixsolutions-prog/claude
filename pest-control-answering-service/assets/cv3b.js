@@ -278,7 +278,8 @@
         v.className = 'cv3b-video__player';
         v.setAttribute('aria-labelledby', 'cv3b-video-title');
         /* captions are burned into the picture, so the VTT track is listed but off by default (no "default" attribute) */
-        v.innerHTML = '<source src="' + VID + '.webm" type="video/webm"><source src="' + VID + '.mp4" type="video/mp4"><track kind="captions" src="' + VID + '.vtt" srclang="en" label="English">';
+        /* MP4 (H.264/AAC) first: every phone plays it, including older iPhones that may accept WebM and then fail to decode it */
+        v.innerHTML = '<source src="' + VID + '.mp4" type="video/mp4"><source src="' + VID + '.webm" type="video/webm"><track kind="captions" src="' + VID + '.vtt" srclang="en" label="English">';
         frame.replaceChildren(v);
         v.addEventListener('play', function () { if (!played) { played = true; record('callvix_video_play'); } });
         var reached = {};

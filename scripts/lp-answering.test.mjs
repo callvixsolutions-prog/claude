@@ -170,7 +170,15 @@ test('tracked-visit memory: first (90 days) and latest tagged visit reach the le
   assert.match(PHP, /'First tracked visit \(last 90 days\): ' \./);
   assert.match(PHP, /'Latest tracked visit: ' \./);
   assert.doesNotMatch(PHP, /\$invalid\[\] = '(first|latest)_visit'/, 'odd values never lose a lead');
-  assert.match(PAGE, /assets\/cv3b\.js\?v=20261027c"/, 'cache-busted');
+  assert.match(PAGE, /assets\/cv3b\.js\?v=20261028a"/, 'cache-busted');
+});
+
+test('explainer video: MP4 is the first source so every phone (older iPhones included) gets H.264', () => {
+  const mp4 = JS.indexOf("VID + '.mp4\" type=\"video/mp4\"");
+  const webm = JS.indexOf("VID + '.webm\" type=\"video/webm\"");
+  assert.ok(mp4 > 0 && webm > 0, 'both sources listed');
+  assert.ok(mp4 < webm, 'MP4 listed before WebM');
+  assert.match(JS, /v\.playsInline = true; v\.setAttribute\('playsinline', ''\);/, 'plays inside the page on iPhone');
 });
 
 test('send.php: Meta Conversions API is off without the server-only config, runs after the visitor has the answer', () => {
