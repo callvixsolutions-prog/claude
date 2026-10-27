@@ -96,7 +96,7 @@ test('lead form: plain HTML POST to send.php, four required single-line fields, 
   const want = { name: 'type="text" autocomplete="name"', business: 'type="text" autocomplete="organization"', phone: 'type="tel" autocomplete="tel" inputmode="tel"', email: 'type="email" autocomplete="email"' };
   for (const f of fields) { assert.ok(f.attrs.startsWith(want[f.name]), f.name); assert.match(f.attrs, / required /, f.name + ' required'); }
   assert.match(card, /<div class="cv3b-hp" aria-hidden="true"><label for="cv3b-website">[^<]+<\/label><input id="cv3b-website" name="website" type="text" tabindex="-1" autocomplete="off"><\/div>/);
-  for (const k of ['page_url', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid']) assert.ok(card.includes(`<input type="hidden" name="${k}" value="">`), k);
+  for (const k of ['page_url', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid']) assert.ok(card.includes(`<input type="hidden" name="${k}" value="">`), k);
   assert.match(card, /<button class="cv3b-btn cv3b-btn--block" id="cv3b-submit" type="submit">Continue to pick a time<\/button>/);
   assert.equal(text(between(card, '<p class="cv3b-consent">', '</p>')), 'By continuing, you agree we can call or text you about this request. See our Privacy Policy .');
   assert.match(card, /See our <a class="cv3b-link" href="\/privacy-policy">Privacy Policy<\/a>\./);
@@ -116,7 +116,7 @@ test('form script: background JSON send to send.php, one retry, generate_lead, s
   assert.equal((JS.match(/post\(body\)\.catch\(function \(\) \{\}\);/g) || []).length, 2, 'exactly one background retry per failure path');
   for (const k of ['cvx_lead_first', 'cvx_lead_name', 'cvx_lead_email']) assert.match(JS, new RegExp(`store\\('${k}'`), k);
   assert.match(JS, /store\('lead_ok', '1'\);/);
-  assert.match(JS, /record\('generate_lead', \{ cta_location: lastCta \}/);
+  assert.match(JS, /record\('generate_lead', \{ cta_location: lastCta, event_id: p\.event_id \}/);
   assert.match(JS, /location\.assign\(SCHEDULE \+ utmQuery\(\)\)/);
   assert.match(JS, /var UTM = TRACKING\.slice\(0, 5\);/, 'only utm_* parameters are carried to the calendar page');
   assert.doesNotMatch(JS + SJS, /chris@|sales@|callvixsolutions@|callvixsupport\.com|noreply@/, 'no email address in page scripts');
@@ -130,7 +130,7 @@ test('calendar page: greeting, Calendly inline embed with prefill and UTMs, deta
   assert.match(SJS, /hide_event_type_details=1/);
   assert.match(SJS, /parentElement: holder, prefill: prefill, utm: utm/);
   assert.match(SJS, /case 'calendly\.page_height':/);
-  assert.match(SJS, /record\('callvix_meeting_booked', \{ booking_method: 'calendly_embed' \}\)/);
+  assert.match(SJS, /record\('callvix_meeting_booked', \{ booking_method: 'calendly_embed', event_id: 'book\.' \+/);
   assert.equal(text(between(SCHED, '<p class="cv3b-schedule__later">', '</p>')), 'Can’t pick a time now? No problem. We’ll call you shortly during U.S. business hours.');
   const header = between(SCHED, '<header', '</header>');
   assert.doesNotMatch(header, /<nav|<a /, 'logo only, no nav links');
@@ -145,17 +145,33 @@ test('send.php: recipient, sender, reply-to, subject, JSON answer, spam limits, 
   assert.match(PHP, /\$headers\[\] = 'Reply-To: ' \. \$replyTo;/);
   assert.match(PHP, /const CVX_SUBJECT_PREFIX = 'New landing page lead: ';/);
   assert.match(PHP, /CVX_SUBJECT_PREFIX \. \$business/);
-  assert.match(PHP, /cvx_respond\(200, \['ok' => true\]\);/);
+  assert.match(PHP, /cvx_output\(200, \['ok' => true\]\);/);
   assert.match(PHP, /new DateTimeZone\('America\/New_York'\)/);
   for (const k of ['Name: ', 'Business: ', 'Phone: ', 'Email: ', 'Submitted: ', 'Page URL: ']) assert.ok(PHP.includes(`'${k}'`), k);
-  assert.match(PHP, /const CVX_TRACKING_KEYS = \['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid'\];/);
+  assert.match(PHP, /const CVX_TRACKING_KEYS = \['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'\];/);
   assert.match(PHP, /\$data\['website'\]/, 'honeypot name matches the page');
   assert.match(PHP, /const CVX_MAX_PER_HOUR = 5;/); assert.match(PHP, /cvx_rate_limited\(cvx_client_ip\(\)\)/);
   assert.match(PHP, /const CVX_ALLOWED_ORIGINS = \['https:\/\/callvixsolutions\.com'\];/);
   for (const f of ["'name'", "'business'", "'phone'", "'email'"]) assert.ok(PHP.includes(`$invalid[] = ${f};`), f);
   assert.match(PHP, /\$data = \$_POST;/, 'the no-JavaScript form post is accepted too');
   const code = PHP.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
-  assert.doesNotMatch(code, /formspree|curl_init|password|api[_-]?key/i, 'no third-party service and no secrets in the code');
+  assert.doesNotMatch(code, /formspree|password|api[_-]?key|EAA[A-Za-z0-9]{20,}/i, 'no form service and no secret or token in the code');
+  assert.match(PHP, /const CVX_TRACKING_KEYS = \[[^\]]*'gclid', 'fbclid'\];/, 'fbclid reaches the lead email');
+});
+
+test('send.php: Meta Conversions API is off without the server-only config, runs after the visitor has the answer', () => {
+  assert.match(PHP, /const CVX_CONFIG_FILE = 'callvix-config\.php';/);
+  assert.match(PHP, /\$file = dirname\(__DIR__, 2\) \. '\/' \. CVX_CONFIG_FILE;/, 'config lives above public_html');
+  assert.ok(!existsSync(join(ROOT, 'callvix-config.php')) && !existsSync(join(ROOT, DIR, 'callvix-config.php')), 'no config file in the repository');
+  const ok = PHP.indexOf("cvx_output(200, ['ok' => true]);"), finish = PHP.indexOf('litespeed_finish_request();'), meta = PHP.indexOf('$metaOk = cvx_meta_lead(');
+  assert.ok(ok > 0 && ok < finish && finish < meta, 'answer, then finish the request, then Meta');
+  assert.match(PHP, /if \(\$config !== \[\]\) \{/, 'nothing goes to Meta without the config');
+  assert.match(PHP, /'event_name' => 'Lead'/); assert.match(PHP, /'action_source' => 'website'/);
+  for (const k of ["'em' => [cvx_hash(", "'ph' => [cvx_hash('1' ."]) assert.ok(PHP.includes(k), k + ' hashed');
+  assert.match(PHP, /preg_match\('\/\^lead\\\.\[a-z0-9\]\{6,12\}\\\.\[a-z0-9\]\{1,8\}\$\/', \$eventId\)/, 'the page event_id is reused for dedupe');
+  assert.match(JS, /p\.event_id = 'lead\.' \+ Date\.now\(\)\.toString\(36\) \+ '\.' \+ Math\.random\(\)\.toString\(36\)\.slice\(2, 8\);/);
+  assert.match(JS, /record\('generate_lead', \{ cta_location: lastCta, event_id: p\.event_id \}/, 'the same id goes to the dataLayer for the browser pixel');
+  assert.match(JS, /record\('callvix_video_progress', \{ video_percent: String\(pct\) \}\)/);
 });
 
 test('video: Page B files in this folder, nothing loads before play, 9:16 cuts never referenced', () => {

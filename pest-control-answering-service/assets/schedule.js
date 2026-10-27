@@ -23,7 +23,7 @@
   function record(name, params) {
     try {
       var p = { event: name, page_path: location.pathname, link_location: undefined, cta_location: undefined,
-        file_name: undefined, booking_step: undefined, booking_method: undefined };
+        file_name: undefined, booking_step: undefined, booking_method: undefined, event_id: undefined, video_percent: undefined };
       if (params) Object.keys(params).forEach(function (k) { if (params[k]) p[k] = params[k]; });
       (window.dataLayer = window.dataLayer || []).push(p);
     } catch (e) { /* measurement must never break the page */ }
@@ -109,7 +109,7 @@
         break;
       case 'calendly.event_scheduled':
         if (alreadyCounted(bookingKey(d.payload))) return;
-        record('callvix_meeting_booked', { booking_method: 'calendly_embed' });
+        record('callvix_meeting_booked', { booking_method: 'calendly_embed', event_id: 'book.' + Date.now().toString(36) + '.' + Math.random().toString(36).slice(2, 8) });
         break;
     }
   }, false);

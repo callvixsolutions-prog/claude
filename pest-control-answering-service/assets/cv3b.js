@@ -6,11 +6,14 @@
  *     background JSON send to send.php, then the move to /schedule/ without waiting on a slow server.
  *   - The phone-only sticky button and the explainer video (click to play, nothing loads before that).
  *
- * Measurement (names unchanged from the earlier landing page; GTM forwards them to GA4):
+ * Measurement (names unchanged from the earlier landing page; GTM forwards them to GA4, Google Ads and Meta):
  *   callvix_cta_click     {cta_location}   a booking button
  *   callvix_booking_step  {booking_step}   details_started (first use of the form), details_sent (form accepted)
  *   generate_lead         {cta_location}   once per session, when the lead is sent (see sendLead)
  *   callvix_video_play                     once per page view
+ *   callvix_video_progress {video_percent} 50 and 100, once each per page view (retargeting video viewers)
+ * generate_lead carries event_id; the same id goes to send.php, which sends the lead to Meta's Conversions API, so
+ * Meta counts the browser and server copies once.
  * GTM keeps every data layer key until it is overwritten, so every event sets each forwarded parameter and
  * clears the ones it doesn't use (same fix as js/main.js, 26 Oct 2026).
  *
@@ -27,7 +30,7 @@
   var ENDPOINT = '/pest-control-answering-service/send.php';
   var SCHEDULE = '/pest-control-answering-service/schedule/';
   var SEND_WAIT_MS = 1200;                   // the longest the visitor waits for the server before moving on
-  var TRACKING = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid'];
+  var TRACKING = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'];
   var UTM = TRACKING.slice(0, 5);
 
   var $ = function (sel, ctx) { return (ctx || document).querySelector(sel); };
@@ -37,7 +40,7 @@
   function record(name, params, extra) {
     try {
       var p = { event: name, page_path: location.pathname, link_location: undefined, cta_location: undefined,
-        file_name: undefined, booking_step: undefined, booking_method: undefined };
+        file_name: undefined, booking_step: undefined, booking_method: undefined, event_id: undefined, video_percent: undefined };
       if (params) Object.keys(params).forEach(function (k) { if (params[k]) p[k] = params[k]; });
       if (extra) Object.keys(extra).forEach(function (k) { p[k] = extra[k]; });
       (window.dataLayer = window.dataLayer || []).push(p);
@@ -122,6 +125,7 @@
       ['name', 'business', 'email', 'website', 'page_url'].concat(TRACKING).forEach(function (k) { p[k] = (form.elements[k] ? form.elements[k].value : '').trim(); });
       p.phone = digits(form.elements.phone.value);
       p.elapsed_ms = Date.now() - openedAt;
+      p.event_id = 'lead.' + Date.now().toString(36) + '.' + Math.random().toString(36).slice(2, 8);
       return p;
     }
     function post(body) {
@@ -167,7 +171,7 @@
         (window.dataLayer = window.dataLayer || []).push({ user_data: ud });
         record('callvix_booking_step', { booking_step: 'details_sent', cta_location: lastCta });
         // GTM calls eventCallback once its tags for this event have run; without GTM the timer moves on.
-        record('generate_lead', { cta_location: lastCta }, { eventCallback: leave, eventTimeout: 1000 });
+        record('generate_lead', { cta_location: lastCta, event_id: p.event_id }, { eventCallback: leave, eventTimeout: 1000 });
         window.dataLayer.push({ user_data: undefined });
       } catch (e) { /* measurement must never block the visitor */ }
       window.setTimeout(leave, 1100);           // GTM blocked or not loaded (e.g. an ad blocker)
@@ -244,6 +248,10 @@
         v.innerHTML = '<source src="' + VID + '.webm" type="video/webm"><source src="' + VID + '.mp4" type="video/mp4"><track kind="captions" src="' + VID + '.vtt" srclang="en" label="English">';
         frame.replaceChildren(v);
         v.addEventListener('play', function () { if (!played) { played = true; record('callvix_video_play'); } });
+        var reached = {};
+        var progress = function (pct) { if (!reached[pct]) { reached[pct] = 1; record('callvix_video_progress', { video_percent: String(pct) }); } };
+        v.addEventListener('timeupdate', function () { if (v.duration && v.currentTime / v.duration >= 0.5) progress(50); });
+        v.addEventListener('ended', function () { progress(50); progress(100); });
         var pl = v.play(); if (pl && pl.catch) pl.catch(function () { /* the visitor can press play on the native controls */ });
         v.focus({ preventScroll: true });
       });

@@ -283,6 +283,18 @@ noreply@callvixsolutions.com, Reply-To the lead, subject "New landing page lead:
 the origin, a honeypot field (`website`), time on page, every field again, and allows 5 requests per visitor
 address per hour. It answers JSON `{"ok": true}`; a plain no-JavaScript post gets a short HTML page.
 
+**Meta Conversions API.** After the visitor has their answer, `send.php` also sends each accepted lead to Meta as
+a `Lead` event (same `event_id` as the page's `generate_lead`, so the browser pixel and the server copy count once;
+email, phone and name hashed with SHA-256). It reads its settings from `callvix-config.php`, which must sit in the
+folder **above** `public_html` on the server (never in this repository):
+
+```php
+<?php return ['meta_pixel_id' => '1234567890', 'meta_capi_token' => 'EAA…', 'meta_test_event_code' => ''];
+```
+
+No file, or empty values, means nothing is sent to Meta. `meta_test_event_code` (from Events Manager → Test events)
+sends to the test view only; clear it after testing.
+
 **Switches.** `LP_VIDEO` at the top of `assets/cv3b.js` (true: the explainer video in "How it works";
 the 9:16 cuts in `assets/video/` are for ads and never loaded). After changing `cv3b.css`, `cv3b.js` or
 `schedule.js`, raise the `?v=` on its tag in both HTML files.

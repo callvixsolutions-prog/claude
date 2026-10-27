@@ -16,6 +16,12 @@
  * Spam protection: allowed origin only, a hidden honeypot field, a minimum time on the form
  * (when the page's script reports it), server-side validation of every field, and at most
  * CVX_MAX_PER_HOUR requests per visitor address per hour.
+ *
+ * Meta Conversions API (27 Oct 2026): after the visitor has their answer, an accepted lead is also sent to Meta
+ * from this server as a "Lead" event with the page's event_id (so Meta counts it once with the browser pixel) and
+ * the contact details hashed with SHA-256, as Meta requires. The pixel ID and access token live ONLY in
+ * callvix-config.php on the server, in the folder above public_html (see CVX_CONFIG_FILE); never in this file or
+ * the repository. Without that file, or with empty values, nothing is sent to Meta.
  */
 declare(strict_types=1);
 
@@ -27,7 +33,10 @@ const CVX_MAX_PER_HOUR = 5;
 const CVX_MIN_MS_ON_FORM = 3000;
 const CVX_MAX_BODY_BYTES = 20000;
 const CVX_PAGE_PREFIX = 'https://callvixsolutions.com/';
-const CVX_TRACKING_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid'];
+const CVX_TRACKING_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'];
+const CVX_CONFIG_FILE = 'callvix-config.php';               // two folders up: next to public_html, out of the web's reach
+const CVX_META_GRAPH = 'https://graph.facebook.com/v23.0/';
+const CVX_META_TIMEOUT_S = 5;
 
 // Cloudflare's published ranges (copied from the PestMaster endpoint, 17 Oct 2026). Only used
 // if the site is ever put behind Cloudflare's proxy; otherwise REMOTE_ADDR is the visitor.
@@ -53,13 +62,20 @@ function cvx_wants_json(): bool
 
 function cvx_respond(int $status, array $body): void
 {
+    cvx_output($status, $body);
+    exit;
+}
+
+// Writes the answer without ending the script (used when work continues after the visitor has their answer).
+function cvx_output(int $status, array $body): void
+{
     http_response_code($status);
     header('Cache-Control: no-store');
     header('X-Robots-Tag: noindex, nofollow, noarchive, noimageindex');
     if (cvx_wants_json()) {
         header('Content-Type: application/json');
         echo json_encode($body);
-        exit;
+        return;
     }
     // Plain form post (no JavaScript): a short page in plain words.
     header('Content-Type: text/html; charset=UTF-8');
@@ -76,7 +92,86 @@ function cvx_respond(int $status, array $body): void
         . 'main{max-width:560px;margin:12vh auto;padding:32px 24px;background:#fff;border-radius:16px}h1{font-size:26px;line-height:1.25;margin:0 0 12px}'
         . 'a{color:#0A7C82;font-weight:600}</style></head><body><main><h1>' . htmlspecialchars($title) . '</h1><p>' . htmlspecialchars($text) . '</p>'
         . '<p><a href="/pest-control-answering-service/">Back to the page</a></p></main></body></html>';
-    exit;
+}
+
+// Server-only settings (Meta pixel ID, Conversions API token, optional test code). Returns [] when absent.
+function cvx_config(): array
+{
+    $file = dirname(__DIR__, 2) . '/' . CVX_CONFIG_FILE;
+    if (!is_file($file)) {
+        return [];
+    }
+    $config = include $file;
+    return is_array($config) ? $config : [];
+}
+
+function cvx_hash(string $value): string
+{
+    return hash('sha256', $value);
+}
+
+// One "Lead" event to Meta's Conversions API. True only when Meta reports the event received.
+function cvx_meta_lead(array $config, array $lead): bool
+{
+    $pixel = is_string($config['meta_pixel_id'] ?? null) ? trim($config['meta_pixel_id']) : '';
+    $token = is_string($config['meta_capi_token'] ?? null) ? trim($config['meta_capi_token']) : '';
+    if (preg_match('/^\d{6,20}$/', $pixel) !== 1 || $token === '' || !function_exists('curl_init')) {
+        return false;
+    }
+    $names = preg_split('/\s+/u', function_exists('mb_strtolower') ? mb_strtolower($lead['name'], 'UTF-8') : strtolower($lead['name'])) ?: [];
+    $userData = [
+        'em' => [cvx_hash(strtolower($lead['email']))],
+        'ph' => [cvx_hash('1' . $lead['phone'])],
+        'country' => [cvx_hash('us')],
+        'client_ip_address' => $lead['ip'],
+        'client_user_agent' => $lead['ua'],
+    ];
+    if (count($names) >= 1 && $names[0] !== '') {
+        $userData['fn'] = [cvx_hash($names[0])];
+    }
+    if (count($names) >= 2) {
+        $userData['ln'] = [cvx_hash((string) end($names))];
+    }
+    if ($lead['fbp'] !== '') {
+        $userData['fbp'] = $lead['fbp'];
+    }
+    if ($lead['fbc'] !== '') {
+        $userData['fbc'] = $lead['fbc'];
+    }
+    $body = [
+        'data' => [[
+            'event_name' => 'Lead',
+            'event_time' => time(),
+            'event_id' => $lead['event_id'],
+            'action_source' => 'website',
+            'event_source_url' => $lead['page_url'],
+            'user_data' => $userData,
+            'custom_data' => ['content_name' => 'Landing page form'],
+        ]],
+        'access_token' => $token,
+    ];
+    $test = is_string($config['meta_test_event_code'] ?? null) ? trim($config['meta_test_event_code']) : '';
+    if ($test !== '') {
+        $body['test_event_code'] = $test;
+    }
+    $handle = curl_init(CVX_META_GRAPH . $pixel . '/events');
+    if ($handle === false) {
+        return false;
+    }
+    curl_setopt_array($handle, [
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => json_encode($body, JSON_UNESCAPED_SLASHES),
+        CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_PROTOCOLS => CURLPROTO_HTTPS,
+        CURLOPT_CONNECTTIMEOUT => 3,
+        CURLOPT_TIMEOUT => CVX_META_TIMEOUT_S,
+    ]);
+    $answer = curl_exec($handle);
+    $status = (int) curl_getinfo($handle, CURLINFO_RESPONSE_CODE);
+    curl_close($handle);
+    $json = is_string($answer) ? json_decode($answer, true) : null;
+    return $status === 200 && is_array($json) && (int) ($json['events_received'] ?? 0) >= 1;
 }
 
 // One line of plain text: no control characters (so no header injection), trimmed, capped.
@@ -298,4 +393,37 @@ if ($sent !== true) {
     error_log('cvx-lead: send_failed');
     cvx_respond(500, ['ok' => false, 'error' => 'send_failed']);
 }
-cvx_respond(200, ['ok' => true]);
+
+// The visitor gets the answer now; Meta is told afterwards, so a slow Meta never delays the page.
+cvx_output(200, ['ok' => true]);
+if (function_exists('litespeed_finish_request')) {
+    litespeed_finish_request();
+} elseif (function_exists('fastcgi_finish_request')) {
+    fastcgi_finish_request();
+}
+
+$config = cvx_config();
+if ($config !== []) {
+    $eventId = cvx_line($data['event_id'] ?? '', 40);
+    if (preg_match('/^lead\.[a-z0-9]{6,12}\.[a-z0-9]{1,8}$/', $eventId) !== 1) {
+        $eventId = 'lead.srv.' . bin2hex(random_bytes(4));
+    }
+    $fbp = cvx_line($_COOKIE['_fbp'] ?? '', 100);
+    $fbc = cvx_line($_COOKIE['_fbc'] ?? '', 300);
+    if (preg_match('/^fb\.\d\.\d+\.\d+$/', $fbp) !== 1) {
+        $fbp = '';
+    }
+    if (preg_match('/^fb\.\d\.\d+\.[\w\-]+$/', $fbc) !== 1) {
+        $fbc = $tracking['fbclid'] !== '' && preg_match('/^[\w\-]+$/', $tracking['fbclid']) === 1
+            ? 'fb.1.' . (int) floor(microtime(true) * 1000) . '.' . $tracking['fbclid'] : '';
+    }
+    $metaOk = cvx_meta_lead($config, [
+        'name' => $name, 'email' => $email, 'phone' => $phoneDigits, 'event_id' => $eventId,
+        'page_url' => $pageUrl !== '' ? $pageUrl : CVX_PAGE_PREFIX . 'pest-control-answering-service/',
+        'ip' => cvx_client_ip(), 'ua' => cvx_line($_SERVER['HTTP_USER_AGENT'] ?? '', 500), 'fbp' => $fbp, 'fbc' => $fbc,
+    ]);
+    if ($metaOk !== true) {
+        error_log('cvx-lead: meta_capi_failed');
+    }
+}
+exit;
