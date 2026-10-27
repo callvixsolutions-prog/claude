@@ -293,7 +293,7 @@ person who clicked a Meta ad and came back later through Google shows both. Neve
 setting): `utm_source=facebook&utm_medium=paid_social&utm_campaign={{campaign.name}}&utm_content={{ad.name}}&utm_term={{adset.name}}`.
 Both point at `/pest-control-answering-service/`, never the homepage. Retargeting lists: Google
 "LP visitors - 30 days (no lead)" and "LP leads - 180 days (exclude)" (the guarded `/schedule/` page = a sent
-form); Meta "LP visitors - 30 days (no lead)" and "Leads - 180 days (exclude)" (Lead event). Exclude the
+form); Meta "LP visitors - 30 days (no lead)", "Video viewers - 30 days (no lead)" (VideoPlay) and "Leads - 180 days (exclude)" (Lead event). Exclude the
 leads list from every campaign on both platforms.
 
 **Meta Conversions API.** After the visitor has their answer, `send.php` also sends each accepted lead to Meta as
