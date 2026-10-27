@@ -282,6 +282,10 @@ sales@callvixsolutions.com on 27 Oct 2026, which didn't receive the first test l
 noreply@callvixsolutions.com, Reply-To the lead, subject "New landing page lead: {business}". It checks
 the origin, a honeypot field (`website`), time on page, every field again, and allows 5 requests per visitor
 address per hour. It answers JSON `{"ok": true}`; a plain no-JavaScript post gets a short HTML page.
+The email lists this visit's `utm_*`, `gclid` and `fbclid`, plus two remembered visits (added 27 Oct 2026):
+`cv3b.js` keeps the first tagged visit (any `utm_*`/`gclid`/`fbclid`, 90 days) and the latest one in
+`localStorage` (`cvx_visit_first`, `cvx_visit_latest`) and sends them as `first_visit` / `latest_visit`, so a
+person who clicked a Meta ad and came back later through Google shows both. Never used to reject a lead.
 
 **Meta Conversions API.** After the visitor has their answer, `send.php` also sends each accepted lead to Meta as
 a `Lead` event (same `event_id` as the page's `generate_lead`, so the browser pixel and the server copy count once;

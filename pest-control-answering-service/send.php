@@ -365,6 +365,9 @@ foreach (CVX_TRACKING_KEYS as $key) {
     // Cleaned to one short line, never rejected: an odd campaign tag must not lose a lead.
     $tracking[$key] = cvx_line($data[$key] ?? '', 300);
 }
+// Remembered tracked visits from the page script (first within 90 days, and latest). Same rule: never rejected.
+$firstVisit = cvx_line($data['first_visit'] ?? '', 1000);
+$latestVisit = cvx_line($data['latest_visit'] ?? '', 1000);
 if ($invalid !== []) {
     cvx_respond(400, ['ok' => false, 'error' => 'invalid', 'fields' => $invalid]);
 }
@@ -381,10 +384,14 @@ $lines = [
     'Submitted: ' . $when,
     'Page URL: ' . ($pageUrl !== '' ? $pageUrl : '(not sent)'),
     '',
+    'This visit:',
 ];
 foreach ($tracking as $key => $value) {
     $lines[] = $key . ': ' . ($value !== '' ? $value : '(none)');
 }
+$lines[] = '';
+$lines[] = 'First tracked visit (last 90 days): ' . ($firstVisit !== '' ? $firstVisit : '(none)');
+$lines[] = 'Latest tracked visit: ' . ($latestVisit !== '' ? $latestVisit : '(none)');
 $lines[] = '';
 $lines[] = 'Reply to this email to write to the lead directly.';
 

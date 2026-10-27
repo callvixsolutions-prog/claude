@@ -159,6 +159,20 @@ test('send.php: recipient, sender, reply-to, subject, JSON answer, spam limits, 
   assert.match(PHP, /const CVX_TRACKING_KEYS = \[[^\]]*'gclid', 'fbclid'\];/, 'fbclid reaches the lead email');
 });
 
+test('tracked-visit memory: first (90 days) and latest tagged visit reach the lead email, never reject a lead', () => {
+  assert.match(JS, /var VISIT_DAYS = 90;/);
+  assert.match(JS, /if \(!readVisit\('cvx_visit_first'\)\) writeVisit\('cvx_visit_first', v\);/, 'first visit is never overwritten while fresh');
+  assert.match(JS, /writeVisit\('cvx_visit_latest', v\);/);
+  assert.match(JS, /p\.first_visit = describeVisit\(readVisit\('cvx_visit_first'\)\);/);
+  assert.match(JS, /p\.latest_visit = describeVisit\(readVisit\('cvx_visit_latest'\)\);/);
+  assert.match(JS, /try \{ localStorage\.setItem/, 'blocked storage cannot break the form');
+  assert.match(PHP, /\$firstVisit = cvx_line\(\$data\['first_visit'\] \?\? '', 1000\);/);
+  assert.match(PHP, /'First tracked visit \(last 90 days\): ' \./);
+  assert.match(PHP, /'Latest tracked visit: ' \./);
+  assert.doesNotMatch(PHP, /\$invalid\[\] = '(first|latest)_visit'/, 'odd values never lose a lead');
+  assert.match(PAGE, /assets\/cv3b\.js\?v=20261027c"/, 'cache-busted');
+});
+
 test('send.php: Meta Conversions API is off without the server-only config, runs after the visitor has the answer', () => {
   assert.match(PHP, /const CVX_CONFIG_FILE = 'callvix-config\.php';/);
   assert.match(PHP, /\$file = dirname\(__DIR__, 2\) \. '\/' \. CVX_CONFIG_FILE;/, 'config lives above public_html');

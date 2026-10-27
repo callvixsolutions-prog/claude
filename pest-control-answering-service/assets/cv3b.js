@@ -57,6 +57,37 @@
     return parts.length ? '?' + parts.join('&') : '';
   }
 
+  /* ---------------- tracked-visit memory ----------------
+     A visit that opens this page with any utm_* / gclid / fbclid is remembered in this browser (localStorage):
+     the first one for 90 days, and the latest one. Both go out only with the lead form, so the lead email
+     says which ad brought the person even when they come back later another way. */
+  var VISIT_DAYS = 90;
+  function readVisit(key) {
+    try {
+      var v = JSON.parse(localStorage.getItem(key) || 'null');
+      return v && typeof v.ts === 'number' && Date.now() - v.ts < VISIT_DAYS * 864e5 ? v : null;
+    } catch (e) { return null; }
+  }
+  function writeVisit(key, v) { try { localStorage.setItem(key, JSON.stringify(v)); } catch (e) { /* storage blocked */ } }
+  (function () {
+    var v = { ts: Date.now() }, tagged = false;
+    TRACKING.forEach(function (k) { if (query[k]) { v[k] = query[k].slice(0, 200); tagged = true; } });
+    if (!tagged) return;
+    if (!readVisit('cvx_visit_first')) writeVisit('cvx_visit_first', v);
+    writeVisit('cvx_visit_latest', v);
+  }());
+  function describeVisit(v) {
+    if (!v) return '';
+    var parts = [(v.utm_source || '(no source)') + ' / ' + (v.utm_medium || '(no medium)')];
+    if (v.utm_campaign) parts.push('campaign ' + v.utm_campaign);
+    if (v.utm_content) parts.push('ad ' + v.utm_content);
+    if (v.utm_term) parts.push('term ' + v.utm_term);
+    if (v.gclid) parts.push('gclid ' + v.gclid);
+    if (v.fbclid) parts.push('fbclid ' + v.fbclid);
+    parts.push('on ' + new Date(v.ts).toISOString().slice(0, 10));
+    return parts.join(', ').slice(0, 900);
+  }
+
   /* ---------------- booking buttons ---------------- */
   var lead = $('#cv3b-lead'), form = $('#cv3b-form'), firstField = $('#cv3b-name');
   var lastCta = 'direct';
@@ -124,6 +155,8 @@
       var p = {};
       ['name', 'business', 'email', 'website', 'page_url'].concat(TRACKING).forEach(function (k) { p[k] = (form.elements[k] ? form.elements[k].value : '').trim(); });
       p.phone = digits(form.elements.phone.value);
+      p.first_visit = describeVisit(readVisit('cvx_visit_first'));
+      p.latest_visit = describeVisit(readVisit('cvx_visit_latest'));
       p.elapsed_ms = Date.now() - openedAt;
       p.event_id = 'lead.' + Date.now().toString(36) + '.' + Math.random().toString(36).slice(2, 8);
       return p;
