@@ -180,6 +180,7 @@ const CLAIM_ALLOW = [
   ['blog/ai-vs-human-answering-service-pest-control.html', 'Some companies split the work', 'describes an arrangement that exists in the market, not Callvix customers'],
   ['blog/ai-vs-human-answering-service-pest-control.html', 'Some companies use an automated system', 'the same sentence as an FAQ answer and its JSON-LD copy'],
   ['blog/pest-control-call-script-intake-form.html', 'Some companies route every commercial enquiry', 'owner-approved wording (round 11 pre-merge): an example of a rule some companies use, not a claim about Callvix customers'],
+  ['privacy-policy.html', 'many companies at optout', 'owner-approved privacy wording (27 Oct 2026): the ad networks a visitor can opt out of at optout.aboutads.info, not Callvix customers'],
 ];
 test('no sentence claims a customer base, an absolute or an unmeasurable result', () => {
   const hits = []; const used = new Set();
