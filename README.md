@@ -287,6 +287,15 @@ The email lists this visit's `utm_*`, `gclid` and `fbclid`, plus two remembered 
 `localStorage` (`cvx_visit_first`, `cvx_visit_latest`) and sends them as `first_visit` / `latest_visit`, so a
 person who clicked a Meta ad and came back later through Google shows both. Never used to reject a lead.
 
+**Ad link tags (27 Oct 2026).** Google Ads 912-148-0350 has an account-level Final URL suffix
+`utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_content={creative}&utm_term={keyword}`
+(auto-tagging stays on). Every Meta ad gets this in its "URL parameters" field (Meta has no account-level
+setting): `utm_source=facebook&utm_medium=paid_social&utm_campaign={{campaign.name}}&utm_content={{ad.name}}&utm_term={{adset.name}}`.
+Both point at `/pest-control-answering-service/`, never the homepage. Retargeting lists: Google
+"LP visitors - 30 days (no lead)" and "LP leads - 180 days (exclude)" (the guarded `/schedule/` page = a sent
+form); Meta "LP visitors - 30 days (no lead)" and "Leads - 180 days (exclude)" (Lead event). Exclude the
+leads list from every campaign on both platforms.
+
 **Meta Conversions API.** After the visitor has their answer, `send.php` also sends each accepted lead to Meta as
 a `Lead` event (same `event_id` as the page's `generate_lead`, so the browser pixel and the server copy count once;
 email, phone and name hashed with SHA-256). It reads its settings from `callvix-config.php`, which must sit in the
