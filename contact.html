@@ -118,15 +118,14 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
         <h2 class="form-title">Send us a message</h2>
         <p class="form-sub">Send us your details and our team will get back to you.</p>
         <!--
-          Form handler: Formspree (form ID maqrpwqw). Submissions are emailed to the
-          address configured in the Formspree dashboard. To change the destination
-          address, edit it in Formspree — no code change needed here.
+          Form handler: /contact-send.php on this server (27 Oct 2026, replaces Formspree).
+          It emails each enquiry to the address in cvx_recipient() in that file; change
+          the destination there.
         -->
-        <form action="https://formspree.io/f/maqrpwqw" method="POST" data-ajax data-success="/thank-you">
-          <!-- Subject line that appears in your inbox -->
-          <input type="hidden" name="_subject" value="New enquiry from callvixsolutions.com">
-          <!-- Send the visitor to our own branded thank-you page after submitting -->
-          <input type="hidden" name="_next" value="https://callvixsolutions.com/thank-you">
+        <form action="/contact-send.php" method="POST" data-ajax data-success="/thank-you">
+          <!-- Sent to /contact-send.php on our own server, which emails the enquiry (no third-party form service).
+               elapsed_ms is filled in below and lets the server reject forms sent faster than a person can type. -->
+          <input type="hidden" name="elapsed_ms" value="">
           <!-- Honeypot: bots fill this in, humans never see it -->
           <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;">
           <div class="form-row">
@@ -143,6 +142,9 @@ height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Ma
           <p class="form-status" id="contact-form-status" role="status" aria-live="polite"></p>
           <p class="form-note">By submitting, you agree to be contacted by Callvix Solutions about your inquiry. See our <a href="/privacy-policy">Privacy Policy</a>.</p>
         </form>
+        <script>(function(){var f=document.querySelector('form[action="/contact-send.php"]');if(!f)return;var t=Date.now(),e=f.elements.elapsed_ms;
+          /* capture phase, so the value is set before js/main.js reads the form */
+          f.addEventListener('submit',function(){if(e)e.value=String(Date.now()-t);},true);})();</script>
       </div>
 
       <div class="contact-other">
