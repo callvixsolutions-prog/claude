@@ -77,7 +77,7 @@ test('calendar guard: no flag = straight back to the landing page with no GTM; a
 
 test('booking buttons all lead to the form; steps line updated', () => {
   const ctas = [...PAGE.matchAll(/<a class="cv3b-btn[^"]*"(?: id="[^"]+")? href="#book" data-cv3b-book data-cta="([a-z_]+)">([^<]+)</g)].map((m) => [m[1], m[2].trim()]);
-  assert.deepEqual(ctas.map((c) => c[0]), ['header', 'hero', 'strip', 'pricing', 'sticky_mobile']);
+  assert.deepEqual(ctas.map((c) => c[0]), ['header', 'hero', 'after_proof', 'strip', 'pricing', 'sticky_mobile']);
   for (const [, label] of ctas) assert.match(label, /^Book a (20-minute )?call$/);
   assert.match(JS, /lead\.scrollIntoView\(/); assert.match(JS, /firstField\.focus\(\{ preventScroll: true \}\)/);
   const steps = between(PAGE, '<ol class="cv3b-next"', '</ol>');
@@ -170,7 +170,7 @@ test('tracked-visit memory: first (90 days) and latest tagged visit reach the le
   assert.match(PHP, /'First tracked visit \(last 90 days\): ' \./);
   assert.match(PHP, /'Latest tracked visit: ' \./);
   assert.doesNotMatch(PHP, /\$invalid\[\] = '(first|latest)_visit'/, 'odd values never lose a lead');
-  assert.match(PAGE, /assets\/cv3b\.js\?v=20261028d"/, 'cache-busted');
+  assert.match(PAGE, /assets\/cv3b\.js\?v=20261028e"/, 'cache-busted');
 });
 
 test('explainer video: unlisted YouTube (nocookie) on tap, self-hosted MP4 fallback, same tracking events', () => {
@@ -188,7 +188,10 @@ test('explainer video: unlisted YouTube (nocookie) on tap, self-hosted MP4 fallb
   assert.ok(mp4 > 0 && webm > mp4, 'fallback lists MP4 before WebM');
   assert.equal((JS.match(/record\('callvix_video_play'\)/g) || []).length, 1, 'one play event for both players');
   assert.match(JS, /if \(e\.data === 1\) \{\s*markPlay\(\);/, 'YouTube PLAYING state records the play');
-  assert.match(JS, /e\.data === 0\) \{ progress\(50\); progress\(100\);/, 'YouTube ENDED records 50 and 100');
+  assert.match(JS, /e\.data === 0\) \{\s*progress\(50\); progress\(100\);/, 'YouTube ENDED records 50 and 100');
+  assert.match(JS, /showEndPanel\(function \(\) \{ try \{ p\.seekTo\(0\); p\.playVideo\(\); \}/, 'YouTube ENDED shows the booking panel');
+  assert.match(JS, /data-cta="video_end"/);
+  assert.match(JS, /showEndPanel\(function \(\) \{ v\.currentTime = 0; v\.play\(\); \}\)/, 'backup MP4 ended shows the booking panel too');
   assert.match(CSS, /\.cv3b-video__frame iframe \{ position: absolute; inset: 0;/);
   assert.match(JS, /onError: function \(\) \{ if \(frame\.contains\(holder\) \|\| frame\.querySelector\('iframe'\)\) showSelfHosted\(false\); \}/, 'a YouTube error (processing, removed) shows the MP4 instead');
 });

@@ -240,6 +240,7 @@
   }
 
   /* ---------------- phone-only sticky button ---------------- */
+  var observeBook = function () { /* set below when the bar runs */ };
   var sticky = $('#cv3b-sticky'), heroCta = $('#cv3b-hero-cta'), bookSection = $('#book');
   if (sticky && heroCta && bookSection && 'IntersectionObserver' in window && window.matchMedia) {
     var phoneMq = window.matchMedia('(max-width: 768px)');
@@ -269,6 +270,7 @@
         otherCtaVisible = seen.size; update();
       });
       others.forEach(function (el) { io.observe(el); });
+      observeBook = function (el) { io.observe(el); };
     }
     document.addEventListener('focusin', update);
     document.addEventListener('focusout', function () { window.setTimeout(update, 0); });
@@ -284,6 +286,23 @@
       var reached = {};
       var progress = function (pct) { if (!reached[pct]) { reached[pct] = 1; record('callvix_video_progress', { video_percent: String(pct) }); } };
       var markPlay = function () { if (!played) { played = true; record('callvix_video_play'); } };
+
+      /* When the video ends: a booking panel over the player (instead of YouTube's end screen of suggestions).
+         "Watch again" closes it and restarts the video. */
+      var endPanel = null;
+      function showEndPanel(replay) {
+        if (!endPanel) {
+          endPanel = document.createElement('div'); endPanel.className = 'cv3b-video__end';
+          endPanel.setAttribute('role', 'group'); endPanel.setAttribute('aria-label', 'Book a call');
+          endPanel.innerHTML = '<p class="cv3b-video__end-title">Ready to set this up for your calls?</p>' +
+            '<a class="cv3b-btn" href="#book" data-cv3b-book data-cta="video_end">Book a 20-minute call<svg class="cv3b-ico" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>' +
+            '<button class="cv3b-video__again" type="button">Watch again</button>';
+          frame.appendChild(endPanel);
+          observeBook(endPanel.querySelector('[data-cv3b-book]'));
+        }
+        endPanel.querySelector('.cv3b-video__again').onclick = function () { endPanel.hidden = true; replay(); };
+        endPanel.hidden = false;
+      }
 
       /* The video plays from YouTube (unlisted, privacy-enhanced youtube-nocookie.com player). Our own host was too
          slow and uneven for iPhone Safari, which never started the self-hosted file (28 Oct 2026).
@@ -315,7 +334,10 @@
                 if (e.data === 1) {
                   markPlay();
                   if (!poll) poll = window.setInterval(function () { try { var d = p.getDuration(); if (d && p.getCurrentTime() / d >= 0.5) progress(50); } catch (x) { /* player gone */ } }, 1000);
-                } else if (e.data === 0) { progress(50); progress(100); if (poll) { window.clearInterval(poll); poll = null; } }
+                } else if (e.data === 0) {
+                  progress(50); progress(100); if (poll) { window.clearInterval(poll); poll = null; }
+                  showEndPanel(function () { try { p.seekTo(0); p.playVideo(); } catch (x) { /* player gone */ } });
+                }
               }
             }
           });
@@ -349,7 +371,7 @@
         frame.replaceChildren(v);
         v.addEventListener('play', markPlay);
         v.addEventListener('timeupdate', function () { if (v.duration && v.currentTime / v.duration >= 0.5) progress(50); });
-        v.addEventListener('ended', function () { progress(50); progress(100); });
+        v.addEventListener('ended', function () { progress(50); progress(100); showEndPanel(function () { v.currentTime = 0; v.play(); }); });
         if (autoplay) { var pl = v.play(); if (pl && pl.catch) pl.catch(function () { /* the visitor can press play on the native controls */ }); }
       }
     }

@@ -625,3 +625,20 @@
   [data-callvix-v3b] .cv3b-track__label { display: none; }
   [data-callvix-v3b] .cv3b-moment { padding: 11px 14px; gap: 12px; }
 }
+
+/* ---------------- extra booking points (28 Oct 2026) ---------------- */
+[data-callvix-v3b] .cv3b-proof__cta { max-width: 1000px; margin: 36px auto 0; padding-left: 96px; display: flex; align-items: center; gap: 16px 24px; flex-wrap: wrap; }
+[data-callvix-v3b] .cv3b-proof__cta p { font-size: 18px; font-weight: 600; color: var(--cv3b-ink); }
+[data-callvix-v3b] .cv3b-video__end { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 20px; text-align: center; background: rgba(11, 27, 63, 0.94); color: var(--cv3b-paper); }
+[data-callvix-v3b] .cv3b-video__end-title { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; text-wrap: balance; }
+[data-callvix-v3b] .cv3b-video__again { padding: 6px 10px; border: 0; background: none; color: var(--cv3b-on-dark); font: inherit; font-size: 15px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+[data-callvix-v3b] .cv3b-video__again:hover { color: var(--cv3b-paper); }
+@media (max-width: 767px) {
+  [data-callvix-v3b] .cv3b-proof__cta { margin-top: 24px; padding-left: 0; flex-direction: column; align-items: stretch; text-align: left; }
+  [data-callvix-v3b] .cv3b-proof__cta p { font-size: 17px; }
+  [data-callvix-v3b] .cv3b-proof__cta .cv3b-btn { width: 100%; }
+  [data-callvix-v3b] .cv3b-video__end { gap: 8px; padding: 12px; }
+  [data-callvix-v3b] .cv3b-video__end-title { font-size: 17px; }
+  [data-callvix-v3b] .cv3b-video__end .cv3b-btn { padding-block: 10px; font-size: 15px; }
+  [data-callvix-v3b] .cv3b-video__again { font-size: 14px; padding: 2px 8px; }
+}
