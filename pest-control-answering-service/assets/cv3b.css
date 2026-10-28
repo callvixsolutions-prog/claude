@@ -599,3 +599,29 @@
   [data-callvix-v3b] .cv3b-next--progress { justify-content: center; }
   [data-callvix-v3b] .cv3b-schedule__title { margin-inline: auto; }
 }
+
+/* ---------------- trim preview (28 Oct 2026) ---------------- */
+[data-callvix-v3b] .cv3b-hero__quote { margin: 12px 0 0; padding-left: 14px; border-left: 3px solid var(--cv3b-cyan); max-width: 520px; }
+[data-callvix-v3b] .cv3b-hero__quote blockquote { margin: 0; font-size: 16px; line-height: 1.5; color: var(--cv3b-paper); }
+[data-callvix-v3b] .cv3b-hero__quote figcaption { margin-top: 10px; display: flex; align-items: center; gap: 10px; font-size: 13.5px; line-height: 1.35; color: var(--cv3b-on-dark); }
+[data-callvix-v3b] .cv3b-hero__quote figcaption img { flex: none; width: 32px; height: 32px; border-radius: 50%; background: #fff; }
+[data-callvix-v3b] .cv3b-hero__quote strong { color: var(--cv3b-paper); font-weight: 700; }
+[data-callvix-v3b] #cv3b-video-slot .cv3b-video { margin-top: 56px; }
+@media (max-width: 767px) {
+  [data-callvix-v3b] .cv3b-hero__quote { margin-top: 8px; }
+  [data-callvix-v3b] .cv3b-hero__quote blockquote { font-size: 15px; }
+  [data-callvix-v3b] #cv3b-video-slot .cv3b-video { margin-top: 36px; }
+  [data-callvix-v3b] .cv3b-trained__list { gap: 6px; }
+  [data-callvix-v3b] .cv3b-trained__list li { padding: 4px 10px 4px 7px; font-size: 13px; gap: 6px; }
+  [data-callvix-v3b] .cv3b-trained__ico { width: 18px; height: 18px; }
+  [data-callvix-v3b] .cv3b-start { gap: 0; }
+  [data-callvix-v3b] .cv3b-start__step { padding: 14px 0; border: 0; border-radius: 0; background: none; border-bottom: 1px solid var(--cv3b-line); }
+  [data-callvix-v3b] .cv3b-start__step:last-child { border-bottom: 0; }
+  [data-callvix-v3b] .cv3b-start__step:not(:last-child)::after { display: none; }
+  [data-callvix-v3b] .cv3b-track__step p:last-child { margin-top: 4px; }
+  /* phones: the call card carries the hero visual on its own; the photo stays on tablets and desktop */
+  [data-callvix-v3b] .cv3b-hero__photo { display: none; }
+  [data-callvix-v3b] .cv3b-feed { margin: 0; }
+  [data-callvix-v3b] .cv3b-track__label { display: none; }
+  [data-callvix-v3b] .cv3b-moment { padding: 11px 14px; gap: 12px; }
+}

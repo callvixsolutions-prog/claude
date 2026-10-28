@@ -170,7 +170,7 @@ test('tracked-visit memory: first (90 days) and latest tagged visit reach the le
   assert.match(PHP, /'First tracked visit \(last 90 days\): ' \./);
   assert.match(PHP, /'Latest tracked visit: ' \./);
   assert.doesNotMatch(PHP, /\$invalid\[\] = '(first|latest)_visit'/, 'odd values never lose a lead');
-  assert.match(PAGE, /assets\/cv3b\.js\?v=20261028c"/, 'cache-busted');
+  assert.match(PAGE, /assets\/cv3b\.js\?v=20261028d"/, 'cache-busted');
 });
 
 test('explainer video: unlisted YouTube (nocookie) on tap, self-hosted MP4 fallback, same tracking events', () => {
@@ -236,4 +236,17 @@ test('retired landing pages: gone from the site, 301 to the live page in one hop
   for (const p of [`${DIR}/`, `${DIR}/schedule/`, `${DIR}/send.php`, 'pest-control-call-demos', 'pricing']) assert.notEqual((first(p) || {}).to, `/${DIR}/`, p);
   const at = (s) => HTACCESS.indexOf(s);
   assert.ok(at('^pest-control-call-demo(') < at('# 5. Remove trailing slash'), 'before the trailing-slash rule');
+});
+
+test('trim (28 Oct 2026): Omar quote under the hero button, video right after "Why it matters", bottom bar never doubles a visible button', () => {
+  const hero = between(PAGE, '<div class="cv3b-hero__cta">', '<figure class="cv3b-hero__visual">');
+  assert.match(hero, /<figure class="cv3b-hero__quote">\s*<blockquote>“Their team answers our calls professionally, follows our booking rules… Setup was straightforward\.”<\/blockquote>/);
+  assert.match(hero, /<strong>Omar Abouhussein<\/strong>, Owner, PestMaster of Naperville &amp; Wheaton, IL/);
+  assert.ok(PAGE.includes('enters customer details and appointments accurately in FieldRoutes'), 'the full testimonial stays, word for word');
+  const problem = between(PAGE, 'id="problem"', '</section>');
+  assert.match(problem, /<div class="cv3b-wrap" id="cv3b-video-slot"><\/div>/, 'video slot sits in "Why it matters"');
+  assert.match(JS, /slot\.appendChild\(vtpl\.content\.cloneNode\(true\)\);/);
+  assert.doesNotMatch(PAGE, /cv3b-handoff|cv3b-problem__more/, 'repeated blocks removed');
+  assert.match(PAGE, /approved availability\. Booking is part of the base service\./);
+  assert.match(JS, /!typing && otherCtaVisible === 0;/, 'bottom bar hides while another booking button is visible');
 });

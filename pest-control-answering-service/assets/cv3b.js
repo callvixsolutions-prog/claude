@@ -243,10 +243,10 @@
   var sticky = $('#cv3b-sticky'), heroCta = $('#cv3b-hero-cta'), bookSection = $('#book');
   if (sticky && heroCta && bookSection && 'IntersectionObserver' in window && window.matchMedia) {
     var phoneMq = window.matchMedia('(max-width: 768px)');
-    var heroGone = false, bookingReached = false;
+    var heroGone = false, bookingReached = false, otherCtaVisible = 0;
     var update = function () {
       var a = document.activeElement, typing = !!a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName);
-      var showBar = phoneMq.matches && heroGone && !bookingReached && !typing;
+      var showBar = phoneMq.matches && heroGone && !bookingReached && !typing && otherCtaVisible === 0;
       if (sticky.hidden === showBar) sticky.hidden = !showBar;
       root.classList.toggle('cv3b-has-sticky', showBar);
     };
@@ -260,6 +260,16 @@
       bookingReached = en.isIntersecting || en.boundingClientRect.top < 0;
       update();
     }).observe(bookSection);
+    /* no second, identical button on screen: the bar steps aside while another booking button is visible */
+    var others = Array.prototype.filter.call(document.querySelectorAll('[data-cv3b-book]'), function (el) { return !sticky.contains(el) && el !== heroCta && !el.closest('.cv3b-header'); });
+    if (others.length) {
+      var seen = new Set();
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) seen.add(en.target); else seen.delete(en.target); });
+        otherCtaVisible = seen.size; update();
+      });
+      others.forEach(function (el) { io.observe(el); });
+    }
     document.addEventListener('focusin', update);
     document.addEventListener('focusout', function () { window.setTimeout(update, 0); });
     if (phoneMq.addEventListener) phoneMq.addEventListener('change', update);
@@ -267,9 +277,9 @@
 
   /* ---------------- explainer video ---------------- */
   if (LP_VIDEO) {
-    var vtpl = document.getElementById('cv3b-tpl-video'), chips = $('.cv3b-trained');
-    if (vtpl && chips) {
-      chips.parentNode.insertBefore(vtpl.content.cloneNode(true), chips);
+    var vtpl = document.getElementById('cv3b-tpl-video'), slot = $('#cv3b-video-slot');
+    if (vtpl && slot) {
+      slot.appendChild(vtpl.content.cloneNode(true));
       var frame = $('[data-cv3b-vid]'), facade = frame && $('.cv3b-video__facade', frame), played = false;
       var reached = {};
       var progress = function (pct) { if (!reached[pct]) { reached[pct] = 1; record('callvix_video_progress', { video_percent: String(pct) }); } };
