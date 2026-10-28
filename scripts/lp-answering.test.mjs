@@ -255,3 +255,17 @@ test('trim (28 Oct 2026): Omar quote under the hero button, video right after "W
   assert.match(PAGE, /approved availability\. Booking is part of the base service\./);
   assert.match(JS, /!typing && otherCtaVisible === 0;/, 'bottom bar hides while another booking button is visible');
 });
+
+/* Owner decision 29 Oct 2026: wrong numbers are not billed. The landing page, the pricing page FAQ
+   (visible answer and its FAQPage JSON-LD) and the video transcript must all say so. */
+test('billing: wrong numbers are not billed on the landing page, the pricing page and the video transcript', () => {
+  const PRICING = read('pricing.html');
+  const visible = text(between(PRICING, '<h3>What counts as a billable call?</h3>', '</p>'));
+  assert.match(visible, /including repeat calls\. Spam, robocalls and wrong numbers aren(’|&rsquo;)t billed/);
+  const ld = between(PRICING, '"name": "What counts as a billable call?"', 'itemized record of billed calls."');
+  assert.match(ld, /including repeat calls\. Spam, robocalls and wrong numbers aren’t billed/);
+  for (const [name, src] of [['pricing visible', visible], ['pricing JSON-LD', ld], ['landing page', text(PAGE)]]) {
+    assert.doesNotMatch(src, /including wrong numbers/i, name + ' must not bill wrong numbers');
+  }
+  assert.match(read(`${DIR}/assets/video/callvix-lp-video-transcript.txt`), /Spam and wrong numbers are never billed\./);
+});
