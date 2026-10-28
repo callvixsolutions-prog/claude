@@ -606,11 +606,14 @@
 [data-callvix-v3b] .cv3b-hero__quote figcaption { margin-top: 10px; display: flex; align-items: center; gap: 10px; font-size: 13.5px; line-height: 1.35; color: var(--cv3b-on-dark); }
 [data-callvix-v3b] .cv3b-hero__quote figcaption img { flex: none; width: 32px; height: 32px; border-radius: 50%; background: #fff; }
 [data-callvix-v3b] .cv3b-hero__quote strong { color: var(--cv3b-paper); font-weight: 700; }
-[data-callvix-v3b] #cv3b-video-slot .cv3b-video { margin-top: 56px; }
+[data-callvix-v3b] .cv3b-watch { padding-bottom: 0; }
+[data-callvix-v3b] .cv3b-watch .cv3b-video { max-width: 960px; margin-top: 0; }
+[data-callvix-v3b] .cv3b-watch__head { margin-bottom: 28px; }
+[data-callvix-v3b] .cv3b-watch__head .cv3b-lede { margin-inline: auto; }
 @media (max-width: 767px) {
   [data-callvix-v3b] .cv3b-hero__quote { margin-top: 8px; }
   [data-callvix-v3b] .cv3b-hero__quote blockquote { font-size: 15px; }
-  [data-callvix-v3b] #cv3b-video-slot .cv3b-video { margin-top: 36px; }
+  [data-callvix-v3b] .cv3b-watch__head { margin-bottom: 18px; }
   [data-callvix-v3b] .cv3b-trained__list { gap: 6px; }
   [data-callvix-v3b] .cv3b-trained__list li { padding: 4px 10px 4px 7px; font-size: 13px; gap: 6px; }
   [data-callvix-v3b] .cv3b-trained__ico { width: 18px; height: 18px; }

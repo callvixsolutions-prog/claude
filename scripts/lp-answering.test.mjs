@@ -246,8 +246,10 @@ test('trim (28 Oct 2026): Omar quote under the hero button, video right after "W
   assert.match(hero, /<figure class="cv3b-hero__quote">\s*<blockquote>“Their team answers our calls professionally, follows our booking rules… Setup was straightforward\.”<\/blockquote>/);
   assert.match(hero, /<strong>Omar Abouhussein<\/strong>, Owner, PestMaster of Naperville &amp; Wheaton, IL/);
   assert.ok(PAGE.includes('enters customer details and appointments accurately in FieldRoutes'), 'the full testimonial stays, word for word');
-  const problem = between(PAGE, 'id="problem"', '</section>');
-  assert.match(problem, /<div class="cv3b-wrap" id="cv3b-video-slot"><\/div>/, 'video slot sits in "Why it matters"');
+  const watch = between(PAGE, 'id="watch"', '</section>');
+  assert.match(watch, /<div class="cv3b-wrap" id="cv3b-video-slot"><\/div>/, 'video has its own section');
+  assert.ok(PAGE.indexOf('id="problem"') < PAGE.indexOf('id="watch"') && PAGE.indexOf('id="watch"') < PAGE.indexOf('id="proof"'), 'order: Why it matters, video, testimonial');
+  assert.match(PAGE, /<h2 class="cv3b-h2" id="cv3b-video-title">See how a call is handled<\/h2>/);
   assert.match(JS, /slot\.appendChild\(vtpl\.content\.cloneNode\(true\)\);/);
   assert.doesNotMatch(PAGE, /cv3b-handoff|cv3b-problem__more/, 'repeated blocks removed');
   assert.match(PAGE, /approved availability\. Booking is part of the base service\./);

@@ -28,7 +28,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/favicon.ico?v=2" sizes="any">
 <link rel="preload" href="/pest-control-answering-service/assets/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/pest-control-answering-service/assets/cv3b.css?v=20261028d">
+<link rel="stylesheet" href="/pest-control-answering-service/assets/cv3b.css?v=20261028e">
 <script src="/pest-control-answering-service/assets/cv3b.js?v=20261028e" defer></script>
 </head>
 <body>
@@ -132,6 +132,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <div class="cv3b-flow__value"><span class="cv3b-flow__value-icon" aria-hidden="true"><svg class="cv3b-ico"><use href="#i-user"/></svg></span><div><p>Callvix Solutions gives callers a real person who can answer using your approved information and help them take the next step.</p><p class="cv3b-flow__staff"><svg class="cv3b-ico" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Extra call support without recruiting and training another receptionist, alongside the team you already have.</p></div></div>
       </div>
     </div>
+  </section>
+
+  <!-- Video: its own white section, then the testimonial in the same white band -->
+  <section class="cv3b-section cv3b-watch" id="watch" aria-labelledby="cv3b-video-title">
     <div class="cv3b-wrap" id="cv3b-video-slot"></div>
   </section>
 
@@ -370,7 +374,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- Explainer video (LP_VIDEO in assets/cv3b.js). The script inserts this before the training chips; nothing loads until the visitor presses play. -->
 <template id="cv3b-tpl-video">
   <div class="cv3b-video" id="cv3b-video">
-    <h3 class="cv3b-video__title" id="cv3b-video-title">See how a call is handled</h3>
+    <div class="cv3b-head cv3b-head--center cv3b-watch__head">
+      <p class="cv3b-kicker">See it in action</p>
+      <h2 class="cv3b-h2" id="cv3b-video-title">See how a call is handled</h2>
+      <p class="cv3b-lede">One minute: a caller reaches your company, talks to a real person and gets booked into a slot you approved.</p>
+    </div>
     <div class="cv3b-video__frame" data-cv3b-vid>
       <button class="cv3b-video__facade" type="button" aria-label="Play the video: see how a call is handled">
         <picture><source type="image/webp" srcset="/pest-control-answering-service/assets/video/callvix-lp-poster.webp"><img class="cv3b-video__poster" src="/pest-control-answering-service/assets/video/callvix-lp-poster.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async"></picture>
