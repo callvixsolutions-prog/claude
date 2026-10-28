@@ -4,7 +4,8 @@
  *   - Every "Book a call" / "Book a 20-minute call" button scrolls to the lead form and focuses its first field.
  *   - The lead form (a normal HTML form that posts to send.php without JavaScript): inline validation, then a
  *     background JSON send to send.php, then the move to /schedule/ without waiting on a slow server.
- *   - The phone-only sticky button and the explainer video (click to play, nothing loads before that).
+ *   - The phone-only sticky button and the explainer video: an unlisted YouTube video (youtube-nocookie player),
+ *     nothing loads before play; falls back to the self-hosted MP4 if YouTube can't load.
  *
  * Measurement (names unchanged from the earlier landing page; GTM forwards them to GA4, Google Ads and Meta):
  *   callvix_cta_click     {cta_location}   a booking button
@@ -270,7 +271,50 @@
     if (vtpl && chips) {
       chips.parentNode.insertBefore(vtpl.content.cloneNode(true), chips);
       var frame = $('[data-cv3b-vid]'), facade = frame && $('.cv3b-video__facade', frame), played = false;
-      if (facade) facade.addEventListener('click', function () {
+      var reached = {};
+      var progress = function (pct) { if (!reached[pct]) { reached[pct] = 1; record('callvix_video_progress', { video_percent: String(pct) }); } };
+      var markPlay = function () { if (!played) { played = true; record('callvix_video_play'); } };
+
+      /* The video plays from YouTube (unlisted, privacy-enhanced youtube-nocookie.com player). Our own host was too
+         slow and uneven for iPhone Safari, which never started the self-hosted file (28 Oct 2026). Nothing from
+         YouTube loads until the visitor presses play. If YouTube can't load in 8 s, the self-hosted MP4 plays instead. */
+      var YT_ID = 'nQgnjTaxi8A';
+      var started = false;
+      function playYouTube() {
+        var holder = document.createElement('div'); holder.className = 'cv3b-video__player cv3b-video__yt';
+        frame.replaceChildren(holder);
+        var timer = window.setTimeout(function () { if (!started) playSelfHosted(); }, 8000);
+        function build() {
+          if (started || !frame.contains(holder)) return;
+          started = true; window.clearTimeout(timer);
+          var poll = null;
+          new window.YT.Player(holder, {
+            host: 'https://www.youtube-nocookie.com', videoId: YT_ID, width: '100%', height: '100%',
+            playerVars: { autoplay: 1, playsinline: 1, rel: 0, modestbranding: 1, cc_load_policy: 0 },
+            events: {
+              onReady: function (e) { try { e.target.playVideo(); } catch (x) { /* iPhone may want a second tap on YouTube's own button */ } },
+              onError: function () { if (frame.contains(holder) || frame.querySelector('iframe')) playSelfHosted(); },
+              onStateChange: function (e) {
+                var p = e.target;
+                if (e.data === 1) {
+                  markPlay();
+                  if (!poll) poll = window.setInterval(function () { try { var d = p.getDuration(); if (d && p.getCurrentTime() / d >= 0.5) progress(50); } catch (x) { /* player gone */ } }, 1000);
+                } else if (e.data === 0) { progress(50); progress(100); if (poll) { window.clearInterval(poll); poll = null; } }
+              }
+            }
+          });
+        }
+        if (window.YT && window.YT.Player) { build(); return; }
+        var prev = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = function () { if (prev) try { prev(); } catch (x) { /* other page code */ } build(); };
+        var s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; s.async = true;
+        s.onerror = function () { if (!started) { window.clearTimeout(timer); playSelfHosted(); } };
+        document.head.appendChild(s);
+      }
+      if (facade) facade.addEventListener('click', playYouTube);
+
+      function playSelfHosted() {
+        started = true;
         var VID = '/pest-control-answering-service/assets/video/callvix-lp-video';
         var v = document.createElement('video');
         v.controls = true; v.playsInline = true; v.setAttribute('playsinline', ''); v.preload = 'none';
@@ -281,14 +325,11 @@
         /* MP4 (H.264/AAC) first: every phone plays it, including older iPhones that may accept WebM and then fail to decode it */
         v.innerHTML = '<source src="' + VID + '.mp4" type="video/mp4"><source src="' + VID + '.webm" type="video/webm"><track kind="captions" src="' + VID + '.vtt" srclang="en" label="English">';
         frame.replaceChildren(v);
-        v.addEventListener('play', function () { if (!played) { played = true; record('callvix_video_play'); } });
-        var reached = {};
-        var progress = function (pct) { if (!reached[pct]) { reached[pct] = 1; record('callvix_video_progress', { video_percent: String(pct) }); } };
+        v.addEventListener('play', markPlay);
         v.addEventListener('timeupdate', function () { if (v.duration && v.currentTime / v.duration >= 0.5) progress(50); });
         v.addEventListener('ended', function () { progress(50); progress(100); });
         var pl = v.play(); if (pl && pl.catch) pl.catch(function () { /* the visitor can press play on the native controls */ });
-        v.focus({ preventScroll: true });
-      });
+      }
     }
   }
 }());
