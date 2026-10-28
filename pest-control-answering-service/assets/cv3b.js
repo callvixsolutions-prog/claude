@@ -4,8 +4,8 @@
  *   - Every "Book a call" / "Book a 20-minute call" button scrolls to the lead form and focuses its first field.
  *   - The lead form (a normal HTML form that posts to send.php without JavaScript): inline validation, then a
  *     background JSON send to send.php, then the move to /schedule/ without waiting on a slow server.
- *   - The phone-only sticky button and the explainer video: an unlisted YouTube video (youtube-nocookie player),
- *     nothing loads before play; falls back to the self-hosted MP4 if YouTube can't load.
+ *   - The phone-only sticky button and the explainer video: an unlisted YouTube video (youtube-nocookie player)
+ *     that loads when the visitor scrolls near it, so one tap plays it; falls back to the self-hosted MP4.
  *
  * Measurement (names unchanged from the earlier landing page; GTM forwards them to GA4, Google Ads and Meta):
  *   callvix_cta_click     {cta_location}   a booking button
@@ -276,24 +276,30 @@
       var markPlay = function () { if (!played) { played = true; record('callvix_video_play'); } };
 
       /* The video plays from YouTube (unlisted, privacy-enhanced youtube-nocookie.com player). Our own host was too
-         slow and uneven for iPhone Safari, which never started the self-hosted file (28 Oct 2026). Nothing from
-         YouTube loads until the visitor presses play. If YouTube can't load in 8 s, the self-hosted MP4 plays instead. */
+         slow and uneven for iPhone Safari, which never started the self-hosted file (28 Oct 2026).
+         One tap: YouTube's player loads (without playing) when the video comes within about a screen of view, so the
+         visitor's first tap lands on YouTube's own play button. iPhone Safari only allows sound from a tap on the player
+         itself; tapping our cover first would need a second tap. Nothing from YouTube loads at page load. If the visitor
+         taps our cover before that (or the browser has no IntersectionObserver), the player loads and starts on that tap.
+         If YouTube errors or can't load in 8 s, the self-hosted MP4 is shown instead (playing only after a tap). */
       var YT_ID = 'nQgnjTaxi8A';
-      var started = false;
-      function playYouTube() {
+      var requested = false, started = false;
+      function loadYouTube(autoplay) {
+        if (requested) return;
+        requested = true;
         var holder = document.createElement('div'); holder.className = 'cv3b-video__player cv3b-video__yt';
         frame.replaceChildren(holder);
-        var timer = window.setTimeout(function () { if (!started) playSelfHosted(); }, 8000);
+        var timer = window.setTimeout(function () { if (!started) showSelfHosted(autoplay); }, 8000);
         function build() {
           if (started || !frame.contains(holder)) return;
           started = true; window.clearTimeout(timer);
           var poll = null;
           new window.YT.Player(holder, {
             host: 'https://www.youtube-nocookie.com', videoId: YT_ID, width: '100%', height: '100%',
-            playerVars: { autoplay: 1, playsinline: 1, rel: 0, modestbranding: 1, cc_load_policy: 0 },
+            playerVars: { autoplay: autoplay ? 1 : 0, playsinline: 1, rel: 0, modestbranding: 1, cc_load_policy: 0 },
             events: {
-              onReady: function (e) { try { e.target.playVideo(); } catch (x) { /* iPhone may want a second tap on YouTube's own button */ } },
-              onError: function () { if (frame.contains(holder) || frame.querySelector('iframe')) playSelfHosted(); },
+              onReady: function (e) { if (autoplay) try { e.target.playVideo(); } catch (x) { /* iPhone may want a tap on YouTube's own button */ } },
+              onError: function () { if (frame.contains(holder) || frame.querySelector('iframe')) showSelfHosted(false); },
               onStateChange: function (e) {
                 var p = e.target;
                 if (e.data === 1) {
@@ -308,12 +314,18 @@
         var prev = window.onYouTubeIframeAPIReady;
         window.onYouTubeIframeAPIReady = function () { if (prev) try { prev(); } catch (x) { /* other page code */ } build(); };
         var s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; s.async = true;
-        s.onerror = function () { if (!started) { window.clearTimeout(timer); playSelfHosted(); } };
+        s.onerror = function () { if (!started) { window.clearTimeout(timer); showSelfHosted(autoplay); } };
         document.head.appendChild(s);
       }
-      if (facade) facade.addEventListener('click', playYouTube);
+      if (facade) facade.addEventListener('click', function () { loadYouTube(true); });
+      if (facade && 'IntersectionObserver' in window) {
+        var near = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) { near.disconnect(); loadYouTube(false); }
+        }, { rootMargin: '600px 0px' });
+        near.observe(frame);
+      }
 
-      function playSelfHosted() {
+      function showSelfHosted(autoplay) {
         started = true;
         var VID = '/pest-control-answering-service/assets/video/callvix-lp-video';
         var v = document.createElement('video');
@@ -328,7 +340,7 @@
         v.addEventListener('play', markPlay);
         v.addEventListener('timeupdate', function () { if (v.duration && v.currentTime / v.duration >= 0.5) progress(50); });
         v.addEventListener('ended', function () { progress(50); progress(100); });
-        var pl = v.play(); if (pl && pl.catch) pl.catch(function () { /* the visitor can press play on the native controls */ });
+        if (autoplay) { var pl = v.play(); if (pl && pl.catch) pl.catch(function () { /* the visitor can press play on the native controls */ }); }
       }
     }
   }

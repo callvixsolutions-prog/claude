@@ -170,16 +170,19 @@ test('tracked-visit memory: first (90 days) and latest tagged visit reach the le
   assert.match(PHP, /'First tracked visit \(last 90 days\): ' \./);
   assert.match(PHP, /'Latest tracked visit: ' \./);
   assert.doesNotMatch(PHP, /\$invalid\[\] = '(first|latest)_visit'/, 'odd values never lose a lead');
-  assert.match(PAGE, /assets\/cv3b\.js\?v=20261028b"/, 'cache-busted');
+  assert.match(PAGE, /assets\/cv3b\.js\?v=20261028c"/, 'cache-busted');
 });
 
 test('explainer video: unlisted YouTube (nocookie) on tap, self-hosted MP4 fallback, same tracking events', () => {
   assert.match(JS, /var YT_ID = 'nQgnjTaxi8A';/);
   assert.match(JS, /host: 'https:\/\/www\.youtube-nocookie\.com'/, 'privacy-enhanced player');
   assert.match(JS, /playsinline: 1/, 'plays inside the page on iPhone');
-  assert.match(JS, /if \(facade\) facade\.addEventListener\('click', playYouTube\);/, 'nothing from YouTube loads before the tap');
+  assert.match(JS, /if \(facade\) facade\.addEventListener\('click', function \(\) \{ loadYouTube\(true\); \}\);/, 'a tap on our cover loads and starts the player');
+  assert.match(JS, /entries\[0\]\.isIntersecting\) \{ near\.disconnect\(\); loadYouTube\(false\); \}[\s\S]{0,40}rootMargin: '600px 0px'/, 'one tap: the player loads, without playing, when the video is near the screen');
+  assert.match(JS, /autoplay: autoplay \? 1 : 0/, 'never autoplays from scrolling');
   assert.ok(!/iframe_api/.test(PAGE), 'no YouTube script in the page HTML');
-  assert.match(JS, /window\.setTimeout\(function \(\) \{ if \(!started\) playSelfHosted\(\); \}, 8000\)/, 'falls back when YouTube is slow');
+  assert.match(JS, /window\.setTimeout\(function \(\) \{ if \(!started\) showSelfHosted\(autoplay\); \}, 8000\)/, 'falls back when YouTube is slow');
+  assert.match(JS, /if \(autoplay\) \{ var pl = v\.play\(\);/, 'the fallback MP4 only plays after a tap');
   const mp4 = JS.indexOf("VID + '.mp4\" type=\"video/mp4\"");
   const webm = JS.indexOf("VID + '.webm\" type=\"video/webm\"");
   assert.ok(mp4 > 0 && webm > mp4, 'fallback lists MP4 before WebM');
@@ -187,7 +190,7 @@ test('explainer video: unlisted YouTube (nocookie) on tap, self-hosted MP4 fallb
   assert.match(JS, /if \(e\.data === 1\) \{\s*markPlay\(\);/, 'YouTube PLAYING state records the play');
   assert.match(JS, /e\.data === 0\) \{ progress\(50\); progress\(100\);/, 'YouTube ENDED records 50 and 100');
   assert.match(CSS, /\.cv3b-video__frame iframe \{ position: absolute; inset: 0;/);
-  assert.match(JS, /onError: function \(\) \{ if \(frame\.contains\(holder\) \|\| frame\.querySelector\('iframe'\)\) playSelfHosted\(\); \}/, 'a YouTube error (processing, removed) falls back to the MP4');
+  assert.match(JS, /onError: function \(\) \{ if \(frame\.contains\(holder\) \|\| frame\.querySelector\('iframe'\)\) showSelfHosted\(false\); \}/, 'a YouTube error (processing, removed) shows the MP4 instead');
 });
 
 test('send.php: Meta Conversions API is off without the server-only config, runs after the visitor has the answer', () => {
