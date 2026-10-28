@@ -171,23 +171,6 @@
 [data-callvix-v3b] .cv3b-proof__role { display: block; font-size: 15px; color: var(--cv3b-muted); }
 
 /* 2. Problem and value: copy left, a progression from three busy moments to the answer */
-[data-callvix-v3b] .cv3b-problem { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: start; }
-[data-callvix-v3b] .cv3b-problem__copy .cv3b-lede { max-width: 44ch; }
-[data-callvix-v3b] .cv3b-problem__more { margin-top: 20px; padding-left: 16px; border-left: 3px solid var(--cv3b-cyan); font-size: 17px; line-height: 1.6; color: var(--cv3b-ink); max-width: 48ch; }
-[data-callvix-v3b] .cv3b-flow { position: relative; }
-[data-callvix-v3b] .cv3b-stat { display: flex; align-items: center; gap: 18px; max-width: none; margin-bottom: 16px; padding: 18px 22px; border-radius: 16px; background: var(--cv3b-navy); color: var(--cv3b-paper); }
-[data-callvix-v3b] .cv3b-stat__num { flex: none; font-size: 52px; font-weight: 800; line-height: 1; letter-spacing: -0.04em; color: var(--cv3b-on-dark-accent); font-variant-numeric: tabular-nums; }
-[data-callvix-v3b] .cv3b-stat__text { font-size: 16px; font-weight: 600; line-height: 1.45; }
-[data-callvix-v3b] .cv3b-flow__moments { display: grid; gap: 12px; position: relative; }
-[data-callvix-v3b] .cv3b-moment { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-radius: 14px; background: var(--cv3b-paper); border: 1px solid var(--cv3b-line); font-weight: 600; color: var(--cv3b-ink); }
-[data-callvix-v3b] .cv3b-moment__icon { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 44px; height: 44px; border-radius: 12px; background: var(--cv3b-grey); color: var(--cv3b-muted); }
-[data-callvix-v3b] .cv3b-moment__icon .cv3b-ico { width: 22px; height: 22px; }
-[data-callvix-v3b] .cv3b-flow__turn { position: relative; display: flex; align-items: center; justify-content: center; height: 64px; }
-[data-callvix-v3b] .cv3b-flow__turn::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; border-left: 2px dashed var(--cv3b-teal); }
-[data-callvix-v3b] .cv3b-flow__turn span { position: relative; padding: 4px 12px; border-radius: 999px; background: var(--cv3b-grey); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cv3b-teal); }
-[data-callvix-v3b] .cv3b-flow__value { display: flex; align-items: flex-start; gap: 16px; max-width: none; padding: 22px 24px; border-radius: 16px; background: var(--cv3b-navy); color: var(--cv3b-paper); font-size: 18px; font-weight: 600; line-height: 1.45; box-shadow: 0 18px 40px rgba(11, 27, 63, 0.16); }
-[data-callvix-v3b] .cv3b-flow__value-icon { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 44px; height: 44px; border-radius: 12px; background: var(--cv3b-cyan); color: var(--cv3b-navy); }
-[data-callvix-v3b] .cv3b-flow__value-icon .cv3b-ico { width: 22px; height: 22px; }
 
 /* 4. Features on one four-step track */
 [data-callvix-v3b] .cv3b-track { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; position: relative; }
@@ -348,8 +331,6 @@
   [data-callvix-v3b] .cv3b-hero__visual { justify-self: center; max-width: 520px; }
   [data-callvix-v3b] .cv3b-feed { left: auto; right: -24px; }
   [data-callvix-v3b] .cv3b-pricing { grid-template-columns: minmax(0, 1fr); max-width: 640px; }
-  [data-callvix-v3b] .cv3b-problem { grid-template-columns: minmax(0, 1fr); gap: 40px; }
-  [data-callvix-v3b] .cv3b-flow { max-width: 560px; }
   [data-callvix-v3b] .cv3b-track { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; }
   [data-callvix-v3b] .cv3b-track::before { display: none; }
   [data-callvix-v3b] .cv3b-start { grid-template-columns: minmax(0, 1fr); max-width: 640px; gap: 16px; }
@@ -391,7 +372,6 @@
   [data-callvix-v3b] .cv3b-start__num { width: 40px; height: 40px; font-size: 16px; grid-row: 1 / span 2; }
   [data-callvix-v3b] .cv3b-start__step .cv3b-h3 { margin-top: 7px; }
   [data-callvix-v3b] .cv3b-start__step:not(:last-child)::after { left: 39px; }
-  [data-callvix-v3b] .cv3b-flow__value { font-size: 17px; padding: 18px 20px; }
   [data-callvix-v3b] .cv3b-plan, [data-callvix-v3b] .cv3b-addons { padding: 26px 22px; }
   [data-callvix-v3b] .cv3b-rail { margin-top: 36px; grid-template-columns: minmax(0, 1fr); gap: 12px; padding-block: 20px 24px; }
   [data-callvix-v3b] .cv3b-proof { padding-block: 52px; }
@@ -430,9 +410,6 @@
 }
 
 /* Refinements (owner-approved 26 Oct): pest-control training strip, "What your office receives" card, staffing line */
-[data-callvix-v3b] .cv3b-flow__value p { max-width: none; }
-[data-callvix-v3b] .cv3b-flow__staff { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.16); font-size: 15px; font-weight: 500; color: var(--cv3b-on-dark); }
-[data-callvix-v3b] .cv3b-flow__staff .cv3b-ico { color: var(--cv3b-on-dark-accent); width: 18px; height: 18px; margin-top: 3px; stroke-width: 2.4; }
 [data-callvix-v3b] .cv3b-trained { margin-top: 40px; padding: 22px 24px; border-radius: 16px; background: var(--cv3b-navy); color: var(--cv3b-paper); display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px 24px; align-items: center; }
 [data-callvix-v3b] .cv3b-trained__label { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cv3b-on-dark-accent); white-space: nowrap; }
 [data-callvix-v3b] .cv3b-trained__list { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -459,7 +436,7 @@
 @media (max-width: 600px) {
   [data-callvix-v3b] { --cv3b-section-y: 44px; }
   [data-callvix-v3b] body { line-height: 1.5; }
-  [data-callvix-v3b] .cv3b-lede, [data-callvix-v3b] .cv3b-hero__sub, [data-callvix-v3b] .cv3b-problem__more { line-height: 1.5; }
+  [data-callvix-v3b] .cv3b-lede, [data-callvix-v3b] .cv3b-hero__sub { line-height: 1.5; }
   [data-callvix-v3b] .cv3b-h2 { font-size: 29px; }
   [data-callvix-v3b] .cv3b-head { margin-bottom: 22px; }
   [data-callvix-v3b] .cv3b-kicker { margin-bottom: 10px; }
@@ -470,19 +447,6 @@
   [data-callvix-v3b] .cv3b-hero__grid { gap: 24px; }
   [data-callvix-v3b] .cv3b-rail { margin-top: 24px; padding-block: 16px 18px; gap: 8px; }
 
-  /* Why it matters: 78% number above its text, full card width */
-  [data-callvix-v3b] .cv3b-problem { gap: 24px; }
-  [data-callvix-v3b] .cv3b-problem__more { margin-top: 16px; }
-  [data-callvix-v3b] .cv3b-stat { flex-direction: column; align-items: flex-start; gap: 6px; margin-bottom: 10px; padding: 16px 18px; }
-  [data-callvix-v3b] .cv3b-stat__num { font-size: 46px; }
-  [data-callvix-v3b] .cv3b-flow__moments { gap: 8px; }
-  [data-callvix-v3b] .cv3b-moment { gap: 14px; padding: 12px 16px; }
-  [data-callvix-v3b] .cv3b-moment__icon { width: 38px; height: 38px; border-radius: 10px; }
-  [data-callvix-v3b] .cv3b-moment__icon .cv3b-ico { width: 20px; height: 20px; }
-  [data-callvix-v3b] .cv3b-flow__turn { height: 44px; }
-  [data-callvix-v3b] .cv3b-flow__value { gap: 14px; padding: 16px; }
-  [data-callvix-v3b] .cv3b-flow__value-icon { width: 38px; height: 38px; border-radius: 10px; }
-  [data-callvix-v3b] .cv3b-flow__staff { margin-top: 12px; padding-top: 12px; }
 
   /* Proof */
   [data-callvix-v3b] .cv3b-proof { padding-block: 40px; }
@@ -626,7 +590,6 @@
   [data-callvix-v3b] .cv3b-hero__photo { display: none; }
   [data-callvix-v3b] .cv3b-feed { margin: 0; }
   [data-callvix-v3b] .cv3b-track__label { display: none; }
-  [data-callvix-v3b] .cv3b-moment { padding: 11px 14px; gap: 12px; }
 }
 
 /* ---------------- extra booking points (28 Oct 2026) ---------------- */
@@ -644,4 +607,29 @@
   [data-callvix-v3b] .cv3b-video__end-title { font-size: 17px; }
   [data-callvix-v3b] .cv3b-video__end .cv3b-btn { padding-block: 10px; font-size: 15px; }
   [data-callvix-v3b] .cv3b-video__again { font-size: 14px; padding: 2px 8px; }
+}
+
+/* ---------------- Why it matters → video (owner-approved version C, 29 Oct 2026) ----------------
+   Heading beside a large 78%, the three busy moments across, then "With Callvix Solutions" pointing down into the
+   video, whose heading picks the same call up ("Here's that call, answered by a real person"). */
+[data-callvix-v3b] .cv3b-why--problem { padding-bottom: 40px; }
+[data-callvix-v3b] .cv3b-why__top { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 64px; align-items: end; }
+[data-callvix-v3b] .cv3b-why__copy .cv3b-lede { max-width: 48ch; }
+[data-callvix-v3b] .cv3b-why__stat { display: flex; flex-direction: column; gap: 12px; max-width: none; padding-left: 28px; border-left: 4px solid var(--cv3b-cyan); }
+[data-callvix-v3b] .cv3b-why__stat-num { font-size: 88px; font-weight: 800; line-height: 0.9; letter-spacing: -0.05em; color: var(--cv3b-teal); font-variant-numeric: tabular-nums; }
+[data-callvix-v3b] .cv3b-why__stat-text { font-size: 17px; font-weight: 600; line-height: 1.45; color: var(--cv3b-ink); max-width: 34ch; }
+[data-callvix-v3b] .cv3b-why__moments { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 48px; }
+[data-callvix-v3b] .cv3b-why__moment { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 22px; border-radius: 16px; background: var(--cv3b-paper); border: 1px solid var(--cv3b-line); font-size: 17px; font-weight: 600; line-height: 1.4; color: var(--cv3b-ink); }
+[data-callvix-v3b] .cv3b-why__icon { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 42px; height: 42px; border-radius: 12px; background: var(--cv3b-grey); color: var(--cv3b-muted); }
+[data-callvix-v3b] .cv3b-why__icon .cv3b-ico { width: 21px; height: 21px; }
+[data-callvix-v3b] .cv3b-why__turn { display: flex; flex-direction: column; align-items: center; gap: 8px; max-width: none; margin-top: 36px; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cv3b-teal); }
+[data-callvix-v3b] .cv3b-why__turn .cv3b-ico { width: 22px; height: 22px; transform: rotate(90deg); }
+[data-callvix-v3b] .cv3b-watch__head .cv3b-lede { max-width: 52ch; }
+@media (max-width: 1023px) { [data-callvix-v3b] .cv3b-why__top { grid-template-columns: minmax(0, 1fr); gap: 28px; align-items: start; } }
+@media (max-width: 767px) {
+  [data-callvix-v3b] .cv3b-why__moments { grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: 28px; }
+  [data-callvix-v3b] .cv3b-why__moment { flex-direction: row; align-items: center; padding: 14px 16px; font-size: 16px; }
+  [data-callvix-v3b] .cv3b-why__stat { padding-left: 18px; }
+  [data-callvix-v3b] .cv3b-why__stat-num { font-size: 64px; }
+  [data-callvix-v3b] .cv3b-why__turn { margin-top: 24px; }
 }
