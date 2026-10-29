@@ -259,7 +259,7 @@ test('trim (28 Oct 2026): Omar quote under the hero button, video right after "W
   const watch = between(PAGE, 'id="watch"', '</section>');
   assert.match(watch, /<div class="cv3b-wrap" id="cv3b-video-slot"><\/div>/, 'video has its own section');
   assert.ok(PAGE.indexOf('id="problem"') < PAGE.indexOf('id="watch"') && PAGE.indexOf('id="watch"') < PAGE.indexOf('id="proof"'), 'order: Why it matters, video, testimonial');
-  assert.match(PAGE, /<h2 class="cv3b-h2" id="cv3b-video-title">Here&rsquo;s that call, answered by a real person<\/h2>/);
+  assert.match(PAGE, /<h2 class="cv3b-h2" id="cv3b-video-title">See how that call gets answered and booked<\/h2>/);
   assert.match(JS, /slot\.appendChild\(vtpl\.content\.cloneNode\(true\)\);/);
   assert.doesNotMatch(PAGE, /cv3b-handoff|cv3b-problem__more/, 'repeated blocks removed');
   assert.match(PAGE, /approved availability\. Booking is part of the base service\./);
@@ -284,18 +284,18 @@ test('billing: wrong numbers are not billed on the landing page, the pricing pag
 test('why it matters (version C): heading beside the 78%, three moments, "With Callvix Solutions" pointing to the video', () => {
   const why = between(PAGE, 'id="problem"', '</section>');
   const top = between(why, '<div class="cv3b-why__top">', '<ol class="cv3b-why__moments"');
-  assert.match(text(top), /^Why it matters When your team is busy, new callers still need an answer\. You work hard to bring inquiries to your business\. When a caller cannot get help, that opportunity may go elsewhere\. 78% of surveyed U\.S\. consumers said an unanswered call had led them to take their business elsewhere\.$/);
+  assert.match(text(top), /^Why it matters When your team is busy, new callers still need an answer\. You work hard to bring inquiries to your business\. When a caller cannot get help, that opportunity may go elsewhere\. 78% of surveyed U\.S\. consumers said an unanswered call had led them to take their business elsewhere\. Source: CallRail, 2025 survey of 1,000 U\.S\. consumers\.$/);
   const moments = between(why, '<ol class="cv3b-why__moments"', '</ol>');
   assert.deepEqual([...moments.matchAll(/<li class="cv3b-why__moment">[\s\S]*?<\/li>/g)].map((m) => text(m[0])),
     ['Your technicians are on a job.', 'Your office is already helping another caller.', 'A new prospect reaches voicemail or waits for a callback.']);
   assert.match(why, /<p class="cv3b-why__turn"><span>With Callvix Solutions<\/span><svg class="cv3b-ico" aria-hidden="true" focusable="false"><use href="#i-arrow"\/><\/svg><\/p>\s*<\/div>\s*$/, 'the arrow closes the section');
   const head = between(PAGE, '<div class="cv3b-head cv3b-head--center cv3b-watch__head">', '<div class="cv3b-video__frame"');
-  assert.equal(text(head), 'See it in action Here’s that call, answered by a real person Callvix Solutions answers using your approved information and helps the caller take the next step, alongside the team you already have.'.replace('’', '&rsquo;'));
+  assert.equal(text(head), 'See it in action See how that call gets answered and booked A one-minute example: Callvix Solutions answers using your approved information and helps the caller take the next step, alongside the team you already have.');
   assert.doesNotMatch(PAGE, /class="[^"]*\bcv3b-(problem|flow|moment|stat)/, 'old section markup gone');
   assert.doesNotMatch(CSS, /\.cv3b-(problem|flow|moment|stat)/, 'old section styles gone');
   assert.match(CSS, /\.cv3b-why__moments \{ display: grid; grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);/);
-  assert.match(PAGE, /assets\/cv3b\.css\?v=20261029a"/, 'cache-busted');
-  assert.match(SCHED, /assets\/cv3b\.css\?v=20261029a"/, 'schedule page shares the stylesheet');
+  assert.match(PAGE, /assets\/cv3b\.css\?v=20261029b"/, 'cache-busted');
+  assert.match(SCHED, /assets\/cv3b\.css\?v=20261029b"/, 'schedule page shares the stylesheet');
 });
 
 /* Owner-approved 29 Oct 2026: send.php keeps a private lead record and recognises a repeated submission. */
@@ -320,4 +320,21 @@ test('privacy policy: backup copy of landing-page requests on the web host, kept
   assert.match(pp, /keeps a private backup copy of each landing-page booking-form request/);
   assert.match(pp, /The backup copy of a landing-page booking-form request is kept on our web host, out of public reach, for up to 12 months and then deleted\./);
   assert.match(pp, /Effective date: October 29, 2026/);
+});
+
+/* Clarity pass (preview 29 Oct 2026): next step inside the form card, 78% source, booking vs CRM entry, video = example. */
+test('clarity pass: form says what happens next, 78% has its source, booking vs CRM is stated in pricing and the FAQ', () => {
+  const card = between(PAGE, '<div class="cv3b-scheduler cv3b-lead" id="cv3b-lead">', '<div class="cv3b-field">');
+  assert.match(card, /<h3 class="cv3b-scheduler__title" id="cv3b-lead-title">Book your 20-minute call<\/h3>\s*<p class="cv3b-scheduler__intro" id="cv3b-lead-intro">Enter your details, then choose a time for your 20-minute call\.<\/p>\s*<!--/);
+  assert.match(card, /aria-labelledby="cv3b-lead-title" aria-describedby="cv3b-lead-intro">/);
+  const stat = between(PAGE, '<p class="cv3b-why__stat">', '</p>');
+  assert.match(stat, /<span class="cv3b-why__stat-source">Source: CallRail, 2025 survey of 1,000 U\.S\. consumers\.<\/span>$/);
+  assert.doesNotMatch(stat, /<a /, 'plain text, no link off the page');
+  const terms = text(between(PAGE, '<dl class="cv3b-terms">', '</dl>'));
+  assert.match(terms, /^Booking Included in the base plan: booking details reach your office by text or email\. Direct CRM entry \(\+\$99\/month\) is for when you want a person to enter them in your system for you\. Not billed /);
+  const faq = text(between(PAGE, 'Can you work with our scheduling or CRM system?', '</details>'));
+  assert.match(faq, /^Can you work with our scheduling or CRM system\? Booking is part of every plan, and booking details reach your office by text or email\. If you want them entered in your system too, Direct CRM entry is an optional \$99\/month add-on/);
+  assert.match(faq, /It isn’t a native integration or automatic sync/, 'no integration claim');
+  assert.doesNotMatch(PAGE, /Here&rsquo;s that call, answered by a real person|illustrative/i, 'the video is called an example, never a real call or "illustrative"');
+  assert.match(CSS, /\.cv3b-terms > div:first-child \{ grid-column: 1 \/ -1; \}/);
 });

@@ -633,3 +633,8 @@
   [data-callvix-v3b] .cv3b-why__stat-num { font-size: 64px; }
   [data-callvix-v3b] .cv3b-why__turn { margin-top: 24px; }
 }
+
+/* ---------------- clarity pass (preview 29 Oct 2026) ---------------- */
+[data-callvix-v3b] .cv3b-scheduler__intro { margin-top: -6px; font-size: 16px; line-height: 1.5; color: var(--cv3b-muted); }
+[data-callvix-v3b] .cv3b-why__stat-source { font-size: 13px; font-weight: 500; line-height: 1.4; color: var(--cv3b-muted); }
+[data-callvix-v3b] .cv3b-terms > div:first-child { grid-column: 1 / -1; }
