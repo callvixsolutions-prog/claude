@@ -64,14 +64,15 @@ function visit(flag, hostname = 'callvixsolutions.com') {
   vm.runInContext(scripts[0], ctx); vm.runInContext(scripts[1], ctx);
   return { replaced, injected, flagLeft: store.has('lead_ok') };
 }
-test('calendar guard: no flag = straight back to the landing page with no GTM; a valid visit clears the flag', () => {
+test('calendar guard: no flag = straight back to the landing page with no GTM; a valid visit keeps the flag (refresh stays)', () => {
   const direct = visit(null);
   assert.deepEqual(direct.replaced, [`/${DIR}/?utm_source=google&utm_campaign=x`]);
   assert.equal(direct.injected.length, 0, 'no GTM on a bounced visit');
   const valid = visit('1');
   assert.deepEqual(valid.replaced, []);
   assert.equal(valid.injected.length, 1, 'GTM loads on a valid visit');
-  assert.equal(valid.flagLeft, false, 'the flag is cleared, so a refresh bounces');
+  assert.equal(valid.flagLeft, true, 'the flag stays for this tab, so a refresh or back/forward keeps the calendar (29 Oct 2026)');
+  assert.equal(visit('1').replaced.length, 0, 'a second visit in the same tab is let in too');
   assert.equal(visit('1', 'localhost').injected.length, 0, 'no GTM off the production host');
 });
 
@@ -96,7 +97,7 @@ test('lead form: plain HTML POST to send.php, four required single-line fields, 
   const want = { name: 'type="text" autocomplete="name"', business: 'type="text" autocomplete="organization"', phone: 'type="tel" autocomplete="tel" inputmode="tel"', email: 'type="email" autocomplete="email"' };
   for (const f of fields) { assert.ok(f.attrs.startsWith(want[f.name]), f.name); assert.match(f.attrs, / required /, f.name + ' required'); }
   assert.match(card, /<div class="cv3b-hp" aria-hidden="true"><label for="cv3b-website">[^<]+<\/label><input id="cv3b-website" name="website" type="text" tabindex="-1" autocomplete="off"><\/div>/);
-  for (const k of ['page_url', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid']) assert.ok(card.includes(`<input type="hidden" name="${k}" value="">`), k);
+  for (const k of ['page_url', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid', 'fbclid']) assert.ok(card.includes(`<input type="hidden" name="${k}" value="">`), k);
   assert.match(card, /<button class="cv3b-btn cv3b-btn--block" id="cv3b-submit" type="submit">Continue to pick a time<\/button>/);
   assert.equal(text(between(card, '<p class="cv3b-consent">', '</p>')), 'By continuing, you agree we can call or text you about this request. See our Privacy Policy .');
   assert.match(card, /See our <a class="cv3b-link" href="\/privacy-policy">Privacy Policy<\/a>\./);
@@ -109,11 +110,19 @@ test('footers link the real Privacy and Terms pages', () => {
   assert.ok(existsSync(join(ROOT, 'privacy-policy.html')) && existsSync(join(ROOT, 'terms.html')));
 });
 
-test('form script: background JSON send to send.php, one retry, generate_lead, session handoff without the URL', () => {
+test('form script: JSON send to send.php, lead counted only on "accepted", retries reuse the id, session handoff without the URL', () => {
   assert.match(JS, /var ENDPOINT = '\/pest-control-answering-service\/send\.php';/);
   assert.match(JS, /keepalive: true/);
-  assert.match(JS, /var SEND_WAIT_MS = 1200;/);
-  assert.equal((JS.match(/post\(body\)\.catch\(function \(\) \{\}\);/g) || []).length, 2, 'exactly one background retry per failure path');
+  assert.doesNotMatch(JS, /SEND_WAIT_MS|finish\('pending'\)|finish\('retrying'\)/, 'no counting before the server answers');
+  assert.match(JS, /var ATTEMPT_MS = 10000;/); assert.match(JS, /var RETRY_AFTER_MS = \[2000, 5000\];/);
+  assert.match(JS, /if \(res\.status === 200 && j\.ok === true && j\.status === 'accepted' && j\.submission_id === p\.event_id\) return 'accepted';/);
+  assert.match(JS, /if \(res\.status === 429\) return 'limited';/, '429 is never a success and never retried');
+  const onAccepted = between(JS, "if (outcome === 'accepted') {", 'return;');
+  assert.match(onAccepted, /store\('lead_ok', '1'\);[\s\S]*countLead\(p\);/, 'the calendar and the conversion only after "accepted"');
+  assert.equal((JS.match(/countLead\(p\);/g) || []).length, 2, 'countLead: on accepted, and on a second press of an already-accepted submission');
+  assert.match(JS, /if \(sub\.done\) \{ store\('lead_ok', '1'\); countLead\(p\); return; \}/);
+  assert.match(JS, /if \(ids\.indexOf\(p\.event_id\) !== -1\) \{ window\.setTimeout\(goToCalendar, 0\); return; \}/, 'one conversion per submission id');
+  assert.match(JS, /if \(!sub \|\| sub\.fp !== fp\) \{ sub = \{ id: newId\(\), fp: fp, done: false \};/, 'same details = same id; different details = a new submission');
   for (const k of ['cvx_lead_first', 'cvx_lead_name', 'cvx_lead_email']) assert.match(JS, new RegExp(`store\\('${k}'`), k);
   assert.match(JS, /store\('lead_ok', '1'\);/);
   assert.match(JS, /record\('generate_lead', \{ cta_location: lastCta, event_id: p\.event_id \}/);
@@ -145,10 +154,10 @@ test('send.php: recipient, sender, reply-to, subject, JSON answer, spam limits, 
   assert.match(PHP, /\$headers\[\] = 'Reply-To: ' \. \$replyTo;/);
   assert.match(PHP, /const CVX_SUBJECT_PREFIX = 'New landing page lead: ';/);
   assert.match(PHP, /CVX_SUBJECT_PREFIX \. \$business/);
-  assert.match(PHP, /cvx_output\(200, \['ok' => true\]\);/);
+  assert.match(PHP, /cvx_output\(200, \['ok' => true, 'status' => 'accepted', 'submission_id' => \$submissionId\]\);/);
   assert.match(PHP, /new DateTimeZone\('America\/New_York'\)/);
   for (const k of ['Name: ', 'Business: ', 'Phone: ', 'Email: ', 'Submitted: ', 'Page URL: ']) assert.ok(PHP.includes(`'${k}'`), k);
-  assert.match(PHP, /const CVX_TRACKING_KEYS = \['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'\];/);
+  assert.match(PHP, /const CVX_TRACKING_KEYS = \['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid', 'fbclid'\];/);
   assert.match(PHP, /\$data\['website'\]/, 'honeypot name matches the page');
   assert.match(PHP, /const CVX_MAX_PER_HOUR = 5;/); assert.match(PHP, /cvx_rate_limited\(cvx_client_ip\(\)\)/);
   assert.match(PHP, /const CVX_ALLOWED_ORIGINS = \['https:\/\/callvixsolutions\.com'\];/);
@@ -156,7 +165,7 @@ test('send.php: recipient, sender, reply-to, subject, JSON answer, spam limits, 
   assert.match(PHP, /\$data = \$_POST;/, 'the no-JavaScript form post is accepted too');
   const code = PHP.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
   assert.doesNotMatch(code, /formspree|password|api[_-]?key|EAA[A-Za-z0-9]{20,}/i, 'no form service and no secret or token in the code');
-  assert.match(PHP, /const CVX_TRACKING_KEYS = \[[^\]]*'gclid', 'fbclid'\];/, 'fbclid reaches the lead email');
+  assert.match(PHP, /const CVX_TRACKING_KEYS = \[[^\]]*'gclid', 'gbraid', 'wbraid', 'fbclid'\];/, 'gbraid, wbraid and fbclid reach the lead email');
 });
 
 test('tracked-visit memory: first (90 days) and latest tagged visit reach the lead email, never reject a lead', () => {
@@ -170,7 +179,7 @@ test('tracked-visit memory: first (90 days) and latest tagged visit reach the le
   assert.match(PHP, /'First tracked visit \(last 90 days\): ' \./);
   assert.match(PHP, /'Latest tracked visit: ' \./);
   assert.doesNotMatch(PHP, /\$invalid\[\] = '(first|latest)_visit'/, 'odd values never lose a lead');
-  assert.match(PAGE, /assets\/cv3b\.js\?v=20261028e"/, 'cache-busted');
+  assert.match(PAGE, /assets\/cv3b\.js\?v=20261029a"/, 'cache-busted');
 });
 
 test('explainer video: unlisted YouTube (nocookie) on tap, self-hosted MP4 fallback, same tracking events', () => {
@@ -200,13 +209,14 @@ test('send.php: Meta Conversions API is off without the server-only config, runs
   assert.match(PHP, /const CVX_CONFIG_FILE = 'callvix-config\.php';/);
   assert.match(PHP, /\$file = dirname\(__DIR__, 2\) \. '\/' \. CVX_CONFIG_FILE;/, 'config lives above public_html');
   assert.ok(!existsSync(join(ROOT, 'callvix-config.php')) && !existsSync(join(ROOT, DIR, 'callvix-config.php')), 'no config file in the repository');
-  const ok = PHP.indexOf("cvx_output(200, ['ok' => true]);"), finish = PHP.indexOf('litespeed_finish_request();'), meta = PHP.indexOf('$metaOk = cvx_meta_lead(');
+  const ok = PHP.indexOf("cvx_output(200, ['ok' => true, 'status' => 'accepted'"), finish = PHP.indexOf('litespeed_finish_request();'), meta = PHP.indexOf('$metaOk = cvx_meta_lead(');
   assert.ok(ok > 0 && ok < finish && finish < meta, 'answer, then finish the request, then Meta');
-  assert.match(PHP, /if \(\$config !== \[\]\) \{/, 'nothing goes to Meta without the config');
+  assert.match(PHP, /if \(\$config !== \[\] && \$tracking\['utm_campaign'\] !== 'test-lead-ignore'\) \{/, 'nothing goes to Meta without the config, or for our own test leads');
   assert.match(PHP, /'event_name' => 'Lead'/); assert.match(PHP, /'action_source' => 'website'/);
   for (const k of ["'em' => [cvx_hash(", "'ph' => [cvx_hash('1' ."]) assert.ok(PHP.includes(k), k + ' hashed');
-  assert.match(PHP, /preg_match\('\/\^lead\\\.\[a-z0-9\]\{6,12\}\\\.\[a-z0-9\]\{1,8\}\$\/', \$eventId\)/, 'the page event_id is reused for dedupe');
-  assert.match(JS, /p\.event_id = 'lead\.' \+ Date\.now\(\)\.toString\(36\) \+ '\.' \+ Math\.random\(\)\.toString\(36\)\.slice\(2, 8\);/);
+  assert.match(PHP, /\$eventId = \$submissionId;/, 'the page submission id is the Meta event id');
+  assert.match(JS, /function newId\(\) \{ return 'lead\.' \+ Date\.now\(\)\.toString\(36\) \+ '\.' \+ Math\.random\(\)\.toString\(36\)\.slice\(2, 8\); \}/);
+  assert.match(JS, /p\.event_id = id;/);
   assert.match(JS, /record\('generate_lead', \{ cta_location: lastCta, event_id: p\.event_id \}/, 'the same id goes to the dataLayer for the browser pixel');
   assert.match(JS, /record\('callvix_video_progress', \{ video_percent: String\(pct\) \}\)/);
 });
@@ -286,4 +296,28 @@ test('why it matters (version C): heading beside the 78%, three moments, "With C
   assert.match(CSS, /\.cv3b-why__moments \{ display: grid; grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);/);
   assert.match(PAGE, /assets\/cv3b\.css\?v=20261029a"/, 'cache-busted');
   assert.match(SCHED, /assets\/cv3b\.css\?v=20261029a"/, 'schedule page shares the stylesheet');
+});
+
+/* Owner-approved 29 Oct 2026: send.php keeps a private lead record and recognises a repeated submission. */
+test('send.php: private lead record above public_html, repeat = accepted again without a second email, rate limit counts new leads only', () => {
+  assert.match(PHP, /const CVX_LEAD_DIR = 'callvix-leads';/); assert.match(PHP, /const CVX_LEAD_KEEP_MONTHS = 12;/);
+  assert.match(PHP, /return defined\('CVX_TEST_DATA_DIR'\) \? \(string\) constant\('CVX_TEST_DATA_DIR'\) : dirname\(__DIR__, 2\);/, 'records live next to public_html');
+  assert.match(PHP, /@mkdir\(\$dir, 0700, true\)/); assert.match(PHP, /@chmod\(\$file, 0600\);/);
+  const order = ['$lock = cvx_store_lock();', 'cvx_already_accepted($submissionId)', 'if (cvx_rate_limited(cvx_client_ip())) {', '$sent = cvx_send_mail(', '$stored = cvx_store_append([', 'cvx_store_unlock($lock);\n}', "cvx_output(200, ['ok' => true, 'status' => 'accepted'"];
+  const at = order.map((k) => PHP.indexOf(k));
+  assert.ok(at.every((v, i) => v > 0 && (i === 0 || v > at[i - 1])), 'lock, repeat check, rate limit, mail, record, unlock, answer: ' + JSON.stringify(at));
+  assert.ok(PHP.indexOf("cvx_respond(400, ['ok' => false, 'error' => 'rejected']);") < PHP.indexOf('if (cvx_rate_limited('), 'spam rejects come before (and never count towards) the rate limit');
+  assert.match(PHP, /'submission_id' => \$submissionId,\n\s+'mail_sent' => \$sent === true,/, 'record keys in the order the repeat check reads');
+  assert.match(PHP, /\$needle = '\{"submission_id":"' \. \$id \. '","mail_sent":true,';/);
+  assert.match(PHP, /\$lines\[\] = 'Lead ID: ' \. \$submissionId;/);
+  assert.match(PHP, /if \(defined\('CVX_TEST_MAIL_FILE'\)\) \{/, 'the test mail hook is switched on by a constant only');
+  assert.doesNotMatch(PHP, /\$_(GET|POST|REQUEST|COOKIE)\[['"]CVX_TEST/, 'never from a request');
+  assert.ok(!existsSync(join(ROOT, 'callvix-leads')) && !existsSync(join(ROOT, DIR, 'callvix-leads')), 'no lead records in the repository');
+});
+
+test('privacy policy: backup copy of landing-page requests on the web host, kept up to 12 months', () => {
+  const pp = text(read('privacy-policy.html').replace(/<script[\s\S]*?<\/script>/g, ''));
+  assert.match(pp, /keeps a private backup copy of each landing-page booking-form request/);
+  assert.match(pp, /The backup copy of a landing-page booking-form request is kept on our web host, out of public reach, for up to 12 months and then deleted\./);
+  assert.match(pp, /Effective date: October 29, 2026/);
 });

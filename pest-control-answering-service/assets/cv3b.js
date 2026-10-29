@@ -3,18 +3,19 @@
  * What it does:
  *   - Every "Book a call" / "Book a 20-minute call" button scrolls to the lead form and focuses its first field.
  *   - The lead form (a normal HTML form that posts to send.php without JavaScript): inline validation, then a
- *     background JSON send to send.php, then the move to /schedule/ without waiting on a slow server.
+ *     JSON send to send.php; the move to /schedule/ happens only after send.php answers "accepted".
  *   - The phone-only sticky button and the explainer video: an unlisted YouTube video (youtube-nocookie player)
  *     that loads when the visitor scrolls near it, so one tap plays it; falls back to the self-hosted MP4.
  *
  * Measurement (names unchanged from the earlier landing page; GTM forwards them to GA4, Google Ads and Meta):
  *   callvix_cta_click     {cta_location}   a booking button
  *   callvix_booking_step  {booking_step}   details_started (first use of the form), details_sent (form accepted)
- *   generate_lead         {cta_location}   once per session, when the lead is sent (see sendLead)
+ *   generate_lead         {cta_location}   once per accepted submission, only after send.php answers "accepted"
  *   callvix_video_play                     once per page view
  *   callvix_video_progress {video_percent} 50 and 100, once each per page view (retargeting video viewers)
- * generate_lead carries event_id; the same id goes to send.php, which sends the lead to Meta's Conversions API, so
- * Meta counts the browser and server copies once.
+ * generate_lead carries event_id = the submission id; the same id goes to send.php, which uses it to recognise retries
+ * (no second email) and sends the lead to Meta's Conversions API with it, so Meta counts the browser and server copies
+ * once. Google Ads uses it as the transaction id, so a repeat is counted once there too (owner-approved 29 Oct 2026).
  * GTM keeps every data layer key until it is overwritten, so every event sets each forwarded parameter and
  * clears the ones it doesn't use (same fix as js/main.js, 26 Oct 2026).
  *
@@ -30,8 +31,10 @@
   var LP_VIDEO = true;                       // false removes the video block; nothing else changes
   var ENDPOINT = '/pest-control-answering-service/send.php';
   var SCHEDULE = '/pest-control-answering-service/schedule/';
-  var SEND_WAIT_MS = 1200;                   // the longest the visitor waits for the server before moving on
-  var TRACKING = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'];
+  var ATTEMPT_MS = 10000;                    // one try at send.php; then it is retried with the same submission id
+  var RETRY_AFTER_MS = [2000, 5000];         // pauses before the 2nd and 3rd try
+  var PHONE = '(551) 373-6777';              // offered when the details can't be sent
+  var TRACKING = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid', 'fbclid'];
   var UTM = TRACKING.slice(0, 5);
 
   var $ = function (sel, ctx) { return (ctx || document).querySelector(sel); };
@@ -59,7 +62,7 @@
   }
 
   /* ---------------- tracked-visit memory ----------------
-     A visit that opens this page with any utm_* / gclid / fbclid is remembered in this browser (localStorage):
+     A visit that opens this page with any utm_* / gclid / gbraid / wbraid / fbclid is remembered in this browser (localStorage):
      the first one for 90 days, and the latest one. Both go out only with the lead form, so the lead email
      says which ad brought the person even when they come back later another way. */
   var VISIT_DAYS = 90;
@@ -84,6 +87,8 @@
     if (v.utm_content) parts.push('ad ' + v.utm_content);
     if (v.utm_term) parts.push('term ' + v.utm_term);
     if (v.gclid) parts.push('gclid ' + v.gclid);
+    if (v.gbraid) parts.push('gbraid ' + v.gbraid);
+    if (v.wbraid) parts.push('wbraid ' + v.wbraid);
     if (v.fbclid) parts.push('fbclid ' + v.fbclid);
     parts.push('on ' + new Date(v.ts).toISOString().slice(0, 10));
     return parts.join(', ').slice(0, 900);
@@ -152,54 +157,66 @@
       if (/^\d{10}$/.test(d)) form.elements.phone.value = '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6);
     });
 
-    function payload() {
+    /* One submission = one id, reused on every retry and on a second press with the same details, so send.php
+       recognises repeats and the conversion is counted once. Different details make a new submission. */
+    function fingerprint() {
+      return ['name', 'business', 'email'].map(function (k) { return form.elements[k].value.trim().toLowerCase(); })
+        .concat(digits(form.elements.phone.value)).join('|');
+    }
+    function readSub() { try { var v = JSON.parse(stored('cvx_lead_sub') || 'null'); return v && v.id && v.fp ? v : null; } catch (e) { return null; } }
+    function newId() { return 'lead.' + Date.now().toString(36) + '.' + Math.random().toString(36).slice(2, 8); }
+
+    function payload(id) {
       var p = {};
       ['name', 'business', 'email', 'website', 'page_url'].concat(TRACKING).forEach(function (k) { p[k] = (form.elements[k] ? form.elements[k].value : '').trim(); });
       p.phone = digits(form.elements.phone.value);
       p.first_visit = describeVisit(readVisit('cvx_visit_first'));
       p.latest_visit = describeVisit(readVisit('cvx_visit_latest'));
       p.elapsed_ms = Date.now() - openedAt;
-      p.event_id = 'lead.' + Date.now().toString(36) + '.' + Math.random().toString(36).slice(2, 8);
+      p.event_id = id;
       return p;
     }
+    // One try. Resolves { status, j } for any answer, or { status: 0 } for no answer (network error or ATTEMPT_MS).
     function post(body) {
+      var ctl = typeof AbortController === 'function' ? new AbortController() : null;
+      var timer = ctl ? window.setTimeout(function () { ctl.abort(); }, ATTEMPT_MS) : 0;
       return fetch(ENDPOINT, {
-        method: 'POST', credentials: 'same-origin', keepalive: true,
+        method: 'POST', credentials: 'same-origin', keepalive: true, signal: ctl ? ctl.signal : undefined,
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: body
       }).then(function (r) {
         return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, j: j || {} }; });
-      });
+      }).catch(function () { return { status: 0, j: {} }; }).then(function (res) { window.clearTimeout(timer); return res; });
     }
 
-    /* Send, but never keep the visitor waiting on a slow server: after SEND_WAIT_MS the move to the calendar
-       goes ahead while the request finishes in the background (keepalive). A failed first attempt is retried
-       once, in the background. generate_lead fires once per session when the lead is on its way: the server
-       said ok, or it is still in flight at the cut-off, or it is being retried. Not when the server rejected
-       it as spam, and not when it asked for a field to be corrected (the visitor stays on the form). */
-    function sendLead(p) {
-      var body = JSON.stringify(p), done = false;
-      return new Promise(function (resolve) {
-        var finish = function (outcome) { if (!done) { done = true; resolve(outcome); } };
-        window.setTimeout(function () { finish('pending'); }, SEND_WAIT_MS);
-        post(body).then(function (res) {
-          if (res.status === 200 && res.j.ok === true) return finish('ok');
-          if (res.status === 400 && res.j.error === 'invalid') return finish({ invalid: res.j.fields || [] });
-          if (res.status === 400 && res.j.error === 'rejected') return finish('rejected');
-          if (res.status === 429) return finish('ok');            // already sent several times this hour
-          post(body).catch(function () {});                       // one retry, in the background
-          finish('retrying');
-        }).catch(function () {
-          post(body).catch(function () {});
-          finish('retrying');
+    /* Accepted means send.php answered 200 with status "accepted" for this submission id; only then is the lead
+       counted and the visitor moved to the calendar. No answer or a server error is retried (same id, so a lost
+       "accepted" can't send a second email); a rate-limit answer is not retried. While it retries the visitor is
+       told it's still sending; if it still fails, the details stay in the form with a way to reach us. */
+    function sendLead(p, onSlow) {
+      var body = JSON.stringify(p), tries = 0;
+      function attempt() {
+        tries++;
+        return post(body).then(function (res) {
+          var j = res.j;
+          if (res.status === 200 && j.ok === true && j.status === 'accepted' && j.submission_id === p.event_id) return 'accepted';
+          if (res.status === 400 && j.error === 'invalid') return { invalid: j.fields || [] };
+          if (res.status === 400 && j.error === 'rejected') return 'rejected';
+          if (res.status === 429) return 'limited';
+          if (tries > RETRY_AFTER_MS.length) return 'failed';
+          onSlow();
+          return new Promise(function (r) { window.setTimeout(r, RETRY_AFTER_MS[tries - 1]); }).then(attempt);
         });
-      });
+      }
+      return attempt();
     }
 
-    function goToCalendar(fireLead, p) {
-      var go = function () { location.assign(SCHEDULE + utmQuery()); };
-      if (!fireLead || stored('cvx_lp_lead_sent') === '1') { window.setTimeout(go, 0); return; }
-      store('cvx_lp_lead_sent', '1');
-      var left = false, leave = function () { if (!left) { left = true; go(); } };
+    function goToCalendar() { location.assign(SCHEDULE + utmQuery()); }
+    function countLead(p) {
+      // Once per accepted submission id (a second press with the same details goes straight to the calendar).
+      var ids = (stored('cvx_lp_lead_ids') || '').split(' ');
+      if (ids.indexOf(p.event_id) !== -1) { window.setTimeout(goToCalendar, 0); return; }
+      store('cvx_lp_lead_ids', ids.concat(p.event_id).join(' ').trim());
+      var left = false, leave = function () { if (!left) { left = true; goToCalendar(); } };
       try {
         var ud = { phone_number: '+1' + p.phone }; if (p.email) ud.email = p.email.toLowerCase();
         (window.dataLayer = window.dataLayer || []).push({ user_data: ud });
@@ -211,30 +228,49 @@
       window.setTimeout(leave, 1100);           // GTM blocked or not loaded (e.g. an ad blocker)
     }
 
+    function say(text) { alertBox.textContent = text; alertBox.hidden = !text; }
+    function ready(label) { busy = false; submit.disabled = false; submit.removeAttribute('aria-busy'); submit.textContent = label || 'Continue to pick a time'; }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (busy) return;
       var bad = Object.keys(CHECKS).filter(function (name) { return !check(name); });
       if (bad.length) { form.elements[bad[0]].focus(); return; }
-      busy = true; alertBox.hidden = true;
-      submit.disabled = true; submit.setAttribute('aria-busy', 'true'); submit.textContent = 'One moment…';
-      var p = payload();
+      var fp = fingerprint(), sub = readSub();
+      if (!sub || sub.fp !== fp) { sub = { id: newId(), fp: fp, done: false }; store('cvx_lead_sub', JSON.stringify(sub)); }
       var name = form.elements.name.value.trim();
       store('cvx_lead_first', name.split(/\s+/)[0].slice(0, 40));
       store('cvx_lead_name', name.slice(0, 80));
-      store('cvx_lead_email', p.email.slice(0, 120));
-      sendLead(p).then(function (outcome) {
+      store('cvx_lead_email', form.elements.email.value.trim().slice(0, 120));
+      var p = payload(sub.id);
+      if (sub.done) { store('lead_ok', '1'); countLead(p); return; }   // already accepted: no second send
+      busy = true; say('');
+      submit.disabled = true; submit.setAttribute('aria-busy', 'true'); submit.textContent = 'Sending…';
+      sendLead(p, function () { say('Still sending your details. Please keep this page open.'); }).then(function (outcome) {
+        if (outcome === 'accepted') {
+          sub.done = true; store('cvx_lead_sub', JSON.stringify(sub));
+          say(''); submit.textContent = 'Sent. Opening the calendar…';
+          store('lead_ok', '1');               // the calendar page lets this tab in from now on
+          countLead(p);
+          return;
+        }
         if (outcome && outcome.invalid) {
           // The server disagreed with a field: show it and keep everything the visitor typed.
           var fields = outcome.invalid.filter(function (f) { return CHECKS[f]; });
           fields.forEach(function (f) { show(f, CHECKS[f]('') || 'Please check this field.'); });
-          if (!fields.length) { alertBox.textContent = 'Something didn’t go through. Please check your details and try again.'; alertBox.hidden = false; }
-          busy = false; submit.disabled = false; submit.removeAttribute('aria-busy'); submit.textContent = 'Continue to pick a time';
+          say(fields.length ? '' : 'Something didn’t go through. Please check your details and try again.');
+          ready();
           if (fields.length) form.elements[fields[0]].focus();
           return;
         }
-        store('lead_ok', '1');               // the calendar page checks and clears this before anything else runs
-        goToCalendar(outcome !== 'rejected', p);
+        if (outcome === 'rejected') { store('lead_ok', '1'); goToCalendar(); return; }   // spam check: no lead, no conversion
+        if (outcome === 'limited') {
+          say('We’ve had several requests from your connection in the last hour, so this one didn’t go through. Your details are still here: please try again later, or call us at ' + PHONE + '.');
+          ready('Try again');
+          return;
+        }
+        say('We couldn’t send your details just now. They’re still here: please press “Try again” in a minute, or call us at ' + PHONE + '.');
+        ready('Try again');
       });
     });
   }

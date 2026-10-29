@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <!-- Guard, first script on the page and before Google Tag Manager. Only a visitor who has just sent the
-     landing-page form may see this page (it is the conversion page). Without the "lead_ok" flag the
-     visitor goes straight back to the landing page and GTM never loads, so no page view or conversion
-     is recorded. A valid visit clears the flag at once, so a refresh or a later revisit can't count
-     twice. The prefill details (name, email) stay in this tab's sessionStorage. -->
-<script>(function(){var ok=false;try{ok=sessionStorage.getItem('lead_ok')==='1';if(ok)sessionStorage.removeItem('lead_ok');}catch(e){ok=false;}
+     landing-page form may see this page. Without the "lead_ok" flag (set only after send.php accepted the
+     lead) the visitor goes straight back to the landing page and GTM never loads. The flag stays for this
+     tab, so a refresh or the back/forward buttons keep the visitor on the calendar (owner-approved 29 Oct
+     2026); nothing here counts a lead, so a second visit can't count twice. The prefill details (name,
+     email) stay in this tab's sessionStorage. -->
+<script>(function(){var ok=false;try{ok=sessionStorage.getItem('lead_ok')==='1';}catch(e){ok=false;}
 if(!ok){window.__cvxBounce=true;location.replace('/pest-control-answering-service/'+location.search);}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <!-- Google Tag Manager (GTM-PJFS7HV5). Standard snippet; production host only (hostname split in two because

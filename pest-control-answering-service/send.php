@@ -5,17 +5,26 @@
  * Adapted from the PestMaster landing page's send.php (pmnaperville.com), which runs on the
  * same Hostinger server. The page posts a lead here; this script checks it and emails it to
  * Chris's mailbox from this website's own server with PHP mail(). No third-party form
- * service, nothing stored on the server, no personal data written to any log, and no
- * passwords or keys in this file.
+ * service, no personal data written to any log, and no passwords or keys in this file.
+ *
+ * Lead record (owner-approved 29 Oct 2026): every lead is also written to a private file on the
+ * server, in callvix-leads/ next to public_html (out of the web's reach), one file per month, kept
+ * 12 months. It is the backup copy if an email goes missing, and it is how a repeated request for
+ * the same submission is recognised: the page sends a submission_id and reuses it on every retry,
+ * so a retry after a lost answer gets "accepted" again without a second email or a second
+ * conversion. A genuinely new submission has a new id.
  *
  * Two ways in:
  *   - the page's script sends JSON (Content-Type: application/json) and gets JSON back:
- *     {"ok": true} only when the email was handed to the mail system;
+ *     {"ok": true, "status": "accepted", "submission_id": "..."} only when the email was handed
+ *     to the mail system (now or by an earlier request with the same id); the page counts a lead
+ *     only on that answer;
  *   - without JavaScript the plain HTML form posts here and gets a short HTML page back.
  *
  * Spam protection: allowed origin only, a hidden honeypot field, a minimum time on the form
  * (when the page's script reports it), server-side validation of every field, and at most
- * CVX_MAX_PER_HOUR requests per visitor address per hour.
+ * CVX_MAX_PER_HOUR new leads per visitor address per hour (spam rejects, invalid requests and
+ * repeats of an accepted submission don't count towards it).
  *
  * Meta Conversions API (27 Oct 2026): after the visitor has their answer, an accepted lead is also sent to Meta
  * from this server as a "Lead" event with the page's event_id (so Meta counts it once with the browser pixel) and
@@ -33,8 +42,10 @@ const CVX_MAX_PER_HOUR = 5;
 const CVX_MIN_MS_ON_FORM = 3000;
 const CVX_MAX_BODY_BYTES = 20000;
 const CVX_PAGE_PREFIX = 'https://callvixsolutions.com/';
-const CVX_TRACKING_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'];
+const CVX_TRACKING_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid', 'fbclid'];
 const CVX_CONFIG_FILE = 'callvix-config.php';               // two folders up: next to public_html, out of the web's reach
+const CVX_LEAD_DIR = 'callvix-leads';                       // same place: the private lead record (see the header)
+const CVX_LEAD_KEEP_MONTHS = 12;
 const CVX_META_GRAPH = 'https://graph.facebook.com/v23.0/';
 const CVX_META_TIMEOUT_S = 5;
 
@@ -282,8 +293,108 @@ function cvx_send_mail(string $to, string $subject, string $body, string $replyT
         $headers[] = 'Reply-To: ' . $replyTo;
     }
     $encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
+    if (defined('CVX_TEST_MAIL_FILE')) {
+        // Local tests only (the constant is defined by the test runner, never by a request): record instead of mailing.
+        @file_put_contents((string) constant('CVX_TEST_MAIL_FILE'), $subject . "\n" . $body . "\n---\n", FILE_APPEND);
+        return !defined('CVX_TEST_MAIL_FAIL');
+    }
     // Same call as the PestMaster endpoint on this server, whose delivery was confirmed.
     return @mail($to, $encodedSubject, $body, implode("\r\n", $headers));
+}
+
+/* ---------- lead record ---------- */
+
+// The folder above public_html (where callvix-config.php lives). Local tests point it elsewhere.
+function cvx_data_dir(): string
+{
+    return defined('CVX_TEST_DATA_DIR') ? (string) constant('CVX_TEST_DATA_DIR') : dirname(__DIR__, 2);
+}
+
+// The page's id for this submission ("lead.<time>.<random>"), reused on every retry. '' when absent or malformed.
+function cvx_submission_id($value): string
+{
+    $id = is_string($value) ? $value : '';
+    return preg_match('/^lead\.[a-z0-9]{6,12}\.[a-z0-9]{4,10}$/', $id) === 1 ? $id : '';
+}
+
+// Opens the lead record folder and takes its lock (so two copies of the same request can't both send
+// an email). Returns the lock handle, or null when the folder can't be used; the lead still goes out
+// by email then, without the backup copy or the repeat check.
+function cvx_store_lock()
+{
+    $dir = cvx_data_dir() . '/' . CVX_LEAD_DIR;
+    if (!is_dir($dir) && !@mkdir($dir, 0700, true) && !is_dir($dir)) {
+        return null;
+    }
+    $handle = @fopen($dir . '/.lock', 'c');
+    if ($handle === false) {
+        return null;
+    }
+    if (!flock($handle, LOCK_EX)) {
+        fclose($handle);
+        return null;
+    }
+    return $handle;
+}
+
+function cvx_store_unlock($handle): void
+{
+    if ($handle) {
+        flock($handle, LOCK_UN);
+        fclose($handle);
+    }
+}
+
+function cvx_store_file(int $monthsAgo = 0): string
+{
+    $month = (new DateTimeImmutable('first day of this month', new DateTimeZone('UTC')))->modify('-' . $monthsAgo . ' month');
+    return cvx_data_dir() . '/' . CVX_LEAD_DIR . '/leads-' . $month->format('Y-m') . '.jsonl';
+}
+
+// True when this submission was already accepted (its email went out), this month or last.
+function cvx_already_accepted(string $id): bool
+{
+    if ($id === '') {
+        return false;
+    }
+    $needle = '{"submission_id":"' . $id . '","mail_sent":true,';
+    foreach ([0, 1] as $monthsAgo) {
+        $file = cvx_store_file($monthsAgo);
+        if (is_file($file)) {
+            $text = @file_get_contents($file);
+            if (is_string($text) && strpos($text, $needle) !== false) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+// Appends one lead (submission_id and mail_sent first: cvx_already_accepted reads them in that order).
+function cvx_store_append(array $record): bool
+{
+    $file = cvx_store_file();
+    $new = !is_file($file);
+    $line = json_encode($record, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    if (!is_string($line) || @file_put_contents($file, $line . "\n", FILE_APPEND) === false) {
+        return false;
+    }
+    if ($new) {
+        @chmod($file, 0600);
+    }
+    return true;
+}
+
+// Deletes monthly files older than CVX_LEAD_KEEP_MONTHS.
+function cvx_store_prune(): void
+{
+    $oldest = (new DateTimeImmutable('first day of this month', new DateTimeZone('UTC')))
+        ->modify('-' . CVX_LEAD_KEEP_MONTHS . ' month')->format('Y-m');
+    foreach (glob(cvx_data_dir() . '/' . CVX_LEAD_DIR . '/leads-*.jsonl') ?: [] as $file) {
+        if (preg_match('/leads-(\d{4}-\d{2})\.jsonl$/', $file, $m) === 1 && strcmp($m[1], $oldest) < 0) {
+            @unlink($file);
+        }
+    }
 }
 
 /* ---------- request checks ---------- */
@@ -317,11 +428,6 @@ if (cvx_wants_json()) {
     }
 } else {
     $data = $_POST;
-}
-
-if (cvx_rate_limited(cvx_client_ip())) {
-    header('Retry-After: 3600');
-    cvx_respond(429, ['ok' => false, 'error' => 'rate_limited']);
 }
 
 // Spam: a filled honeypot, or (when the page's script reports it) a form sent faster than a
@@ -395,14 +501,56 @@ $lines[] = 'Latest tracked visit: ' . ($latestVisit !== '' ? $latestVisit : '(no
 $lines[] = '';
 $lines[] = 'Reply to this email to write to the lead directly.';
 
+/* ---------- accept once ---------- */
+
+// The page's id for this submission (the same id is the conversion's event_id for Google, Meta and the
+// Conversions API). A plain form post without JavaScript has none, so it gets a fresh one here.
+$submissionId = cvx_submission_id($data['event_id'] ?? '');
+$fromPage = $submissionId !== '';
+if (!$fromPage) {
+    $submissionId = 'lead.srv' . substr(bin2hex(random_bytes(4)), 0, 6) . '.' . bin2hex(random_bytes(3));
+}
+$lines[] = 'Lead ID: ' . $submissionId;
+
+$lock = cvx_store_lock();
+if ($lock === null) {
+    error_log('cvx-lead: store_unavailable');
+}
+if ($lock !== null && $fromPage && cvx_already_accepted($submissionId)) {
+    // A repeat of a submission that already went out (the visitor's answer was lost, or a retry crossed it).
+    cvx_store_unlock($lock);
+    cvx_respond(200, ['ok' => true, 'status' => 'accepted', 'submission_id' => $submissionId, 'repeat' => true]);
+}
+if (cvx_rate_limited(cvx_client_ip())) {
+    cvx_store_unlock($lock);
+    header('Retry-After: 3600');
+    cvx_respond(429, ['ok' => false, 'error' => 'rate_limited']);
+}
+
 $sent = cvx_send_mail(cvx_recipient(), CVX_SUBJECT_PREFIX . $business, implode("\r\n", $lines) . "\r\n", $email);
+if ($lock !== null) {
+    $stored = cvx_store_append([
+        'submission_id' => $submissionId,
+        'mail_sent' => $sent === true,
+        'received_at' => gmdate('c'),
+        'name' => $name, 'business' => $business, 'phone' => $phoneDigits, 'email' => $email,
+        'page_url' => $pageUrl, 'tracking' => $tracking, 'first_visit' => $firstVisit, 'latest_visit' => $latestVisit,
+    ]);
+    if (!$stored) {
+        error_log('cvx-lead: store_failed');
+    }
+    cvx_store_prune();
+    cvx_store_unlock($lock);
+}
 if ($sent !== true) {
+    // Not accepted: the page keeps the details and tries again with the same id (the record above keeps
+    // a copy meanwhile, marked mail_sent false, so the lead is never only in the visitor's browser).
     error_log('cvx-lead: send_failed');
     cvx_respond(500, ['ok' => false, 'error' => 'send_failed']);
 }
 
 // The visitor gets the answer now; Meta is told afterwards, so a slow Meta never delays the page.
-cvx_output(200, ['ok' => true]);
+cvx_output(200, ['ok' => true, 'status' => 'accepted', 'submission_id' => $submissionId]);
 if (function_exists('litespeed_finish_request')) {
     litespeed_finish_request();
 } elseif (function_exists('fastcgi_finish_request')) {
@@ -410,11 +558,9 @@ if (function_exists('litespeed_finish_request')) {
 }
 
 $config = cvx_config();
-if ($config !== []) {
-    $eventId = cvx_line($data['event_id'] ?? '', 40);
-    if (preg_match('/^lead\.[a-z0-9]{6,12}\.[a-z0-9]{1,8}$/', $eventId) !== 1) {
-        $eventId = 'lead.srv.' . bin2hex(random_bytes(4));
-    }
+// Our own test leads (utm_campaign=test-lead-ignore, see README §9) still email and are recorded, but never reach Meta.
+if ($config !== [] && $tracking['utm_campaign'] !== 'test-lead-ignore') {
+    $eventId = $submissionId;                   // the same id the page gave the browser pixel, so Meta counts it once
     $fbp = cvx_line($_COOKIE['_fbp'] ?? '', 100);
     $fbc = cvx_line($_COOKIE['_fbc'] ?? '', 300);
     if (preg_match('/^fb\.\d\.\d+\.\d+$/', $fbp) !== 1) {

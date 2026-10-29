@@ -290,11 +290,28 @@ person who clicked a Meta ad and came back later through Google shows both. Neve
 **Ad link tags (27 Oct 2026).** Google Ads 912-148-0350 has an account-level Final URL suffix
 `utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_content={creative}&utm_term={keyword}`
 (auto-tagging stays on). Every Meta ad gets this in its "URL parameters" field (Meta has no account-level
-setting): `utm_source=facebook&utm_medium=paid_social&utm_campaign={{campaign.name}}&utm_content={{ad.name}}&utm_term={{adset.name}}`.
+setting): `utm_source=facebook&utm_medium=paid_social&utm_campaign={{campaign.name}}&utm_id={{campaign.id}}&utm_content={{ad.name}}__{{ad.id}}&utm_term={{adset.name}}`
+(29 Oct 2026: the ad ID is added so each ad stays identifiable even if it is renamed; give the two video ads short readable
+names such as `video-1-explainer` and `video-2-<label>`, and keep campaign names in the form `callvix-<goal>-<audience>`).
 Both point at `/pest-control-answering-service/`, never the homepage. Retargeting lists: Google
 "LP visitors - 30 days (no lead)" and "LP leads - 180 days (exclude)" (the guarded `/schedule/` page = a sent
 form); Meta "LP visitors - 30 days (no lead)", "Video viewers - 30 days (no lead)" (VideoPlay) and "Leads - 180 days (exclude)" (Lead event). Exclude the
 leads list from every campaign on both platforms.
+
+**Lead acceptance (29 Oct 2026, owner-approved).** The landing page counts a lead (`generate_lead` → GA4, Google
+Ads "Lead – form submitted", Meta Lead) **only after `send.php` answers 200 `{"ok":true,"status":"accepted","submission_id":…}`**.
+The page gives each submission an id (`lead.<time>.<random>`), reuses it on every retry and on a second press with the
+same details, and sends it as `event_id`; Google Ads uses it as the transaction ID and Meta as the event ID, so a repeat
+counts once. Slow or failed answers are retried (10 s per try, then 2 s and 5 s pauses); a 429 is not retried; while
+it retries the visitor sees "Still sending…", and if it fails the details stay in the form with a "Try again" button and
+the phone number. `send.php` writes every lead to `callvix-leads/leads-YYYY-MM.jsonl` in the folder above `public_html`
+(private, 0600, kept 12 months), recognises a repeated submission id there (answers `accepted` again with no second email),
+and counts only new leads towards the 5-per-hour limit. Accepted = the email was handed to the mail system; if mail fails
+the record keeps a copy (`mail_sent: false`) and the page retries. Local check: `_callvix-live-tools/php-wasm/send-php-check.mjs`.
+The calendar page lets a tab back in after a refresh or back/forward (the `lead_ok` flag is no longer cleared on the first visit).
+
+**Consent (29 Oct 2026, owner decision).** No consent banner: ads launch **US-only**. Add a consent banner and Google
+Consent Mode before any campaign targets Canada (Quebec's Law 25 in particular).
 
 **Meta Conversions API.** After the visitor has their answer, `send.php` also sends each accepted lead to Meta as
 a `Lead` event (same `event_id` as the page's `generate_lead`, so the browser pixel and the server copy count once;
