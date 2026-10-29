@@ -348,3 +348,20 @@ test('feedback pass: slow answers show "Still sending" after 4 s; touch devices 
   assert.match(JS, /var touchOnly = !!\(window\.matchMedia && window\.matchMedia\('\(hover: none\) and \(pointer: coarse\)'\)\.matches\);/);
   assert.match(JS, /if \(touchOnly && leadTitle\) leadTitle\.focus\(\{ preventScroll: true \}\);\s*else if \(firstField\) firstField\.focus\(\{ preventScroll: true \}\);/);
 });
+
+/* OpenAI (ChatGPT Ads) Measurement Pixel disclosure (29 Oct 2026). The pixel itself lives in GTM, never in the page source. */
+test('privacy policy discloses the OpenAI pixel in the processor table, cookies and advertising sections; no hardcoded pixel', () => {
+  const PP = read('privacy-policy.html');
+  const table = between(PP, '<h2>Third-party services (data processors)</h2>', '</table>');
+  const rows = table.match(/<tr><td>OpenAI Ads Measurement Pixel \(ads in ChatGPT\)<\/td>/g) || [];
+  assert.equal(rows.length, 1, 'exactly one OpenAI row');
+  assert.match(table, /<\/td><\/tr>\s*<tr><td>OpenAI Ads Measurement Pixel \(ads in ChatGPT\)<\/td><td>Measuring which of our ads in ChatGPT lead to visits, inquiries and booked calls\. It keeps the ad-click reference from the ad link for 30 days and a random browser reference for up to 12 months, in cookies on this website<\/td><td><a href="https:\/\/openai\.com\/policies\/privacy-policy\/" rel="noopener">openai\.com<\/a><\/td><\/tr>\s*<tr><td>YouTube/, 'after Meta, before YouTube');
+  const cookies = text(between(PP, '<h2>Cookies and analytics</h2>', '<h2>Advertising and remarketing</h2>'));
+  assert.match(cookies, /through Google Tag Manager, Google Analytics 4, Microsoft Clarity, Google Ads, Meta and OpenAI to understand site usage/);
+  const ads = text(between(PP, '<h2>Advertising and remarketing</h2>', '<h2>Data retention</h2>'));
+  assert.match(ads, /^Advertising and remarketing We advertise with Google Ads, Meta \(Facebook and Instagram\) and OpenAI \(ads in ChatGPT\)\./);
+  assert.match(ads, /We use OpenAI&rsquo;s pixel only to measure which of our ChatGPT ads lead to visits, inquiries and booked calls;/);
+  assert.match(ads, /with Google, Meta and OpenAI in hashed \(one-way encrypted\) form/);
+  assert.match(ads, /in ChatGPT you can turn off ad personalization under Settings &gt; Ad controls \(see help\.openai\.com \);/);
+  for (const f of ['index.html', 'contact.html', 'privacy-policy.html', `${DIR}/index.html`, `${DIR}/schedule/index.html`]) assert.doesNotMatch(read(f), /oaiq|bzrcdn\.openai\.com/, f + ' must not hardcode the pixel (GTM loads it)');
+});

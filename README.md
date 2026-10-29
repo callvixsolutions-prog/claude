@@ -313,6 +313,20 @@ The calendar page lets a tab back in after a refresh or back/forward (the `lead_
 **Consent (29 Oct 2026, owner decision).** No consent banner: ads launch **US-only**. Add a consent banner and Google
 Consent Mode before any campaign targets Canada (Quebec's Law 25 in particular).
 
+**OpenAI (ChatGPT Ads) pixel (built 29 Oct 2026, GTM).** Pixel `HUDtCiLLUxHHZsjsQWn9Zt`, web data source "Callvix website".
+It lives only in GTM (never hardcode it in a page): "OpenAI - Pixel base + page_viewed" (Initialization: official loader,
+one `init`, one `page_viewed` per page load), "OpenAI - lead_created" (on `generate_lead`) and "OpenAI -
+appointment_scheduled" (on `callvix_meeting_booked`), all `{type:"customer_action"}` with no value, reusing the page's
+`event_id` when there is one. Variable "JS - OpenAI eligible" + trigger "Block - OpenAI ineligible" keep it to
+callvixsolutions.com public pages (path allowlist: add a new top-level page there), and off for internal visitors
+(`cvx_internal`) and test leads (`utm_campaign=test-lead-ignore`, for the rest of that tab). The SDK stores the ad click's
+`oppref` itself in the first-party `__oppref` cookie (30 days, full value) and `__obref` (365 days); `oppref` is
+deliberately **not** in the form's 200-character tracking fields. Automatic advanced matching is on in OpenAI's pixel
+settings, so the SDK hashes the form's email/phone/name in the browser and attaches the hashes to `lead_created`.
+Debug logging: open any page with `?cvx_oai_debug=1` (that tab only). No consent call (US-only, as above). Browser only:
+no OpenAI Conversions API. Checks: `_callvix-live-tools/oai-pixel-check.mjs` (49 checks; OpenAI requests answered
+locally, never forwarded).
+
 **Meta Conversions API.** After the visitor has their answer, `send.php` also sends each accepted lead to Meta as
 a `Lead` event (same `event_id` as the page's `generate_lead`, so the browser pixel and the server copy count once;
 email, phone and name hashed with SHA-256). It reads its settings from `callvix-config.php`, which must sit in the
