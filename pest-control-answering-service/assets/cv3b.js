@@ -33,6 +33,7 @@
   var SCHEDULE = '/pest-control-answering-service/schedule/';
   var ATTEMPT_MS = 10000;                    // one try at send.php; then it is retried with the same submission id
   var RETRY_AFTER_MS = [2000, 5000];         // pauses before the 2nd and 3rd try
+  var SLOW_MS = 4000;                        // "Still sending…" appears if there's no answer by then
   var PHONE = '(551) 373-6777';              // offered when the details can't be sent
   var TRACKING = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid', 'fbclid'];
   var UTM = TRACKING.slice(0, 5);
@@ -95,7 +96,8 @@
   }
 
   /* ---------------- booking buttons ---------------- */
-  var lead = $('#cv3b-lead'), form = $('#cv3b-form'), firstField = $('#cv3b-name');
+  var lead = $('#cv3b-lead'), form = $('#cv3b-form'), firstField = $('#cv3b-name'), leadTitle = $('#cv3b-lead-title');
+  var touchOnly = !!(window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches);
   var lastCta = 'direct';
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('[data-cv3b-book]');
@@ -105,7 +107,10 @@
     lastCta = a.getAttribute('data-cta') || 'other';
     record('callvix_cta_click', { cta_location: lastCta });
     lead.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-    if (firstField) firstField.focus({ preventScroll: true });
+    // Phones and tablets: focus the form's title, not the first field, so the keyboard doesn't pop up mid-scroll
+    // (screen readers still land on the form). Mouse and keyboard users go straight to the first field.
+    if (touchOnly && leadTitle) leadTitle.focus({ preventScroll: true });
+    else if (firstField) firstField.focus({ preventScroll: true });
   });
 
   /* ---------------- lead form ---------------- */
@@ -246,7 +251,10 @@
       if (sub.done) { store('lead_ok', '1'); countLead(p); return; }   // already accepted: no second send
       busy = true; say('');
       submit.disabled = true; submit.setAttribute('aria-busy', 'true'); submit.textContent = 'Sending…';
-      sendLead(p, function () { say('Still sending your details. Please keep this page open.'); }).then(function (outcome) {
+      var slow = function () { say('Still sending your details. Please keep this page open.'); };
+      var slowTimer = window.setTimeout(slow, SLOW_MS);   // a slow answer, or a retry, shows the same message
+      sendLead(p, slow).then(function (outcome) {
+        window.clearTimeout(slowTimer);
         if (outcome === 'accepted') {
           sub.done = true; store('cvx_lead_sub', JSON.stringify(sub));
           say(''); submit.textContent = 'Sent. Opening the calendar…';

@@ -87,7 +87,7 @@ test('booking buttons all lead to the form; steps line updated', () => {
 
 test('lead form: plain HTML POST to send.php, four required single-line fields, honeypot, consent', () => {
   const card = between(PAGE, '<div class="cv3b-scheduler cv3b-lead" id="cv3b-lead">', '</form>');
-  assert.match(card, /<h3 class="cv3b-scheduler__title" id="cv3b-lead-title">Book your 20-minute call<\/h3>/);
+  assert.match(card, /<h3 class="cv3b-scheduler__title" id="cv3b-lead-title" tabindex="-1">Book your 20-minute call<\/h3>/);
   assert.match(card, /<form class="cv3b-form" id="cv3b-form" action="\/pest-control-answering-service\/send\.php" method="POST"/);
   assert.doesNotMatch(card, /<form[^>]*novalidate/i, 'without JavaScript the browser still checks required fields');
   assert.doesNotMatch(card, /<select|<textarea/);
@@ -179,7 +179,7 @@ test('tracked-visit memory: first (90 days) and latest tagged visit reach the le
   assert.match(PHP, /'First tracked visit \(last 90 days\): ' \./);
   assert.match(PHP, /'Latest tracked visit: ' \./);
   assert.doesNotMatch(PHP, /\$invalid\[\] = '(first|latest)_visit'/, 'odd values never lose a lead');
-  assert.match(PAGE, /assets\/cv3b\.js\?v=20261029a"/, 'cache-busted');
+  assert.match(PAGE, /assets\/cv3b\.js\?v=20261029b"/, 'cache-busted');
 });
 
 test('explainer video: unlisted YouTube (nocookie) on tap, self-hosted MP4 fallback, same tracking events', () => {
@@ -325,7 +325,7 @@ test('privacy policy: backup copy of landing-page requests on the web host, kept
 /* Clarity pass (preview 29 Oct 2026): next step inside the form card, 78% source, booking vs CRM entry, video = example. */
 test('clarity pass: form says what happens next, 78% has its source, booking vs CRM is stated in pricing and the FAQ', () => {
   const card = between(PAGE, '<div class="cv3b-scheduler cv3b-lead" id="cv3b-lead">', '<div class="cv3b-field">');
-  assert.match(card, /<h3 class="cv3b-scheduler__title" id="cv3b-lead-title">Book your 20-minute call<\/h3>\s*<p class="cv3b-scheduler__intro" id="cv3b-lead-intro">Enter your details, then choose a time for your 20-minute call\.<\/p>\s*<!--/);
+  assert.match(card, /<h3 class="cv3b-scheduler__title" id="cv3b-lead-title" tabindex="-1">Book your 20-minute call<\/h3>\s*<p class="cv3b-scheduler__intro" id="cv3b-lead-intro">Enter your details, then choose a time for your 20-minute call\.<\/p>\s*<!--/);
   assert.match(card, /aria-labelledby="cv3b-lead-title" aria-describedby="cv3b-lead-intro">/);
   const stat = between(PAGE, '<p class="cv3b-why__stat">', '</p>');
   assert.match(stat, /<span class="cv3b-why__stat-source">Source: CallRail, 2025 survey of 1,000 U\.S\. consumers\.<\/span>$/);
@@ -337,4 +337,14 @@ test('clarity pass: form says what happens next, 78% has its source, booking vs 
   assert.match(faq, /It isn’t a native integration or automatic sync/, 'no integration claim');
   assert.doesNotMatch(PAGE, /Here&rsquo;s that call, answered by a real person|illustrative/i, 'the video is called an example, never a real call or "illustrative"');
   assert.match(CSS, /\.cv3b-terms > div:first-child \{ grid-column: 1 \/ -1; \}/);
+});
+
+/* Feedback pass (29 Oct 2026): "Still sending" after 4 s of silence; no keyboard pop-up on phones after a CTA tap. */
+test('feedback pass: slow answers show "Still sending" after 4 s; touch devices focus the form title, not a field', () => {
+  assert.match(JS, /var SLOW_MS = 4000;/);
+  const sending = between(JS, "submit.textContent = 'Sending…';", "if (outcome === 'accepted')");
+  assert.match(sending, /var slowTimer = window\.setTimeout\(slow, SLOW_MS\);/);
+  assert.match(sending, /sendLead\(p, slow\)\.then\(function \(outcome\) \{\s*window\.clearTimeout\(slowTimer\);/, 'the timer is cleared on every outcome');
+  assert.match(JS, /var touchOnly = !!\(window\.matchMedia && window\.matchMedia\('\(hover: none\) and \(pointer: coarse\)'\)\.matches\);/);
+  assert.match(JS, /if \(touchOnly && leadTitle\) leadTitle\.focus\(\{ preventScroll: true \}\);\s*else if \(firstField\) firstField\.focus\(\{ preventScroll: true \}\);/);
 });
