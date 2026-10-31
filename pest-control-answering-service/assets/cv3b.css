@@ -638,3 +638,43 @@
 [data-callvix-v3b] .cv3b-scheduler__intro { margin-top: -6px; font-size: 16px; line-height: 1.5; color: var(--cv3b-muted); }
 [data-callvix-v3b] .cv3b-why__stat-source { font-size: 13px; font-weight: 500; line-height: 1.4; color: var(--cv3b-muted); }
 [data-callvix-v3b] .cv3b-terms > div:first-child { grid-column: 1 / -1; }
+
+/* ---------------- type and spacing fine-tune (owner-approved 31 Oct 2026; no copy or layout changes) ---------------- */
+
+/* 1. Headlines: slightly looser letter-spacing so heavy 800-weight words don't run together */
+[data-callvix-v3b] .cv3b-h1 { letter-spacing: -0.025em; }
+[data-callvix-v3b] .cv3b-h2 { letter-spacing: -0.024em; }
+[data-callvix-v3b] .cv3b-strip__text { letter-spacing: -0.012em; }
+[data-callvix-v3b] .cv3b-h3 { letter-spacing: -0.005em; }
+
+/* 2. Fine print and notes up from 14px to 15px */
+[data-callvix-v3b] .cv3b-trained__note,
+[data-callvix-v3b] .cv3b-addons__desc,
+[data-callvix-v3b] .cv3b-terms dd,
+[data-callvix-v3b] .cv3b-book__qualifier,
+[data-callvix-v3b] .cv3b-consent { font-size: 15px; line-height: 1.6; }
+[data-callvix-v3b] .cv3b-terms dt { font-size: 15px; }
+[data-callvix-v3b] .cv3b-terms dd { margin-top: 4px; }
+[data-callvix-v3b] .cv3b-assure li { font-size: 15px; }
+
+/* 3. Line length: the training note ran ~165 characters wide on desktop */
+[data-callvix-v3b] .cv3b-trained__note { max-width: 68ch; }
+
+/* 4. No one-word last lines in intros and body copy */
+[data-callvix-v3b] .cv3b-lede,
+[data-callvix-v3b] .cv3b-hero__sub,
+[data-callvix-v3b] main p { text-wrap: pretty; }
+
+/* 5. A little more room between a section's heading block and its content */
+[data-callvix-v3b] .cv3b-head { margin-bottom: 52px; }
+
+@media (max-width: 767px) {
+  [data-callvix-v3b] .cv3b-h1 { letter-spacing: -0.022em; }
+}
+/* 6. Phone: sections had 44px top/bottom and 22px under headings; give them more air */
+@media (max-width: 600px) {
+  [data-callvix-v3b] { --cv3b-section-y: 56px; }
+  [data-callvix-v3b] .cv3b-h2 { font-size: 29px; letter-spacing: -0.018em; }
+  [data-callvix-v3b] .cv3b-head { margin-bottom: 30px; }
+  [data-callvix-v3b] main p { line-height: 1.6; }
+}

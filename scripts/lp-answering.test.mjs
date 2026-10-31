@@ -294,8 +294,8 @@ test('why it matters (version C): heading beside the 78%, three moments, "With C
   assert.doesNotMatch(PAGE, /class="[^"]*\bcv3b-(problem|flow|moment|stat)/, 'old section markup gone');
   assert.doesNotMatch(CSS, /\.cv3b-(problem|flow|moment|stat)/, 'old section styles gone');
   assert.match(CSS, /\.cv3b-why__moments \{ display: grid; grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);/);
-  assert.match(PAGE, /assets\/cv3b\.css\?v=20261029b"/, 'cache-busted');
-  assert.match(SCHED, /assets\/cv3b\.css\?v=20261029b"/, 'schedule page shares the stylesheet');
+  assert.match(PAGE, /assets\/cv3b\.css\?v=20261031a"/, 'cache-busted');
+  assert.match(SCHED, /assets\/cv3b\.css\?v=20261031a"/, 'schedule page shares the stylesheet');
 });
 
 /* Owner-approved 29 Oct 2026: send.php keeps a private lead record and recognises a repeated submission. */
@@ -364,4 +364,19 @@ test('privacy policy discloses the OpenAI pixel in the processor table, cookies 
   assert.match(ads, /with Google, Meta and OpenAI in hashed \(one-way encrypted\) form/);
   assert.match(ads, /in ChatGPT you can turn off ad personalization under Settings &gt; Ad controls \(see help\.openai\.com \);/);
   for (const f of ['index.html', 'contact.html', 'privacy-policy.html', `${DIR}/index.html`, `${DIR}/schedule/index.html`]) assert.doesNotMatch(read(f), /oaiq|bzrcdn\.openai\.com/, f + ' must not hardcode the pixel (GTM loads it)');
+});
+
+test('type and spacing fine-tune (31 Oct 2026): rules sit after the clarity pass and set the approved values', () => {
+  const tune = CSS.slice(CSS.indexOf('/* ---------------- type and spacing fine-tune'));
+  assert.ok(CSS.indexOf('/* ---------------- type and spacing fine-tune') > CSS.indexOf('/* ---------------- clarity pass'), 'last block in the file, so it wins the cascade');
+  assert.match(tune, /\.cv3b-h1 \{ letter-spacing: -0\.025em; \}/);
+  assert.match(tune, /\.cv3b-h2 \{ letter-spacing: -0\.024em; \}/);
+  assert.match(tune, /\.cv3b-trained__note,\s*\[data-callvix-v3b\] \.cv3b-addons__desc,\s*\[data-callvix-v3b\] \.cv3b-terms dd,\s*\[data-callvix-v3b\] \.cv3b-book__qualifier,\s*\[data-callvix-v3b\] \.cv3b-consent \{ font-size: 15px; line-height: 1\.6; \}/);
+  assert.match(tune, /\.cv3b-trained__note \{ max-width: 68ch; \}/);
+  assert.match(tune, /\.cv3b-head \{ margin-bottom: 52px; \}/);
+  const phone = between(tune, '@media (max-width: 600px) {', '\n}');
+  assert.match(phone, /--cv3b-section-y: 56px;/);
+  assert.match(phone, /\.cv3b-head \{ margin-bottom: 30px; \}/);
+  assert.doesNotMatch(tune, /\.cv3b-pill \{ font-size: 14px/, 'the 14px phone pill wrapped to two lines and was dropped');
+  assert.doesNotMatch(tune, /\.cv3b-track__label \{ font-size: 13px/, '13px step labels wrapped and were dropped');
 });
