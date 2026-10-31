@@ -294,8 +294,8 @@ test('why it matters (version C): heading beside the 78%, three moments, "With C
   assert.doesNotMatch(PAGE, /class="[^"]*\bcv3b-(problem|flow|moment|stat)/, 'old section markup gone');
   assert.doesNotMatch(CSS, /\.cv3b-(problem|flow|moment|stat)/, 'old section styles gone');
   assert.match(CSS, /\.cv3b-why__moments \{ display: grid; grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);/);
-  assert.match(PAGE, /assets\/cv3b\.css\?v=20261031b"/, 'cache-busted');
-  assert.match(SCHED, /assets\/cv3b\.css\?v=20261031b"/, 'schedule page shares the stylesheet');
+  assert.match(PAGE, /assets\/cv3b\.css\?v=20261031c"/, 'cache-busted');
+  assert.match(SCHED, /assets\/cv3b\.css\?v=20261031c"/, 'schedule page shares the stylesheet');
 });
 
 /* Owner-approved 29 Oct 2026: send.php keeps a private lead record and recognises a repeated submission. */
@@ -388,4 +388,20 @@ test('phone pricing link (31 Oct 2026): "View pricing" sits right under the hero
   assert.ok(PAGE.includes('<section class="cv3b-section cv3b-section--navy" id="pricing"') || /<section[^>]*id="pricing"/.test(PAGE), '#pricing target exists');
   const block = CSS.slice(CSS.indexOf('/* ---------------- phone pricing link'));
   assert.match(block, /\.cv3b-hero__pricing \{ display: none; \}\s*@media \(max-width: 767px\) \{\s*\[data-callvix-v3b\] \.cv3b-hero__pricing \{ display: inline-flex;[^}]*min-height: 44px;/);
+});
+
+test('calendar page booked state (31 Oct 2026): says "You’re booked", moves to step 3, and a refresh shows that instead of the calendar; booking still counted once', () => {
+  assert.match(SCHED, /assets\/schedule\.js\?v=20261031a"/, 'schedule.js cache-busted');
+  const panel = between(SCHED, '<div class="cv3b-booked" id="cv3b-booked" hidden>', '</div>');
+  assert.match(panel, /Your calendar invite is on its way to your email, with the time and how to join the call\./);
+  assert.match(panel, /Need a different time\? Use the reschedule link in that email\./);
+  assert.ok(SCHED.indexOf('id="cv3b-booked"') > SCHED.indexOf('id="cv3b-cal"') && SCHED.indexOf('id="cv3b-booked"') < SCHED.indexOf('class="cv3b-schedule__later"'), 'between the calendar and the "later" line');
+  assert.match(SJS, /var booked = stored\('cvx_lp_booked'\) === '1';/);
+  assert.match(SJS, /title\.textContent = first \? 'You\\u2019re booked, ' \+ first \+ '\.' : 'You\\u2019re booked\.';/);
+  assert.match(SJS, /steps\[2\]\.className = 'is-current'; steps\[2\]\.setAttribute\('aria-current', 'step'\);/);
+  assert.match(SJS, /if \(booked\) showBooked\(\);\s*else \{\s*var s = doc\.createElement\('script'\);/, 'a refresh after booking does not load Calendly again');
+  assert.match(SJS, /if \(ready \|\| booked\) return;/, 'no "calendar didn’t load" message once booked');
+  // tracking lines unchanged: the UI line sits before the existing dedupe + record
+  assert.match(SJS, /case 'calendly\.event_scheduled':\n        booked = true; showBooked\(\);\n        if \(alreadyCounted\(bookingKey\(d\.payload\)\)\) return;\n        record\('callvix_meeting_booked', \{ booking_method: 'calendly_embed', event_id: 'book\.' \+ Date\.now\(\)\.toString\(36\) \+ '\.' \+ Math\.random\(\)\.toString\(36\)\.slice\(2, 8\) \}\);\n        break;/);
+  assert.equal((SJS.match(/record\('callvix_meeting_booked'/g) || []).length, 1);
 });

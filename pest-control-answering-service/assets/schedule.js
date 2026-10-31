@@ -45,9 +45,26 @@
   if (stored('cvx_lead_name')) prefill.name = stored('cvx_lead_name');
   if (stored('cvx_lead_email')) prefill.email = stored('cvx_lead_email');
 
+  /* Booked state (31 Oct 2026): after a booking, or a refresh after one, the page says so instead of showing the calendar again. */
+  var booked = stored('cvx_lp_booked') === '1';
+  function showBooked() {
+    var steps = doc.querySelectorAll('.cv3b-next--progress li');
+    if (steps.length === 3) {
+      steps[1].className = 'is-done'; steps[1].removeAttribute('aria-current');
+      steps[2].className = 'is-current'; steps[2].setAttribute('aria-current', 'step');
+    }
+    if (title) title.textContent = first ? 'You\u2019re booked, ' + first + '.' : 'You\u2019re booked.';
+    var panel = $('#cv3b-booked'), later = $('.cv3b-schedule__later');
+    if (box) box.hidden = true;
+    if (fallback) fallback.hidden = true;
+    if (later) later.hidden = true;
+    if (panel) panel.hidden = false;
+    try { sessionStorage.setItem('cvx_lp_booked', '1'); } catch (e) { /* private mode: the page still updates now */ }
+  }
+
   var ready = false;
   function failed() {
-    if (ready) return;
+    if (ready || booked) return;
     if (status) status.textContent = 'The calendar is taking too long to load.';
     if (fallback) fallback.hidden = false;
     if (box) box.removeAttribute('aria-busy');
@@ -62,11 +79,14 @@
       });
     } catch (e) { failed(); }
   }
-  var s = doc.createElement('script');
-  s.src = 'https://assets.calendly.com/assets/external/widget.js'; s.async = true;
-  s.onload = init; s.onerror = failed;
-  doc.head.appendChild(s);
-  window.setTimeout(failed, 15000);
+  if (booked) showBooked();
+  else {
+    var s = doc.createElement('script');
+    s.src = 'https://assets.calendly.com/assets/external/widget.js'; s.async = true;
+    s.onload = init; s.onerror = failed;
+    doc.head.appendChild(s);
+    window.setTimeout(failed, 15000);
+  }
 
   /* Calendly's messages: size, steps, booking. Same dedupe as js/lp-booking.js and js/main.js. */
   function bookingKey(payload) {
@@ -108,6 +128,7 @@
         if (!sent.time) { sent.time = 1; record('callvix_booking_step', { booking_step: 'time_selected' }); }
         break;
       case 'calendly.event_scheduled':
+        booked = true; showBooked();
         if (alreadyCounted(bookingKey(d.payload))) return;
         record('callvix_meeting_booked', { booking_method: 'calendly_embed', event_id: 'book.' + Date.now().toString(36) + '.' + Math.random().toString(36).slice(2, 8) });
         break;

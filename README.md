@@ -309,6 +309,9 @@ the phone number. `send.php` writes every lead to `callvix-leads/leads-YYYY-MM.j
 and counts only new leads towards the 5-per-hour limit. Accepted = the email was handed to the mail system; if mail fails
 the record keeps a copy (`mail_sent: false`) and the page retries. Local check: `_callvix-live-tools/php-wasm/send-php-check.mjs`.
 The calendar page lets a tab back in after a refresh or back/forward (the `lead_ok` flag is no longer cleared on the first visit).
+After a booking (31 Oct 2026, owner-approved) the calendar page switches to a booked state: "You’re booked, <first name>.", step 3
+current, a short confirmation box (the invite email has the time and the reschedule link) instead of the calendar. `cvx_lp_booked`
+in sessionStorage keeps that state on a refresh in the same tab, and the calendar is not loaded again. The booking is still counted once.
 
 **Consent (29 Oct 2026, owner decision).** No consent banner: ads launch **US-only**. Add a consent banner and Google
 Consent Mode before any campaign targets Canada (Quebec's Law 25 in particular).
