@@ -54,12 +54,25 @@ its trademark disclaimer. A false integration claim ends a sales call.
 Other standing accuracy rules:
 - Base coverage is **Mon–Fri 9am–6pm client local time**. It is not 24/7. After-Hours ($199/mo) and Weekend
   ($149/mo) are paid add-ons; CRM Management is $99/mo.
-- Pricing is $399/mo base + $2.99 per inbound call + $0.99 per outbound follow-up. Flat per call, never per minute.
+- Pricing is $399/mo base + $2.99 per answered inbound call + $0.99 per outbound follow-up. Flat per call, never per minute.
+  Never write "per inbound call" without "answered".
 - Never use "illustrative", "illustration" or "illustrate" (owner decision, 24 Oct 2026). Assumed figures are labelled as
   example figures the reader replaces with their own, never presented as facts or statistics.
 - No "not a real call / customer / Callvix call" disclaimers and no "hypothetical" (owner decision, 24 Oct 2026).
-  Call scenarios and volumes are "examples". /services and the two landing pages are exempt and untouched.
+  Call scenarios and volumes are "examples". The landing page `/pest-control-answering-service/` is exempt and untouched.
 - Callvix is human-answered. Never describe it as AI, automated, or a voice bot.
+
+## Keyword targeting (owner brief, 31 Oct 2026)
+
+- The homepage `/` is the page for "pest control answering service" (title, H1, Service schema, FAQ).
+  `/services` is the "How It Works" page: no "pest control answering service" in its title, headings or FAQ
+  questions, and at most one body mention, linked to `/`.
+- Internal links: an anchor containing "pest control answering service", "pest control phone answering service",
+  "pest control call answering" or "human pest control answering service" points to `/`. A process anchor
+  ("how it works", "see how our call handling works", "see the setup steps") points to `/services`.
+- Every blog post, integration page, `/pricing` and `/about` carries one contextual keyword link to `/`
+  (two on the AI-vs-human and comparison guides). `scripts/keyword-target.test.mjs` holds this.
+- Brand: write "Callvix Solutions" in full in new or edited copy, never "Callvix" alone (another company is called Callvix).
 
 ## IndexNow
 

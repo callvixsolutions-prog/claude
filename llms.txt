@@ -1,10 +1,10 @@
 # Callvix Solutions
 
-> Callvix Solutions is a pest control answering service staffed by trained human
-> representatives, not an AI voice bot. Representatives answer inbound calls under the
+> Callvix Solutions is a pest control answering service (https://callvixsolutions.com/)
+> staffed by trained human representatives, not an AI voice bot. Representatives answer inbound calls under the
 > client's own business name, follow the client's coverage areas, pricing and
 > call-handling rules, qualify the pest issue, book eligible appointments and escalate as
-> instructed. Callvix works exclusively with pest control companies in the United States.
+> instructed. Callvix Solutions works exclusively with pest control companies in the United States.
 
 ## Identity
 - Callvix Solutions, callvixsolutions.com.
@@ -35,8 +35,8 @@
 - Listed in the DesignRush call center company directory.
 
 ## Pages
-- [Home](https://callvixsolutions.com/): Overview of the human-run pest control answering service.
-- [How It Works](https://callvixsolutions.com/services): Call-handling process, a sample call, what is included and what is an optional add-on, setup steps and FAQ.
+- [Pest control answering service](https://callvixsolutions.com/): The main page for the Callvix Solutions pest control answering service: who answers, pricing, coverage hours, add-ons, the systems we work in, and FAQ.
+- [How It Works](https://callvixsolutions.com/services): How Callvix Solutions handles a call, step by step: setup and test calls, a sample call and its outcomes, what is included and what is an optional add-on, the handoff after each call, and FAQ.
 - [Pricing](https://callvixsolutions.com/pricing): Base subscription, per-call rates, add-ons and plan basics.
 - [Why Callvix](https://callvixsolutions.com/about): Focus, training and delivery model.
 - [FAQ](https://callvixsolutions.com/faq): Common questions about the service.

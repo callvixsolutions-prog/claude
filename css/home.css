@@ -430,3 +430,20 @@
 
 /* The coverage chart's smallest labels were 11.5px at tablet and desktop widths. */
 .home-main .h18-cover .cov-row-label em, .home-main .h18-cover .cov-day { font-size: 12px; }
+
+/* 31 Oct 2026 (owner brief: the homepage is the pest control answering service page). Two short answers
+   below the pricing panel, and seven FAQ answers printed in full rather than collapsed. */
+.home-main .h19-cover2 { display: grid; gap: var(--space-lg); }
+.home-main .h19-cover2 h2 { font-size: clamp(24px, 1vw + 19px, 30px); margin: var(--space-2xs) 0 0; max-width: 22ch; }
+.home-main .h19-cover2 p { margin: var(--space-sm) 0 0; font-size: 17px; line-height: 1.65; color: var(--ink-700); max-width: 34em; }
+.home-main .h19-cover2 a, .home-main .h19-qa a { color: var(--teal-600); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.home-main .h19-cover2 a:hover, .home-main .h19-qa a:hover { text-decoration-thickness: 2px; }
+.home-main .h19-faq { max-width: 760px; margin: 0 auto; border-top: 1px solid var(--line-2); }
+.home-main .h19-qa { padding: 20px 0; border-bottom: 1px solid var(--line-2); }
+.home-main .h19-qa h3 { font-size: 18px; line-height: 1.35; color: var(--navy-900); margin: 0; }
+.home-main .h19-qa p { margin: 8px 0 0; font-size: 16px; line-height: 1.65; color: var(--ink-700); }
+@media (min-width: 1024px) { .home-main .h19-cover2 { grid-template-columns: 1fr 1fr; gap: 64px; } }
+/* The H1 now carries the service name, so it is longer: one size step down keeps it to four lines beside the
+   illustration and the first button above the fold at 1440 x 900. */
+.home-main .h18-hero h1 { font-size: clamp(31px, 1.3vw + 24px, 42px); max-width: 13em; }
+@media (min-width: 1024px) { .home-main .h18-hero h1 { font-size: 42px; line-height: 1.1; } }

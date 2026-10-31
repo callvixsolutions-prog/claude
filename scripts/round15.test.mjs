@@ -39,9 +39,10 @@ test('the homepage shows one call and one handoff sheet', () => {
     assert.equal(count(text, once), 1, `"${once}" should appear once, found ${count(text, once)}`);
   }
   /* Restored in Round 17 and not to be merged away again without a decision. */
-  assert.equal((main.match(/<h1[^>]*>([^<]*)<\/h1>/g) || []).join(), '<h1>Your pest control calls, answered by trained people</h1>', 'the homepage H1 is the keyword heading');
+  assert.equal((main.match(/<h1[^>]*>([^<]*)<\/h1>/g) || []).join(), '<h1>Pest control answering service: trained people answer and book your calls</h1>', 'the homepage H1 is the keyword heading (owner brief, 31 Oct 2026: the homepage is the pest control answering service page)');
   for (const back of ['Keep working. We’ll take the next call.', 'Human call answering for U.S. pest control companies', 'For the calls your team can’t get to', 'In pest control, a missed call can mean a missed booking', 'See what happens to one call',
-    'A clear handoff after each call we take', 'From first call to booked job', 'Your rules stay in charge', 'When a call isn’t a booking',
+    'A clear handoff after each call we take', 'From first call to booked job: how our pest control phone answering works', 'Your rules stay in charge',
+    'After-hours and weekend pest control call answering', 'Overflow and busy-season coverage for your office', 'When a call isn’t a booking',
     'The week it covers', 'Works with the tools your office already runs on', 'Which CRM or scheduling systems do you work with?']) {
     assert.equal(count(text, back), 1, `"${back}" should be on the homepage exactly once`);
   }
@@ -49,7 +50,7 @@ test('the homepage shows one call and one handoff sheet', () => {
   for (const cls of ['rec-bubble', 'jobnote']) {
     assert.ok(!new RegExp(`class="[^"]*\\b${cls}\\b`).test(main), `old component .${cls} is back on the homepage`);
   }
-  assert.ok(text.includes('Stock photographs, not Callvix customers.'), 'the stock-photo label must stay beside the photographs');
+  assert.ok(text.includes('Stock photographs, not Callvix Solutions customers.'), 'the stock-photo label must stay beside the photographs');
   /* The hero is one illustration, described for people who cannot see it, and not a photograph of a person. */
   const hero = main.slice(0, main.indexOf('h18-who'));
   assert.equal(count(hero, '<svg'), 2, 'the illustration, and the tick in its one HTML label');
@@ -59,8 +60,8 @@ test('the homepage shows one call and one handoff sheet', () => {
 });
 
 test('the facts search and AI tools read are plain HTML text on the homepage', () => {
-  const FACTS = ['Answered by trained people, not an AI voice bot', 'Callvix Solutions is a human pest control answering service for U.S. pest control companies.', 'Trained people answer in your company name', 'Callvix works only with pest control companies', 'Our representatives only handle pest control calls',
-    '$399/month + $2.99 per answered inbound call', '$399 / month', '$2.99 / inbound call', '$0.99 per outbound follow-up, when used.',
+  const FACTS = ['Answered by trained people, not an AI voice bot', 'Callvix Solutions is a human pest control answering service for U.S. pest control companies.', 'Trained people answer in your company name', 'Callvix Solutions works only with pest control companies', 'Our representatives only handle pest control calls',
+    '$399/month + $2.99 per answered inbound call', '$399 / month', '$2.99 / answered inbound call', '$0.99 per outbound follow-up, when used.',
     'Mon–Fri, 9am–6pm your company’s local time', '9am–6pm, your company’s local time — included', 'Overnight coverage is not offered.',
     'Month-to-month, with no long-term contract.', 'using access you grant and can revoke',
     'It’s manual work by a person — no native integration or automatic sync.'];
@@ -72,9 +73,9 @@ test('the facts search and AI tools read are plain HTML text on the homepage', (
     assert.ok(!banned.test(text), `banned claim on the homepage: ${banned}`);
   }
   /* "overnight" and "native integration" are allowed only as denials. */
-  /* Twice since 20 Oct 2026: the pricing panel and the at-a-glance list. */
-  assert.equal(count(text.toLowerCase(), 'overnight'), 2);
-  assert.equal(count(text.toLowerCase(), 'overnight coverage is not offered'), 2, 'overnight only ever denied');
+  /* Four since 31 Oct 2026: the pricing panel, the at-a-glance list, the after-hours section and the hours FAQ. */
+  assert.equal(count(text.toLowerCase(), 'overnight'), 4);
+  assert.equal(count(text.toLowerCase(), 'overnight coverage is not offered'), 4, 'overnight only ever denied');
   for (const m of text.matchAll(/native integration/gi)) assert.match(text.slice(m.index - 12, m.index), /no $/i, 'native integration only ever denied');
 });
 
@@ -139,8 +140,9 @@ test('the services stylesheet is current, services-only and scoped', () => {
   const foreign = [...new Set(selectors.flatMap((s) => [...s.matchAll(/\.([a-z][\w-]*)/g)].map((m) => m[1])))].filter((c) => !c.startsWith('s18-') && !OK.has(c));
   assert.deepEqual(foreign, [], 'services.css may only name s18- classes');
   /* The protected tags, read from the file this stylesheet belongs to. */
-  assert.ok(page.includes('<title>Human Pest Control Answering Service | Callvix Solutions</title>'));
-  assert.equal((page.match(/<h1[^>]*>([^<]*)<\/h1>/g) || []).join(), '<h1>Human Pest Control Answering Service</h1>');
+  /* 31 Oct 2026 (owner brief): /services is the "How It Works" page; the homepage targets "pest control answering service". */
+  assert.ok(page.includes('<title>How Callvix Solutions Works | Pest Control Call Handling</title>'));
+  assert.equal((page.match(/<h1[^>]*>([^<]*)<\/h1>/g) || []).join(), '<h1>How our pest control call handling works</h1>');
   assert.ok(page.includes('<link rel="canonical" href="https://callvixsolutions.com/services">'));
   assert.ok(/<meta name="robots" content="index,follow/.test(page), '/services must stay indexable in the repository');
   /* The sample call checks before it promises. */
@@ -181,9 +183,14 @@ test('the homepage structured data is byte-identical to before the rebuild', () 
   /* Round 20b changed one sentence on purpose: the CRM Management offer now says
      representatives "manually enter agreed call notes", matching the visible copy.
      24 Oct 2026 (SEO/AIO audit, owner brief): "per answered inbound call" wording, and a sales
-     contactPoint on the Organization. */
-  assert.equal(createHash('sha256').update(blocks).digest('hex'), '7ad00e62afecd8f5a65ef3a8377c7df8572621a654b2e380c6d9c84b1368406b',
+     contactPoint on the Organization.
+     31 Oct 2026 (owner brief, keyword cannibalization): the Service is now the homepage's own entity (name and
+     serviceType "Pest control answering service", url "/", per answered inbound call, the /pricing OfferCatalog),
+     and the seven visible FAQ answers are a FAQPage. */
+  assert.equal(createHash('sha256').update(blocks).digest('hex'), 'e17fa4375de9bea9dd234d0d1016d1daccfe49f98a956ffd2fab913d4c2cbe58',
     'Round 15 changed markup and CSS only. If the JSON-LD is meant to change, that is its own decision: update this hash with it.');
-  assert.ok(!/"@type"\s*:\s*"FAQPage"/.test(blocks), 'the homepage has no FAQPage');
+  assert.equal(count(blocks, '"@type": "FAQPage"'), 1, 'one FAQPage, for the seven visible answers');
+  assert.equal(count(main, 'class="h19-qa"'), 7, 'seven FAQ answers, all visible');
+  assert.ok(!/<details\b/.test(main.slice(main.indexOf('h19-faq-sec'))), 'the homepage FAQ is not an accordion');
   assert.equal(count(main, '<h1'), 1);
 });
