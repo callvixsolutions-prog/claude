@@ -294,8 +294,8 @@ test('why it matters (version C): heading beside the 78%, three moments, "With C
   assert.doesNotMatch(PAGE, /class="[^"]*\bcv3b-(problem|flow|moment|stat)/, 'old section markup gone');
   assert.doesNotMatch(CSS, /\.cv3b-(problem|flow|moment|stat)/, 'old section styles gone');
   assert.match(CSS, /\.cv3b-why__moments \{ display: grid; grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);/);
-  assert.match(PAGE, /assets\/cv3b\.css\?v=20261031a"/, 'cache-busted');
-  assert.match(SCHED, /assets\/cv3b\.css\?v=20261031a"/, 'schedule page shares the stylesheet');
+  assert.match(PAGE, /assets\/cv3b\.css\?v=20261031b"/, 'cache-busted');
+  assert.match(SCHED, /assets\/cv3b\.css\?v=20261031b"/, 'schedule page shares the stylesheet');
 });
 
 /* Owner-approved 29 Oct 2026: send.php keeps a private lead record and recognises a repeated submission. */
@@ -379,4 +379,13 @@ test('type and spacing fine-tune (31 Oct 2026): rules sit after the clarity pass
   assert.match(phone, /\.cv3b-head \{ margin-bottom: 30px; \}/);
   assert.doesNotMatch(tune, /\.cv3b-pill \{ font-size: 14px/, 'the 14px phone pill wrapped to two lines and was dropped');
   assert.doesNotMatch(tune, /\.cv3b-track__label \{ font-size: 13px/, '13px step labels wrapped and were dropped');
+});
+
+test('phone pricing link (31 Oct 2026): "View pricing" sits right under the hero CTA line, points at #pricing, shown only below 768px', () => {
+  const cta = between(PAGE, '<div class="cv3b-hero__cta">', '<figure class="cv3b-hero__quote">');
+  assert.match(cta, /id="cv3b-hero-cta"[\s\S]*<p class="cv3b-hero__micro">[^<]*<\/p>\s*<a class="cv3b-hero__pricing" href="#pricing">View pricing<svg/, 'after the booking CTA and its line, so the CTA does not move');
+  assert.equal((PAGE.match(/class="cv3b-hero__pricing"/g) || []).length, 1);
+  assert.ok(PAGE.includes('<section class="cv3b-section cv3b-section--navy" id="pricing"') || /<section[^>]*id="pricing"/.test(PAGE), '#pricing target exists');
+  const block = CSS.slice(CSS.indexOf('/* ---------------- phone pricing link'));
+  assert.match(block, /\.cv3b-hero__pricing \{ display: none; \}\s*@media \(max-width: 767px\) \{\s*\[data-callvix-v3b\] \.cv3b-hero__pricing \{ display: inline-flex;[^}]*min-height: 44px;/);
 });

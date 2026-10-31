@@ -678,3 +678,11 @@
   [data-callvix-v3b] .cv3b-head { margin-bottom: 30px; }
   [data-callvix-v3b] main p { line-height: 1.6; }
 }
+
+/* ---------------- phone pricing link (31 Oct 2026) ----------------
+   The header menu (How it works / Pricing / FAQ) is hidden below 768px, so phones get a "View pricing" link under the hero CTA. */
+[data-callvix-v3b] .cv3b-hero__pricing { display: none; }
+@media (max-width: 767px) {
+  [data-callvix-v3b] .cv3b-hero__pricing { display: inline-flex; align-items: center; align-self: flex-start; gap: 8px; min-height: 44px; margin-top: -4px; color: var(--cv3b-on-dark-accent); font-size: 16px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+  [data-callvix-v3b] .cv3b-hero__pricing .cv3b-ico { width: 18px; height: 18px; transform: rotate(90deg); }
+}
