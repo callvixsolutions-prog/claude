@@ -96,7 +96,6 @@ const DUPLICATE_ALLOW = [
   ['blog/pest-control-call-script-intake-form.html', 'Before you start: safety overrides everything.', 'the safety notice is shown before step 1 and again at the top of the printable form, which is printed on its own'],
   ['blog/best-pest-control-answering-services.html', 'Mon–Fri 9am–6pm your local time; evening and weekend add-ons', 'owner brief 24 Oct 2026: Callvix is the first row of both the human and the AI comparison tables, so its hours cell repeats'],
   ['blog/best-pest-control-answering-services.html', 'FieldRoutes, PestPac, GorillaDesk, Briostack', 'comparison table cells: several services name the same four pest CRMs, so the cell text repeats by design'],
-  ['index.html', 'Sample call. Names and details are made up.', 'owner-approved 22 Oct 2026: the same label captions both sample-call figures (the call walkthrough and the handoff details)'],
 ];
 
 test('the duplicate detector sees a planted duplicate, a nested copy and a short repeat correctly', () => {
@@ -193,22 +192,25 @@ test('strings retired in round 12 have not come back', () => {
   assert.deepEqual(stale, [], `PENDING entries whose string is gone — delete them:\n  ${stale.join('\n  ')}`);
 });
 
-/* 22 Oct 2026, owner-approved: example call content on the homepage and the integration pages is labelled
-   "Sample call" ("Names and details are made up"), never "illustrative", and out-of-area calls are not
-   described as "never booked" (the client's rules can allow it). */
-test('homepage and integration pages: sample-call labels, no "illustrative" or "never booked"', () => {
+/* 22 Oct 2026, owner-approved: example call content is never "illustrative", and out-of-area calls are not
+   described as "never booked" (the client's rules can allow it).
+   2 Nov 2026, owner instruction: the caption notes are removed site-wide ("Sample call. Names and details are
+   made up.", "Stock photographs, not ...", "Sample scenarios ...", "Example" badges). Section titles such as
+   "Sample call record" stay, and so does each add-on sentence that shared a line with a removed note. */
+test('homepage and integration pages: no caption notes, no "illustrative" or "never booked"', () => {
   const pages = ['index.html', 'integrations/index.html', ...['fieldroutes', 'pestpac', 'servicetitan', 'gorilladesk', 'briostack', 'housecall-pro'].map((n) => `integrations/${n}.html`)];
   const hits = [];
   for (const rel of pages) {
     const html = readFileSync(join(ROOT, rel), 'utf8');
-    for (const old of [/llustrative/, /not a recording/, /customer record/, /never booked/]) if (old.test(html)) hits.push(`${rel}: ${old}`);
+    for (const old of [/llustrative/, /not a recording/, /customer record/, /never booked/, /made up/i, /Stock photograph/i, /Sample scenarios/, /crm-record-tag/, /answers and books; your own technicians/])
+      if (old.test(html)) hits.push(`${rel}: ${old}`);
     if (rel.startsWith('integrations/') && rel !== 'integrations/index.html') {
-      assert.ok(html.includes('Sample call record</') && html.includes('Sample call record. Names and details are made up. Entry in ') && html.includes('Sample scenarios &mdash; your own booking'), rel);
+      assert.ok(html.includes('Sample call record</') && /<p class="card-disclaimer">Entry in [^<]+ requires the optional CRM Management add-on\.<\/p>/.test(html), rel);
     }
   }
   assert.deepEqual(hits, []);
   const home = readFileSync(join(ROOT, 'index.html'), 'utf8');
-  assert.equal(home.split('Sample call. Names and details are made up.').length - 1, 2);
-  assert.ok(home.includes('Logged and sent to you unless your rules allow us to book it') && home.includes('Sample call. Callvix Solutions answers and books; your own technicians do the work.') && home.includes('The same steps on one sample call.'));
-  assert.ok(readFileSync(join(ROOT, 'integrations/index.html'), 'utf8').includes('Sample call. Names and details are made up. Entering the booking in your software requires the CRM Management add-on.'));
+  assert.ok(home.includes('Logged and sent to you unless your rules allow us to book it') && home.includes('The same steps on one sample call.'));
+  assert.ok(!/h15-caption|h18-photo-note|&middot; example/.test(home), 'homepage caption notes are gone');
+  assert.ok(readFileSync(join(ROOT, 'integrations/index.html'), 'utf8').includes('<p class="card-disclaimer">Entering the booking in your software requires the CRM Management add-on.</p>'));
 });

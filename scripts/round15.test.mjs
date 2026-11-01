@@ -50,7 +50,8 @@ test('the homepage shows one call and one handoff sheet', () => {
   for (const cls of ['rec-bubble', 'jobnote']) {
     assert.ok(!new RegExp(`class="[^"]*\\b${cls}\\b`).test(main), `old component .${cls} is back on the homepage`);
   }
-  assert.ok(text.includes('Stock photographs, not Callvix Solutions customers.'), 'the stock-photo label must stay beside the photographs');
+  /* 2 Nov 2026, owner instruction: the stock-photo caption and the sample-call captions are removed. */
+  assert.ok(!/Stock photograph|Names and details are made up/i.test(text), 'the caption notes were removed by owner instruction');
   /* The hero is one illustration, described for people who cannot see it, and not a photograph of a person. */
   const hero = main.slice(0, main.indexOf('h18-who'));
   assert.equal(count(hero, '<svg'), 2, 'the illustration, and the tick in its one HTML label');
