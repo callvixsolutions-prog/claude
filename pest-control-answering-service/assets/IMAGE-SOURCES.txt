@@ -14,3 +14,13 @@ SHA-256 dbe9b285989be4792c8346aca7426bd5a6e6ea3fc19dd08b4956ff2130daaa36), which
 octanecdn.com/pestmastercom/pestmastercom_516600041.png, linked from https://www.pestmaster.com/naperville-wheaton/,
 downloaded 2026-10-10. Same asset the owner named on 25 Oct 2026. Served from this folder, never hotlinked.
 This file's SHA-256: d91def7e843007e65724c57475fb4338037d999dd69f5e1eced93e170b0f103e.
+
+Speed pass (2 Nov 2026, owner-approved). Same pictures, lighter files. Pillow 11.3, method 6:
+- cv3b-hero-phone-call.webp (864x1080): cv3b-hero-phone-call.jpg re-encoded as WebP quality 84 (PSNR 42.5 dB against the JPG).
+  Tablets and desktop get this file; phones (767px and narrower, where the photo is hidden) download no hero photo at all.
+  The JPG stays as the fallback. SHA-256: 00bc5ca0512568d92de1ffca2692b7c2c601d47be436f2cb0b70a84867c7653b.
+- cv3b-pestmaster-mark.webp (112x112): cv3b-pestmaster-mark.png saved as lossless WebP, pixel-identical to the PNG.
+  SHA-256: fbeea6dd7a93535642a992d228cc9b60543661999e90021b6b6647e3dfd30443.
+- video/callvix-lp-poster-720.webp and -960.webp: video/callvix-lp-poster.jpg resized (Lanczos) to 720x405 and 960x540,
+  WebP quality 80, offered next to the 1280 WebP so each screen downloads the size it shows.
+  SHA-256: 00e9060e348287614a24f9b3899de2c888abfa979f3b945a51142bbc5304c196 and 517137e52af8f0aa2bab3aac1c6d4384c2e392e005517588c597d540cac8723e.

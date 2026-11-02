@@ -13,7 +13,10 @@ import vm from 'node:vm';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const read = (p) => readFileSync(join(ROOT, p), 'utf8');
 const DIR = 'pest-control-answering-service';
-const PAGE = read(`${DIR}/index.html`);
+// The page's styles are inlined from cv3b.css (speed pass, 2 Nov 2026). PAGE is the markup with that block emptied,
+// so markup checks can't be satisfied by CSS text; PAGE_RAW is the file as served.
+const PAGE_RAW = read(`${DIR}/index.html`);
+const PAGE = PAGE_RAW.replace(/<style id="cv3b-css">[\s\S]*?<\/style>/, '<style id="cv3b-css"></style>');
 const SCHED = read(`${DIR}/schedule/index.html`);
 const JS = read(`${DIR}/assets/cv3b.js`);
 const SJS = read(`${DIR}/assets/schedule.js`);
@@ -294,8 +297,8 @@ test('why it matters (version C): heading beside the 78%, three moments, "With C
   assert.doesNotMatch(PAGE, /class="[^"]*\bcv3b-(problem|flow|moment|stat)/, 'old section markup gone');
   assert.doesNotMatch(CSS, /\.cv3b-(problem|flow|moment|stat)/, 'old section styles gone');
   assert.match(CSS, /\.cv3b-why__moments \{ display: grid; grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);/);
-  assert.match(PAGE, /assets\/cv3b\.css\?v=20261031c"/, 'cache-busted');
-  assert.match(SCHED, /assets\/cv3b\.css\?v=20261031c"/, 'schedule page shares the stylesheet');
+  assert.equal(PAGE_RAW.match(/<style id="cv3b-css">\n([\s\S]*?)\n<\/style>/)[1], CSS.replace(/\n$/, ''), 'page carries cv3b.css inline (run node scripts/lp-inline-css.mjs)');
+  assert.match(SCHED, /assets\/cv3b\.css\?v=20261031c"/, 'schedule page links the stylesheet');
 });
 
 /* Owner-approved 29 Oct 2026: send.php keeps a private lead record and recognises a repeated submission. */
@@ -408,4 +411,23 @@ test('calendar page booked state (31 Oct 2026): says "You’re booked", moves to
   // tracking lines unchanged: the UI line sits before the existing dedupe + record
   assert.match(SJS, /case 'calendly\.event_scheduled':\n        booked = true; showBooked\(\);\n        if \(alreadyCounted\(bookingKey\(d\.payload\)\)\) return;\n        record\('callvix_meeting_booked', \{ booking_method: 'calendly_embed', event_id: 'book\.' \+ Date\.now\(\)\.toString\(36\) \+ '\.' \+ Math\.random\(\)\.toString\(36\)\.slice\(2, 8\) \}\);\n        break;/);
   assert.equal((SJS.match(/record\('callvix_meeting_booked'/g) || []).length, 1);
+});
+
+test('speed pass (2 Nov 2026): no stylesheet request on the page, no hero photo on phones, lighter poster and logo', () => {
+  const A = '/pest-control-answering-service/assets/';
+  // 2. styles inline: exactly one copy, identical to cv3b.css, and no render-blocking stylesheet left
+  assert.equal((PAGE_RAW.match(/<style id="cv3b-css">/g) || []).length, 1);
+  assert.equal(PAGE_RAW.match(/<style id="cv3b-css">\n([\s\S]*?)\n<\/style>/)[1], CSS.replace(/\n$/, ''), 'inline block equals cv3b.css');
+  assert.doesNotMatch(head(PAGE), /<link[^>]+rel="stylesheet"/, 'no stylesheet link on the landing page');
+  assert.ok(head(PAGE).indexOf('<style id="cv3b-css">') > head(PAGE).indexOf('rel="preload" href="/pest-control-answering-service/assets/inter-latin.woff2"'), 'font preload still comes first');
+  assert.ok(head(PAGE).indexOf('googletagmanager.com/gtm.js') < head(PAGE).indexOf('<style id="cv3b-css">'), 'GTM snippet still first in <head>');
+  // 1. hero photo: phones (photo hidden at 767px and below) fetch a 1x1 data GIF; others get WebP, JPG fallback, high priority
+  assert.match(PAGE, new RegExp('<span class="cv3b-hero__photo"><picture><source media="\\(max-width: 767px\\)" srcset="data:image/gif;base64,[A-Za-z0-9+/=]+"><source type="image/webp" srcset="' + A + 'cv3b-hero-phone-call\\.webp"><img class="cv3b-hero__img" src="' + A + 'cv3b-hero-phone-call\\.jpg" width="864" height="1080" alt="A smiling man in glasses talks on a desk phone in an office\\." fetchpriority="high"></picture></span>'));
+  assert.match(CSS, /@media \(max-width: 767px\) \{[^@]*\.cv3b-hero__photo \{ display: none; \}/, 'the 767px breakpoint matches where the photo is hidden');
+  // 3. poster sizes; 4. logo
+  assert.match(PAGE, new RegExp('srcset="' + A + 'video/callvix-lp-poster-720\\.webp 720w, ' + A + 'video/callvix-lp-poster-960\\.webp 960w, ' + A + 'video/callvix-lp-poster\\.webp 1280w" sizes="\\(max-width: 920px\\) 100vw, 880px"'));
+  assert.equal((PAGE.match(/cv3b-pestmaster-mark\.webp"/g) || []).length, 2);
+  assert.doesNotMatch(PAGE, /cv3b-pestmaster-mark\.png/);
+  for (const f of ['cv3b-hero-phone-call.webp', 'cv3b-hero-phone-call.jpg', 'cv3b-pestmaster-mark.webp', 'video/callvix-lp-poster-720.webp', 'video/callvix-lp-poster-960.webp'])
+    assert.ok(existsSync(join(ROOT, DIR, 'assets', f)), f);
 });

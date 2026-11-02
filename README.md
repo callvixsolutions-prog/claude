@@ -345,8 +345,13 @@ No file, or empty values, means nothing is sent to Meta. `meta_test_event_code` 
 sends to the test view only; clear it after testing.
 
 **Switches.** `LP_VIDEO` at the top of `assets/cv3b.js` (true: the explainer video in "How it works";
-the 9:16 cuts in `assets/video/` are for ads and never loaded). After changing `cv3b.css`, `cv3b.js` or
-`schedule.js`, raise the `?v=` on its tag in both HTML files.
+the 9:16 cuts in `assets/video/` are for ads and never loaded). After changing `cv3b.js` or `schedule.js`, raise the
+`?v=` on its tag in both HTML files. **`cv3b.css` is inlined into the landing page** (speed pass, 2 Nov 2026): after
+editing it, run `node scripts/lp-inline-css.mjs` (copies it into `index.html`'s `<style id="cv3b-css">`; a test fails
+if they differ) and raise `?v=` on the calendar page's stylesheet link, which still loads the file.
+Same pass: phones (767px and narrower, where the hero photo is hidden) download no hero photo; tablets and desktop get
+`cv3b-hero-phone-call.webp` first with high priority; the video poster offers 720/960/1280 WebP sizes; the PestMaster
+mark is a lossless WebP. Sources and checksums: `assets/IMAGE-SOURCES.txt`.
 
 **Retired pages.** `/pest-control-call-demo/`, `/pest-control-call-demo-v1/` and the never-deployed
 `/pest-control-discovery-v3/` review routes answer 301 to `/pest-control-answering-service/` with the query
