@@ -391,12 +391,16 @@ test('phone pricing link (31 Oct 2026): "View pricing" sits right under the hero
 });
 
 test('calendar page booked state (31 Oct 2026): says "You’re booked", moves to step 3, and a refresh shows that instead of the calendar; booking still counted once', () => {
-  assert.match(SCHED, /assets\/schedule\.js\?v=20261031a"/, 'schedule.js cache-busted');
+  assert.match(SCHED, /assets\/schedule\.js\?v=20261102a"/, 'schedule.js cache-busted');
   const panel = between(SCHED, '<div class="cv3b-booked" id="cv3b-booked" hidden>', '</div>');
   assert.match(panel, /Your calendar invite is on its way to your email, with the time and how to join the call\./);
   assert.match(panel, /Need a different time\? Use the reschedule link in that email\./);
   assert.ok(SCHED.indexOf('id="cv3b-booked"') > SCHED.indexOf('id="cv3b-cal"') && SCHED.indexOf('id="cv3b-booked"') < SCHED.indexOf('class="cv3b-schedule__later"'), 'between the calendar and the "later" line');
-  assert.match(SJS, /var booked = stored\('cvx_lp_booked'\) === '1';/);
+  // 2 Nov 2026: the flag is the booked enquiry's id, so a new enquiry in the same tab gets a fresh calendar
+  assert.match(SJS, /var sub = JSON\.parse\(stored\('cvx_lead_sub'\) \|\| 'null'\); if \(sub && sub\.id\) leadRef = String\(sub\.id\);/);
+  assert.match(SJS, /var booked = !!leadRef && stored\('cvx_lp_booked'\) === leadRef;/);
+  assert.match(SJS, /if \(leadRef\) \{ try \{ sessionStorage\.setItem\('cvx_lp_booked', leadRef\); \}/);
+  assert.doesNotMatch(SJS, /setItem\('cvx_lp_booked', '1'\)|=== '1'/, 'no plain "booked" flag left');
   assert.match(SJS, /title\.textContent = first \? 'You\\u2019re booked, ' \+ first \+ '\.' : 'You\\u2019re booked\.';/);
   assert.match(SJS, /steps\[2\]\.className = 'is-current'; steps\[2\]\.setAttribute\('aria-current', 'step'\);/);
   assert.match(SJS, /if \(booked\) showBooked\(\);\s*else \{\s*var s = doc\.createElement\('script'\);/, 'a refresh after booking does not load Calendly again');

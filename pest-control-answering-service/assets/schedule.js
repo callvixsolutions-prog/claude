@@ -45,8 +45,11 @@
   if (stored('cvx_lead_name')) prefill.name = stored('cvx_lead_name');
   if (stored('cvx_lead_email')) prefill.email = stored('cvx_lead_email');
 
-  /* Booked state (31 Oct 2026): after a booking, or a refresh after one, the page says so instead of showing the calendar again. */
-  var booked = stored('cvx_lp_booked') === '1';
+  /* Booked state (31 Oct 2026): after a booking, or a refresh after one, the page says so instead of showing the calendar again.
+     The flag holds the id of the enquiry that was booked (2 Nov 2026), so a new enquiry in the same tab gets a fresh calendar. */
+  var leadRef = '';
+  try { var sub = JSON.parse(stored('cvx_lead_sub') || 'null'); if (sub && sub.id) leadRef = String(sub.id); } catch (e) { leadRef = ''; }
+  var booked = !!leadRef && stored('cvx_lp_booked') === leadRef;
   function showBooked() {
     var steps = doc.querySelectorAll('.cv3b-next--progress li');
     if (steps.length === 3) {
@@ -59,7 +62,7 @@
     if (fallback) fallback.hidden = true;
     if (later) later.hidden = true;
     if (panel) panel.hidden = false;
-    try { sessionStorage.setItem('cvx_lp_booked', '1'); } catch (e) { /* private mode: the page still updates now */ }
+    if (leadRef) { try { sessionStorage.setItem('cvx_lp_booked', leadRef); } catch (e) { /* private mode: the page still updates now */ } }
   }
 
   var ready = false;

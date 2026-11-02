@@ -312,6 +312,8 @@ The calendar page lets a tab back in after a refresh or back/forward (the `lead_
 After a booking (31 Oct 2026, owner-approved) the calendar page switches to a booked state: "You’re booked, <first name>.", step 3
 current, a short confirmation box (the invite email has the time and the reschedule link) instead of the calendar. `cvx_lp_booked`
 in sessionStorage keeps that state on a refresh in the same tab, and the calendar is not loaded again. The booking is still counted once.
+Since 2 Nov 2026 `cvx_lp_booked` holds the id of the booked enquiry (`cvx_lead_sub`), not "1": a new enquiry in the same tab (different
+details, so a new id) gets a fresh calendar, while a refresh after the booking still shows the confirmation.
 
 **Consent (29 Oct 2026, owner decision).** No consent banner: ads launch **US-only**. Add a consent banner and Google
 Consent Mode before any campaign targets Canada (Quebec's Law 25 in particular).
