@@ -529,6 +529,8 @@
 [data-callvix-v3b] .cv3b-lead .cv3b-scheduler__action { margin-top: 4px; }
 [data-callvix-v3b] .cv3b-hp { position: absolute !important; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
 [data-callvix-v3b] .cv3b-consent { font-size: 14px; line-height: 1.5; color: var(--cv3b-muted); }
+/* Reassurance under the form button (closing copy, owner-approved 5 Nov 2026) */
+[data-callvix-v3b] .cv3b-reassure { font-size: 15px; line-height: 1.5; font-weight: 600; color: var(--cv3b-ink); }
 [data-callvix-v3b] .cv3b-form__alert { padding: 12px 14px; border: 2px solid var(--cv3b-error); border-radius: 10px; color: var(--cv3b-error); font-size: 15px; font-weight: 600; }
 [data-callvix-v3b] .cv3b-btn[disabled] { cursor: progress; opacity: 0.85; transform: none; }
 
@@ -622,7 +624,7 @@
 [data-callvix-v3b] .cv3b-why__moment { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 22px; border-radius: 16px; background: var(--cv3b-paper); border: 1px solid var(--cv3b-line); font-size: 17px; font-weight: 600; line-height: 1.4; color: var(--cv3b-ink); }
 [data-callvix-v3b] .cv3b-why__icon { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 42px; height: 42px; border-radius: 12px; background: var(--cv3b-grey); color: var(--cv3b-muted); }
 [data-callvix-v3b] .cv3b-why__icon .cv3b-ico { width: 21px; height: 21px; }
-[data-callvix-v3b] .cv3b-why__turn { display: flex; flex-direction: column; align-items: center; gap: 8px; max-width: none; margin-top: 36px; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cv3b-teal); }
+[data-callvix-v3b] .cv3b-why__turn { display: flex; flex-direction: column; align-items: center; gap: 8px; max-width: none; margin-top: 36px; font-size: 17px; font-weight: 700; line-height: 1.4; text-align: center; text-wrap: balance; color: var(--cv3b-teal); }
 [data-callvix-v3b] .cv3b-why__turn .cv3b-ico { width: 22px; height: 22px; transform: rotate(90deg); }
 [data-callvix-v3b] .cv3b-watch__head .cv3b-lede { max-width: 52ch; }
 @media (max-width: 1023px) { [data-callvix-v3b] .cv3b-why__top { grid-template-columns: minmax(0, 1fr); gap: 28px; align-items: start; } }

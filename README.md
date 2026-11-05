@@ -352,6 +352,11 @@ if they differ) and raise `?v=` on the calendar page's stylesheet link, which st
 Same pass: phones (767px and narrower, where the hero photo is hidden) download no hero photo; tablets and desktop get
 `cv3b-hero-phone-call.webp` first with high priority; the video poster offers 720/960/1280 WebP sizes; the PestMaster
 mark is a lossless WebP. Sources and checksums: `assets/IMAGE-SOURCES.txt`.
+Closing copy (owner-approved 5 Nov 2026, from a before/after review): booking heading "Stop sending new callers to
+voicemail.", the intro line before the four bullets, a reassurance line (`.cv3b-reassure`) between the form button and the
+privacy line, the hero line under the button, the navy strip line and the sentence-case line after the three problem cards.
+The pricing value line from the same review was not approved. `id="top"` is on `<body>`, not the sticky header, so the
+logo returns to the top (jumping to a sticky header did nothing on desktop).
 
 **Retired pages.** `/pest-control-call-demo/`, `/pest-control-call-demo-v1/` and the never-deployed
 `/pest-control-discovery-v3/` review routes answer 301 to `/pest-control-answering-service/` with the query

@@ -562,6 +562,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 [data-callvix-v3b] .cv3b-lead .cv3b-scheduler__action { margin-top: 4px; }
 [data-callvix-v3b] .cv3b-hp { position: absolute !important; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
 [data-callvix-v3b] .cv3b-consent { font-size: 14px; line-height: 1.5; color: var(--cv3b-muted); }
+/* Reassurance under the form button (closing copy, owner-approved 5 Nov 2026) */
+[data-callvix-v3b] .cv3b-reassure { font-size: 15px; line-height: 1.5; font-weight: 600; color: var(--cv3b-ink); }
 [data-callvix-v3b] .cv3b-form__alert { padding: 12px 14px; border: 2px solid var(--cv3b-error); border-radius: 10px; color: var(--cv3b-error); font-size: 15px; font-weight: 600; }
 [data-callvix-v3b] .cv3b-btn[disabled] { cursor: progress; opacity: 0.85; transform: none; }
 
@@ -655,7 +657,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 [data-callvix-v3b] .cv3b-why__moment { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 22px; border-radius: 16px; background: var(--cv3b-paper); border: 1px solid var(--cv3b-line); font-size: 17px; font-weight: 600; line-height: 1.4; color: var(--cv3b-ink); }
 [data-callvix-v3b] .cv3b-why__icon { display: inline-flex; align-items: center; justify-content: center; flex: none; width: 42px; height: 42px; border-radius: 12px; background: var(--cv3b-grey); color: var(--cv3b-muted); }
 [data-callvix-v3b] .cv3b-why__icon .cv3b-ico { width: 21px; height: 21px; }
-[data-callvix-v3b] .cv3b-why__turn { display: flex; flex-direction: column; align-items: center; gap: 8px; max-width: none; margin-top: 36px; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cv3b-teal); }
+[data-callvix-v3b] .cv3b-why__turn { display: flex; flex-direction: column; align-items: center; gap: 8px; max-width: none; margin-top: 36px; font-size: 17px; font-weight: 700; line-height: 1.4; text-align: center; text-wrap: balance; color: var(--cv3b-teal); }
 [data-callvix-v3b] .cv3b-why__turn .cv3b-ico { width: 22px; height: 22px; transform: rotate(90deg); }
 [data-callvix-v3b] .cv3b-watch__head .cv3b-lede { max-width: 52ch; }
 @media (max-width: 1023px) { [data-callvix-v3b] .cv3b-why__top { grid-template-columns: minmax(0, 1fr); gap: 28px; align-items: start; } }
@@ -729,7 +731,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </style>
 <script src="/pest-control-answering-service/assets/cv3b.js?v=20261029b" defer></script>
 </head>
-<body>
+<body id="top">
 <svg class="cv3b-sprite" aria-hidden="true" focusable="false">
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
@@ -758,7 +760,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <a class="cv3b-skip" href="#main">Skip to content</a>
 
-<header class="cv3b-header" id="top">
+<header class="cv3b-header">
   <div class="cv3b-wrap cv3b-header__inner">
     <a class="cv3b-header__logo" href="#top"><img src="/pest-control-answering-service/assets/cv3b-logo.webp" width="124" height="42" alt="Callvix Solutions"></a>
     <nav class="cv3b-header__nav" aria-label="Page sections">
@@ -782,7 +784,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <p class="cv3b-hero__sub">We answer in your company’s name, take the caller’s details and book eligible jobs into the slots you approve, so your team can stay on the job.</p>
           <div class="cv3b-hero__cta">
             <a class="cv3b-btn cv3b-btn--lg" id="cv3b-hero-cta" href="#book" data-cv3b-book data-cta="hero">Book a 20-minute call<svg class="cv3b-ico" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
-            <p class="cv3b-hero__micro">Walk through your call flow, coverage needs and estimated cost.</p>
+            <p class="cv3b-hero__micro">20 minutes. You’ll get a call plan and your estimated monthly cost.</p>
             <a class="cv3b-hero__pricing" href="#pricing">View pricing<svg class="cv3b-ico" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
             <figure class="cv3b-hero__quote">
               <blockquote>“Their team answers our calls professionally, follows our booking rules… Setup was straightforward.”</blockquote>
@@ -828,7 +830,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <li class="cv3b-why__moment"><span class="cv3b-why__icon" aria-hidden="true"><svg class="cv3b-ico"><use href="#i-busy"/></svg></span><span>Your office is already helping another caller.</span></li>
         <li class="cv3b-why__moment"><span class="cv3b-why__icon" aria-hidden="true"><svg class="cv3b-ico"><use href="#i-vm"/></svg></span><span>A new prospect reaches voicemail or waits for a callback.</span></li>
       </ol>
-      <p class="cv3b-why__turn"><span>With Callvix Solutions</span><svg class="cv3b-ico" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></p>
+      <p class="cv3b-why__turn"><span>With Callvix Solutions, that caller gets a real person and a booked appointment.</span><svg class="cv3b-ico" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></p>
     </div>
   </section>
 
@@ -916,7 +918,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <!-- CTA strip -->
   <section class="cv3b-strip" aria-label="Book a call">
     <div class="cv3b-wrap cv3b-strip__inner">
-      <p class="cv3b-strip__text">Ready to talk through your call flow?</p>
+      <p class="cv3b-strip__text">Don’t let the next caller reach voicemail.</p>
       <a class="cv3b-btn" href="#book" data-cv3b-book data-cta="strip">Book a 20-minute call<svg class="cv3b-ico" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
@@ -991,10 +993,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="cv3b-wrap cv3b-book__grid">
       <div class="cv3b-book__head">
         <p class="cv3b-kicker">Book a call</p>
-        <h2 class="cv3b-h2" id="cv3b-book-title" tabindex="-1">Let’s talk about how we can help.</h2>
+        <h2 class="cv3b-h2" id="cv3b-book-title" tabindex="-1">Stop sending new callers to voicemail.</h2>
       </div>
       <div class="cv3b-book__more">
-        <p class="cv3b-lede">In 20 minutes, we’ll:</p>
+        <p class="cv3b-lede">In 20 minutes you’ll leave with a call plan and your monthly cost at your volume, whether you sign up or not. We’ll:</p>
         <ul class="cv3b-book__gets" role="list">
           <li><svg class="cv3b-ico" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Walk through your current call flow and which calls to forward: overflow or all calls.</li>
           <li><svg class="cv3b-ico" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Talk through how a typical inquiry would be handled.</li>
@@ -1047,6 +1049,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <input type="hidden" name="wbraid" value="">
           <input type="hidden" name="fbclid" value="">
           <p class="cv3b-scheduler__action"><button class="cv3b-btn cv3b-btn--block" id="cv3b-submit" type="submit">Continue to pick a time</button></p>
+          <p class="cv3b-reassure">No obligation · Month-to-month · No setup fee · Nothing goes live until you approve it.</p>
           <p class="cv3b-consent">By continuing, you agree we can call or text you about this request. See our <a class="cv3b-link" href="/privacy-policy">Privacy Policy</a>.</p>
           <p class="cv3b-form__alert" id="cv3b-form-alert" role="alert" hidden></p>
         </form>

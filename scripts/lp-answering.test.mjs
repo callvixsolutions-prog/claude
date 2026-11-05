@@ -284,21 +284,21 @@ test('billing: wrong numbers are not billed on the landing page, the pricing pag
 });
 
 /* Owner-approved version C (29 Oct 2026): "Why it matters" sets up the call, the video answers it. */
-test('why it matters (version C): heading beside the 78%, three moments, "With Callvix Solutions" pointing to the video', () => {
+test('why it matters (version C): heading beside the 78%, three moments, the "With Callvix Solutions…" line pointing to the video', () => {
   const why = between(PAGE, 'id="problem"', '</section>');
   const top = between(why, '<div class="cv3b-why__top">', '<ol class="cv3b-why__moments"');
   assert.match(text(top), /^Why it matters When your team is busy, new callers still need an answer\. You work hard to bring inquiries to your business\. When a caller cannot get help, that opportunity may go elsewhere\. 78% of surveyed U\.S\. consumers said an unanswered call had led them to take their business elsewhere\. Source: CallRail, 2025 survey of 1,000 U\.S\. consumers\.$/);
   const moments = between(why, '<ol class="cv3b-why__moments"', '</ol>');
   assert.deepEqual([...moments.matchAll(/<li class="cv3b-why__moment">[\s\S]*?<\/li>/g)].map((m) => text(m[0])),
     ['Your technicians are on a job.', 'Your office is already helping another caller.', 'A new prospect reaches voicemail or waits for a callback.']);
-  assert.match(why, /<p class="cv3b-why__turn"><span>With Callvix Solutions<\/span><svg class="cv3b-ico" aria-hidden="true" focusable="false"><use href="#i-arrow"\/><\/svg><\/p>\s*<\/div>\s*$/, 'the arrow closes the section');
+  assert.match(why, /<p class="cv3b-why__turn"><span>With Callvix Solutions, that caller gets a real person and a booked appointment\.<\/span><svg class="cv3b-ico" aria-hidden="true" focusable="false"><use href="#i-arrow"\/><\/svg><\/p>\s*<\/div>\s*$/, 'the arrow closes the section');
   const head = between(PAGE, '<div class="cv3b-head cv3b-head--center cv3b-watch__head">', '<div class="cv3b-video__frame"');
   assert.equal(text(head), 'See it in action See how that call gets answered and booked A one-minute example: Callvix Solutions answers using your approved information and helps the caller take the next step, alongside the team you already have.');
   assert.doesNotMatch(PAGE, /class="[^"]*\bcv3b-(problem|flow|moment|stat)/, 'old section markup gone');
   assert.doesNotMatch(CSS, /\.cv3b-(problem|flow|moment|stat)/, 'old section styles gone');
   assert.match(CSS, /\.cv3b-why__moments \{ display: grid; grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);/);
   assert.equal(PAGE_RAW.match(/<style id="cv3b-css">\n([\s\S]*?)\n<\/style>/)[1], CSS.replace(/\n$/, ''), 'page carries cv3b.css inline (run node scripts/lp-inline-css.mjs)');
-  assert.match(SCHED, /assets\/cv3b\.css\?v=20261031c"/, 'schedule page links the stylesheet');
+  assert.match(SCHED, /assets\/cv3b\.css\?v=20261105a"/, 'schedule page links the stylesheet');
 });
 
 /* Owner-approved 29 Oct 2026: send.php keeps a private lead record and recognises a repeated submission. */
@@ -430,4 +430,25 @@ test('speed pass (2 Nov 2026): no stylesheet request on the page, no hero photo 
   assert.doesNotMatch(PAGE, /cv3b-pestmaster-mark\.png/);
   for (const f of ['cv3b-hero-phone-call.webp', 'cv3b-hero-phone-call.jpg', 'cv3b-pestmaster-mark.webp', 'video/callvix-lp-poster-720.webp', 'video/callvix-lp-poster-960.webp'])
     assert.ok(existsSync(join(ROOT, DIR, 'assets', f)), f);
+});
+
+/* Closing copy (owner-approved 5 Nov 2026): changes 1-6 from the before/after review, plus the logo going back to the top. */
+test('closing copy (5 Nov 2026): booking close, hero line, strip, bridge line, and the logo returns to the top', () => {
+  const book = between(PAGE, 'id="book"', '</section>');
+  assert.match(book, /<h2 class="cv3b-h2" id="cv3b-book-title" tabindex="-1">Stop sending new callers to voicemail\.<\/h2>/);
+  assert.match(book, /<p class="cv3b-lede">In 20 minutes you’ll leave with a call plan and your monthly cost at your volume, whether you sign up or not\. We’ll:<\/p>/);
+  assert.match(book, /id="cv3b-submit" type="submit">Continue to pick a time<\/button><\/p>\s*<p class="cv3b-reassure">No obligation · Month-to-month · No setup fee · Nothing goes live until you approve it\.<\/p>\s*<p class="cv3b-consent">/, 'reassurance sits between the button and the privacy line');
+  assert.match(CSS, /\.cv3b-reassure \{ font-size: 15px; line-height: 1\.5; font-weight: 600; color: var\(--cv3b-ink\); \}/);
+  assert.match(PAGE, /<p class="cv3b-hero__micro">20 minutes\. You’ll get a call plan and your estimated monthly cost\.<\/p>/);
+  assert.match(PAGE, /<p class="cv3b-strip__text">Don’t let the next caller reach voicemail\.<\/p>/);
+  assert.match(CSS, /\.cv3b-why__turn \{[^}]*font-size: 17px;[^}]*text-align: center;[^}]*\}/);
+  assert.doesNotMatch(CSS.match(/\.cv3b-why__turn \{[^}]*\}/)[0], /uppercase/, 'the longer line is in sentence case, not capitals');
+  for (const old of ['Let’s talk about how we can help.', 'In 20 minutes, we’ll:', 'Walk through your call flow, coverage needs and estimated cost.', 'Ready to talk through your call flow?']) assert.ok(!PAGE.includes(old), 'old copy gone: ' + old);
+  // Logo: #top is the page itself, not the sticky header (a sticky header is always on screen, so jumping to it did nothing)
+  assert.match(PAGE_RAW, /<body id="top">/);
+  assert.match(PAGE, /<header class="cv3b-header">/);
+  assert.equal((PAGE_RAW.match(/id="top"/g) || []).length, 1);
+  assert.match(PAGE, /<a class="cv3b-header__logo" href="#top">/);
+  // Change 7 (pricing value line) was not approved
+  assert.ok(!PAGE.includes('the numbers work'), 'pricing value line not added');
 });
