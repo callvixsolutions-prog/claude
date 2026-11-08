@@ -126,7 +126,8 @@
 /* 1. Hero */
 [data-callvix-v3b] .cv3b-hero { background: var(--cv3b-navy); color: var(--cv3b-paper); padding-top: 48px; overflow: hidden; }
 [data-callvix-v3b] .cv3b-hero__grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: 64px; align-items: center; }
-[data-callvix-v3b] .cv3b-pill { display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px; border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 999px; background: rgba(255, 255, 255, 0.06); font-size: 14px; font-weight: 600; color: var(--cv3b-on-dark); }
+/* Plain label, not a chip (8 Nov 2026: visitors tapped it like a button) */
+[data-callvix-v3b] .cv3b-pill { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--cv3b-on-dark); }
 [data-callvix-v3b] .cv3b-pill__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cv3b-cyan); box-shadow: 0 0 0 4px rgba(46, 196, 201, 0.22); }
 [data-callvix-v3b] .cv3b-hero .cv3b-h1 { margin-top: 20px; }
 [data-callvix-v3b] .cv3b-hero__sub { margin-top: 22px; font-size: 19px; line-height: 1.6; color: var(--cv3b-on-dark); max-width: 44ch; }
@@ -353,7 +354,7 @@
   [data-callvix-v3b] .cv3b-h2 { font-size: 31px; }
   [data-callvix-v3b] .cv3b-lede { font-size: 17px; }
   [data-callvix-v3b] .cv3b-hero { padding-top: 32px; }
-  [data-callvix-v3b] .cv3b-pill { font-size: 13px; padding: 6px 12px; }
+  [data-callvix-v3b] .cv3b-pill { font-size: 13px; }
   [data-callvix-v3b] .cv3b-hero .cv3b-h1 { margin-top: 18px; }
   [data-callvix-v3b] .cv3b-hero__sub { font-size: 17px; margin-top: 16px; }
   [data-callvix-v3b] .cv3b-hero__cta { margin-top: 24px; align-items: stretch; }
@@ -412,8 +413,9 @@
 /* Refinements (owner-approved 26 Oct): pest-control training strip, "What your office receives" card, staffing line */
 [data-callvix-v3b] .cv3b-trained { margin-top: 40px; padding: 22px 24px; border-radius: 16px; background: var(--cv3b-navy); color: var(--cv3b-paper); display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px 24px; align-items: center; }
 [data-callvix-v3b] .cv3b-trained__label { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cv3b-on-dark-accent); white-space: nowrap; }
-[data-callvix-v3b] .cv3b-trained__list { display: flex; flex-wrap: wrap; gap: 8px; }
-[data-callvix-v3b] .cv3b-trained__list li { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px 5px 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.16); font-size: 14px; font-weight: 600; }
+/* Plain icon list, not chips (8 Nov 2026: visitors tapped the pests like buttons) */
+[data-callvix-v3b] .cv3b-trained__list { display: flex; flex-wrap: wrap; gap: 10px 22px; }
+[data-callvix-v3b] .cv3b-trained__list li { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
 [data-callvix-v3b] .cv3b-trained__note { grid-column: 1 / -1; max-width: none; font-size: 14px; color: var(--cv3b-on-dark); }
 [data-callvix-v3b] .cv3b-handoff { margin-top: 28px; padding-top: 20px; border-top: 2px solid #C9D7E6; }
 [data-callvix-v3b] .cv3b-handoff__rows { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 24px; }
@@ -465,8 +467,8 @@
   [data-callvix-v3b] .cv3b-handoff__rows li { gap: 6px; padding-block: 10px; border-bottom: 1px solid var(--cv3b-line); }
   [data-callvix-v3b] .cv3b-handoff__base { margin-top: 12px; }
   [data-callvix-v3b] .cv3b-trained { margin-top: 24px; padding: 16px; gap: 10px; }
-  [data-callvix-v3b] .cv3b-trained__list { gap: 6px; }
-  [data-callvix-v3b] .cv3b-trained__list li { gap: 6px; padding: 4px 10px 4px 6px; font-size: 13.5px; }
+  [data-callvix-v3b] .cv3b-trained__list { gap: 8px 16px; }
+  [data-callvix-v3b] .cv3b-trained__list li { gap: 6px; font-size: 13.5px; }
   [data-callvix-v3b] .cv3b-trained__ico { width: 20px; height: 20px; }
 
   /* Getting started: reassurances as a plain tick list */
@@ -580,8 +582,8 @@
   [data-callvix-v3b] .cv3b-hero__quote { margin-top: 8px; }
   [data-callvix-v3b] .cv3b-hero__quote blockquote { font-size: 15px; }
   [data-callvix-v3b] .cv3b-watch__head { margin-bottom: 18px; }
-  [data-callvix-v3b] .cv3b-trained__list { gap: 6px; }
-  [data-callvix-v3b] .cv3b-trained__list li { padding: 4px 10px 4px 7px; font-size: 13px; gap: 6px; }
+  [data-callvix-v3b] .cv3b-trained__list { gap: 8px 16px; }
+  [data-callvix-v3b] .cv3b-trained__list li { font-size: 13px; gap: 6px; }
   [data-callvix-v3b] .cv3b-trained__ico { width: 18px; height: 18px; }
   [data-callvix-v3b] .cv3b-start { gap: 0; }
   [data-callvix-v3b] .cv3b-start__step { padding: 14px 0; border: 0; border-radius: 0; background: none; border-bottom: 1px solid var(--cv3b-line); }

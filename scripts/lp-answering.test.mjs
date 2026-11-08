@@ -298,7 +298,7 @@ test('why it matters (version C): heading beside the 78%, three moments, the "Wi
   assert.doesNotMatch(CSS, /\.cv3b-(problem|flow|moment|stat)/, 'old section styles gone');
   assert.match(CSS, /\.cv3b-why__moments \{ display: grid; grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);/);
   assert.equal(PAGE_RAW.match(/<style id="cv3b-css">\n([\s\S]*?)\n<\/style>/)[1], CSS.replace(/\n$/, ''), 'page carries cv3b.css inline (run node scripts/lp-inline-css.mjs)');
-  assert.match(SCHED, /assets\/cv3b\.css\?v=20261105a"/, 'schedule page links the stylesheet');
+  assert.match(SCHED, /assets\/cv3b\.css\?v=20261108a"/, 'schedule page links the stylesheet');
 });
 
 /* Owner-approved 29 Oct 2026: send.php keeps a private lead record and recognises a repeated submission. */
@@ -336,8 +336,8 @@ test('clarity pass: form says what happens next, 78% has its source, booking vs 
   const terms = text(between(PAGE, '<dl class="cv3b-terms">', '</dl>'));
   assert.match(terms, /^Booking Included in the base plan: booking details reach your office by text or email\. Direct CRM entry \(\+\$99\/month\) is for when you want a person to enter them in your system for you\. Not billed /);
   const faq = text(between(PAGE, 'Can you work with our scheduling or CRM system?', '</details>'));
-  assert.match(faq, /^Can you work with our scheduling or CRM system\? Booking is part of every plan, and booking details reach your office by text or email\. If you want them entered in your system too, Direct CRM entry is an optional \$99\/month add-on/);
-  assert.match(faq, /It isn’t a native integration or automatic sync/, 'no integration claim');
+  assert.match(faq, /^Can you work with our scheduling or CRM system\? Yes\. Booking is included in every plan, and booking details reach your office by text or email\. Want them in your system too\? Direct CRM entry \(\$99\/month\) has a person enter/);
+  assert.match(faq, /It’s done by hand, not through an integration or automatic sync/, 'no integration claim');
   assert.doesNotMatch(PAGE, /Here&rsquo;s that call, answered by a real person|illustrative/i, 'the video is called an example, never a real call or "illustrative"');
   assert.match(CSS, /\.cv3b-terms > div:first-child \{ grid-column: 1 \/ -1; \}/);
 });
@@ -451,4 +451,33 @@ test('closing copy (5 Nov 2026): booking close, hero line, strip, bridge line, a
   assert.match(PAGE, /<a class="cv3b-header__logo" href="#top">/);
   // Change 7 (pricing value line) was not approved
   assert.ok(!PAGE.includes('the numbers work'), 'pricing value line not added');
+});
+
+/* FAQ and small fixes (owner-approved 8 Nov 2026, after the Clarity review): smoother answers with the same facts,
+   the hero label and pest list as plain text (visitors tapped them like buttons), and a working Microsoft privacy link. */
+test('FAQ (8 Nov 2026): eight smoother answers, same facts and claims rules', () => {
+  const qs = [...between(PAGE, '<div class="cv3b-faq">', '</section>').matchAll(/<summary class="cv3b-q__summary">([^<]+)<span[\s\S]*?<p class="cv3b-q__body">([^<]+)<\/p>/g)].map((m) => [m[1], m[2]]);
+  assert.deepEqual(qs, [
+    ['Are the people answering real?', 'Yes, every call is answered by a real person, never a recording or a bot. They answer in your company’s name and follow the information and booking rules you approve.'],
+    ['Can you answer only when our team is busy?', 'Yes. Your office can answer first, and any call it can’t pick up rolls over to us. Or you can send us every call. We’ll set it up around your phone system and the coverage you choose.'],
+    ['What if I need evening or weekend coverage?', 'We can cover that. The base plan covers Monday to Friday, 9am to 6pm in your time zone. Add evenings for $199/month or weekends for $149/month, and we’ll agree the exact hours with you before you start.'],
+    ['Can we keep our existing phone number?', 'Yes, your number stays yours. You forward it to us, and you can stop forwarding at any time.'],
+    ['How do you follow our services, prices and booking rules?', 'Before we answer a single call, we learn your services, the prices you’re happy for us to quote, your service area, booking rules and who to contact for urgent calls. You review and approve the call instructions, and nothing goes live until you do.'],
+    ['Can you work with our scheduling or CRM system?', 'Yes. Booking is included in every plan, and booking details reach your office by text or email. Want them in your system too? Direct CRM entry ($99/month) has a person enter customer details, notes and bookings for you, using access you grant and can remove anytime. It’s done by hand, not through an integration or automatic sync, and we agree the steps with you first.'],
+    ['How are urgent or unusual calls handled?', 'We follow the escalation steps you set and reach the person you name. Questions about pest identification, treatment or safety always go to your team, so callers get the right answer from the people who know.'],
+    ['What do we need to provide before starting?', 'Just the basics: your greeting, the questions to ask callers, your services and the prices we may quote, your service area and booking windows, and who to call for urgent issues. CRM access is only needed if you add direct CRM entry. We’ll walk you through it during setup.'],
+  ]);
+  const faqText = qs.flat().join(' ');
+  assert.doesNotMatch(faqText, /integrates with|syncs to|connects directly|partner|24\/7|per minute|illustrat|\bAI\b|automated (assistant|system)/i, 'claims policy');
+});
+
+test('plain hero label and pest list (8 Nov 2026), and the Microsoft privacy link', () => {
+  const pill = CSS.match(/\[data-callvix-v3b\] \.cv3b-pill \{[^}]*\}/)[0];
+  assert.doesNotMatch(pill, /border|background|padding|border-radius/, 'the label is plain text, not a chip');
+  const li = CSS.match(/\[data-callvix-v3b\] \.cv3b-trained__list li \{[^}]*\}/g);
+  assert.equal(li.length, 3);
+  for (const r of li) assert.doesNotMatch(r, /border|background|padding|border-radius/, 'pests are a plain icon list, not chips');
+  const priv = read('privacy-policy.html');
+  assert.match(priv, /href="https:\/\/www\.microsoft\.com\/en-us\/privacy\/privacystatement"/);
+  assert.doesNotMatch(priv, /privacy\.microsoft\.com\/privacystatement/, 'old address redirected to a missing page');
 });

@@ -159,7 +159,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 /* 1. Hero */
 [data-callvix-v3b] .cv3b-hero { background: var(--cv3b-navy); color: var(--cv3b-paper); padding-top: 48px; overflow: hidden; }
 [data-callvix-v3b] .cv3b-hero__grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: 64px; align-items: center; }
-[data-callvix-v3b] .cv3b-pill { display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px; border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 999px; background: rgba(255, 255, 255, 0.06); font-size: 14px; font-weight: 600; color: var(--cv3b-on-dark); }
+/* Plain label, not a chip (8 Nov 2026: visitors tapped it like a button) */
+[data-callvix-v3b] .cv3b-pill { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--cv3b-on-dark); }
 [data-callvix-v3b] .cv3b-pill__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cv3b-cyan); box-shadow: 0 0 0 4px rgba(46, 196, 201, 0.22); }
 [data-callvix-v3b] .cv3b-hero .cv3b-h1 { margin-top: 20px; }
 [data-callvix-v3b] .cv3b-hero__sub { margin-top: 22px; font-size: 19px; line-height: 1.6; color: var(--cv3b-on-dark); max-width: 44ch; }
@@ -386,7 +387,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   [data-callvix-v3b] .cv3b-h2 { font-size: 31px; }
   [data-callvix-v3b] .cv3b-lede { font-size: 17px; }
   [data-callvix-v3b] .cv3b-hero { padding-top: 32px; }
-  [data-callvix-v3b] .cv3b-pill { font-size: 13px; padding: 6px 12px; }
+  [data-callvix-v3b] .cv3b-pill { font-size: 13px; }
   [data-callvix-v3b] .cv3b-hero .cv3b-h1 { margin-top: 18px; }
   [data-callvix-v3b] .cv3b-hero__sub { font-size: 17px; margin-top: 16px; }
   [data-callvix-v3b] .cv3b-hero__cta { margin-top: 24px; align-items: stretch; }
@@ -445,8 +446,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 /* Refinements (owner-approved 26 Oct): pest-control training strip, "What your office receives" card, staffing line */
 [data-callvix-v3b] .cv3b-trained { margin-top: 40px; padding: 22px 24px; border-radius: 16px; background: var(--cv3b-navy); color: var(--cv3b-paper); display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px 24px; align-items: center; }
 [data-callvix-v3b] .cv3b-trained__label { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cv3b-on-dark-accent); white-space: nowrap; }
-[data-callvix-v3b] .cv3b-trained__list { display: flex; flex-wrap: wrap; gap: 8px; }
-[data-callvix-v3b] .cv3b-trained__list li { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px 5px 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.16); font-size: 14px; font-weight: 600; }
+/* Plain icon list, not chips (8 Nov 2026: visitors tapped the pests like buttons) */
+[data-callvix-v3b] .cv3b-trained__list { display: flex; flex-wrap: wrap; gap: 10px 22px; }
+[data-callvix-v3b] .cv3b-trained__list li { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; }
 [data-callvix-v3b] .cv3b-trained__note { grid-column: 1 / -1; max-width: none; font-size: 14px; color: var(--cv3b-on-dark); }
 [data-callvix-v3b] .cv3b-handoff { margin-top: 28px; padding-top: 20px; border-top: 2px solid #C9D7E6; }
 [data-callvix-v3b] .cv3b-handoff__rows { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 24px; }
@@ -498,8 +500,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   [data-callvix-v3b] .cv3b-handoff__rows li { gap: 6px; padding-block: 10px; border-bottom: 1px solid var(--cv3b-line); }
   [data-callvix-v3b] .cv3b-handoff__base { margin-top: 12px; }
   [data-callvix-v3b] .cv3b-trained { margin-top: 24px; padding: 16px; gap: 10px; }
-  [data-callvix-v3b] .cv3b-trained__list { gap: 6px; }
-  [data-callvix-v3b] .cv3b-trained__list li { gap: 6px; padding: 4px 10px 4px 6px; font-size: 13.5px; }
+  [data-callvix-v3b] .cv3b-trained__list { gap: 8px 16px; }
+  [data-callvix-v3b] .cv3b-trained__list li { gap: 6px; font-size: 13.5px; }
   [data-callvix-v3b] .cv3b-trained__ico { width: 20px; height: 20px; }
 
   /* Getting started: reassurances as a plain tick list */
@@ -613,8 +615,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   [data-callvix-v3b] .cv3b-hero__quote { margin-top: 8px; }
   [data-callvix-v3b] .cv3b-hero__quote blockquote { font-size: 15px; }
   [data-callvix-v3b] .cv3b-watch__head { margin-bottom: 18px; }
-  [data-callvix-v3b] .cv3b-trained__list { gap: 6px; }
-  [data-callvix-v3b] .cv3b-trained__list li { padding: 4px 10px 4px 7px; font-size: 13px; gap: 6px; }
+  [data-callvix-v3b] .cv3b-trained__list { gap: 8px 16px; }
+  [data-callvix-v3b] .cv3b-trained__list li { font-size: 13px; gap: 6px; }
   [data-callvix-v3b] .cv3b-trained__ico { width: 18px; height: 18px; }
   [data-callvix-v3b] .cv3b-start { gap: 0; }
   [data-callvix-v3b] .cv3b-start__step { padding: 14px 0; border: 0; border-radius: 0; background: none; border-bottom: 1px solid var(--cv3b-line); }
@@ -976,14 +978,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <h2 class="cv3b-h2" id="cv3b-faq-title">Questions owners ask before starting.</h2>
       </div>
       <div class="cv3b-faq">
-        <details class="cv3b-q"><summary class="cv3b-q__summary">Are the people answering real?<span class="cv3b-q__icon" aria-hidden="true"></span></summary><p class="cv3b-q__body">Yes. Your calls are answered by real people, not an automated system. They answer in your company’s name using the information and booking rules you approve.</p></details>
-        <details class="cv3b-q"><summary class="cv3b-q__summary">Can you answer only when our team is busy?<span class="cv3b-q__icon" aria-hidden="true"></span></summary><p class="cv3b-q__body">Yes. You can forward all calls, or only the ones your office doesn’t pick up. The setup depends on your phone system and the coverage you choose.</p></details>
-        <details class="cv3b-q"><summary class="cv3b-q__summary">What if I need evening or weekend coverage?<span class="cv3b-q__icon" aria-hidden="true"></span></summary><p class="cv3b-q__body">The base service covers Monday to Friday, 9am to 6pm in your time zone. Evening and weekend coverage are optional add-ons (+$199/month and +$149/month), and we agree the exact hours with you before you start.</p></details>
-        <details class="cv3b-q"><summary class="cv3b-q__summary">Can we keep our existing phone number?<span class="cv3b-q__icon" aria-hidden="true"></span></summary><p class="cv3b-q__body">Yes. You forward your existing number to us, and you can stop forwarding at any time.</p></details>
-        <details class="cv3b-q"><summary class="cv3b-q__summary">How do you follow our services, prices and booking rules?<span class="cv3b-q__icon" aria-hidden="true"></span></summary><p class="cv3b-q__body">During setup we learn your services, the prices you allow us to quote, your service area, booking rules and escalation contacts. You approve the call-handling instructions before anything goes live, and calls are handled from them.</p></details>
-        <details class="cv3b-q"><summary class="cv3b-q__summary">Can you work with our scheduling or CRM system?<span class="cv3b-q__icon" aria-hidden="true"></span></summary><p class="cv3b-q__body">Booking is part of every plan, and booking details reach your office by text or email. If you want them entered in your system too, Direct CRM entry is an optional $99/month add-on: a person enters customer details, notes and bookings in your agreed system, with access you grant and can revoke. It isn’t a native integration or automatic sync, and we confirm the workflow with you first.</p></details>
-        <details class="cv3b-q"><summary class="cv3b-q__summary">How are urgent or unusual calls handled?<span class="cv3b-q__icon" aria-hidden="true"></span></summary><p class="cv3b-q__body">We follow your escalation instructions and contact the person you name. Pest identification, treatment recommendations and safety advice stay with your team.</p></details>
-        <details class="cv3b-q"><summary class="cv3b-q__summary">What do we need to provide before starting?<span class="cv3b-q__icon" aria-hidden="true"></span></summary><p class="cv3b-q__body">Your greeting and the questions callers should be asked, your services and the prices we may quote, your service area and booking windows, and who to contact for urgent calls. CRM access only if you choose direct CRM entry.</p></details>
+        <details class="cv3b-q"><summary class="cv3b-q__summary">Are the people answering real?<span class="cv3b-q__icon" aria-hidden="true"></span></summary><p class="cv3b-q__body">Yes, every call is answered by a real person, never a recording or a bot. They answer in your company’s name and follow the information and booking rules you approve.</p></details>
+        <details class="cv3b-q"><summary class="cv3b-q__summary">Can you answer only when our team is busy?<span class="cv3b-q__icon" aria-hidden="true"></span></summary><p class="cv3b-q__body">Yes. Your office can answer first, and any call it can’t pick up rolls over to us. Or you can send us every call. We’ll set it up around your phone system and the coverage you choose.</p></details>
+        <details class="cv3b-q"><summary class="cv3b-q__summary">What if I need evening or weekend coverage?<span class="cv3b-q__icon" aria-hidden="true"></span></summary><p class="cv3b-q__body">We can cover that. The base plan covers Monday to Friday, 9am to 6pm in your time zone. Add evenings for $199/month or weekends for $149/month, and we’ll agree the exact hours with you before you start.</p></details>
+        <details class="cv3b-q"><summary class="cv3b-q__summary">Can we keep our existing phone number?<span class="cv3b-q__icon" aria-hidden="true"></span></summary><p class="cv3b-q__body">Yes, your number stays yours. You forward it to us, and you can stop forwarding at any time.</p></details>
+        <details class="cv3b-q"><summary class="cv3b-q__summary">How do you follow our services, prices and booking rules?<span class="cv3b-q__icon" aria-hidden="true"></span></summary><p class="cv3b-q__body">Before we answer a single call, we learn your services, the prices you’re happy for us to quote, your service area, booking rules and who to contact for urgent calls. You review and approve the call instructions, and nothing goes live until you do.</p></details>
+        <details class="cv3b-q"><summary class="cv3b-q__summary">Can you work with our scheduling or CRM system?<span class="cv3b-q__icon" aria-hidden="true"></span></summary><p class="cv3b-q__body">Yes. Booking is included in every plan, and booking details reach your office by text or email. Want them in your system too? Direct CRM entry ($99/month) has a person enter customer details, notes and bookings for you, using access you grant and can remove anytime. It’s done by hand, not through an integration or automatic sync, and we agree the steps with you first.</p></details>
+        <details class="cv3b-q"><summary class="cv3b-q__summary">How are urgent or unusual calls handled?<span class="cv3b-q__icon" aria-hidden="true"></span></summary><p class="cv3b-q__body">We follow the escalation steps you set and reach the person you name. Questions about pest identification, treatment or safety always go to your team, so callers get the right answer from the people who know.</p></details>
+        <details class="cv3b-q"><summary class="cv3b-q__summary">What do we need to provide before starting?<span class="cv3b-q__icon" aria-hidden="true"></span></summary><p class="cv3b-q__body">Just the basics: your greeting, the questions to ask callers, your services and the prices we may quote, your service area and booking windows, and who to call for urgent issues. CRM access is only needed if you add direct CRM entry. We’ll walk you through it during setup.</p></details>
       </div>
     </div>
   </section>
