@@ -27,29 +27,23 @@ llms.txt                  Structured summary for AI engines (ChatGPT, Perplexity
 
 ## 1. Contact form — CONFIGURED ✅
 
-The contact form is wired to **Formspree**, form ID **`maqrpwqw`**
-(`https://formspree.io/f/maqrpwqw`). Nothing further to code.
+Since 27 Oct 2026 `/contact` posts to **`/contact-send.php`** on this server (Formspree retired), which emails each
+enquiry to chris@callvixsupport.com (`cvx_recipient()` in that file) with the subject "New website enquiry: <company>".
+Nothing is stored on the server. Spam protection: allowed origin only, the hidden `_gotcha` honeypot, a minimum
+3 seconds on the form (`elapsed_ms`), field validation and 5 requests per address per hour. With JavaScript,
+`js/main.js` sends the form with fetch() and moves the visitor to `/thank-you`, where `generate_lead` fires; without
+it the form posts normally and gets a 303 to `/thank-you`.
 
-It's set up with:
-
-| Field | Purpose |
-|---|---|
-| `_subject` | Emails arrive titled "New enquiry from callvixsolutions.com" |
-| `_next` | After submitting, visitors land on our own `thank-you.html`, not Formspree's default page |
-| `_gotcha` | Hidden honeypot — bots fill it in, humans never see it, so spam is filtered without a CAPTCHA |
-
-### Remaining one-time step (after the site is live)
-Submit the form **once yourself** from the live domain. Formspree requires you to
-confirm the very first submission before it starts forwarding to your inbox.
-
-### Notes
-- The destination email is set **in the Formspree dashboard**, not in the code —
-  change it there, no re-upload needed.
-- Free tier is 50 submissions/month. If you outgrow it, upgrading in Formspree
-  requires no code change.
-- The `_next` redirect points at `https://callvixsolutions.com/thank-you.html`,
-  so it only works once the site is on the real domain. Testing locally will show
-  Formspree's default confirmation page instead — that's expected.
+**Where they came from** (owner-approved 6 Nov 2026): `js/main.js` keeps, in the visitor's own browser, how this
+visit started (entry page, referring site name, ad or campaign tags, pages viewed; sessionStorage
+`cvx_visit_session`) and the first and latest ad-tagged visits for 90 days (localStorage `cvx_visit_first` /
+`cvx_visit_latest`, the same keys as the landing page, so a landing-page ad click is named on a later contact
+enquiry). Only the contact form sends them; the email gets a "Where they came from" section after the message,
+plus the browser and system from the User-Agent (no IP address). The fields are optional and never reject an
+enquiry. It works even when GA4 and Clarity are blocked, because it is the site's own script.
+Checks: `scripts/contact-source.test.mjs`; the real PHP in `_callvix-live-tools/php-wasm/contact-php-check.mjs`;
+the whole flow in Chrome and Safari in `_callvix-live-tools/php-wasm/contact-source-flow.mjs`.
+After changing `js/main.js`, raise `?v=` on its tag on every main-site page (`scripts/round16.test.mjs` checks it).
 
 ---
 

@@ -14,6 +14,10 @@
  *   - without JavaScript the plain HTML form posts here: success is a 303 redirect to /thank-you, an error is a
  *     short page with a link back to the form.
  *
+ * Where they came from (owner-approved 6 Nov 2026): js/main.js adds the visit's entry page, referring site, ad or
+ * campaign tags, pages viewed and time on site, plus the first and latest ad-tagged visits remembered in the browser.
+ * All optional: a form is never rejected over them, and nothing about the visit is stored on the server.
+ *
  * Spam protection: allowed origin only, the form's hidden _gotcha honeypot, a minimum time on the form (when the
  * page reports elapsed_ms), server-side validation of every field, and at most CVX_MAX_PER_HOUR requests per
  * visitor address per hour.
@@ -213,7 +217,65 @@ function cvx_send_mail(string $to, string $subject, string $body, string $replyT
         $headers[] = 'Reply-To: ' . $replyTo;
     }
     $encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
+    if (defined('CVX_TEST_MAIL_FILE')) {
+        // Local tests only (the constant is defined by the test runner, never by a request): record instead of mailing.
+        @file_put_contents((string) constant('CVX_TEST_MAIL_FILE'), $subject . "\n" . $body . "\n---\n", FILE_APPEND);
+        return !defined('CVX_TEST_MAIL_FAIL');
+    }
     return @mail($to, $encodedSubject, $body, implode("\r\n", $headers));
+}
+
+// "Chrome 155 on Linux" from the browser's own User-Agent (no IP address goes in the email).
+function cvx_browser(string $ua): string
+{
+    if ($ua === '') {
+        return '(not sent)';
+    }
+    $browser = 'Unknown browser';
+    $patterns = [
+        '/HeadlessChrome\/(\d+)/' => 'Headless Chrome (automated) %s',
+        '/Edg(?:e|A|iOS)?\/(\d+)/' => 'Edge %s',
+        '/OPR\/(\d+)/' => 'Opera %s',
+        '/SamsungBrowser\/(\d+)/' => 'Samsung Internet %s',
+        '/Firefox\/(\d+)/' => 'Firefox %s',
+        '/FxiOS\/(\d+)/' => 'Firefox %s',
+        '/CriOS\/(\d+)/' => 'Chrome %s',
+        '/Chrome\/(\d+)/' => 'Chrome %s',
+        '/Version\/(\d+)[\d.]* .*Safari\//' => 'Safari %s',
+    ];
+    foreach ($patterns as $re => $label) {
+        if (preg_match($re, $ua, $m) === 1) {
+            $browser = sprintf($label, $m[1]);
+            break;
+        }
+    }
+    $os = 'an unknown system';
+    if (preg_match('/iPhone|iPad|iPod/', $ua) === 1) {
+        $os = 'iPhone/iPad';
+    } elseif (stripos($ua, 'Android') !== false) {
+        $os = 'Android';
+    } elseif (stripos($ua, 'Windows') !== false) {
+        $os = 'Windows';
+    } elseif (stripos($ua, 'CrOS') !== false) {
+        $os = 'ChromeOS';
+    } elseif (stripos($ua, 'Macintosh') !== false) {
+        $os = 'Mac';
+    } elseif (stripos($ua, 'Linux') !== false) {
+        $os = 'Linux';
+    }
+    return $browser . ' on ' . $os;
+}
+
+// "26 seconds", "4 min 5 s", "2 h 10 min".
+function cvx_duration(int $seconds): string
+{
+    if ($seconds < 60) {
+        return $seconds . ($seconds === 1 ? ' second' : ' seconds');
+    }
+    if ($seconds < 3600) {
+        return intdiv($seconds, 60) . ' min ' . ($seconds % 60) . ' s';
+    }
+    return intdiv($seconds, 3600) . ' h ' . intdiv($seconds % 3600, 60) . ' min';
 }
 
 /* ---------- request checks ---------- */
@@ -289,6 +351,36 @@ if ($errors !== []) {
     cvx_fail(400, $errors);
 }
 
+/* ---------- where they came from (optional, never rejected) ---------- */
+
+$visitEntry = cvx_line($data['visit_entry'] ?? '', 300);
+$visitReferrer = cvx_line($data['visit_referrer'] ?? '', 200);
+$visitTags = cvx_line($data['visit_tags'] ?? '', 900);
+$visitPages = cvx_line($data['visit_pages'] ?? '', 900);
+$visitSeconds = isset($data['visit_seconds']) && is_numeric($data['visit_seconds']) ? max(0, min((int) $data['visit_seconds'], 30 * 86400)) : null;
+$firstVisit = cvx_line($data['first_visit'] ?? '', 1000);
+$latestVisit = cvx_line($data['latest_visit'] ?? '', 1000);
+
+$source = ['', 'Where they came from:'];
+if ($visitEntry === '') {
+    $source[] = 'This visit: (not sent: the page script did not run, so only the browser is known)';
+} else {
+    $from = ($visitReferrer === '' || $visitReferrer === 'none') ? 'no referring site (typed in, a bookmark or an app)' : $visitReferrer;
+    $source[] = 'This visit: entered on ' . $visitEntry . ', from ' . $from;
+    $source[] = 'Ad or campaign tags: ' . ($visitTags !== '' ? $visitTags : 'none');
+    $source[] = 'Pages before the form: ' . ($visitPages !== '' ? $visitPages : '(not sent)');
+    $time = $visitSeconds !== null ? cvx_duration($visitSeconds) : '(not sent)';
+    if ($elapsed !== null) {
+        $time .= ' (on the form page: ' . cvx_duration(intdiv(max(0, $elapsed), 1000)) . ')';
+    }
+    $source[] = 'Time on site before sending: ' . $time;
+}
+$source[] = 'Browser: ' . cvx_browser(cvx_line($_SERVER['HTTP_USER_AGENT'] ?? '', 400));
+if ($visitEntry !== '') {
+    $source[] = 'First ad visit (last 90 days): ' . ($firstVisit !== '' ? $firstVisit : '(none)');
+    $source[] = 'Latest ad visit: ' . ($latestVisit !== '' ? $latestVisit : '(none)');
+}
+
 /* ---------- the email ---------- */
 
 $phoneDisplay = $phoneRaw === ''
@@ -306,9 +398,8 @@ $lines = [
     '',
     'Current call flow:',
     $message !== '' ? $message : '(no message)',
-    '',
-    'Reply to this email to write to them directly.',
 ];
+$lines = array_merge($lines, $source, ['', 'Reply to this email to write to them directly.']);
 
 $sent = cvx_send_mail(cvx_recipient(), CVX_SUBJECT_PREFIX . $company, implode("\r\n", str_replace("\n", "\r\n", $lines)) . "\r\n", $email);
 if ($sent !== true) {

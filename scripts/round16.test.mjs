@@ -163,5 +163,5 @@ test('every main-site page loads the current main.js', () => {
     }
   }(ROOT));
   assert.equal(versions.size, 28); // 26 + /blog/best-pest-control-answering-services (20 Oct 2026) + /blog/pest-control-call-volume-by-season-and-region (24 Oct 2026)
-  assert.deepEqual([...new Set(versions.values())], ['20261026a'], 'main.js changed on 26 Oct 2026 (event parameters reset per event); every page must ask for the new copy');
+  assert.deepEqual([...new Set(versions.values())], ['20261106a'], 'main.js changed on 6 Nov 2026 (contact form says where the visitor came from); every page must ask for the new copy');
 });

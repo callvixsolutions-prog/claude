@@ -1,3 +1,82 @@
+/* ------------------------------------------------------------------
+   Where a contact-form visitor came from (owner-approved 6 Nov 2026).
+   Kept only in this visitor's own browser and sent only with the contact
+   form, so the enquiry email says how they reached us even when analytics
+   and Clarity are blocked:
+   - this visit (this tab): entry page, referring site (name only), ad or
+     campaign tags, pages viewed, start time  -> sessionStorage
+   - a visit opened with ad or campaign tags: the first one for 90 days and
+     the latest one -> localStorage, the same keys and shape the landing page
+     uses, so an ad click there is still named on a later contact enquiry.
+------------------------------------------------------------------ */
+var cvxVisitSource = (function () {
+  var TRACKING = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid', 'fbclid'];
+  var VISIT_DAYS = 90, SESSION_KEY = 'cvx_visit_session', MAX_PAGES = 12;
+  var query = {};
+  try { new URLSearchParams(window.location.search).forEach(function (v, k) { query[k] = v; }); } catch (e) { /* old browser */ }
+  var tags = { ts: Date.now() }, tagged = false;
+  TRACKING.forEach(function (k) { if (query[k]) { tags[k] = String(query[k]).slice(0, 200); tagged = true; } });
+
+  function readVisit(key) {
+    try {
+      var v = JSON.parse(localStorage.getItem(key) || 'null');
+      return v && typeof v.ts === 'number' && Date.now() - v.ts < VISIT_DAYS * 864e5 ? v : null;
+    } catch (e) { return null; }
+  }
+  function writeVisit(key, v) { try { localStorage.setItem(key, JSON.stringify(v)); } catch (e) { /* storage blocked */ } }
+  if (tagged) {
+    if (!readVisit('cvx_visit_first')) writeVisit('cvx_visit_first', tags);
+    writeVisit('cvx_visit_latest', tags);
+  }
+
+  function describeTags(v, withDate) {
+    if (!v) return '';
+    var parts = [], any = false;
+    TRACKING.forEach(function (k) { if (v[k]) any = true; });
+    if (!any) return '';
+    parts.push((v.utm_source || '(no source)') + ' / ' + (v.utm_medium || '(no medium)'));
+    if (v.utm_campaign) parts.push('campaign ' + v.utm_campaign);
+    if (v.utm_content) parts.push('ad ' + v.utm_content);
+    if (v.utm_term) parts.push('term ' + v.utm_term);
+    ['gclid', 'gbraid', 'wbraid', 'fbclid'].forEach(function (k) { if (v[k]) parts.push(k + ' ' + v[k]); });
+    if (withDate) parts.push('on ' + new Date(v.ts).toISOString().slice(0, 10));
+    return parts.join(', ').slice(0, 900);
+  }
+  function referrerName() {
+    var r = '';
+    try { r = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, '') : ''; } catch (e) { r = ''; }
+    if (r && r === window.location.hostname.replace(/^www\./, '')) return 'this site (opened in a new tab)';
+    return r;
+  }
+
+  // This visit: started on the first page this tab opened on the site.
+  var session = null;
+  try { session = JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null'); } catch (e) { session = null; }
+  if (!session || typeof session.ts !== 'number' || !session.pages) {
+    session = { ts: Date.now(), entry: window.location.pathname, ref: referrerName(), tags: tagged ? tags : null, pages: [] };
+  } else if (tagged) {
+    session.tags = tags;   // tags that arrive mid-visit (a new ad click in the same tab) replace the old ones
+  }
+  if (session.pages[session.pages.length - 1] !== window.location.pathname) session.pages.push(window.location.pathname);
+  if (session.pages.length > MAX_PAGES) session.pages = session.pages.slice(0, 1).concat(['…'], session.pages.slice(-(MAX_PAGES - 2)));
+  try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch (e) { /* storage blocked: still sent from memory below */ }
+
+  return {
+    // Added to the contact form when it is sent. The server never rejects a form over these.
+    fields: function () {
+      return {
+        visit_entry: session.entry,
+        visit_referrer: session.ref || 'none',
+        visit_tags: describeTags(session.tags, false) || 'none',
+        visit_pages: session.pages.join(' → '),
+        visit_seconds: String(Math.max(0, Math.round((Date.now() - session.ts) / 1000))),
+        first_visit: describeTags(readVisit('cvx_visit_first'), true),
+        latest_visit: describeTags(readVisit('cvx_visit_latest'), true)
+      };
+    }
+  };
+}());
+
 // Mobile nav toggle
 document.addEventListener('DOMContentLoaded', function () {
   var toggle = document.querySelector('.nav-toggle');
@@ -100,9 +179,15 @@ document.addEventListener('DOMContentLoaded', function () {
       if (status) { status.textContent = ''; status.className = 'form-status'; }
       clearInvalid();
 
+      var body = new FormData(form);
+      // The contact form also says where the visitor came from (see cvxVisitSource above).
+      if (/\/contact-send\.php$/.test(form.getAttribute('action') || '')) {
+        try { var src = cvxVisitSource.fields(); Object.keys(src).forEach(function (k) { body.set(k, src[k]); }); } catch (e) { /* never block the enquiry */ }
+      }
+
       fetch(form.action, {
         method: 'POST',
-        body: new FormData(form),
+        body: body,
         headers: { Accept: 'application/json' }
       })
         .then(function (res) {
