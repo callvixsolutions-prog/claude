@@ -9,7 +9,7 @@
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
@@ -81,11 +81,35 @@ test('only the contact form gets the fields, and they can never block it', () =>
   assert.match(SRC, /body: body,/);
 });
 
-test('contact-send.php: optional fields, capped, never stored; the email section is after the message', () => {
+test('contact-send.php: optional fields, capped; the email section is after the message', () => {
   for (const [k, max] of [['visit_entry', 300], ['visit_referrer', 200], ['visit_tags', 900], ['visit_pages', 900], ['first_visit', 1000], ['latest_visit', 1000]]) {
     assert.ok(PHP.includes(`cvx_line($data['${k}'] ?? '', ${max})`), k);
   }
-  assert.match(PHP, /\$lines = array_merge\(\$lines, \$source, \['', 'Reply to this email to write to them directly\.'\]\);/);
-  assert.doesNotMatch(PHP, /file_put_contents\((?!\(string\) constant\('CVX_TEST_MAIL_FILE'\))/, 'the only file write is the test mail log');
+  assert.match(PHP, /\$lines = array_merge\(\$lines, \$source, \['', \$recordNote, 'Reply to this email to write to them directly\.'\]\);/);
   assert.doesNotMatch(PHP.slice(PHP.indexOf('where they came from (optional')), /REMOTE_ADDR/, 'no IP address in the email');
+});
+
+/* Owner-approved 12 Nov 2026: an 11 Nov enquiry never arrived and left no trace. The contact form now keeps a
+   private record of every request, saved BEFORE the email, and of why any request was turned away. */
+test('contact-send.php: private record next to public_html, saved before the email, every turn-away recorded', () => {
+  assert.match(PHP, /const CVX_RECORD_DIR = 'callvix-leads';/);
+  assert.match(PHP, /const CVX_RECORD_KEEP_MONTHS = 12;/);
+  assert.match(PHP, /return defined\('CVX_TEST_DATA_DIR'\) \? \(string\) constant\('CVX_TEST_DATA_DIR'\) : dirname\(__DIR__\);/, 'one level up from public_html');
+  assert.match(PHP, /@mkdir\(\$dir, 0700, true\)/);
+  assert.match(PHP, /@chmod\(\$file, 0600\);/);
+  assert.match(PHP, /\$file = \$dir \. '\/contact-' \. gmdate\('Y-m'\) \. '\.jsonl';/, 'its own monthly files');
+  assert.match(PHP, /glob\(cvx_data_dir\(\) \. '\/' \. CVX_RECORD_DIR \. '\/contact-\*\.jsonl'\)/, 'pruning never touches the landing page leads-*.jsonl');
+  /* Order: record "received", then the email, then the result, then the answer. */
+  const order = ["$recorded = cvx_record([\n    'outcome' => 'received',", '$sent = cvx_send_mail(', "cvx_record(['outcome' => $sent === true ? 'emailed' : 'email_failed'], true);", 'cvx_succeed();'];
+  const at = order.map((k) => PHP.indexOf(k));
+  assert.ok(at.every((v, i) => v > 0 && (i === 0 || v > at[i - 1])), 'record, mail, result, answer: ' + JSON.stringify(at));
+  assert.match(PHP, /\$recordNote = 'Record ID: ' \. cvx_record_id\(\)/, 'the email carries the record id');
+  /* Every rejection after the method check is recorded with its reason; only 405 and the final 500 answer directly. */
+  const flow = PHP.slice(PHP.indexOf('/* ---------- request checks ---------- */'));
+  const direct = flow.match(/cvx_fail\(\d+/g) || [];
+  assert.deepEqual(direct, ['cvx_fail(405', 'cvx_fail(500'], 'only the method check and the failed email answer without a turn-away record');
+  for (const reason of ['origin', 'too_large', 'rate_limited', 'honeypot', 'too_fast', 'invalid']) assert.ok(flow.includes(`'${reason}'`), reason);
+  assert.match(PHP, /'honeypot', \['elapsed_ms' => \$elapsed\]\);/, 'a honeypot hit is a bot: no typed text kept');
+  assert.doesNotMatch(PHP, /\$_(GET|POST|REQUEST|COOKIE)\[['"]CVX_TEST/, 'test hooks are never switched on by a request');
+  assert.ok(!existsSync(join(ROOT, 'callvix-leads')), 'no records in the repository');
 });

@@ -318,11 +318,11 @@ test('send.php: private lead record above public_html, repeat = accepted again w
   assert.ok(!existsSync(join(ROOT, 'callvix-leads')) && !existsSync(join(ROOT, DIR, 'callvix-leads')), 'no lead records in the repository');
 });
 
-test('privacy policy: backup copy of landing-page requests on the web host, kept up to 12 months', () => {
+test('privacy policy: backup copy of contact-form and landing-page requests on the web host, kept up to 12 months', () => {
   const pp = text(read('privacy-policy.html').replace(/<script[\s\S]*?<\/script>/g, ''));
-  assert.match(pp, /keeps a private backup copy of each landing-page booking-form request/);
-  assert.match(pp, /The backup copy of a landing-page booking-form request is kept on our web host, out of public reach, for up to 12 months and then deleted\./);
-  assert.match(pp, /Effective date: October 29, 2026/);
+  assert.match(pp, /keeps a private backup copy of each contact-form request \(including one that could not be completed\) and each landing-page booking-form request/);
+  assert.match(pp, /The backup copy of a contact-form or landing-page booking-form request is kept on our web host, out of public reach, for up to 12 months and then deleted\./);
+  assert.match(pp, /Effective date: November 12, 2026/);
 });
 
 /* Clarity pass (preview 29 Oct 2026): next step inside the form card, 78% source, booking vs CRM entry, video = example. */

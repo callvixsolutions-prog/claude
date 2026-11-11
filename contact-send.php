@@ -4,8 +4,16 @@
  *
  * Adapted from /pest-control-answering-service/send.php (the landing page's endpoint on this same server, whose
  * delivery is confirmed). The form posts here; this script checks the request and emails the enquiry to Chris
- * from this website's own server with PHP mail(). No third-party form service, nothing stored on the server, no
- * personal data written to any log, and no passwords or keys in this file.
+ * from this website's own server with PHP mail(). No third-party form service, no personal data written to any log,
+ * and no passwords or keys in this file.
+ *
+ * Private record (owner-approved 12 Nov 2026, after an 11 Nov enquiry that never arrived and left no trace): every
+ * request that reaches the form checks is also written to a private file on the server, in callvix-leads/ next to
+ * public_html (out of the web's reach, the same folder as the landing page's lead record), one file per month
+ * (contact-YYYY-MM.jsonl), kept 12 months. An enquiry is saved BEFORE the email is sent, then its result is added
+ * ("emailed" or "email_failed"), so a lead is never only in an email. A request that is turned away is saved with
+ * the reason (wrong origin, too large, rate limit, honeypot, too fast, or which fields failed), with what was typed
+ * only where a real person could be behind it. Each enquiry email carries its Record ID.
  *
  * Two ways in, same rules:
  *   - js/main.js sends the form with fetch() and "Accept: application/json", and gets JSON back. Errors use the
@@ -16,7 +24,7 @@
  *
  * Where they came from (owner-approved 6 Nov 2026): js/main.js adds the visit's entry page, referring site, ad or
  * campaign tags, pages viewed and time on site, plus the first and latest ad-tagged visits remembered in the browser.
- * All optional: a form is never rejected over them, and nothing about the visit is stored on the server.
+ * All optional: a form is never rejected over them. They go in the email and in the private record.
  *
  * Spam protection: allowed origin only, the form's hidden _gotcha honeypot, a minimum time on the form (when the
  * page reports elapsed_ms), server-side validation of every field, and at most CVX_MAX_PER_HOUR requests per
@@ -34,6 +42,9 @@ const CVX_MAX_BODY_BYTES = 20000;
 const CVX_SUCCESS_PATH = '/thank-you';
 const CVX_FORM_PATH = '/contact';
 const CVX_FALLBACK = 'Could not send. Please call (551) 373-6777 or email contact@callvixsolutions.com.';
+const CVX_RECORD_DIR = 'callvix-leads';         // next to public_html, out of the web's reach (see the header)
+const CVX_RECORD_KEEP_MONTHS = 12;
+const CVX_RECORD_MAX_BYTES = 5000000;           // per month: past this, turned-away requests are not written (enquiries always are)
 
 // Cloudflare's published ranges (copied from the landing-page endpoint). Only used if the site is ever put
 // behind Cloudflare's proxy; otherwise REMOTE_ADDR is the visitor.
@@ -225,6 +236,71 @@ function cvx_send_mail(string $to, string $subject, string $body, string $replyT
     return @mail($to, $encodedSubject, $body, implode("\r\n", $headers));
 }
 
+/* ---------- the private record ---------- */
+
+// The folder above public_html (this file sits in public_html). Local tests point it elsewhere.
+function cvx_data_dir(): string
+{
+    return defined('CVX_TEST_DATA_DIR') ? (string) constant('CVX_TEST_DATA_DIR') : dirname(__DIR__);
+}
+
+// One id per request: in every line written for it, and in the enquiry email.
+function cvx_record_id(): string
+{
+    static $id = null;
+    if ($id === null) {
+        $id = 'enq.' . gmdate('ymd-His') . '.' . bin2hex(random_bytes(3));
+    }
+    return $id;
+}
+
+// Appends one line to this month's file. An enquiry ($always) is always written; a turned-away request is skipped
+// once the month's file passes CVX_RECORD_MAX_BYTES, so a flood of junk can't fill the disk. Never stops the request.
+function cvx_record(array $entry, bool $always = false): bool
+{
+    $dir = cvx_data_dir() . '/' . CVX_RECORD_DIR;
+    if (!is_dir($dir) && !@mkdir($dir, 0700, true) && !is_dir($dir)) {
+        error_log('cvx-contact: record_unavailable');
+        return false;
+    }
+    $file = $dir . '/contact-' . gmdate('Y-m') . '.jsonl';
+    $new = !is_file($file);
+    if (!$always && !$new && (int) @filesize($file) > CVX_RECORD_MAX_BYTES) {
+        return false;
+    }
+    $line = json_encode(['id' => cvx_record_id(), 'at' => gmdate('c')] + $entry,
+        JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+    if (!is_string($line) || @file_put_contents($file, $line . "\n", FILE_APPEND | LOCK_EX) === false) {
+        error_log('cvx-contact: record_failed');
+        return false;
+    }
+    if ($new) {
+        @chmod($file, 0600);
+        cvx_record_prune();
+    }
+    return true;
+}
+
+// Deletes monthly contact files older than CVX_RECORD_KEEP_MONTHS (the landing page's leads-*.jsonl are left alone).
+function cvx_record_prune(): void
+{
+    $oldest = (new DateTimeImmutable('first day of this month', new DateTimeZone('UTC')))
+        ->modify('-' . CVX_RECORD_KEEP_MONTHS . ' month')->format('Y-m');
+    foreach (glob(cvx_data_dir() . '/' . CVX_RECORD_DIR . '/contact-*.jsonl') ?: [] as $file) {
+        if (preg_match('/contact-(\d{4}-\d{2})\.jsonl$/', $file, $m) === 1 && strcmp($m[1], $oldest) < 0) {
+            @unlink($file);
+        }
+    }
+}
+
+// Saves why a request was turned away, then gives the visitor exactly the answer they got before.
+function cvx_turn_away(int $status, array $errors, string $reason, array $details = []): void
+{
+    cvx_record(['outcome' => 'turned_away', 'reason' => $reason] + $details
+        + ['browser' => cvx_browser(cvx_line($_SERVER['HTTP_USER_AGENT'] ?? '', 400))]);
+    cvx_fail($status, $errors);
+}
+
 // "Chrome 155 on Linux" from the browser's own User-Agent (no IP address goes in the email).
 function cvx_browser(string $ua): string
 {
@@ -294,34 +370,39 @@ if ($origin === '') {
     }
 }
 if (!in_array($origin, CVX_ALLOWED_ORIGINS, true)) {
-    cvx_fail(403, [['message' => CVX_FALLBACK]]);
+    cvx_turn_away(403, [['message' => CVX_FALLBACK]], 'origin', ['origin' => cvx_line($origin, 200)]);
 }
 
 if ((int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > CVX_MAX_BODY_BYTES) {
-    cvx_fail(400, [['message' => CVX_FALLBACK]]);
+    cvx_turn_away(400, [['message' => CVX_FALLBACK]], 'too_large', ['bytes' => (int) ($_SERVER['CONTENT_LENGTH'] ?? 0)]);
 }
 $data = $_POST;
 
-if (cvx_rate_limited(cvx_client_ip())) {
-    header('Retry-After: 3600');
-    cvx_fail(429, [['message' => 'Too many messages from this connection. Please call (551) 373-6777 or email contact@callvixsolutions.com.']]);
-}
-
-// Spam: a filled honeypot, or (when the page reports it) a form sent faster than a person can fill it in.
-$honeypot = isset($data['_gotcha']) && is_scalar($data['_gotcha']) ? trim((string) $data['_gotcha']) : '';
-$elapsed = isset($data['elapsed_ms']) && is_numeric($data['elapsed_ms']) ? (int) $data['elapsed_ms'] : null;
-if ($honeypot !== '' || ($elapsed !== null && $elapsed < CVX_MIN_MS_ON_FORM)) {
-    cvx_fail(400, [['message' => CVX_FALLBACK]]);
-}
-
-/* ---------- validation ---------- */
-
+// What was typed, capped (read here so a turned-away enquiry from a real person can still be found in the record).
 $name = cvx_line($data['name'] ?? '', 200);
 $company = cvx_line($data['company'] ?? '', 200);
 $email = cvx_line($data['email'] ?? '', 200);
 $phoneRaw = cvx_line($data['phone'] ?? '', 40);
 $state = cvx_line($data['state'] ?? '', 200);
 $message = cvx_text($data['message'] ?? '', 3000);
+$given = ['name' => $name, 'company' => $company, 'email' => $email, 'phone' => $phoneRaw, 'state' => $state, 'message' => $message];
+
+if (cvx_rate_limited(cvx_client_ip())) {
+    header('Retry-After: 3600');
+    cvx_turn_away(429, [['message' => 'Too many messages from this connection. Please call (551) 373-6777 or email contact@callvixsolutions.com.']], 'rate_limited', ['given' => $given]);
+}
+
+// Spam: a filled honeypot, or (when the page reports it) a form sent faster than a person can fill it in.
+$honeypot = isset($data['_gotcha']) && is_scalar($data['_gotcha']) ? trim((string) $data['_gotcha']) : '';
+$elapsed = isset($data['elapsed_ms']) && is_numeric($data['elapsed_ms']) ? (int) $data['elapsed_ms'] : null;
+if ($honeypot !== '') {
+    cvx_turn_away(400, [['message' => CVX_FALLBACK]], 'honeypot', ['elapsed_ms' => $elapsed]);
+}
+if ($elapsed !== null && $elapsed < CVX_MIN_MS_ON_FORM) {
+    cvx_turn_away(400, [['message' => CVX_FALLBACK]], 'too_fast', ['elapsed_ms' => $elapsed, 'given' => $given]);
+}
+
+/* ---------- validation ---------- */
 
 $errors = [];
 if (cvx_length($name) < 2 || cvx_length($name) > 80) {
@@ -348,7 +429,7 @@ if (cvx_length($message) > 2000) {
     $errors[] = ['field' => 'message', 'message' => 'Please keep the message under 2,000 characters.'];
 }
 if ($errors !== []) {
-    cvx_fail(400, $errors);
+    cvx_turn_away(400, $errors, 'invalid', ['fields' => array_column($errors, 'field'), 'given' => $given]);
 }
 
 /* ---------- where they came from (optional, never rejected) ---------- */
@@ -399,9 +480,23 @@ $lines = [
     'Current call flow:',
     $message !== '' ? $message : '(no message)',
 ];
-$lines = array_merge($lines, $source, ['', 'Reply to this email to write to them directly.']);
+
+// Saved before the email goes out, so the enquiry exists even if the email never arrives.
+$recorded = cvx_record([
+    'outcome' => 'received',
+    'given' => $given,
+    'phone_digits' => $phoneRaw === '' ? '' : $phoneDigits,
+    'visit' => [
+        'entry' => $visitEntry, 'referrer' => $visitReferrer, 'tags' => $visitTags, 'pages' => $visitPages,
+        'seconds' => $visitSeconds, 'elapsed_ms' => $elapsed, 'first' => $firstVisit, 'latest' => $latestVisit,
+    ],
+    'browser' => cvx_browser(cvx_line($_SERVER['HTTP_USER_AGENT'] ?? '', 400)),
+], true);
+$recordNote = 'Record ID: ' . cvx_record_id() . ($recorded ? ' (a copy is saved on the server)' : ' (the server copy could not be saved)');
+$lines = array_merge($lines, $source, ['', $recordNote, 'Reply to this email to write to them directly.']);
 
 $sent = cvx_send_mail(cvx_recipient(), CVX_SUBJECT_PREFIX . $company, implode("\r\n", str_replace("\n", "\r\n", $lines)) . "\r\n", $email);
+cvx_record(['outcome' => $sent === true ? 'emailed' : 'email_failed'], true);
 if ($sent !== true) {
     error_log('cvx-contact: send_failed');
     cvx_fail(500, [['message' => CVX_FALLBACK]]);
