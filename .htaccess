@@ -83,6 +83,14 @@ RedirectMatch 404 ^/scripts(/|$)
   RewriteCond %{THE_REQUEST} \s/+index(\.html)?/?[\s?] [NC]
   RewriteRule ^ / [R=301,L]
 
+  # /dir/index and /dir/index.html are duplicates of /dir/ (blog, integrations,
+  # tools, the landing page and its schedule page). Send them to the directory in
+  # one hop, before rule 4 turns /dir/index.html into a 200 at /dir/index.
+  # THE_REQUEST for the same reason as the homepage rule above. No "?" in the
+  # target, so the query string (gclid, utm_*) is passed on unchanged.
+  RewriteCond %{THE_REQUEST} \s/+((?:[^/\s?]+/)+)index(?:\.html)?/?[\s?] [NC]
+  RewriteRule ^ /%1 [R=301,L]
+
   # ------------------------------------------------------------------------
   # 4. Strip .html  (only for real browser requests, never internal rewrites)
   # ------------------------------------------------------------------------

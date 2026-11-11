@@ -102,3 +102,21 @@ test('every page has exactly one h1', () => {
     .map(([f, n]) => `${f} has ${n}`);
   assert.deepEqual(bad, []);
 });
+
+/* 12 Nov 2026 (technical audit D1): /dir/index.html used to 301 to /dir/index, which served the section page a
+   second time with a 200. A THE_REQUEST rule now sends /dir/index and /dir/index.html to /dir/ in one hop. */
+test('.htaccess: /dir/index(.html) goes to /dir/ in one hop, before .html is stripped', () => {
+  const ht = readFileSync(join(ROOT, '.htaccess'), 'utf8');
+  const cond = 'RewriteCond %{THE_REQUEST} \\s/+((?:[^/\\s?]+/)+)index(?:\\.html)?/?[\\s?] [NC]\n  RewriteRule ^ /%1 [R=301,L]';
+  const at = ht.indexOf(cond);
+  assert.ok(at > 0, 'rule present, condition and rule together');
+  assert.ok(at > ht.indexOf('RewriteCond %{THE_REQUEST} \\s/+index(\\.html)?/?[\\s?] [NC]'), 'after the homepage rule');
+  assert.ok(at < ht.indexOf('# 4. Strip .html'), 'before rule 4 strips .html');
+  const re = /\s\/+((?:[^/\s?]+\/)+)index(?:\.html)?\/?[\s?]/i;
+  const target = (path) => { const m = `GET ${path} HTTP/2`.match(re); return m ? '/' + m[1] : null; };
+  for (const [path, want] of [['/blog/index.html', '/blog/'], ['/blog/index', '/blog/'], ['/integrations/index.html', '/integrations/'],
+    ['/tools/index', '/tools/'], ['/pest-control-answering-service/index.html?gclid=t', '/pest-control-answering-service/'],
+    ['/pest-control-answering-service/schedule/index.html', '/pest-control-answering-service/schedule/']]) assert.equal(target(path), want, path);
+  for (const path of ['/', '/index.html', '/blog/', '/blog/index-of-guides', '/pricing', '/services/', '/blog/pest-control-answering-service-cost'])
+    assert.equal(target(path), null, path);
+});
