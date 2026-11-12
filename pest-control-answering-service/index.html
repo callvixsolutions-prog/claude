@@ -730,8 +730,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 [data-callvix-v3b] .cv3b-booked__lead { font-size: 18px; font-weight: 600; line-height: 1.5; color: var(--cv3b-ink); text-wrap: pretty; }
 [data-callvix-v3b] .cv3b-booked__note { margin-top: 10px; font-size: 16px; line-height: 1.55; color: var(--cv3b-muted); text-wrap: pretty; }
 @media (max-width: 767px) { [data-callvix-v3b] .cv3b-booked { margin-top: 18px; padding: 24px 20px; } }
+
+/* Interaction fixes (owner-approved 12 Nov 2026). Short screens (a phone held sideways): the header scrolls away
+   instead of staying pinned, so the form and keyboard keep the screen. Email typo hint under the email field. */
+@media (max-height: 500px) {
+  [data-callvix-v3b] .cv3b-header { position: static; }
+  [data-callvix-v3b] section[id] { scroll-margin-top: 0; }
+  [data-callvix-v3b] .cv3b-lead { scroll-margin-top: 12px; }
+}
+[data-callvix-v3b] .cv3b-field__hint { font-size: 15px; line-height: 1.4; color: var(--cv3b-ink); }
+[data-callvix-v3b] .cv3b-field__hint-use { display: inline; min-height: 44px; padding: 10px 2px; border: 0; background: none; font: inherit; font-weight: 700; color: var(--cv3b-teal); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; overflow-wrap: anywhere; }
 </style>
-<script src="/pest-control-answering-service/assets/cv3b.js?v=20261029b" defer></script>
+<script src="/pest-control-answering-service/assets/cv3b.js?v=20261112a" defer></script>
 </head>
 <body id="top">
 <svg class="cv3b-sprite" aria-hidden="true" focusable="false">
@@ -1037,7 +1047,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <div class="cv3b-field">
           <label class="cv3b-label" for="cv3b-email">Email</label>
           <p class="cv3b-field__error" id="cv3b-email-error" hidden></p>
-          <input class="cv3b-input" id="cv3b-email" name="email" type="email" autocomplete="email" spellcheck="false" maxlength="120" required aria-describedby="cv3b-email-error">
+          <input class="cv3b-input" id="cv3b-email" name="email" type="email" autocomplete="email" spellcheck="false" maxlength="120" required aria-describedby="cv3b-email-error cv3b-email-hint">
+          <p class="cv3b-field__hint" id="cv3b-email-hint" hidden></p>
         </div>
           <div class="cv3b-hp" aria-hidden="true"><label for="cv3b-website">Leave this field empty</label><input id="cv3b-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
           <input type="hidden" name="page_url" value="">
@@ -1054,6 +1065,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <p class="cv3b-reassure">No obligation · Month-to-month · No setup fee · Nothing goes live until you approve it.</p>
           <p class="cv3b-consent">By continuing, you agree we can call or text you about this request. See our <a class="cv3b-link" href="/privacy-policy">Privacy Policy</a>.</p>
           <p class="cv3b-form__alert" id="cv3b-form-alert" role="alert" hidden></p>
+          <p class="cv3b-visually-hidden" id="cv3b-field-live" aria-live="polite"></p>
         </form>
       </div>
     </div>

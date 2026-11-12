@@ -182,7 +182,7 @@ test('tracked-visit memory: first (90 days) and latest tagged visit reach the le
   assert.match(PHP, /'First tracked visit \(last 90 days\): ' \./);
   assert.match(PHP, /'Latest tracked visit: ' \./);
   assert.doesNotMatch(PHP, /\$invalid\[\] = '(first|latest)_visit'/, 'odd values never lose a lead');
-  assert.match(PAGE, /assets\/cv3b\.js\?v=20261029b"/, 'cache-busted');
+  assert.match(PAGE, /assets\/cv3b\.js\?v=20261112a"/, 'cache-busted');
 });
 
 test('explainer video: unlisted YouTube (nocookie) on tap, self-hosted MP4 fallback, same tracking events', () => {
@@ -298,7 +298,7 @@ test('why it matters (version C): heading beside the 78%, three moments, the "Wi
   assert.doesNotMatch(CSS, /\.cv3b-(problem|flow|moment|stat)/, 'old section styles gone');
   assert.match(CSS, /\.cv3b-why__moments \{ display: grid; grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);/);
   assert.equal(PAGE_RAW.match(/<style id="cv3b-css">\n([\s\S]*?)\n<\/style>/)[1], CSS.replace(/\n$/, ''), 'page carries cv3b.css inline (run node scripts/lp-inline-css.mjs)');
-  assert.match(SCHED, /assets\/cv3b\.css\?v=20261108a"/, 'schedule page links the stylesheet');
+  assert.match(SCHED, /assets\/cv3b\.css\?v=20261112a"/, 'schedule page links the stylesheet');
 });
 
 /* Owner-approved 29 Oct 2026: send.php keeps a private lead record and recognises a repeated submission. */
@@ -480,4 +480,28 @@ test('plain hero label and pest list (8 Nov 2026), and the Microsoft privacy lin
   const priv = read('privacy-policy.html');
   assert.match(priv, /href="https:\/\/www\.microsoft\.com\/en-us\/privacy\/privacystatement"/);
   assert.doesNotMatch(priv, /privacy\.microsoft\.com\/privacystatement/, 'old address redirected to a missing page');
+});
+
+/* Interaction fixes (owner-approved 12 Nov 2026, after the Clarity recordings): the header unpins on short screens
+   (a phone held sideways), an email typo hint, and form errors announced to screen readers. */
+test('interaction fixes (12 Nov 2026): short-screen header, email typo hint, announced errors', async () => {
+  const short = CSS.match(/@media \(max-height: 500px\) \{([\s\S]*?)\n\}/);
+  assert.ok(short, 'short-screen block');
+  assert.match(short[1], /\.cv3b-header \{ position: static; \}/);
+  assert.match(short[1], /\.cv3b-lead \{ scroll-margin-top: 12px; \}/);
+  const card = between(PAGE, '<div class="cv3b-scheduler cv3b-lead" id="cv3b-lead">', '</form>');
+  assert.match(card, /<input class="cv3b-input" id="cv3b-email" [^>]*aria-describedby="cv3b-email-error cv3b-email-hint">\s*<p class="cv3b-field__hint" id="cv3b-email-hint" hidden><\/p>/);
+  assert.match(card, /<p class="cv3b-visually-hidden" id="cv3b-field-live" aria-live="polite"><\/p>/);
+  assert.match(CSS, /\.cv3b-field__hint-use \{[^}]*min-height: 44px;/, 'the suggestion is a 44px tap target');
+  // the suggestion rule, run from the real file
+  const src = read(`${DIR}/assets/cv3b.js`);
+  const body = src.slice(src.indexOf('var COMMON'), src.indexOf('var emailInput'));
+  const suggestEmail = new Function(body + '\nreturn suggestEmail;')();
+  const want = { 'jo@gmial.com': 'jo@gmail.com', 'jo@gmail.con': 'jo@gmail.com', 'jo@yaho.com': 'jo@yahoo.com', 'jo@hotmial.com': 'jo@hotmail.com',
+    'jo@icloud.co': 'jo@icloud.com', 'jo@comcast.nte': 'jo@comcast.net', 'jo@acme.con': 'jo@acme.com',
+    'jo@gmail.com': '', 'jo@mail.com': '', 'jo@ne.com': '', 'jo@abc.com': '', 'jo@pro.com': '', 'jo@pestpros.com': '', 'owner@gmx.us': '' };
+  for (const [v, s] of Object.entries(want)) assert.equal(suggestEmail(v), s, v);
+  // errors: announced when a field is left, never twice on "Continue"
+  assert.match(src, /if \(!check\(name\) && !wasWrong\) announce\(CHECKS\[name\]\(input\.value\.trim\(\)\)\);/);
+  assert.doesNotMatch(between(src, "form.addEventListener('submit'", "sendLead(p, slow)"), /announce\(/, 'submit relies on focus + aria-describedby');
 });

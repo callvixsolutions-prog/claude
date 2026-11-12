@@ -151,12 +151,67 @@
       }
     }
     function check(name) { var msg = CHECKS[name](form.elements[name].value.trim()); show(name, msg); return !msg; }
+    // Screen readers hear an error that appears when a field is left (12 Nov 2026). On "Continue" the first wrong
+    // field gets focus instead, and its error is read with it (aria-describedby), so nothing is announced twice.
+    var live = document.getElementById('cv3b-field-live');
+    function announce(text) { if (!live) return; live.textContent = ''; window.setTimeout(function () { live.textContent = text; }, 60); }
     Object.keys(CHECKS).forEach(function (name) {
       var input = form.elements[name];
       // Checked when the visitor leaves a field (never on each keystroke); an error clears as soon as it's fixed.
-      input.addEventListener('blur', function () { if (input.value.trim() || input.hasAttribute('aria-invalid')) check(name); });
+      input.addEventListener('blur', function () {
+        if (!input.value.trim() && !input.hasAttribute('aria-invalid')) return;
+        var wasWrong = input.hasAttribute('aria-invalid');
+        if (!check(name) && !wasWrong) announce(CHECKS[name](input.value.trim()));
+      });
       input.addEventListener('input', function () { if (input.hasAttribute('aria-invalid')) check(name); });
     });
+
+    /* "Did you mean …@gmail.com?" (12 Nov 2026): a hint under the email field for a likely typo in a common address
+       (gmial.com, gmail.con). Only a suggestion: the form is never blocked by it, and a tap on it fills the address. */
+    var COMMON = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com', 'icloud.com', 'comcast.net', 'att.net',
+      'msn.com', 'live.com', 'me.com', 'mac.com', 'sbcglobal.net', 'verizon.net', 'bellsouth.net', 'cox.net', 'charter.net',
+      'ymail.com', 'rocketmail.com', 'protonmail.com', 'earthlink.net', 'frontier.com', 'windstream.net', 'optonline.net'];
+    var REAL = ['mail.com', 'email.com', 'gmx.com', 'gmx.us', 'zoho.com', 'att.com', 'me.net', 'live.ca', 'yahoo.ca', 'proton.me'];
+    function distance(a, b) {   // edits needed to turn a into b; swapping two neighbours counts as one
+      var d = [], i, j;
+      for (i = 0; i <= a.length; i++) { d[i] = [i]; }
+      for (j = 0; j <= b.length; j++) { d[0][j] = j; }
+      for (i = 1; i <= a.length; i++) {
+        for (j = 1; j <= b.length; j++) {
+          var cost = a.charAt(i - 1) === b.charAt(j - 1) ? 0 : 1;
+          d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+          if (i > 1 && j > 1 && a.charAt(i - 1) === b.charAt(j - 2) && a.charAt(i - 2) === b.charAt(j - 1)) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+        }
+      }
+      return d[a.length][b.length];
+    }
+    function suggestEmail(value) {
+      var at = value.lastIndexOf('@');
+      if (at < 1) return '';
+      var local = value.slice(0, at), domain = value.slice(at + 1).toLowerCase();
+      if (!domain || COMMON.indexOf(domain) !== -1 || REAL.indexOf(domain) !== -1) return '';
+      var best = '', bestD = 3;
+      COMMON.forEach(function (c) { var dd = distance(domain, c); if (dd < bestD) { bestD = dd; best = c; } });
+      // Short domains are left alone ("ne.com", "abc.com" can be a real business): one slip from 7 letters, two from 9.
+      if (best && ((bestD === 1 && domain.length >= 7) || (bestD === 2 && domain.length >= 9))) return local + '@' + best;
+      var fixed = domain.replace(/\.(con|cmo|cpm|vom|xom|ocm|comm|coom)$/, '.com').replace(/\.(nte|ner|nett)$/, '.net').replace(/\.(ogr|orgg)$/, '.org');
+      return fixed !== domain ? local + '@' + fixed : '';
+    }
+    var emailInput = form.elements.email, hint = document.getElementById('cv3b-email-hint');
+    function updateHint() {
+      if (!hint) return;
+      var v = emailInput.value.trim(), s = isEmail(v) || /@[^\s@]+$/.test(v) ? suggestEmail(v) : '';
+      if (!s) { hint.hidden = true; hint.textContent = ''; return; }
+      hint.textContent = 'Did you mean ';
+      var use = document.createElement('button'); use.type = 'button'; use.className = 'cv3b-field__hint-use'; use.textContent = s;
+      use.addEventListener('click', function () { emailInput.value = s; hint.hidden = true; hint.textContent = ''; check('email'); emailInput.focus(); });
+      hint.appendChild(use); hint.appendChild(document.createTextNode('?'));
+      if (hint.hidden) { hint.hidden = false; announce('Did you mean ' + s + '?'); }
+    }
+    if (emailInput && hint) {
+      emailInput.addEventListener('blur', updateHint);
+      emailInput.addEventListener('input', function () { if (!hint.hidden) { hint.hidden = true; hint.textContent = ''; } });
+    }
     form.elements.phone.addEventListener('blur', function () {
       var d = digits(form.elements.phone.value);
       if (/^\d{10}$/.test(d)) form.elements.phone.value = '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6);

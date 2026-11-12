@@ -697,3 +697,13 @@
 [data-callvix-v3b] .cv3b-booked__lead { font-size: 18px; font-weight: 600; line-height: 1.5; color: var(--cv3b-ink); text-wrap: pretty; }
 [data-callvix-v3b] .cv3b-booked__note { margin-top: 10px; font-size: 16px; line-height: 1.55; color: var(--cv3b-muted); text-wrap: pretty; }
 @media (max-width: 767px) { [data-callvix-v3b] .cv3b-booked { margin-top: 18px; padding: 24px 20px; } }
+
+/* Interaction fixes (owner-approved 12 Nov 2026). Short screens (a phone held sideways): the header scrolls away
+   instead of staying pinned, so the form and keyboard keep the screen. Email typo hint under the email field. */
+@media (max-height: 500px) {
+  [data-callvix-v3b] .cv3b-header { position: static; }
+  [data-callvix-v3b] section[id] { scroll-margin-top: 0; }
+  [data-callvix-v3b] .cv3b-lead { scroll-margin-top: 12px; }
+}
+[data-callvix-v3b] .cv3b-field__hint { font-size: 15px; line-height: 1.4; color: var(--cv3b-ink); }
+[data-callvix-v3b] .cv3b-field__hint-use { display: inline; min-height: 44px; padding: 10px 2px; border: 0; background: none; font: inherit; font-weight: 700; color: var(--cv3b-teal); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; overflow-wrap: anywhere; }
