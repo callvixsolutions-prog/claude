@@ -73,6 +73,13 @@ RedirectMatch 404 ^/scripts(/|$)
   RewriteRule ^pest-control-call-demo(?:-v1)?(?:/.*)?$  /pest-control-answering-service/  [R=301,L]
   RewriteRule ^pest-control-discovery-v3(?:/.*)?$      /pest-control-answering-service/  [R=301,L]
 
+  # Short links for Facebook DM outreach, Texas batch 01 (12 Nov 2026). The DM shows a
+  # clean /go/tx001 address; this forwards it to the landing page with that business's
+  # UTM tags so GA4 still reports which business visited. Only tx000-tx030 match.
+  # 302, not 301, so browsers and Facebook don't cache it and the target can change.
+  # The "?" in the target drops any incoming query string (e.g. Facebook's fbclid).
+  RewriteRule ^go/(tx0(?:[0-2][0-9]|30))/?$  /pest-control-answering-service/?utm_source=facebook&utm_medium=dm&utm_campaign=texas_pages_batch01&utm_content=$1_initial  [R=302,L,NE]
+
   # /index, /index/ and /index.html are duplicates of the homepage. Send all
   # three straight to / in one hop, before rule 4 turns /index.html into /index.
   #
